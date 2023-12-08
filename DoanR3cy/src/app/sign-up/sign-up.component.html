@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./sign-up.component.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="box-container">
+                <p class="h2 font-bold">Đăng ký</p>
+                <form [formGroup]="signUpForm" (ngSubmit)="submitForm()">
+                    <div class="text-name">
+                      <input type="text" class="form-control" id="form-input" formControlName="textName" placeholder="Họ và tên" required>
+                    </div>
+                  
+                    <div class="text-ep">
+                      <input type="text" class="form-control" id="form-input" formControlName="textEp" placeholder="Email/ Số điện thoại" required>
+                    </div>
+                  
+                    <div class="text-pass">
+                      <input type="password" class="form-control" id="form-input" formControlName="textPass" placeholder="Mật khẩu" required>
+                    </div>
+                  
+                    <div class="btn-sigup">
+                      <input type="submit" value="Đăng Ký" id="submit-sign" class="form-sbm" name="btn-sigup">
+                    </div>
+                  
+                    <div class="has-account">
+                      Bạn đã có tài khoản? <a href="javascript:void(0)" class="p" (click)="navigateToLogin()">Đăng nhập</a>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

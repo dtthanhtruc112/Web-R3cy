@@ -1,0 +1,47 @@
+<!-- custom-form.component.html -->
+<div class="container text-center">
+    <div class="content">
+      <div class="header">
+        <div class="h2 font-bold">Chúng tôi có tùy chỉnh sản phẩm</div>
+        <div class="h3">Nếu bạn muốn thay đổi hình thức của sản phẩm hiện có tại R3cy, hãy liên hệ với R3cy tại đây.</div>
+      </div>
+      <form [formGroup]="customProduct" (ngSubmit)="submitForm()">
+        <!-- Nhập họ tên -->
+        <div class="text-fname">
+          <input type="text" class="form-control" id="form-input" formControlName="textName" placeholder="Họ và tên" required>
+        </div>
+  
+        <!-- Nhập email-->
+        <div class="text-email">
+          <input type="text" class="form-control" id="form-input" formControlName="textEmail" placeholder="Email" required>
+        </div>
+  
+        <!-- Nhập số điện thoại-->
+        <div class="text-phone">
+          <input type="text" class="form-control" id="form-input" formControlName="textPhone" placeholder="Số điện thoại" required>
+        </div>
+  
+        <!-- Nhập tên sản phẩm-->
+        <div class="text-pname">
+          <input type="text" class="form-control" id="form-input" formControlName="textPname" placeholder="Tên sản phẩm" required>
+        </div>
+  
+        <!-- Nhập mô tả -->
+        <div class="text-pdes">
+          <input type="text" class="form-control" id="form-input" formControlName="textPdes" placeholder="Mô tả sản phẩm" required>
+        </div>
+  
+        <!-- Up file -->
+        <div class="up-file">
+          <!-- Input cho phép chọn file-->
+          <input type="file" id="fileInput" formControlName="fileInput" required>
+        </div>
+  
+        <!-- Button gửi -->
+        <div div class="btn-custom">
+          <button type="submit" class="form-sbm" name="btn-custom">Gửi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

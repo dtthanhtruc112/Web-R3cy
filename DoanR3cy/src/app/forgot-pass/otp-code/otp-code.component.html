@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./otp-code.component.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="box-container">
+                <p class="h2 font-bold">Nhập mã xác nhận</p>
+
+                <div class="p text-center">Mã xác thực đã được gửi đến</div>
+
+                <form [formGroup]="otpForm" (ngSubmit)="submitForm()">
+                <!-- OTP code -->
+                <div class="otp-list">
+                    <div class="otp-code otp-1">
+                      <input type="text" class="form-control" formControlName="otp1">
+                    </div>
+                
+                    <div class="otp-code otp-2">
+                      <input type="text" class="form-control" formControlName="otp2">
+                    </div>
+                
+                    <div class="otp-code otp-3">
+                      <input type="text" class="form-control" formControlName="otp3">
+                    </div>
+                
+                    <div class="otp-code otp-4">
+                      <input type="text" class="form-control" formControlName="otp4">
+                    </div>
+                
+                    <div class="otp-code otp-5">
+                      <input type="text" class="form-control" formControlName="otp5">
+                    </div>
+                </div>
+
+                <div class="resend-otp text-center">
+                    Bạn vẫn chưa nhận được? <br>
+                    <a href="../login" target="_blank" class="p font-bold" >Gửi lại</a> hoặc thử 
+                    <a href="javascript:void(0);" (click)="redirectToForgotPassPage()" class="p font-bold" >Các phương thức khác</a>
+                  </div>
+                
+                  <div class="btn-next">
+                    <input type="submit" value="Tiếp theo" id="submit-next" class="form-sbm" name="btn-next" (click)="redirectToNewPassPage()">
+                  </div>
+
+                <div class="clear"></div>
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

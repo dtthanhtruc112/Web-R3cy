@@ -1,0 +1,49 @@
+[
+    {
+        "id": 1,
+        "tendangnhap": "danglenhuquynh",
+        "hovaten": "Đặng Lê Như Quỳnh",
+        "email": "quynhdln21411@st.uel.edu.vn",
+        "sdt": "0123456789",
+        "gioitinh": "Nữ",
+        "ngaysinh": "18/4/2003",
+        "hinhdaidien": "./assets/img/voucher.png",
+        "matkhau": "aaaaaaaa1@A",
+        "diachi": [{
+            "STT": "diachi1",
+            "tendiachi": "KTX ĐHQG.HCM KHU B, HCM"
+        }, {
+            "STT": "diachi2",
+            "tendiachi": "184 Phan Văn Trị, HCM"
+        }]
+            
+            
+
+    },
+    {
+        "id": 2,
+        "tendangnhap": "dangtruc",
+        "hovaten": "Đặng Thị Thanh Trúc",
+        "email": "trucdtt21411@st.uel.edu.vn",
+        "sdt": "0123456798",
+        "gioitinh": "Nữ",
+        "ngaysinh": "25/09/2001",
+        "hinhdaidien": "./assets/img/voucher.png",
+        "matkhau": "aaassaaa1@A",
+        "diachi": "KTX ĐHQG.HCM KHU B, HCM"
+
+    },
+    {
+        "id": 3,
+        "tendangnhap": "thienphuoc",
+        "hovaten": "Nguyễn Thị Thiên Phước",
+        "email": "phuocntt21411@st.uel.edu.vn",
+        "sdt": "0123456333",
+        "gioitinh": "Nữ",
+        "ngaysinh": "18/11/2002",
+        "hinhdaidien": "./assets/img/voucher.png",
+        "matkhau": "aaabbba1@A",
+        "diachi": "184 Phan Văn Trị, HCM"
+
+    }
+]

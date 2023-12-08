@@ -1,0 +1,119 @@
+div{
+    font-family: Inter-Regular;
+}
+
+body {
+        display: flex;
+    /* Sử dụng flexbox cho toàn bộ body */
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    max-width: 80vw;
+    margin: auto;
+    max-height: 50vh;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    /* Cho phép container chia đều không gian với sidebar */
+    /* padding-top: 50px; */
+}
+
+h2 {
+    color: var(--color-blue);
+    font-size: 28px;
+}
+
+.sidebar {
+    min-width: 18vw;
+    max-width: 23vw;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid var(--color-blue);
+    border-radius: 15px;
+    text-align: center;
+    min-height: 100%;
+    /* Hiển thị các mục theo chiều dọc */
+    margin-top: 40px;
+    
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.sidebar li:hover {
+    color: var(--color-blue);
+}
+
+/* .sidebar li.active {
+    font-weight: bold;
+} */
+
+.sidebar li.selected {
+    font-weight: bold;
+  }
+
+.content {
+    flex: 1;
+    padding: 20px;
+    /* margin-left: 60px; */
+}
+
+ol li{
+    font-size: 16px;
+}
+
+ol li > h4{
+    font-size: 20px;
+}
+
+#thanhbar i{
+    font-size: 40px;
+    display: none;
+}
+
+/* PC - Desktop */
+@media screen and (max-width: 1200px) {
+    
+}
+/* Tablet */
+@media screen and (max-width: 768px) {
+    .sidebar{
+        min-width: 28vw;
+    }
+}
+/* Mobile */
+@media screen and (max-width: 480px) {
+    .sidebar{
+        flex-direction: column;
+        min-width: 60vw;
+    }
+    .container{
+        flex-direction: row;
+    }
+
+    #thanhbar i{
+        display: block;
+    }
+
+    #thanhbar i:hover{
+        color: var(--color-blue);
+    }
+
+
+}
+

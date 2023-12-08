@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./forgot-pass.component.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="box-container">
+                <p class="h2 font-bold">Đặt lại mật khẩu</p>
+                <form [formGroup]="forgotPassForm" (ngSubmit)="redirectToOtpPage()">
+
+                <!-- Nhập email, số điện thoại -->
+                <div class="text-epr">
+                    <input type="email" formControlName="textEp" class="form-control" id="form-input" placeholder="Email/ Số điện thoại" required>
+                  </div>
+                
+                <!-- <div class="btn-sigup">
+                    <input type="submit" value="Tiếp theo" id="submit" class="form-sbm" name="btn-next">
+                </div> -->
+                <!-- forgot-pass.component.html -->
+                <div class="btn-sigup">
+                    <input type="submit" value="Tiếp theo" id="submit" class="form-sbm" name="btn-next">
+                </div>
+  
+                  
+
+            </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

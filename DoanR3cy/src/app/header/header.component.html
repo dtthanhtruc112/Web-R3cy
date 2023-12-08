@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="../../assets/themify-icons/themify-icons.css">
+<link rel="icon"
+    href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJnU_yiQd13YXogJMjseaI7k2g9ige7_O-TQ&usqp=CAU"
+    type="image/x-icon" />
+<div id="main">
+    <div id="header">
+        <div class="logo">
+            <a href=""><img src="../../assets/img/header/Logo.png" alt="Logo"></a>
+        </div>
+        <ul id="nav">
+            <li><a href="#">Trang chủ</a></li>
+            <li><a href="#">Câu chuyện</a></li>
+            <li><a href="#">Sản phẩm</a>
+                <ul class="subnav">
+                    <li><a href="#">Phụ kiện</a></li>
+                    <li><a href="#">Đồ gia dụng</a></li>
+                    <li><a href="#">Đồ trang trí</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">FAQ</a></li>
+        </ul>
+
+        <div class="icon">
+            <a (click)="toggleSearchInput()">
+                <i class="bi bi-search icon_item"></i>
+            </a>
+            <a href=""><i class="bi bi-cart3 icon_item"></i></a>
+            <a href=""><i class="bi bi-person-circle icon_item"></i></a>
+
+            <!-- Ô nhập liệu -->
+
+
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu-btn">
+            <i class="mobile-icon ti-menu"></i>
+        </div>
+
+    </div>
+    <div *ngIf="isSearchVisible" class="search-container">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Tìm kiếm...">
+        <button class="button" (click)="performSearch()">Tìm kiếm</button>
+    </div>
+
+</div>
+
+<script>
+
+    const mobileMenu = document.getElementById("mobile-menu");
+    const navMenu = document.getElementById("nav");
+
+    mobileMenu.addEventListener("click", () => {
+        mobileMenu.classList.toggle("active");
+        navMenu.classList.toggle("active");
+    });
+
+</script>

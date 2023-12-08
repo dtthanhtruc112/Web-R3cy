@@ -1,0 +1,60 @@
+[
+    {
+        "ordernumber": 1001,
+        "products": [
+            {
+                "id": 1,
+                "category1": "gia-dung",
+                "category2": "dia-khay",
+                "name": "Đĩa nhỏ",
+                "price": 100000,
+                "quantity": 2
+            },
+            {
+                "id": 2,
+                "category1": "gia-dung",
+                "category2": "dia-khay",
+                "name": "Khay đựng xà phòng",
+                "price": 150000,
+                "quantity": 1
+            }
+        ],
+        "status": "Đang giao"
+    },
+    {
+        "ordernumber": 1002,
+        "products": [
+            {
+                "id": 3,
+                "category1": "gia-dung",
+                "category2": "dia-khay",
+                "name": "Lót ly",
+                "price": 90000,
+                "quantity": 3
+            }
+        ],
+        "status": "Đã giao"
+    },
+    {
+        "ordernumber": 1003,
+        "products": [
+            {
+                "id": 4,
+                "category1": "gia-dung",
+                "category2": "khac",
+                "name": "Giá đỡ laptop",
+                "price": 200000,
+                "quantity": 1
+            },
+            {
+                "id": 5,
+                "category1": "gia-dung",
+                "category2": "khac",
+                "name": "Giá treo đồ",
+                "price": 150000,
+                "quantity": 3
+            }
+        ],
+        "status": "Đang giao"
+    }
+]

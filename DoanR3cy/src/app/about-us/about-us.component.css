@@ -1,0 +1,247 @@
+
+div{
+    font-family: Inter-Regular;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: var(--color-darkBlue)
+}
+
+.text-center{
+    text-align: center;
+}
+
+.mt-60{
+    margin-top: 60px;
+}
+
+.mb-60{
+    margin-bottom: 60px;
+}
+
+.mb-30{
+    margin-bottom: 30px;
+}
+
+.font-bold{
+    font-weight: bold;
+}
+
+/* Container chính */
+.container {
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header-img{
+    padding-top: 50%;
+    background: url(../../assets/about-us/banner.png) top center/ cover no-repeat;
+}
+
+.slogan{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slogan > .h4{
+    margin-top: 30px;
+}
+
+
+.slogan {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box-slogan{
+    background-color: var(--color-lightblue);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.slogan-img{
+    padding-top: 30%;
+    background: url('../../assets/about-us/about-pdt.png') top center/ cover no-repeat;
+    flex: 1;
+    width: 100%;
+}
+
+.slogan-txt{
+    flex: 1;
+    padding-left: 80px;
+    width: 100%;
+}
+
+.process-container{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.process-list{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.process-item{
+    flex-basis: 25%;
+}
+
+.box-collect{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.collect-img{
+    padding-top: 30%;
+    background: url('../../assets/about-us/thugom.png') top center/ cover no-repeat;
+    flex: 1;
+    width: 100%;
+}
+
+.collect-txt{
+    flex: 1;
+    padding-left: 80px;
+}
+
+.custom-link{
+    text-decoration: underline;
+}
+
+.custom-link:hover {
+    font-weight: bold;
+}
+
+.box-clean{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+/* .box-clean {
+    flex-direction: column-reverse;
+} */
+
+.clean-img{
+    padding-top: 30%;
+    background: url('../../assets/about-us/vesinh.png') top center/ cover no-repeat;
+    flex: 1;
+    width: 100%;
+}
+
+.clean-txt{
+    flex: 1;
+    padding-right: 80px;
+    padding-left: 20px;
+}
+
+.box-ship{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background-color: var(--color-lightblue);
+    height: 380px
+}
+
+.ship-txtl, .ship-txtr{
+    text-align: left;
+    flex: 1;
+    margin-right: 40px;
+    margin-left: 40px;
+}
+
+.intro{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-sp button{
+    background-color: var(--color-blue);
+    width: 130px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-sp a{
+    text-transform: uppercase;
+    color: var(--color-white);
+}
+
+.btn-sp button:hover{
+    font-weight: bold;
+}
+
+/* ============Responsive============ */
+/* Tablet */
+@media screen and (max-width:768px){
+    .box-slogan, .box-collect, .box-ship {
+        display: flex;
+        flex-direction: column;
+        height: 100%
+    }
+
+    .box-clean{
+        display: flex;
+        flex-direction: column-reverse;
+        height: 100%
+    }
+
+    .slogan-img,
+    .collect-img,
+    .clean-img
+    {
+        padding-top: 100%;
+        margin-bottom: 30px;
+    }
+
+    .slogan-txt,
+    .collect-txt,
+    .clean-txt
+    {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 30px;
+        padding-right: 0px;
+    }
+
+    .process-container{
+        margin-bottom: 60px;
+    }
+
+    .process-list{
+        display: none
+    }
+
+    .clean-txt > .h4{
+        margin-bottom: 0px;
+    }
+    
+    .ship-txtr{
+        display: none
+    }
+
+    .ship-txtl{
+        margin: 0px;
+        padding: 30px 15px 30px 15px;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width:480px){
+    .slogan{
+        max-width: 100%;
+    }
+    
+}
+

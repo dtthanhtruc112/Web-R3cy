@@ -1,0 +1,344 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+<!-- src/app/faq/faq.component.html -->
+<div class="tieude">
+    <h1>FAQs</h1>
+    <h2>CÂU HỎI THƯỜNG GẶP</h2>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <h2>DANH MỤC TRANG</h2>
+            <hr>
+            <li (click)="showContent('cham-soc')"
+                [ngClass]="{ 'selected': selectedCategory === 'cham-soc' }">CHĂM SÓC</li>
+            <li (click)="showContent('dat-hang')"
+                [ngClass]="{ 'selected': selectedCategory === 'dat-hang' }">ĐẶT HÀNG & THANH TOÁN</li>
+            <li (click)="showContent('giao-hang')"
+                [ngClass]="{ 'selected': selectedCategory === 'giao-hang' }">GIAO HÀNG</li>
+            <li (click)="showContent('san-pham')"
+                [ngClass]="{ 'selected': selectedCategory === 'san-pham' }">SẢN PHẨM</li>
+        </ul>
+    </div>
+
+    <div id="content">
+        <div *ngIf="selectedCategory === 'cham-soc'">
+            <div class="qa-section">
+                <div class="question" (click)="toggleAnswer('question1')" >
+                    <div class="question-header">
+                        <h3 class="h4">Phải làm gì khi sản phẩm bị hư hỏng quá thời hạn bảo hành?</h3>
+                        <a #question1Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question1')">R3cy nhận sửa chữa có tính phí đối với các sản phẩm bị hư hỏng quá thời hạn
+                        bảo hành.
+                        Chi phí sửa chữa sẽ tùy thuộc vào tình trạng lỗi của sản phẩm. Ngoài ra, bất cứ lúc nào
+                        trong quá
+                        trình sử dụng, nếu bạn có vấn đề với sản phẩm của R3cy, xin liên hệ: <br>
+                        Điện thoại: 0123-456-789 <br>
+                        Email: info..r3cy.com
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question2')">
+                    <div class="question-header">
+                        <h3 class="h4">Làm thế nào để gửi sản phẩm cần bảo hành cho R3cy?
+                        </h3>
+                        <a #question2Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question2')">Quy trình nhận và trả sản phẩm bảo hành được thực hiện như sau: <br>
+                        Bước 1: Khách hàng gửi sản phẩm về lại cho R3cy <br>
+                        Khách mua qua website: liên hệ số điện thoại 0123-456-789 <br>
+                        Khách mua tại đại lý bán hàng: liên hệ gửi trả lại cho đại lý <br>
+                        Bước 2: R3cy tiếp nhận sản phẩm và thực hiện bảo hành <br>
+                        Bước 3: Sau khi bảo hành xong, R3cy/ đại lý bán hàng liên hệ với khách để hẹn thời gian và
+                        địa điểm
+                        giao trả sản phẩm. <br> Thời gian bảo hành kéo dài từ 7 – 14 ngày làm việc tùy thuộc vào
+                        tình trạng
+                        sản phẩm. <br>
+                        Lưu ý: Khách hàng vui lòng chi trả chi phí vận chuyển sản phẩm (nếu có phát sinh) trong
+                        trường hợp
+                        cần giao nhận sản phẩm khi bảo hành.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question3')">
+                    <div class="question-header">
+                        <h3 class="h4">Sản phẩm sau mua có được đổi trả không?
+                        </h3>
+                        <a #question3Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question3')">Đối với các sản phẩm mới chưa qua sử dụng, trong vòng 10 ngày từ khi nhận được
+                        hàng,
+                        R3cy áp dụng chính sách đổi sản phẩm 1 đổi 1, hoặc trả sản phẩm để nhận hoàn tiền. Trường
+                        hợp sản
+                        phẩm không còn hàng để thay thế, R3cy sẽ thay bằng một sản phẩm khác có giá trị và chất <br>
+                        Lưu ý: Khách hàng vui lòng chi trả chi phí vận chuyển sản phẩm (nếu có phát sinh) trong
+                        trường hợp
+                        cần giao nhận sản phẩm khi đổi trả.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question4')">
+                    <div class="question-header">
+                        <h3 class="h4">Sản phẩm của R3cy được bảo hành như thế nào?
+                        </h3>
+                        <a #question4Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question4')">Tất cả sản phẩm của R3cy đều được bảo hành trong vòng 1 năm kể từ ngày mua.
+                        Trong thời
+                        gian bảo hành, nếu sản phẩm bị lỗi do nhà sản xuất, bạn có thể mang sản phẩm đến cửa hàng
+                        của chúng
+                        tôi để được đổi trả hoặc sửa chữa miễn phí. <br>
+                        Lưu ý: Khách hàng vui lòng chi trả chi phí vận chuyển sản phẩm (nếu có phát sinh) trong
+                        trường hợp
+                        cần giao nhận sản phẩm khi bảo hành.
+
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedCategory === 'dat-hang'">
+            <div class="qa-section">
+                <div class="question" (click)="toggleAnswer('question5')">
+                    <div class="question-header">
+                        <h3 class="h4">Phải làm gì nếu tôi muốn thay đổi đơn hàng?</h3>
+                        <a #question5Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question5')">Trong trường hợp bạn cần thay đổi đơn hàng sau khi đặt, vui lòng liên hệ
+                        trực tiếp
+                        với R3cy: <br>
+                        Điện thoại: 0123-456-789 <br>
+                        Email: info..r3cy.com
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question6')">
+                    <div class="question-header">
+                        <h3 class="h4">Cách thức mua sản phẩm ở R3cy?
+                        </h3>
+                        <a #question6Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <div class="answer" [hidden]="!isAnswerVisible('question6')">
+                        <p>Để đặt hàng online trên website của R3cy, bạn vui lòng thực hiện theo các bước sau:
+                        </p>
+                        <ul>
+                            <li>Truy cập website của R3cy và chọn sản phẩm muốn mua.</li>
+                            <li>Điền thông tin cá nhân và địa chỉ giao hàng.</li>
+                            <li>Chọn phương thức thanh toán.</li>
+                            <li>Xác nhận đơn hàng.</li>
+                        </ul>
+                        <p>Sau khi hoàn tất các bước trên, đơn hàng của bạn sẽ được R3cy tiếp nhận và xử lý.
+                            Chúng tôi
+                            sẽ liên hệ với bạn để xác nhận đơn hàng và giao hàng cho bạn trong thời gian sớm
+                            nhất.</p>
+                    </div>
+                </div>
+                <div class="question" (click)="toggleAnswer('question7')">
+                    <div class="question-header">
+                        <h3 class="h4">Làm thế nào nếu sản phẩm tôi muốn đặt đã hết hàng?
+                        </h3>
+                        <a #question7Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <div class="answer" [hidden]="!isAnswerVisible('question7')">
+                        <p>Nếu sản phẩm bạn muốn đặt đã hết hàng, bạn có thể thực hiện theo các bước sau:
+                        </p>
+                        <ul>
+                            <li>Liên hệ với bộ phận chăm sóc khách hàng của R3cy qua hotline, email hoặc chat
+                                trực tiếp
+                                trên website. <br>
+                                Điện thoại: 0123-456-789 <br>
+                                Email: info..r3cy.com</li>
+                            <li>Thông báo cho bộ phận chăm sóc khách hàng về sản phẩm bạn muốn đặt đã hết hàng.
+                            </li>
+                            <li>Bộ phận chăm sóc khách hàng sẽ kiểm tra tình trạng hàng hóa và thông báo cho bạn
+                                biết
+                                khi nào sản phẩm sẽ có hàng trở lại.
+                            </li>
+                        </ul>
+                        <p>Trong thời gian chờ đợi, bạn có thể lựa chọn các sản phẩm khác của R3cy để đặt mua.
+                        </p>
+                    </div>
+                </div>
+                <div class="question" (click)="toggleAnswer('question8')">
+                    <div class="question-header">
+                        <h3 class="h4">Thông tin thanh toán cá nhân của tôi có an toàn không?</h3>
+                        <a #question8Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question8')">Các hình thức thanh toán của R3cy (bao gồm chuyển khoản và tiền mặt) không
+                        yêu cầu
+                        bạn cung cấp các thông tin thanh toán cá nhân có tính bảo mật.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question9')">
+                    <div class="question-header">
+                        <h3 class="h4">Cách thức thanh toán khi mua sản phẩm từ R3cy?
+                        </h3>
+                        <a #question9Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <div class="answer" [hidden]="!isAnswerVisible('question9')">
+                        <p>R3cy hiện đang hỗ trợ các hình thức thanh toán sau:
+                        </p>
+                        <ul>
+                            <li>Thanh toán bằng tiền mặt khi nhận hàng
+                            </li>
+                            <li>Thanh toán qua chuyển khoản ngân hàng.</li>
+                            <li>Thanh toán qua ví điện tử
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedCategory === 'giao-hang'">
+            <div class="qa-section">
+                <div class="question" (click)="toggleAnswer('question10')">
+                    <div class="question-header">
+                        <h3 class="h4">Làm thế nào để tôi theo dõi vận chuyển của đơn hàng?
+                        </h3>
+                        <a #question10Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question10')">Khi đơn hàng của bạn được gửi đi, R3cy sẽ gửi cho bạn một email xác
+                        nhận vận
+                        chuyển cùng với mã theo dõi. Bạn có thể sử dụng mã này để theo dõi trạng thái vận
+                        chuyển của đơn
+                        hàng trên trang web hoặc trang web của dịch vụ vận chuyển.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question11')">
+                    <div class="question-header">
+                        <h3 class="h4">Tôi có thể thay đổi địa chỉ giao hàng sau khi đã đặt đơn hàng không?</h3>
+                        <a #question11Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question11')">Để thay đổi địa chỉ giao hàng, vui lòng liên hệ với chúng tôi càng sớm
+                        càng tốt.
+                        <br>
+                        Điện thoại: 0123-456-789 <br>
+                        Email: info..r3cy.com <br>
+                        Nếu đơn hàng đã được gửi đi, chúng tôi sẽ không thể thay đổi địa chỉ giao hàng.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question12')">
+                    <div class="question-header">
+                        <h3 class="h4">R3cy có giao hàng đến các tỉnh thành khác ngoài TP.HCM không?
+                        </h3>
+                        <a #question12Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question12')">R3cy có giao hàng đến các tỉnh thành khác ngoài TP.HCM, bao gồm các
+                        tỉnh miền Nam,
+                        miền Trung, miền Bắc.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question113')">
+                    <div class="question-header">
+                        <h3 class="h4">Tôi sẽ nhận được sản phẩm trong thời gian bao lâu?
+                        </h3>
+                        <a #question113Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question113')">Khu vực TP.HCM: thời gian giao nhận hàng từ 1 – 3 ngày làm việc <br>
+                        Khu vực các tỉnh thành miền Nam: thời gian giao nhận hàng từ 2 – 4 ngày làm việc
+                        <br>
+                        Khu vực các tỉnh thành miền Trung, miền Bắc: thời gian giao nhận hàng từ 3 – 5 ngày
+                        làm việc.
+                        <br>
+                        Ngoài ra, bạn cũng có thể đến nhận sản phẩm trực tiếp tại xưởng may của R3cy …., sau
+                        khi nhận
+                        được cuộc gọi xác nhận đơn hàng.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question14')">
+                    <div class="question-header">
+                        <h3 class="h4">Làm thế nào để tôi biết thời gian dự kiến nhận hàng sau khi đặt đơn hàng?
+                        </h3>
+                        <a #question14Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question14')">Thời gian dự kiến nhận hàng sẽ được hiển thị trong quá trình đặt hàng.
+                        Nếu có bất
+                        kỳ thay đổi nào, R3cy sẽ thông báo cho bạn qua email hoặc điện thoại.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedCategory === 'san-pham'">
+            <div class="qa-section">
+                <div class="question" (click)="toggleAnswer('question15')">
+                    <div class="question-header">
+                        <h3 class="h4">Làm thế nào để tôi biết nguồn gốc của sản phẩm tái chế?
+                        </h3>
+                        <a #question15Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question15')">R3cy cung cấp thông tin chi tiết về nguồn gốc của từng sản phẩm tái chế
+                        trên trang
+                        web. Bạn có thể xem thông tin này trong mô tả sản phẩm hoặc liên hệ trực tiếp với R3cy
+                        để biết
+                        thêm chi tiết.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question16')">
+                    <div class="question-header">
+                        <h3 class="h4">Làm thế nào để vệ sinh và bảo quản sản phẩm?</h3>
+                        <a #question16Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <div class="answer" [hidden]="!isAnswerVisible('question16')">
+                        <p>Cách thức vệ sinh & bảo quản sản phẩm tái chế từ R3cy:
+                        </p>
+                        <ul>
+                            <li>Làm sạch: vệ sinh bằng khăn ướt thấm với nước xà phòng & lau lại bằng vải khô
+                            </li>
+                            <li>Giữ dáng túi: hạn chế gập, bẻ túi dẫn đến mất dáng, hư hỏng lớp bạt
+                            </li>
+                            <li>Tránh tiếp xúc với lửa: Lửa không tốt cho túi, không tốt cho laptop. Xin đừng để
+                                túi gần
+                                lửa.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question" (click)="toggleAnswer('question17')">
+                    <div class="question-header">
+                        <h3 class="h4">Sản phẩm tái chế có chất lượng như sản phẩm mới không?
+                        </h3>
+                        <a #question17Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question17')">Sản phẩm tái chế được kiểm soát chất lượng và đảm bảo đạt chuẩn cao. Tuy
+                        nhiên, do
+                        nguyên liệu đã được sử dụng trước đó, có thể có những dấu vết nhỏ hoặc khác biệt nhỏ về
+                        màu sắc
+                        so với sản phẩm mới.
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question18')">
+                    <div class="question-header">
+                        <h3 class="h4">Có phải mỗi thiết kế của R3cy chỉ có 1 mẫu duy nhất?
+                        </h3>
+                        <a #question18Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question18')">Số lượng được thiết kế & sản xuất của từng mẫu sản phẩm ở R3cy sẽ thay đổi
+                        tùy
+                        thuộc vào màu sắc, kích thước cho phép của những tấm bạt vụn, bạt cũ thu về. <br>
+                        Bạn vẫn có thể đặt mua số lượng nhiều hơn 1 (những) sản phẩm mình yêu thích. Trong
+                        trường hợp
+                        chưa thể cung cấp mẫu sản phẩm đó với số lượng bạn yêu cầu, R3cy sẽ liên hệ để trao đổi
+                        chi tiết
+                        với bạn.
+
+                    </p>
+                </div>
+                <div class="question" (click)="toggleAnswer('question19')">
+                    <div class="question-header">
+                        <h3 class="h4">Sản phẩm tái chế là gì và tại sao nó quan trọng?
+                        </h3>
+                        <a #question19Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                    </div>
+                    <p class="answer" [hidden]="!isAnswerVisible('question19')">Sản phẩm tái chế là sản phẩm được chế tạo từ nguyên liệu tái chế, giúp
+                        giảm lượng
+                        rác thải và bảo vệ môi trường. Điều này giúp giữ lại giá trị của nguyên liệu và giảm
+                        tiêu thụ
+                        tài nguyên tự nhiên.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ... Repeat the structure for other categories ... -->
+    </div>
+</div>
