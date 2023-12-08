@@ -13,6 +13,7 @@ import { TrangtaikhoanComponent } from './trangtaikhoan/trangtaikhoan.component'
 import { ProductCartComponent } from './product-cart/product-cart.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { TimkiemComponent } from './timkiem/timkiem.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'trangtaikhoan', component: TrangtaikhoanComponent},
   { path: 'product-cart', component: ProductCartComponent},
   { path: 'aboutus', component: AboutUsComponent},
+  { path: 'timkiem', component: TimkiemComponent},
   // { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/sign-up', pathMatch: 'full' }, // Trang mặc định
   {path: "**", component: PageNotFoundComponent}
