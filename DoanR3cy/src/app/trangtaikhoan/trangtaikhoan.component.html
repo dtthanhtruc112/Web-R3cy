@@ -5,47 +5,47 @@
                 <img src="" alt="">
             </div>
             <div class="taikhoan_item">
-                <p>{{tendangnhap}}</p>
+                <p class="p">{{tendangnhap}}</p>
             </div>
             <div class="bar_item">
-                <h4>Thông tin tài khoản</h4>
-                <p (click)="showContent('hoso_content')">Hồ sơ</p>
-                <p (click)="showContent('diachi_content')">Địa chỉ</p>
-                <p (click)="showContent('voucher_content')">Kho voucher</p>
-                <h4 (click)="showContent('donhang_content')">Quản lý đơn hàng</h4>
-                <h4>Đăng xuất</h4>
+                <h4 class="h4">Thông tin tài khoản</h4>
+                <p class="p" (click)="showContent('hoso_content')">Hồ sơ</p>
+                <p class="p" (click)="showContent('diachi_content')">Địa chỉ</p>
+                <p class="p" (click)="showContent('voucher_content')">Kho voucher</p>
+                <h4 class="h4" (click)="showContent('donhang_content')">Quản lý đơn hàng</h4>
+                <h4 class="h4">Đăng xuất</h4>
             </div>
         </div>
 
         <div id="taikhoan_content">
             <div *ngIf="selectedbar === 'hoso_content'">
                 <div class="hoso_container">
-                    <h2>THÔNG TIN TÀI KHOẢN</h2>
-                    <p>Quản lý thông tin hồ sơ để bảo mật tài khoản </p>
+                    <h2 class="h2">THÔNG TIN TÀI KHOẢN</h2>
+                    <p class="p">Quản lý thông tin hồ sơ để bảo mật tài khoản </p>
                     <hr>
                     <div >
                         <div class="hoso_item">
                             <div class="hoso_item_content">
                                 <div class="hoso_item_row">
-                                    <label class="hoso_item_label" for="tendn">Tên đăng nhập</label>
+                                    <label class="hoso_item_label p" for="tendn">Tên đăng nhập</label>
                                     <input type="text" name="" id="" value="{{tendangnhap}}" readonly>
                                 </div>
                                 <div class="hoso_item_row">
-                                    <label class="hoso_item_label" for="ten">Họ và tên</label>
+                                    <label class="hoso_item_label p" for="ten">Họ và tên</label>
                                     <input type="text" name="" id="" value="{{hovaten}}" readonly>
                                 </div>
                                 <div class="hoso_item_row">
-                                    <label class="hoso_item_label" for="email">Email</label>
+                                    <label class="hoso_item_label p" for="email">Email</label>
                                     <input type="text" name="" id="email" value="{{email}}" readonly>
-                                    <span id="hoso_change" (click)="chinhsua('email')">Thay đổi</span>
+                                    <span class="p" id="hoso_change" (click)="chinhsua('email')">Thay đổi</span>
                                 </div>
                                 <div class="hoso_item_row">
-                                    <label class="hoso_item_label" for="sdt">Số điện thoại</label>
+                                    <label class="hoso_item_label p" for="sdt">Số điện thoại</label>
                                     <input type="text" value="{{sdt}}" id="sdt" readonly>
-                                    <span id="hoso_change" (click)="chinhsua('sdt')">Thay đổi</span>
+                                    <span class="p" id="hoso_change" (click)="chinhsua('sdt')">Thay đổi</span>
                                 </div>
                                 <div class="hoso_item_row" *ngIf="selectedGender">
-                                    <label class="hoso_item_label" for="sdt">Giới tính:</label>
+                                    <label class="hoso_item_label p" for="sdt">Giới tính:</label>
                                     <label>
                                         <input type="radio" [value]="'Nam'" [(ngModel)]="selectedGender" name="gioitinh">Nam
                                     </label>
@@ -58,7 +58,7 @@
                                     </label>
                                 </div>
                                 <div class="hoso_item_row">
-                                    <label class="hoso_item_label" for="ngaysinh">Ngày Sinh</label>
+                                    <label class="hoso_item_label p" for="ngaysinh">Ngày Sinh</label>
                                     <label>
                                         Ngày: <select [(ngModel)]="selectedDay">
                                             <option *ngFor="let day of days" [value]="day">{{ day }}</option>
@@ -74,14 +74,14 @@
                             </div>
                             <div class="hoso_img">
                                 <img class="circle_img" #selectedImage [src]="imageSrc" alt=""> <br>
-                                <button type="button" class="button" (click)="selectImage()">Chọn ảnh</button>
+                                <button type="button" class="button p" (click)="selectImage()">Chọn ảnh</button>
                                 <input type="file" #myfile name="myfile" accept="image/*" (change)="displayImage($event)">
                             </div>
                         </div>      
                         
                         <div class="hoso_item_row">
                             <label for="" class="hoso_item_label"></label>
-                            <button type="button" class="button" (click)="saveData()">Lưu</button>
+                            <button type="button" class="button p" (click)="saveData()">Lưu</button>
                         </div>                  
                     </div>
 
@@ -92,18 +92,18 @@
 
             <div *ngIf="selectedbar === 'diachi_content'">
                 <div class="hoso_container">
-                    <h2>SỔ ĐỊA CHỈ</h2>
-                    <p>Quản lý các địa chỉ giao hàng, cài đặt địa chỉ mặc định </p>
+                    <h2 class="h2">SỔ ĐỊA CHỈ</h2>
+                    <p class="p">Quản lý các địa chỉ giao hàng, cài đặt địa chỉ mặc định </p>
                     <hr>
-                    <button type="button" class="button" (click)="openPopup()">+ THÊM ĐỊA CHỈ MỚI</button>
+                    <button type="button" class="button p" (click)="openPopup()">+ THÊM ĐỊA CHỈ MỚI</button>
                     <div class="diachi_container" *ngFor="let address of userAddresses">
                         <div class="diachi_item">
                             <input class="diachi_item_name" type="text" value="{{ address.hovaten }}" readonly>
                             <input type="text" name="" id="" value="{{ address.sdt }}" readonly> <br>
                             <input type="text" value="{{ address.diachi }}" id="diachi" readonly> <br>
                             <button type="button" class="button" (click)="saveData()">Địa chỉ mặc định</button>
-                            <span id="hoso_change" #mySpan (click)="deleteDiv(mySpan)">Xóa</span>
-                            <span id="hoso_change" (click)="chinhsua('diachi')">Chỉnh sửa</span>
+                            <span class="p" id="hoso_change" #mySpan (click)="deleteDiv(mySpan)">Xóa</span>
+                            <span class="p" id="hoso_change" (click)="chinhsua('diachi')">Chỉnh sửa</span>
                         </div>
                     </div>
                 </div>
@@ -112,29 +112,29 @@
 
             <div *ngIf="selectedbar === 'voucher_content'">
                 <div class="hoso_container">
-                    <h2>KHO VOUCHER</h2>
-                    <p>Quản lý các voucher, mã ưu đãi của bạn tại đây</p>
+                    <h2 class="h2">KHO VOUCHER</h2>
+                    <p class="p">Quản lý các voucher, mã ưu đãi của bạn tại đây</p>
                     <hr>
                     <div class="voucher_nhapma">
-                        <span>Nhập mã Voucher:</span>
+                        <span class="p">Nhập mã Voucher:</span>
                         <input type="text" id="voucher" name="voucher">
-                        <button type="button" class="button" (click)="saveData()">Lưu</button>
+                        <button type="button" class="button p" (click)="saveData()">Lưu</button>
 
                     </div>
                     <div class="voucher_container">
                         <div class="voucher_item">
                             <img src="../../assets/img/voucher.png" alt="">
-                            <span id="hoso_change">Dùng ngay</span>
-                            <p>Giảm 8% <br>
+                            <span class="minitext" id="hoso_change">Dùng ngay</span>
+                            <p class="minitext" >Giảm 8% <br>
                                 Đơn tối thiểu 500k Giảm tối đa 30k</p>
-                            <p>Sắp hết hạn: Còn 2 ngày <span>Điều kiện</span></p>
+                            <p class="minitext" >Sắp hết hạn: Còn 2 ngày <span class="minitext" >Điều kiện</span></p>
                         </div>
                         <div class="voucher_item">
                             <img src="../../assets/img/voucher.png" alt="">
-                            <span id="hoso_change">Dùng ngay</span>
-                            <p>Giảm 8% <br>
+                            <span class="minitext"  id="hoso_change">Dùng ngay</span>
+                            <p class="minitext" >Giảm 8% <br>
                                 Đơn tối thiểu 500k Giảm tối đa 30k</p>
-                            <p>Sắp hết hạn: Còn 2 ngày <span>Điều kiện</span></p>
+                            <p class="minitext" >Sắp hết hạn: Còn 2 ngày <span class="minitext" >Điều kiện</span></p>
                         </div>
                     </div>
                 </div>
@@ -142,42 +142,42 @@
 
             <div *ngIf="selectedbar === 'donhang_content'">
                 <div class="hoso_container">
-                    <h2>QUẢN LÝ ĐƠN HÀNG</h2>
+                    <h2 class="h2">QUẢN LÝ ĐƠN HÀNG</h2>
                     <div class="donhang_container">
                         <!-- (click)="showContent('cham-soc')"
                 [ngClass]="{ 'selected': selectedCategory === 'cham-soc' }" -->
-                        <p (click)="changeStatusFilter('Tất cả đơn hàng')"
+                        <p class="p" (click)="changeStatusFilter('Tất cả đơn hàng')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Tất cả đơn hàng' }">Tất cả đơn hàng</p>
-                        <p (click)="changeStatusFilter('Chờ xử lí')"
+                        <p class="p" (click)="changeStatusFilter('Chờ xử lí')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Chờ xử lí' }">Chờ xử lí</p>
-                        <p (click)="changeStatusFilter('Chờ lấy hàng')"
+                        <p class="p" (click)="changeStatusFilter('Chờ lấy hàng')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Chờ lấy hàng' }">Chờ lấy hàng</p>
-                        <p (click)="changeStatusFilter('Đang giao')"
+                        <p class="p" (click)="changeStatusFilter('Đang giao')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Đang giao' }">Đang giao</p>
-                        <p (click)="changeStatusFilter('Đã giao')"
+                        <p class="p" (click)="changeStatusFilter('Đã giao')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Đã giao' }">Đã giao</p>
-                        <p (click)="changeStatusFilter('Đã hủy')"
+                        <p class="p" (click)="changeStatusFilter('Đã hủy')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Đã hủy' }">Đã hủy</p>
-                        <p (click)="changeStatusFilter('Trả hàng/ Hoàn tiền')"
+                        <p class="p" (click)="changeStatusFilter('Trả hàng/ Hoàn tiền')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Trả hàng/ Hoàn tiền' }">Trả hàng/ Hoàn tiền</p>
                     </div>
                     <div class="donhang_item">
                         <div class="donhang_itemdetail" *ngFor="let order of Orders">
                             <div class="donhang_itemdetal_row">
-                                <h5>Đơn hàng {{order.ordernumber}}</h5>
-                                <p id="status">{{order.status }}</p>
+                                <h5 class="p">Đơn hàng {{order.ordernumber}}</h5>
+                                <p class="p" id="status">{{order.status }}</p>
                             </div>
                             <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
                                 <img src="" alt="">
-                                <p class="don_item_label">{{ product.name }} <br>
+                                <p class="don_item_label p">{{ product.name }} <br>
                                     x{{product.quantity}}</p>
-                                <p id="total">{{product.productValue }}</p>
+                                <p class="p" id="total">{{product.productValue }}</p>
                                 <img src="" alt="">
                             </div>
                             <hr>
                             <div class="donhang_itemdetal_row">
-                                <button class="button" type="button">Mua lại</button>
-                                <p id="totalpayment">Tổng thanh toán: {{totalOrderValue}}</p>
+                                <button class="button p" type="button">Mua lại</button>
+                                <p class="p" id="totalpayment">Tổng thanh toán: {{totalOrderValue}}</p>
                             </div>
 
 
@@ -187,15 +187,15 @@
             </div>
             <div class="overlay" *ngIf="showOverlay"></div>
             <div class="popup" *ngIf="showSuccessPopup">
-                <p>Đã lưu thông tin thành công!</p>
-                <button (click)="closePopup()">Đóng</button>
+                <p class="p">Đã lưu thông tin thành công!</p>
+                <button class="p" (click)="closePopup()">Đóng</button>
             </div>
             <div class="popup" *ngIf="addressPopup">
-                <h2>Thêm Địa Chỉ Mới</h2>
-                <textarea id="newAddress" placeholder="Nhập địa chỉ mới..." [(ngModel)]="newAddress"></textarea>
+                <h2 class="h2">Thêm Địa Chỉ Mới</h2>
+                <textarea class="p" id="newAddress" placeholder="Nhập địa chỉ mới..." [(ngModel)]="newAddress"></textarea>
                 <br>
-                <button (click)="addNewAddress()">Thêm Địa Chỉ</button>
-                <button (click)="closePopup()">Đóng</button>
+                <button class="p" (click)="addNewAddress()">Thêm Địa Chỉ</button>
+                <button class="p" (click)="closePopup()">Đóng</button>
             </div>
 
         </div>

@@ -22,7 +22,6 @@ body {
 
 h2 {
     color: var(--color-blue);
-    font-size: 28px;
 }
 
 .sidebar {
@@ -52,7 +51,6 @@ h2 {
     border-radius: 5px;
     margin-bottom: 5px;
     transition: background-color 0.3s;
-    font-size: 16px;
 }
 
 .sidebar li:hover {
@@ -73,13 +71,12 @@ h2 {
     /* margin-left: 60px; */
 }
 
-ol li{
-    font-size: 16px;
+.content > li{
+    list-style: decimal;
 }
 
-ol li > h4{
-    font-size: 20px;
-}
+
+
 
 #thanhbar i{
     font-size: 40px;

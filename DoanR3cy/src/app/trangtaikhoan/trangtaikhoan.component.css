@@ -23,21 +23,10 @@ div{
 }
 
 h2 {
-    font-size: 28px;
     color: var(--color-blue);
 }
 
-h4 {
-    font-size: 20px;
-}
 
-h5 {
-    font-size: 16px;
-}
-
-p {
-    font-size: 16px;
-}
 
 .bar_container {
     top: 25px;
@@ -195,7 +184,6 @@ input {
 
 .popup button {
     padding: 10px 20px;
-    font-size: 16px;
     background-color: var(--color-blue);
     color: var(--color-white);
     border: none;
@@ -271,12 +259,10 @@ span {
 
 .voucher_item p:nth-child(even) {
     color: var(--color-red);
-    font-size: 13px;
 }
 
 .voucher_item span {
     color: var(--color-blue);
-    font-size: 13px;
 }
 
 .voucher_item #hoso_change{

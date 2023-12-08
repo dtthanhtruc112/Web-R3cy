@@ -34,7 +34,6 @@ div{
 #nav>li>a {
     color: var(--color-blue);
     font-weight: bold;
-    font-size: 24px;
 }
 
 #nav li a {

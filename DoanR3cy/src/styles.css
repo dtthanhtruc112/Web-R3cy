@@ -1,10 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
 @font-face {
     font-family: Inter-Regular;
-    src: url("assets/font/Inter-Regular.ttf") format('truetype');
+    src: url('./assets/font/Inter-Regular.ttf') format('truetype');
     font-weight: normal;
-    font-style:normal;
+    font-style: normal;
     font-display: swap;
 }
+
 /* Thêm font chữ Inter */
 
 /* ------------Màu chữ, màu box ----------*/
@@ -69,7 +71,7 @@
 }
 
 .h4{
-    font-size: 20px ;
+    font-size: 20px;
 }
 
 .p{
@@ -123,10 +125,10 @@
 
 /* ------------ Dropdown menu / ul, li ---------- */
 
-ul, li{
+/* ul, li{
     text-decoration: none;
-    /* list-style: none; */
-}
+    list-style: none;
+} */
 /* Phần xổ xuống có sử dụng ul, li */
 
 /* ------------ Line ---------- */
@@ -146,8 +148,49 @@ ul, li{
 /* -------------Link-------------- */
 a{
     text-decoration: none;
-    color: black;
-    font-weight: normal;
+}
+
+/* ============Responsive============ */
+/* Tablet */
+@media screen and (max-width:768px){
+    .h1{
+        font-size: 46px;
+    }
+    
+    .h2{
+        font-size: 26px;
+    }
+    
+    .h3{
+        font-size: 22px;
+    }
+    
+    .h4{
+        font-size: 18px;
+    }
+    
+
+}
+
+/* Mobile */
+@media screen and (max-width:480px){
+    .h1{
+        font-size: 44px;
+    }
+    
+    .h2{
+        font-size: 24px;
+    }
+    
+    .h3{
+        font-size: 20px;
+    }
+    
+    .h4{
+        font-size: 16px;
+    }
+    
+    
 }
 
 
