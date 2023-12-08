@@ -11,7 +11,7 @@
             </div>
             <ul id="nav">
                 <li><a href="#">Trang chủ</a></li>
-                <li><a href="#">Câu chuyện</a></li>
+                <li><a href="#" routerLink="/aboutus" routerLinkActive="active" >Câu chuyện</a></li>
                 <li><a href="#">Sản phẩm</a>
                     <ul class="subnav">
                         <li><a href="#">Phụ kiện</a></li>
@@ -20,17 +20,15 @@
                     </ul>
                 </li>
                 <li><a href="#">Blog</a></li>
-                <li><a href="#">FAQ</a></li>
+                <li><a href="#" routerLink="/QnA" routerLinkActive="active">FAQ</a></li>
             </ul>
     
             <div class="icon">
                 <a href="">
                     <i class="bi bi-search icon_item"></i>
                 </a>
-                <a href=""><i class="bi bi-cart3 icon_item"></i></a>
-                <a href=""><i class="bi bi-person-circle icon_item"></i></a>
-    
-                <!-- Ô nhập liệu -->
+                <a href="" routerLink="product-cart" routerLinkActive="active"><i class="bi bi-cart3 icon_item"></i></a>
+                <a href="" routerLink="/login" routerLinkActive="active"><i class="bi bi-person-circle icon_item"></i></a>
     
     
             </div>
@@ -47,23 +45,7 @@
     
     </div>
 
-    <div>
-        <app-chinhsach></app-chinhsach>
-    </div>
 </div>
 
 
-
-
-<!-- <script>
-
-    const mobileMenu = document.getElementById("mobile-menu");
-    const navMenu = document.getElementById("nav");
-
-    mobileMenu.addEventListener("click", () => {
-        mobileMenu.classList.toggle("active");
-        navMenu.classList.toggle("active");
-    });
-
-</script> -->
-
+<router-outlet></router-outlet>

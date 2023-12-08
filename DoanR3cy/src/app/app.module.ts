@@ -19,7 +19,8 @@ import { ForgotPassComponent } from './forgot-pass/forgot-pass.component';
 import { OtpCodeComponent } from './forgot-pass/otp-code/otp-code.component';
 import { NewPassComponent } from './forgot-pass/otp-code/new-pass/new-pass.component';
 import { CustomProductComponent } from './custom-product/custom-product.component';
-import { MainPageComponent } from './main-page/main-page.component'
+import { MainPageComponent } from './main-page/main-page.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MainPageComponent } from './main-page/main-page.component'
     NewPassComponent,
     CustomProductComponent,
     MainPageComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

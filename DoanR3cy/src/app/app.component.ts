@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -23,6 +25,18 @@ export class AppComponent implements OnInit  {
         }
       });
     }
+  }
+
+  constructor(private router: Router) {}
+
+  navigateToOtherPage(destination: string): void {
+    // Sử dụng tham số để xác định trang đích cần chuyển hướng
+    this.router.navigate([`/${destination}`]);
+  }
+
+  navigateToForgotPass(): void {
+    // Chuyển hướng đến trang forgot-pass khi người dùng bấm "Quên mật khẩu?"
+    this.router.navigate(['/QnA']);
   }
 
   // isSearchVisible: boolean = false;
