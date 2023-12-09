@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } fr
 import { UsersService } from '../Service/users.service';
 import { OrderService } from '../Service/order.service';
 import {UserOrders, Order, Product  } from '../Interface/Order';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-trangtaikhoan',
@@ -76,7 +78,7 @@ export class TrangtaikhoanComponent implements OnInit {
   }
 
   saveData(): void {
-    console.log('Saving data...');
+    // alert('Đã lưu thông tin');
     // Hiển thị overlay
     this.showOverlay = true;
 
@@ -86,6 +88,7 @@ export class TrangtaikhoanComponent implements OnInit {
     // Ẩn popup sau 3 giây (3000 milliseconds)
     setTimeout(() => {
       this.closePopup();
+      this.cdr.detectChanges(); // Manually trigger change detection
     }, 3000);
   }
 
@@ -132,7 +135,7 @@ export class TrangtaikhoanComponent implements OnInit {
   userAddresses: any[] = [];
 
   constructor(private _userService: UsersService,
-    private _orderService: OrderService
+    private _orderService: OrderService, private cdr: ChangeDetectorRef
   ) { }
 
 
@@ -242,9 +245,12 @@ export class TrangtaikhoanComponent implements OnInit {
   selectedMonth: number = 1;
   selectedYear: number = new Date().getFullYear();
 
+ 
+
   filteredOrders(): Order[] {
-    this.resetOrders(); // Reset orders before filtering
-    return this.Orders.filter(order => this.isEligibleForReview(order));
+    this.resetOrders();
+    const filtered = this.Orders.filter(order => this.isEligibleForReview(order));
+    return [...filtered]; // Return a new array to avoid modifying the original
   }
 
   isEligibleForReview(order: Order): boolean {

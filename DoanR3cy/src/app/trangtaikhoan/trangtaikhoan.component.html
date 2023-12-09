@@ -89,6 +89,8 @@
                 </div>
             </div>
 
+            
+
 
 
             <div *ngIf="selectedbar === 'diachi_content'">
@@ -141,12 +143,12 @@
                 </div>
             </div>
 
+            
+
             <div *ngIf="selectedbar === 'donhang_content'">
                 <div class="hoso_container">
                     <h2 class="h2">QUẢN LÝ ĐƠN HÀNG</h2>
                     <div class="donhang_container">
-                        <!-- (click)="showContent('cham-soc')"
-                [ngClass]="{ 'selected': selectedCategory === 'cham-soc' }" -->
                         <p class="p" (click)="changeStatusFilter('Tất cả đơn hàng')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Tất cả đơn hàng' }">Tất cả đơn hàng</p>
                         <p class="p" (click)="changeStatusFilter('Chờ xử lí')"
@@ -184,6 +186,22 @@
                       
                 </div>
             </div>
+            
+
+            <div class="overlay" *ngIf="showOverlay"></div>
+            <div class="popup" *ngIf="showSuccessPopup">
+                <p class="p">Đã lưu thông tin thành công!</p>
+                <button class="p" (click)="closePopup()">Đóng</button>
+            </div>
+            <div class="popup" *ngIf="addressPopup">
+                <h2 class="h2">Thêm Địa Chỉ Mới</h2>
+                <textarea class="p" id="newAddress" placeholder="Nhập địa chỉ mới..." [(ngModel)]="newAddress"></textarea>
+                <br>
+                <button class="p" (click)="addNewAddress()">Thêm Địa Chỉ</button>
+                <button class="p" (click)="closePopup()">Đóng</button>
+            </div>
+
+
             <div *ngIf="selectedbar === 'danhgia_content'">
                 <div class="hoso_container">
                     <h2 class="h2">ĐÁNH GIÁ ĐƠN HÀNG</h2>
@@ -209,18 +227,6 @@
                           </div>
                         </div>
                 </div>
-            </div>
-            <div class="overlay" *ngIf="showOverlay"></div>
-            <div class="popup" *ngIf="showSuccessPopup">
-                <p class="p">Đã lưu thông tin thành công!</p>
-                <button class="p" (click)="closePopup()">Đóng</button>
-            </div>
-            <div class="popup" *ngIf="addressPopup">
-                <h2 class="h2">Thêm Địa Chỉ Mới</h2>
-                <textarea class="p" id="newAddress" placeholder="Nhập địa chỉ mới..." [(ngModel)]="newAddress"></textarea>
-                <br>
-                <button class="p" (click)="addNewAddress()">Thêm Địa Chỉ</button>
-                <button class="p" (click)="closePopup()">Đóng</button>
             </div>
 
         </div>

@@ -1,6 +1,9 @@
 [
     {
         "userid": 1,
+        "ngaytao": "10/11/2023",
+        "thanhtoan": "Bank: ACB",
+        "kenh": "Website",
         "orders": [
             {
                 "ordernumber": 1001,

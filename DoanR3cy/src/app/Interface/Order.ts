@@ -18,6 +18,9 @@ export interface Product {
   
   export interface UserOrders {
     userid: number;
+    ngaytao: string;
+    thanhtoan: string;
+    kenh: string;
     orders: Order[];
   }
   
