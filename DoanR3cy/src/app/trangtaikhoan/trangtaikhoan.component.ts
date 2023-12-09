@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { UsersService } from '../Service/users.service';
 import { OrderService } from '../Service/order.service';
-import { Product } from '../Interface/Order';
+import {UserOrders, Order, Product  } from '../Interface/Order';
 
 @Component({
   selector: 'app-trangtaikhoan',
@@ -172,44 +172,55 @@ export class TrangtaikhoanComponent implements OnInit {
     });
   }
 
-  Orders: any[] = [];
+  Orders: Order[] = [];
   totalOrderValue: number = 0;
-
+  selectedStatus: string = 'Tất cả đơn hàng';
+  initialOrders: Order[] = [];
+  
   loadOrderInfo(): void {
-    this._orderService.getOrder().subscribe((orders: any[]) => {
-      this.Orders = orders.map(order => ({
-        ...order,
-        products: (order.products as any[]).map((product: any) => ({
-          ...product,
-          productValue: product.quantity * product.price
-        } as Product)) // Chuyển kiểu product thành Product
-      }));
-      this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
-      this.filterOrders();
-      this.totalOrderValue = this.calculateTotalOrderValue();
-
+    this._orderService.getOrderByUserId(1).subscribe((userOrders: Order[] | undefined) => {
+      if (userOrders) {
+        this.Orders = userOrders.map(order => {
+          const mappedOrder: Order = {
+            ...order,
+            products: order.products.map(product => {
+              const productValue = product.quantity * product.price;
+              return {
+                ...product,
+                productValue: productValue
+              };
+            }),
+            totalOrderValue: 0 // Initialize totalOrderValue to 0
+          };
+          mappedOrder.totalOrderValue = this.calculateTotalOrderValue(mappedOrder); // Calculate totalOrderValue
+          console.log(`Order ${order.ordernumber}: Total Order Value=${mappedOrder.totalOrderValue}`);
+          return mappedOrder;
+        });
+  
+        this.initialOrders = [...this.Orders];
+        this.filterOrders();
+  
+        // Log total order value for each order
+        this.Orders.forEach(order => {
+          console.log(`Order Number ${order.ordernumber}: Total Order Value = ${order.totalOrderValue}`);
+        });
+      }
     });
   }
-
-  // Tính tổng đơn hàng
-  calculateTotalOrderValue(): number {
-    return this.Orders.reduce((total: number, order) => {
-      return total + order.products.reduce((orderTotal: number, product: Product) => {
-        return orderTotal + product.productValue;
-      }, 0);
+  
+  calculateTotalOrderValue(order: Order): number {
+    return order.products.reduce((orderTotal: number, product: Product) => {
+      return orderTotal + (product.productValue || 0);
     }, 0);
   }
+  
 
-  // Phân loại đơn
-  selectedStatus: string = 'Tất cả đơn hàng';
-  initialOrders: any[] = []; // Lưu trữ danh sách đơn hàng ban đầu
 
   resetOrders(): void {
-    this.Orders = [...this.initialOrders]; // Khôi phục danh sách về trạng thái ban đầu
+    this.Orders = [...this.initialOrders];
   }
 
   filterOrders(): void {
-    // Lọc danh sách đơn hàng dựa trên trạng thái đã chọn
     if (this.selectedStatus !== 'Tất cả đơn hàng') {
       this.Orders = this.Orders.filter(order => order.status === this.selectedStatus);
     }
@@ -217,8 +228,7 @@ export class TrangtaikhoanComponent implements OnInit {
 
   changeStatusFilter(status: string): void {
     this.selectedStatus = status;
-    this.resetOrders(); // Reset danh sách mỗi khi chuyển trạng thái
-
+    this.resetOrders();
     this.filterOrders();
   }
 
@@ -231,6 +241,15 @@ export class TrangtaikhoanComponent implements OnInit {
   selectedDay: number = 1;
   selectedMonth: number = 1;
   selectedYear: number = new Date().getFullYear();
+
+  filteredOrders(): Order[] {
+    this.resetOrders(); // Reset orders before filtering
+    return this.Orders.filter(order => this.isEligibleForReview(order));
+  }
+
+  isEligibleForReview(order: Order): boolean {
+    return order.status === 'Đã giao' && order.danhgia === '';
+  }
 
 }
 

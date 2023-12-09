@@ -12,6 +12,7 @@ div{
     /* padding: 40px; */
     /* margin-top: 20px; */
     margin: 0;
+    margin-top: 150px;
 }
 .taikhoan_container {
     width: 80vw;
@@ -353,6 +354,21 @@ span {
 }
 /* Tablet */
 @media screen and (max-width: 768px) {
+    .circle_img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .taikhoan_item p{
+        font-size: 13px;
+    }
+
+    .h3{
+        font-size: 20px;
+    }
+    .fullpage{
+        margin-top: 100px;
+    }
 }
 /* Mobile */
 @media screen and (max-width: 480px) {
@@ -388,4 +404,6 @@ span {
     .hoso_item_row button{
         margin-left: 28%;
     }
+
+    
 }

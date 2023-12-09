@@ -13,6 +13,7 @@
                 <p class="p" (click)="showContent('diachi_content')">Địa chỉ</p>
                 <p class="p" (click)="showContent('voucher_content')">Kho voucher</p>
                 <h4 class="h4" (click)="showContent('donhang_content')">Quản lý đơn hàng</h4>
+                <h4 class="h4" (click)="showContent('danhgia_content')">Đánh giá đơn hàng</h4>
                 <h4 class="h4">Đăng xuất</h4>
             </div>
         </div>
@@ -124,7 +125,7 @@
                     <div class="voucher_container">
                         <div class="voucher_item">
                             <img src="../../assets/img/voucher.png" alt="">
-                            <span class="minitext" id="hoso_change">Dùng ngay</span>
+                            <span class="minitext" id="hoso_change" routerLink="/product-cart" routerLinkActive="active">Dùng ngay</span>
                             <p class="minitext" >Giảm 8% <br>
                                 Đơn tối thiểu 500k Giảm tối đa 30k</p>
                             <p class="minitext" >Sắp hết hạn: Còn 2 ngày <span class="minitext" >Điều kiện</span></p>
@@ -163,26 +164,50 @@
                     </div>
                     <div class="donhang_item">
                         <div class="donhang_itemdetail" *ngFor="let order of Orders">
-                            <div class="donhang_itemdetal_row">
-                                <h5 class="p">Đơn hàng {{order.ordernumber}}</h5>
-                                <p class="p" id="status">{{order.status }}</p>
-                            </div>
-                            <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
-                                <img src="" alt="">
-                                <p class="don_item_label p">{{ product.name }} <br>
-                                    x{{product.quantity}}</p>
-                                <p class="p" id="total">{{product.productValue }}</p>
-                                <img src="" alt="">
-                            </div>
-                            <hr>
-                            <div class="donhang_itemdetal_row">
-                                <button class="button p" type="button">Mua lại</button>
-                                <p class="p" id="totalpayment">Tổng thanh toán: {{totalOrderValue}}</p>
-                            </div>
-
-
+                          <div class="donhang_itemdetal_row">
+                            <h5 class="p">Đơn hàng {{order.ordernumber}}</h5>
+                            <p class="p" id="status">{{order.status}}</p>
+                          </div>
+                          <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
+                            <img src="" alt="">
+                            <p class="don_item_label p">{{product.name}} <br>x{{product.quantity}}</p>
+                            <p class="p" id="total">{{product.productValue}}</p>
+                            <img src="" alt="">
+                          </div>
+                          <hr>
+                          <div class="donhang_itemdetal_row">
+                            <button class="button p" type="button">Mua lại</button>
+                            <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
+                          </div>
                         </div>
-                    </div>
+                      </div>
+                      
+                </div>
+            </div>
+            <div *ngIf="selectedbar === 'danhgia_content'">
+                <div class="hoso_container">
+                    <h2 class="h2">ĐÁNH GIÁ ĐƠN HÀNG</h2>
+                    <p class="p">Đánh giá các đơn hàng đã giao thành công tại đây:</p>
+                    <hr>
+                    <div class="donhang_item">
+                        <div class="donhang_itemdetail" *ngFor="let order of filteredOrders()">
+                          <div class="donhang_itemdetal_row">
+                            <h5 class="p">Đơn hàng {{order.ordernumber}}</h5>
+                            <p class="p" id="status">{{order.status }}</p>
+                          </div>
+                          <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
+                            <img src="" alt="">
+                            <p class="don_item_label p">{{ product.name }} <br>
+                              x{{product.quantity}}</p>
+                            <p class="p" id="total">{{product.productValue }}</p>
+                            <img src="" alt="">
+                          </div>
+                          <hr>
+                          <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
+                            <button class="button p" type="button">Đánh giá</button>
+                            <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
+                          </div>
+                        </div>
                 </div>
             </div>
             <div class="overlay" *ngIf="showOverlay"></div>

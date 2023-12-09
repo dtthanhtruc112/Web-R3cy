@@ -1,63 +1,98 @@
 [
     {
-        "ordernumber": 1001,
-        "products": [
+        "userid": 1,
+        "orders": [
             {
-                "id": 1,
-                "category1": "gia-dung",
-                "category2": "dia-khay",
-                "name": "Đĩa nhỏ",
-                "price": 100000,
-                "quantity": 2
+                "ordernumber": 1001,
+                "products": [
+                    {
+                        "id": 1,
+                        "category1": "gia-dung",
+                        "category2": "dia-khay",
+                        "name": "Đĩa nhỏ",
+                        "price": 100000,
+                        "quantity": 2
+                    },
+                    {
+                        "id": 2,
+                        "category1": "gia-dung",
+                        "category2": "dia-khay",
+                        "name": "Khay đựng xà phòng",
+                        "price": 150000,
+                        "quantity": 1
+                    }
+                ],
+                "status": "Đang giao",
+                "danhgia": ""
             },
             {
-                "id": 2,
-                "category1": "gia-dung",
-                "category2": "dia-khay",
-                "name": "Khay đựng xà phòng",
-                "price": 150000,
-                "quantity": 1
-            }
-        ],
-        "status": "Đang giao",
-        "userid": 1
-    },
-    {
-        "ordernumber": 1002,
-        "products": [
-            {
-                "id": 3,
-                "category1": "gia-dung",
-                "category2": "dia-khay",
-                "name": "Lót ly",
-                "price": 90000,
-                "quantity": 3
-            }
-        ],
-        "status": "Đã giao",
-        "userid": 1
-    },
-    {
-        "ordernumber": 1003,
-        "products": [
-            {
-                "id": 4,
-                "category1": "gia-dung",
-                "category2": "khac",
-                "name": "Giá đỡ laptop",
-                "price": 200000,
-                "quantity": 1
+                "ordernumber": 1002,
+                "products": [
+                    {
+                        "id": 3,
+                        "category1": "gia-dung",
+                        "category2": "dia-khay",
+                        "name": "Lót ly",
+                        "price": 90000,
+                        "quantity": 3
+                    }
+                ],
+                "status": "Đã giao",
+                "danhgia": ""
             },
             {
-                "id": 5,
-                "category1": "gia-dung",
-                "category2": "khac",
-                "name": "Giá treo đồ",
-                "price": 150000,
-                "quantity": 3
+                "ordernumber": 1003,
+                "products": [
+                    {
+                        "id": 4,
+                        "category1": "gia-dung",
+                        "category2": "khac",
+                        "name": "Giá đỡ laptop",
+                        "price": 200000,
+                        "quantity": 1
+                    },
+                    {
+                        "id": 5,
+                        "category1": "gia-dung",
+                        "category2": "khac",
+                        "name": "Giá treo đồ",
+                        "price": 150000,
+                        "quantity": 3
+                    }
+                ],
+                "status": "Đang giao",
+                "danhgia": ""
+            },
+            {
+                "ordernumber": 1004,
+                "products": [
+                    {
+                        "id": 3,
+                        "category1": "gia-dung",
+                        "category2": "dia-khay",
+                        "name": "Lót ly",
+                        "price": 90000,
+                        "quantity": 5
+                    }
+                ],
+                "status": "Đã giao",
+                "danhgia": "Rất tốt"
+            },
+            {
+                "ordernumber": 1005,
+                "products": [
+                    {
+                        "id": 3,
+                        "category1": "gia-dung",
+                        "category2": "dia-khay",
+                        "name": "Lót ly",
+                        "price": 90000,
+                        "quantity": 7
+                    }
+                ],
+                "status": "Đã hủy",
+                "danhgia": ""
             }
-        ],
-        "status": "Đang giao",
-        "userid": 1
+        ]
     }
 ]
