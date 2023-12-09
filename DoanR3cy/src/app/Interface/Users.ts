@@ -7,6 +7,7 @@ export interface Users {
     ngaysinh: string;
     hinhdaidien: string;
     matkhau: string;
-    diachi: string
+    diachi: string;
+    userid: number;
 
 }

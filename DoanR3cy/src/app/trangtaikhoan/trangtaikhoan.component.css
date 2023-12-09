@@ -321,7 +321,7 @@ span {
 .donhang_itemdetal_row #status{
     color: var(--color-blue);
     font-weight: bold;
-    margin-left: 23vw;
+    margin-left: 24vw;
     text-transform: uppercase;
 }
 
@@ -336,7 +336,7 @@ span {
 }
 
 .don_item_label{
-    min-width: 140px;
+    min-width: 160px;
 }
 
 #newAddress {

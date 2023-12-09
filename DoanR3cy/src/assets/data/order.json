@@ -19,7 +19,8 @@
                 "quantity": 1
             }
         ],
-        "status": "Đang giao"
+        "status": "Đang giao",
+        "userid": 1
     },
     {
         "ordernumber": 1002,
@@ -33,7 +34,8 @@
                 "quantity": 3
             }
         ],
-        "status": "Đã giao"
+        "status": "Đã giao",
+        "userid": 1
     },
     {
         "ordernumber": 1003,
@@ -55,6 +57,7 @@
                 "quantity": 3
             }
         ],
-        "status": "Đang giao"
+        "status": "Đang giao",
+        "userid": 1
     }
 ]

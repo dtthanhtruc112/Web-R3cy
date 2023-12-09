@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "userid": 1,
         "tendangnhap": "danglenhuquynh",
         "hovaten": "Đặng Lê Như Quỳnh",
         "email": "quynhdln21411@st.uel.edu.vn",
@@ -21,7 +21,7 @@
 
     },
     {
-        "id": 2,
+        "userid": 2,
         "tendangnhap": "dangtruc",
         "hovaten": "Đặng Thị Thanh Trúc",
         "email": "trucdtt21411@st.uel.edu.vn",
@@ -34,7 +34,7 @@
 
     },
     {
-        "id": 3,
+        "userid": 3,
         "tendangnhap": "thienphuoc",
         "hovaten": "Nguyễn Thị Thiên Phước",
         "email": "phuocntt21411@st.uel.edu.vn",

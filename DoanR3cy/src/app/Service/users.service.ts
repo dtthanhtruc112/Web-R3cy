@@ -25,7 +25,7 @@ export class UsersService {
   }
   getUserById(id: number): Observable<any | undefined> {
     return this._http.get<any[]>(this._url).pipe(
-      map(users => users.find(user => user.id === id))
+      map(users => users.find(user => user.userid === id))
     );
   }
 }

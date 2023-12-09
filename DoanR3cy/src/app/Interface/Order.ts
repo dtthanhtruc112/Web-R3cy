@@ -1,7 +1,8 @@
 export interface Order {
     ordernumber: number,
     products: Product[];
-    status: string
+    status: string;
+    userid: number
 }
 
 export interface Product{
