@@ -387,6 +387,7 @@ span {
 
     .hoso_container{
         width: 100vw;
+        min-width: 350px;
     }
     .fullpage {
         /* position: fixed; */

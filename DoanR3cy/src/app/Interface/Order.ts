@@ -20,7 +20,6 @@ export interface Product {
     userid: number;
     ngaytao: string;
     thanhtoan: string;
-    kenh: string;
     orders: Order[];
   }
   
