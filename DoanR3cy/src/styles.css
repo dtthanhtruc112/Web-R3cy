@@ -125,10 +125,10 @@
 
 /* ------------ Dropdown menu / ul, li ---------- */
 
-/* ul, li{
+ul, li{
     text-decoration: none;
     list-style: none;
-} */
+}
 /* Phần xổ xuống có sử dụng ul, li */
 
 /* ------------ Line ---------- */
@@ -148,6 +148,27 @@
 /* -------------Link-------------- */
 a{
     text-decoration: none;
+}
+
+.chat-box{
+    display: flex;
+    justify-content: flex-end; /* Đặt phần tử ở sát lề phải của body */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.messenger{
+    position: fixed; /* Đặt vị trí cố định */
+    top: 95%; /* Đặt ở giữa theo chiều dọc */
+    right: 20px; /* Khoảng cách từ lề phải */
+    transform: translateY(-70%); /* Để căn giữa chính xác theo chiều dọc */
+    z-index: 999; /* Đảm bảo nó đè lên các phần tử khác */
+    width: 45px;
+    height: 45px;
+}
+
+.messenger:hover{
+    width: 55px;
+    height: 55px
 }
 
 /* ============Responsive============ */
