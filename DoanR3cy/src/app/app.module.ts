@@ -27,6 +27,7 @@ import { DetailBlogComponent } from './detail-blog/detail-blog.component';
 import { AdminCreateBlogComponent } from './admin-create-blog/admin-create-blog.component';
 import { TongquanComponent } from './admin-tongquan/tongquan.component';
 import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
+import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 
 
 
@@ -53,7 +54,8 @@ import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
     DetailBlogComponent,
     AdminCreateBlogComponent,
     TongquanComponent,
-    AdminSidebarComponent
+    AdminSidebarComponent, 
+    ManageBlogComponent
 
   ],
   imports: [

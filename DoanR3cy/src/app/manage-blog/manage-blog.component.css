@@ -1,0 +1,70 @@
+div {
+    font-family: Inter-Regular;
+}
+
+.containerAll {
+    margin-top: 20px;
+    width: 70%;
+    height: 100vh;
+    background-color: var(--color-white);
+    color: black;
+    box-sizing: border-box;
+    margin-left: 300px;
+}
+.containerContent{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 30px 0px;
+}
+.Title{
+    font-size: 20px;
+    font-family: Inter-Bold;
+    color: var(--color-blue);
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+}
+.buttonLine{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+th {
+    background-color: #f2f2f2;
+}
+
+.btn {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: var(--color-blue);
+    border: 0.5px solid var(--color-blue);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: bold;
+}
+.thumb{
+    width: 49px;
+    height: 39px;
+    margin-right: 8px;
+}
+.TiltleBlog{
+    font-family: Inter-Bold;
+    color: black;
+}
+.fa-solid fa-trash{
+    cursor: pointer;
+}
+.delete button{
+    border: none;
+    background-color: white;
+}

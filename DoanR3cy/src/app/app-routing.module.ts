@@ -19,6 +19,7 @@ import { DetailBlogComponent } from './detail-blog/detail-blog.component';
 import { AdminCreateBlogComponent } from './admin-create-blog/admin-create-blog.component';
 import { TongquanComponent } from './admin-tongquan/tongquan.component';
 import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
+import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent},
@@ -39,8 +40,9 @@ const routes: Routes = [
   { path: 'createblog', component: AdminCreateBlogComponent},
   { path: 'tongquan', component: TongquanComponent},
   { path: 'sidebar', component: AdminSidebarComponent},
+  { path: 'manageblog', component: ManageBlogComponent},
   // { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/sidebar', pathMatch: 'full' }, // Trang mặc định
+  { path: '', redirectTo: '/manageblog', pathMatch: 'full' }, // Trang mặc định
   {path: "**", component: PageNotFoundComponent}
 
 ];
