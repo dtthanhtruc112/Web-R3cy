@@ -1,0 +1,139 @@
+.imageThumBig {
+    width: 60vw;
+    height: auto;
+  }
+  
+  .imageThumBig img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .imageThumbCircle {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 10px 10px;
+  }
+  
+  .bannerBlog img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .TitleTextAllPost {
+    color: var(--color-blue);
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .blog-card {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  
+  .Left {
+    width: 60vw;
+    flex: 1;
+    margin-left: 20px;
+    align-self: flex-start;
+  }
+  
+  .Right {
+    width: 400px;
+    margin-left: 20px;
+    align-self: flex-start;
+  }
+  
+  .containerList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  
+  .listRelated {
+    display: flex;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    flex: 1;
+  }
+  
+  .listRelated img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .listRelated .TitleTextAllPost {
+    flex: 1;
+    align-self: center;
+  }
+  
+  /* Thêm media query cho màn hình di động */
+  @media (max-width: 767px) {
+    .Left{
+        flex:1
+    }
+    .Right {
+        width: 300px;
+      margin-left: 0;
+    }
+    .blog-card{
+      flex-direction: column;
+    } 
+  
+    .listRelated img {
+      width: 70px;
+      height: 70px;
+      margin-right: 0;
+    }
+    .TitleTextAllPost{
+        font-size: 20px;
+    }
+    .imageThumBig{
+        margin: 0 auto;
+    }
+  }
+  @media (max-width: 480px) {
+    .Left,
+    .Right {
+      width: 100%;
+      margin-left: 0;
+    }
+
+  
+    .listRelated img {
+      width: 70px;
+      height: 70px;
+      margin-right: 0;
+    }
+
+    .TitleTextAllPost{
+        font-size: 20px;
+    }
+    .imageThumBig{
+        width: 100%;
+    }
+    .blog-card{
+      flex-direction: column;
+    } 
+  }
+  /* Thêm media query cho màn hình tablet */
+@media (max-width: 1023px) {
+    .listRelated img {
+      width: 100px;
+      height: 100px;
+      margin-right: 0;
+    }
+    .TitleTextAllPost{
+        font-size: 26px;
+    }
+}
+.listRelated:hover{
+  cursor: pointer;
+}
+  

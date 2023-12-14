@@ -14,6 +14,11 @@ import { ProductCartComponent } from './product-cart/product-cart.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { TimkiemComponent } from './timkiem/timkiem.component';
+import { BlogComponent } from './blog/blog.component';
+import { DetailBlogComponent } from './detail-blog/detail-blog.component';
+import { AdminCreateBlogComponent } from './admin-create-blog/admin-create-blog.component';
+import { TongquanComponent } from './admin-tongquan/tongquan.component';
+import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent},
@@ -28,10 +33,16 @@ const routes: Routes = [
   { path: 'trangtaikhoan', component: TrangtaikhoanComponent},
   { path: 'product-cart', component: ProductCartComponent},
   { path: 'aboutus', component: AboutUsComponent},
+  { path: 'blogs', component: BlogComponent },
+  { path: 'detail/:id', component: DetailBlogComponent },
   { path: 'timkiem', component: TimkiemComponent},
+  { path: 'createblog', component: AdminCreateBlogComponent},
+  { path: 'tongquan', component: TongquanComponent},
+  { path: 'sidebar', component: AdminSidebarComponent},
   // { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/sign-up', pathMatch: 'full' }, // Trang mặc định
+  { path: '', redirectTo: '/sidebar', pathMatch: 'full' }, // Trang mặc định
   {path: "**", component: PageNotFoundComponent}
+
 ];
 
 @NgModule({

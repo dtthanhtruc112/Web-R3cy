@@ -21,7 +21,13 @@ import { NewPassComponent } from './forgot-pass/otp-code/new-pass/new-pass.compo
 import { CustomProductComponent } from './custom-product/custom-product.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { TimkiemComponent } from './timkiem/timkiem.component'
+import { TimkiemComponent } from './timkiem/timkiem.component';
+import { BlogComponent } from './blog/blog.component';
+import { DetailBlogComponent } from './detail-blog/detail-blog.component';
+import { AdminCreateBlogComponent } from './admin-create-blog/admin-create-blog.component';
+import { TongquanComponent } from './admin-tongquan/tongquan.component';
+import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
+
 
 
 @NgModule({
@@ -42,8 +48,13 @@ import { TimkiemComponent } from './timkiem/timkiem.component'
     NewPassComponent,
     CustomProductComponent,
     MainPageComponent,
-    PageNotFoundComponent,
     TimkiemComponent,
+    BlogComponent,
+    DetailBlogComponent,
+    AdminCreateBlogComponent,
+    TongquanComponent,
+    AdminSidebarComponent
+
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,154 @@
 <p>Này là main page test. Nếu có trang chủ mới, đổi code tại login.component.ts để sau khi đăng nhập thành công sẽ chuyển qua trang chủ</p>
+
+<div class="containerAll">
+    <div class="containerBanner">
+        <img src="../../assets/img/Homepage/bannerHomepage.png" alt="">
+    </div>
+    <div class="containerContent">
+        <!-- <div class="Blog2NoiBat">
+            <div class="ImgBlogLeft">
+                <img src="../../assets/img/ImageForBlog/thumbnail/1.png" alt="">
+            </div>
+            <div class="ImgBlogRight">
+                <img src="../../assets/img/ImageForBlog/thumbnail/3.png" alt="">
+            </div>
+        </div> -->
+        <div class=" Welcome">
+            <p class="h3 text-center mt-60 font-bold">Chào mừng đến với R3cy!</p>
+    
+            <p class="h4 text-center">Được thiết kế và sản xuất thủ công tại một xưởng ở Thành phố Hồ Chí Minh,
+            R3cy mang trên mình câu chuyện đầy ý nghĩa với thành phố. R3cy mong muốn tạo ra các vật dụng không chỉ bền chắc, đẹp mắt mà còn cùng bạn góp phần bảo vệ môi trường.</p>
+        </div>
+    
+        <div class="ProductsNoiBat">
+            <a href=""><h2>SẢN PHẨM NỔI BẬT</h2></a>
+            
+    
+    
+        </div>
+        <div class="brandStory">
+            <a href=""><h2>CÂU CHUYỆN THƯƠNG HIỆU</h2></a>
+            <div class="box-slogan">
+                <div class="slogan-img"></div>
+    
+                <div class="slogan-txt">
+                    <p class="h4">R3cy là cái tên với sự kết hợp giữa 3 nguyên tắc quen thuộc là reduce, reuse và recycle.</p>
+    
+                    <p class="h3 mt-60 font-bold">“R3cy - tái chế cho môi trường thêm xanh”</p>
+                </div>           
+            </div>
+        </div>
+    
+        <div class="recycleProcess">
+            <a href=""><h2>QUY TRÌNH TÁI CHẾ</h2></a>
+            
+            <div class="containerimg">
+                <div class="imgRecycle imgRecycle1">
+                    <img src="../../assets/img/Homepage/recycleprocess1.png" alt="">
+                    <p class="pRecycle">Thu gom rác thải nhựa và phân loại phù hợp</p>
+                </div>
+                <div class="imgRecycle imgRecycle2">
+                    <img src="../../assets/img/Homepage/recycleprocess2.png" alt="">
+                    <p class="pRecycle">Làm sạch bằng các chất không hại môi trường hay sức khoẻ</p>
+                </div>
+                <div class="imgRecycle imgRecycle3">
+                    <img src="../../assets/img/Homepage/recycleprocess3.png" alt="">
+                    <p class="pRecycle">Xử lý nhựa thô thành hạt nhựa để tiến hành sản xuất sản phẩm</p>
+                </div>
+            </div>
+        </div>
+        <div class="containerBlog">
+            <a href=""><h2>BLOG</h2></a>
+            
+        <div class="blogs">
+            <div *ngFor="let relatedBlog of relatedBlogs" class="b1log" [routerLink]="['/detail', relatedBlog.id]">
+              <div> 
+                <img [src]="relatedBlog.thumb" class="imageThumbCircle" alt="{{ relatedBlog.title }}" />
+                 <p class="TitleTextAllPost"> {{ relatedBlog.title }}</p>
+            </div>
+            </div>
+          </div>
+    
+        <div class="FAQs">
+            <h2>CÂU HỎI THƯỜNG GẶP</h2>
+            <div id="content">
+                <div *ngIf="selectedCategory === 'cham-soc'">
+                    <div class="qa-section">
+                        <div class="question" (click)="toggleAnswer('question1')" >
+                            <div class="question-header">
+                                <h3 class="h4">Phải làm gì khi sản phẩm bị hư hỏng quá thời hạn bảo hành?</h3>
+                                <a #question1Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                            </div>
+                            <p class="answer p" [hidden]="!isAnswerVisible('question1')">R3cy nhận sửa chữa có tính phí đối với các sản phẩm bị hư hỏng quá thời hạn
+                                bảo hành.
+                                Chi phí sửa chữa sẽ tùy thuộc vào tình trạng lỗi của sản phẩm. Ngoài ra, bất cứ lúc nào
+                                trong quá
+                                trình sử dụng, nếu bạn có vấn đề với sản phẩm của R3cy, xin liên hệ: <br>
+                                Điện thoại: 0123-456-789 <br>
+                                Email: info..r3cy.com
+                            </p>
+                        </div>
+                        <div class="question" (click)="toggleAnswer('question2')">
+                            <div class="question-header">
+                                <h3 class="h4">Làm thế nào để gửi sản phẩm cần bảo hành cho R3cy?
+                                </h3>
+                                <a #question2Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                            </div>
+                            <p class="answer p" [hidden]="!isAnswerVisible('question2')">Quy trình nhận và trả sản phẩm bảo hành được thực hiện như sau: <br>
+                                Bước 1: Khách hàng gửi sản phẩm về lại cho R3cy <br>
+                                Khách mua qua website: liên hệ số điện thoại 0123-456-789 <br>
+                                Khách mua tại đại lý bán hàng: liên hệ gửi trả lại cho đại lý <br>
+                                Bước 2: R3cy tiếp nhận sản phẩm và thực hiện bảo hành <br>
+                                Bước 3: Sau khi bảo hành xong, R3cy/ đại lý bán hàng liên hệ với khách để hẹn thời gian và
+                                địa điểm
+                                giao trả sản phẩm. <br> Thời gian bảo hành kéo dài từ 7 – 14 ngày làm việc tùy thuộc vào
+                                tình trạng
+                                sản phẩm. <br>
+                                Lưu ý: Khách hàng vui lòng chi trả chi phí vận chuyển sản phẩm (nếu có phát sinh) trong
+                                trường hợp
+                                cần giao nhận sản phẩm khi bảo hành.
+                            </p>
+                        </div>
+                        <div class="question" (click)="toggleAnswer('question3')">
+                            <div class="question-header">
+                                <h3 class="h4">Sản phẩm sau mua có được đổi trả không?
+                                </h3>
+                                <a #question3Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                            </div>
+                            <p class="answer p" [hidden]="!isAnswerVisible('question3')">Đối với các sản phẩm mới chưa qua sử dụng, trong vòng 10 ngày từ khi nhận được
+                                hàng,
+                                R3cy áp dụng chính sách đổi sản phẩm 1 đổi 1, hoặc trả sản phẩm để nhận hoàn tiền. Trường
+                                hợp sản
+                                phẩm không còn hàng để thay thế, R3cy sẽ thay bằng một sản phẩm khác có giá trị và chất <br>
+                                Lưu ý: Khách hàng vui lòng chi trả chi phí vận chuyển sản phẩm (nếu có phát sinh) trong
+                                trường hợp
+                                cần giao nhận sản phẩm khi đổi trả.
+                            </p>
+                        </div>
+                        <div class="question" (click)="toggleAnswer('question4')">
+                            <div class="question-header">
+                                <h3 class="h4">Sản phẩm của R3cy được bảo hành như thế nào?
+                                </h3>
+                                <a #question4Btn class="toggleBtn"><i class="bi bi-chevron-down"></i></a>
+                            </div>
+                            <p class="answer p" [hidden]="!isAnswerVisible('question4')">Tất cả sản phẩm của R3cy đều được bảo hành trong vòng 1 năm kể từ ngày mua.
+                                Trong thời
+                                gian bảo hành, nếu sản phẩm bị lỗi do nhà sản xuất, bạn có thể mang sản phẩm đến cửa hàng
+                                của chúng
+                                tôi để được đổi trả hoặc sửa chữa miễn phí. <br>
+                                Lưu ý: Khách hàng vui lòng chi trả chi phí vận chuyển sản phẩm (nếu có phát sinh) trong
+                                trường hợp
+                                cần giao nhận sản phẩm khi bảo hành.
+        
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    
+        
+
+
+</div>
+

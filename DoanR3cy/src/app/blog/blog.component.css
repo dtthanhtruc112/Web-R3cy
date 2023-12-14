@@ -1,0 +1,78 @@
+
+.container1blog {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .blog-card {
+    width: 90%;
+    max-width: 1223px;
+    border: var(--color-blue) solid 1px;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  .bannerBlog img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .TitleTextAllPost {
+    color: var(--color-blue);
+    font-size: 28px;
+    text-align: center;
+  }
+  
+  .imageThumnailOnBlogList {
+    max-width: 100%;
+    height: auto;
+    margin-right: 20px;
+  }
+  
+  .sumary1Blog {
+    margin-top: 10px;
+  }
+  
+  .Tieudebai1 {
+    font-size: 20px;
+  }
+  
+  .paraOfContent {
+    font-size: 16px;
+  }
+  
+  .authorDate {
+    font-size: 14px;
+    font-style: italic;
+  }
+  
+  /* Thêm media query cho màn hình nhỏ hơn 480px */
+  @media (max-width: 480px) {
+    .blog-card {
+      flex-direction: column; /* Đặt layout của blog-card thành dạng cột */
+    }
+  
+    .sumary1Blog {
+      margin-top: 0; /* Loại bỏ khoảng cách giữa thumbnail và sumary1Blog */
+    }
+  }
+  .imageThumnailOnBlogList:hover{
+    cursor: pointer;
+  }
+  .title1Blog:hover{
+    cursor: pointer;
+  }
+  @media (max-width: 390px){
+    .imageThumnailOnBlogList img{
+      text-align: center;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      margin-right: 0;
+    }
+  }
