@@ -1,0 +1,86 @@
+div{
+    font-family: Inter-Regular;
+}
+
+.main{
+    width: 80vw;
+    margin: 0 auto;
+}
+
+.productcontainer{
+    display: flex;
+}
+
+.leftcolumn{
+    width: 50%;
+}
+.rightcolumn{
+    width: 50%
+}
+
+.name{
+    color: #31B9F4;
+}
+
+.oldprice{
+    color: grey;
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+button{
+    border: 1px solid #31B9F4;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    margin: 5px;
+    padding: 10px;
+}
+
+button:hover{
+    border: 1px solid #31B9F4;
+    border-radius: 10px;
+    background-color: #31B9F4;
+    color: white;
+    font-weight: bold;
+}
+
+input{
+    border: 1px solid #31B9F4;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+}
+
+.grey{
+    color: grey;
+    margin-bottom: 10px;
+}
+
+.rate{
+    display: flex;
+}
+
+.leftcontent{
+    width: 30%
+}
+
+.rightcontent{
+    width: 70%
+}
+
+.ratecontent{
+    display: flex;
+}
+
+.imgfb{
+    width: 5%;
+}
+
+.fbcontent{
+    width: 95%;
+}
+
+h2{
+    color: #31B9F4;
+}

@@ -1,0 +1,67 @@
+<br> <br> <br> <br>
+
+<div class="main">
+    <div class="firstinfo">
+        <h3 class="bigtitle">SẢN PHẨM</h3>
+        <p> 
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia dolore magni, reiciendis beatae porro esse, recusandae repellat libero in ducimus numquam ad assumenda voluptatum eos iste vero similique excepturi reprehenderit.
+        </p>
+    </div>
+    <br>
+    <div class="flexboxcontainer">
+        <div class="leftcolumn">
+            <h3 class="filtertitle">Bộ lọc &emsp;</h3>
+            <p class="note">Xóa bộ lọc</p>
+
+            <p class="selecttitle">Loại sản phẩm</p>
+            <input type="checkbox" name="cate-opt1" value="phu-kien" id="cate-opt1"> Phụ kiện 
+            <br>
+            <input type="checkbox" name="cate-opt2" value="trang-tri" id="cate-opt2"> Trang trí
+            <br>
+            <input type="checkbox" name="cate-opt3" value="gia-dung" id="cate-opt3"> Gia dụng
+
+            <br><br>
+
+            <p class="selecttitle">Giá sản phẩm</p>
+            <input type="checkbox" name="price-opt1" value="duoi100" id="price-opt1"> Dưới 100.000đ
+            <br>
+            <input type="checkbox" name="price-opt12" value="tu100den200" id="price-opt2"> Từ 100.000đ đến 200.000đ
+            <br>
+            <input type="checkbox" name="price-opt3" value="tu200den300" id="price-opt3"> Từ 200.000đ đến 300.000đ
+            <br>
+            <input type="checkbox" name="price-opt4" value="tren300" id="price-opt4"> Trên 300.000
+            
+        </div>
+
+        <div class="rightcolumn">
+            <div class="floatright">
+                <select style="float: right;" name="" id="sort" aria-placeholder="Bộ lọc">
+                    <option value="pho-bien">Lọc theo Phổ biến</option>
+                    <option value="gia">Lọc theo Giá</option>
+                </select>
+                <br>
+                <p style="float: right;">Đang hiển thị 00 sản phẩm</p>
+            </div>
+            <br><br><br><br><br><br>
+            <div class="product-show" *ngFor="let p of product" [routerLink]="['/product', p.id]">
+                    <!-- <p class="mainimg">{{p.img1}}</p> -->
+                    <p>{{p.id}}</p>
+                    <p class="name">{{p.name}}</p>
+                    <div class="pricecontainer">
+                        <p class="price">{{p.price}}.000đ</p>
+                        <p class="oldprice">{{p.oldprice}}.000đ</p>
+                    </div>  
+                    <!-- <button [productname]="p.name" ></button> -->
+                
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="customize">
+    <h3>Bạn muốn tùy chỉnh sản phẩm?</h3>
+    <p>Liên hệ ngay với R3cy nào!</p>
+    <button type="button" class="custom-contact">GỬI YÊU CẦU</button>
+</div>
+
