@@ -14,14 +14,6 @@ div{
     text-align: center;
 }
 
-.mt-60{
-    margin-top: 60px;
-}
-
-.mb-60{
-    margin-bottom: 60px;
-}
-
 .mb-30{
     margin-bottom: 30px;
 }
@@ -35,7 +27,7 @@ div{
     /* max-width: 1200px; */
     margin: 0 auto;
     padding: 20px;
-    margin-top: 100px;
+    width: 80%;
 }
 
 .header-img{

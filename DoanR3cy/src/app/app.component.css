@@ -13,7 +13,7 @@ div{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 90%;
+    width: 100%;
     padding-left: 5%;
     padding-right: 5%;
     background-color: var(--color-white);
@@ -427,3 +427,7 @@ gap: 10px;
       transition: all 0.5s ease-in-out;
     }
   }
+
+.routeroutlet{
+    margin: 60px 0;
+}
