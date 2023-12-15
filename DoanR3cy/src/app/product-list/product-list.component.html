@@ -45,7 +45,7 @@
             <br><br><br><br><br><br>
             <div class="product-show" *ngFor="let p of product" [routerLink]="['/product', p.id]">
                     <!-- <p class="mainimg">{{p.img1}}</p> -->
-                    <p>{{p.id}}</p>
+                    <img [src]="p.img1">
                     <p class="name">{{p.name}}</p>
                     <div class="pricecontainer">
                         <p class="price">{{p.price}}.000đ</p>
