@@ -16,9 +16,6 @@ import { AboutUsComponent } from './about-us/about-us.component';
 import { TimkiemComponent } from './timkiem/timkiem.component';
 import { BlogComponent } from './blog/blog.component';
 import { DetailBlogComponent } from './detail-blog/detail-blog.component';
-import { AdminCreateBlogComponent } from './admin-create-blog/admin-create-blog.component';
-import { TongquanComponent } from './admin-tongquan/tongquan.component';
-import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -40,9 +37,6 @@ const routes: Routes = [
   { path: 'blogs', component: BlogComponent },
   { path: 'detail/:id', component: DetailBlogComponent },
   { path: 'timkiem', component: TimkiemComponent},
-  { path: 'createblog', component: AdminCreateBlogComponent},
-  { path: 'tongquan', component: TongquanComponent},
-  { path: 'sidebar', component: AdminSidebarComponent},
   { path: 'manageblog', component: ManageBlogComponent},
   { path: 'product-list', component: ProductListComponent},
   { path: 'product/:id', component: ProductComponent},

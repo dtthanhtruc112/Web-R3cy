@@ -8,6 +8,8 @@ div {
     background-color: var(--color-white);
     color: var(--color-blue);
     box-sizing: border-box;
+    margin-left: 300px;
+    margin-top: 20px;
 }
 
 table {
@@ -98,5 +100,9 @@ tr {
     
       .containerRight {
         margin-top: 10px;
+      }
+      .containerAll{
+        margin-top: 130px;
+        margin-left: 20px;
       }
 }

@@ -48,7 +48,8 @@ import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.compone
     TimkiemComponent,
     BlogComponent,
     DetailBlogComponent,
-    ManageBlogComponent, ProductComponent, ProductListComponent, DanhgiasanphamComponent
+    ManageBlogComponent, ProductComponent, ProductListComponent, DanhgiasanphamComponent,
+    PageNotFoundComponent
 
   ],
   imports: [
