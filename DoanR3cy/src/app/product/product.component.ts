@@ -32,7 +32,6 @@ item: any;
         // ))
       )))
 
-
       .subscribe(data => {
         this.pro = data;
         console.log(this.pro);
@@ -46,12 +45,6 @@ item: any;
   addProductToCart(item: any) {
     // thêm sản phẩm vào giỏ hàng
     this.cartService.addItemToCart(item);
-
-
-    
-   
-
-
   }
 
 }
