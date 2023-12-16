@@ -1,0 +1,53 @@
+.main{
+    margin: 100px auto;
+    width: 80%;
+}
+
+h2{
+    color: var(--color-blue);
+}
+
+h4{
+    color: var(--color-blue);
+}
+
+.productcontainer{
+    display: flex;
+}
+
+.rate{
+    display: flex;
+}
+
+.button{
+    text-align: center;
+}
+
+button{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 10%;
+}
+
+.huy{
+    border: 1px solid white;
+}
+
+.gui{
+    border: 1px solid var(--color-blue);
+    background-color: var(--color-blue);
+    color: white;
+    font-weight: bold;
+}
+
+textarea{
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+
+
+
+
+
