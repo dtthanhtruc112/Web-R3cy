@@ -255,4 +255,16 @@ export class TrangtaikhoanComponent implements OnInit {
     return order.status === 'Đã giao' && order.danhgia === '';
   }
 
+  extractOrderIds(): void {
+    const filteredOrders = this.filteredOrders();
+    
+    // Log giá trị của ordernumber
+    filteredOrders.forEach(order => {
+      console.log('Order ID:', order.ordernumber);
+      return order.ordernumber
+    });
+    
+  }
+  
+
 }

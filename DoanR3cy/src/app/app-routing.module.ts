@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'manageblog', component: ManageBlogComponent},
   { path: 'product-list', component: ProductListComponent},
   { path: 'product/:id', component: ProductComponent},
-  { path: 'danhgia', component: DanhgiasanphamComponent},
+  { path: 'danhgia/:id', component: DanhgiasanphamComponent},
   { path: 'checkout', component: ProductCheckoutComponent},
   // { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/main-page', pathMatch: 'full' }, // Trang mặc định

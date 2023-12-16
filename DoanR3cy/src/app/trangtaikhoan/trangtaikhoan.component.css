@@ -217,6 +217,8 @@ span {
 .voucher_nhapma > input {
     border: 1px solid var(--color-blue);
     height: 25px;
+    border-radius: 10px;
+    padding: 5px;
 }
 .voucher_container {
     display: flex;
@@ -361,7 +363,7 @@ span {
         width: 100vw;
     }
     .hoso_item_row button{
-        margin-left: 28%;
+        margin-left: 40.5%;
     }
     
 }

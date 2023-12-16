@@ -81,7 +81,6 @@
                         </div>      
                         
                         <div class="hoso_item_row">
-                            <label for="" class="hoso_item_label"></label>
                             <button type="button" class="button p" (click)="saveData()">Lưu</button>
                         </div>                  
                     </div>
@@ -222,7 +221,7 @@
                           </div>
                           <hr>
                           <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
-                            <button class="button p" type="button" routerLink="/danhgia" routerLinkActive="active">Đánh giá</button>
+                            <button class="button p" type="button" [routerLink]="['/danhgia', order.ordernumber]">Đánh giá</button>
                             <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
                           </div>
                         </div>

@@ -1,22 +1,33 @@
-import { Component } from '@angular/core';
-import { ProductService } from '../Service/product.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { product } from '../Interface/product';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Order } from '../Interface/Order';
+import { OrderService } from '../Service/order.service';
 
 @Component({
   selector: 'app-danhgiasanpham',
   templateUrl: './danhgiasanpham.component.html',
-  styleUrl: './danhgiasanpham.component.css'
+  styleUrls: ['./danhgiasanpham.component.css']
 })
-export class DanhgiasanphamComponent {
-  product: any;
-  errMsg: string ="";
+export class DanhgiasanphamComponent implements OnInit {
+  order: Order | undefined;
 
-  constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private orderService: OrderService) {}
 
-  ngOnInit() {
-    this.productService.getData().subscribe((data: product[]) => {
-      this.product = data;
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const orderId = params.get('id');
+      console.log(orderId)
+
+      if (orderId) {
+        const orderIdNumber = +orderId;
+        this.orderService.getOrderById(orderIdNumber).subscribe(order => {
+          if (order) {
+            this.order = order;
+          } else {
+            console.error(`Order with ID ${orderIdNumber} not found.`);
+          }
+        });
+      }
     });
   }
 }
