@@ -1,112 +1,112 @@
 #sidebar {
-    position: fixed;
-    width: 250px;
-    height: 100%;
-    background: var(--color-lightblue);
-    padding-top: 20px;
-    color: var(--color-blue);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  #sidebar .containerFunc,
-  .containerSetting {
-    width: 100%;
-  }
-  
-  #sidebar a,p {
-    width: 100%;
-    text-decoration: none;
-    padding: 10px 8px;
-    display: block;
-    transition: 0.3s;
-    margin-left: 0;
-    color: var(--color-blue);
-  }
-  #sidebar p {
-    margin: 0;
-  }
-  
-  .containerSetting {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  
-  #sidebar .submenu {
-    display: none;
-    margin-left: 20px;
-    transition: all 0.5s ease-in-out;
-  }
-  #sidebar .menuActive {
-    display: block;
-    cursor: pointer;
-  }
-  
-  /* #sidebar .menuActive.active + .submenu {
-    display: block;
-  } */
-  #sidebar a:hover {
-    background: var(--color-white);
-  }
-  #sidebar p:hover {
-    background: var(--color-white);
-  }
-  
-  #sidebar .menuActive.active + .submenu {
-    display: block;
-  }
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  background: var(--color-lightblue);
+  padding-top: 20px;
+  color: var(--color-blue);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  
+#sidebar .containerFunc,
+.containerSetting {
+  width: 100%;
+}
+
+#sidebar a,p {
+  width: 100%;
+  text-decoration: none;
+  padding: 10px 8px;
+  display: block;
+  transition: 0.3s;
+  margin-left: 0;
+  color: var(--color-blue);
+}
+#sidebar p {
+  margin: 0;
+}
+
+.containerSetting {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#sidebar .submenu {
+  display: none;
+  margin-left: 20px;
+  transition: all 0.5s ease-in-out;
+}
+#sidebar .menuActive {
+  display: block;
+  cursor: pointer;
+}
+
+/* #sidebar .menuActive.active + .submenu {
+  display: block;
+} */
+#sidebar a:hover {
+  background: var(--color-white);
+}
+#sidebar p:hover {
+  background: var(--color-white);
+}
+
+#sidebar .menuActive.active + .submenu {
+  display: block;
+}
+
+
 #sidebar .toggle-icon{
 display: none;
 }
 .logo {
-  margin-bottom: auto; /* Đặt margin-bottom là auto để logo nằm ở đầu */
+margin-bottom: auto; /* Đặt margin-bottom là auto để logo nằm ở đầu */
 }
 @media screen and (max-width: 480px) {
-  #sidebar {
-    width: 100%;
-    height: auto;
-    display: flexbox;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px; /* Thêm padding cho đỡ sát mép màn hình */
-  }
+#sidebar {
+  width: 100%;
+  height: auto;
+  display: flexbox;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* Thêm padding cho đỡ sát mép màn hình */
+}
 
-  .containerSetting {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-  }
+.containerSetting {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+}
 
-  #sidebar .containerFunc {
-    display: none;
-  }
-  #sidebar #toggle-icon {
-    order: -1; /* Đặt thứ tự là -1 để nằm bên trái */
-  }
-  #sidebar .setting-icon {
-    order: 2; /* Đặt thứ tự là 2 để nằm bên phải */
-  }
-  #sidebar #toggle-icon {
-    display: inline-block;
-    cursor: pointer;
-  }
+#sidebar .containerFunc {
+  display: none;
+}
+#sidebar #toggle-icon {
+  order: -1; /* Đặt thứ tự là -1 để nằm bên trái */
+}
+#sidebar .setting-icon {
+  order: 2; /* Đặt thứ tự là 2 để nằm bên phải */
+}
+#sidebar #toggle-icon {
+  display: inline-block;
+  cursor: pointer;
+}
 
-  #sidebar.active .containerFunc,
-  #sidebar.active .containerSetting {
-    display: flex;
-    flex-direction: column;
-  }
-  #sidebar.active .menuActive {
-    width: 100%;
-  }
-  #sidebar.active a, #sidebar.active p {
-    width: 100%;
-  }
-  
+#sidebar.active .containerFunc,
+#sidebar.active .containerSetting {
+  display: flex;
+  flex-direction: column;
+}
+#sidebar.active .menuActive {
+  width: 100%;
+}
+#sidebar.active a, #sidebar.active p {
+  width: 100%;
+}
 
-  }
+
+}
