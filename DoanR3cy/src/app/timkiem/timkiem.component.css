@@ -2,6 +2,8 @@
     margin-top: 100px;
     text-align: center;
     position: relative;
+    min-height: 47vh;
+
 }
 
 input{

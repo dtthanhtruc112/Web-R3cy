@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   <div class="container">
     <h3 class="h3">Không tìm thấy trang này</h3>
     <p class="p">Xin lỗi, chúng tôi không tìm thấy trang này</p>
-    <button class="h3 button" routerLink="/aboutus" routerLinkActive="active">TRỞ VỀ TRANG CHỦ</button>
+    <button class="h3 button" routerLink="/main-page" routerLinkActive="active">TRỞ VỀ TRANG CHỦ</button>
     </div>
   `,
   styles: `
