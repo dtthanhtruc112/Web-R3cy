@@ -222,7 +222,7 @@
                           </div>
                           <hr>
                           <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
-                            <button class="button p" type="button">Đánh giá</button>
+                            <button class="button p" type="button" routerLink="/danhgia" routerLinkActive="active">Đánh giá</button>
                             <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
                           </div>
                         </div>
