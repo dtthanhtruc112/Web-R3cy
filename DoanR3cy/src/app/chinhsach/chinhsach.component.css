@@ -12,7 +12,7 @@ body {
     flex: 1;
     max-width: 80vw;
     margin: auto;
-    max-height: 50vh;
+    /* max-height: 50vh; */
     justify-content: center;
     align-items: start;
     flex-wrap: wrap;
