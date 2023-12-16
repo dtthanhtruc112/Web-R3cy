@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'danhgia', component: DanhgiasanphamComponent},
   { path: 'checkout', component: ProductCheckoutComponent},
   // { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/manageblog', pathMatch: 'full' }, // Trang mặc định
+  { path: '', redirectTo: '/main-page', pathMatch: 'full' }, // Trang mặc định
   {path: "**", component: PageNotFoundComponent}
 
 ];

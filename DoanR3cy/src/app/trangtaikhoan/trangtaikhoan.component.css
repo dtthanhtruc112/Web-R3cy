@@ -103,10 +103,23 @@ input {
     padding: 10px 0px;
     display: flex;
 }
+
+.hoso_item_row > label > input{
+    margin: 5px;
+}
+
+.hoso_item_row > label > select{
+    margin: 5px;
+    border: 1px solid var(--color-blue);
+    border-radius: 5px;
+}
+
+
+
 .hoso_item_row>input[type="text"]{
     font-weight: bold;
     padding-right: 10px;
-    width: 40%;
+    width: 45%;
 }
 .hoso_item_label {
     min-width: 12vw;
@@ -125,6 +138,7 @@ input {
     /* width: 100px; */
     cursor: pointer;
     font-weight: bold;
+    margin: 5px auto;
 }
 .overlay {
     position: fixed;
@@ -178,7 +192,7 @@ input {
     margin-right: 40px;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 300px;
+    width: 350px;
 }
 .diachi_item > input{
     margin: 6px 0;
