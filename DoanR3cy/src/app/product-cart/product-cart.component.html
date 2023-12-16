@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="./product-cart.component.css">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- ---chưa cài được button quantity-------- -->
 <!-- 
 </head> -->
 
@@ -40,31 +39,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="tbody-item">
+                                <tr class="tbody-item" *ngFor="let p of product">
                                     <td class="product-remove">
                                         <a class="remove" href="javascript:void(0)">×</a>
                                     </td>
                                     <td class="product-thumbnail">
                                         <div class="thumb">
-                                            <a href="single-product.html">
-                                                <img src="../../assets/Products/Phu kien/Móc khóa/Móc khóa rùa biển/Hình ảnh/rùa 1.webp"
-                                                    width="100" height="100" alt="Image-Loading">
-                                            </a>
+
+                                            <img [src]="p.img1" width="100" height="100" alt="Image-Loading">
+
                                         </div>
                                     </td>
                                     <td class="product-name">
-                                        <a class="title"
-                                            href="assets/Products/Phu kien/Móc khóa/Móc khóa rùa biển/Hình ảnh/rùa 2.webp">Móc
-                                            khóa rùa biển</a><br>
-                                        <a class="type minitext">Phân loại: mặc định</a>
+                                        <a class="title" href="">{{p.name}}</a><br>
+                                        <a class="type minitext">Phân loại: {{p.opt1}}</a>
                                     </td>
                                     <td class="product-price">
-                                        <span class="price">250.000</span>
+                                        <span class="price">{{p.price}}.000 đ</span>
                                     </td>
                                     <td class="product-quantity">
                                         <div class="pro-qty">
                                             <input type="text" class="quantity" title="Quantity" id="show" min="1"
-                                            max="1000" name="show" value="1" type="number" onchange="loadJson()">
+                                                max="1000" name="show" value="1" type="number" onchange="loadJson()">
                                         </div>
 
                                     </td>
@@ -72,70 +68,7 @@
                                         <span class="price">$115.00</span>
                                     </td>
                                 </tr>
-                                <tr class="tbody-item">
-                                    <td class="product-remove">
-                                        <a class="remove" href="javascript:void(0)">×</a>
-                                    </td>
-                                    <td class="product-thumbnail">
-                                        <div class="thumb">
-                                            <a href="single-product.html">
-                                                <img src="../../assets/Products/Do gia dung/Dia, khay/Lot ly/Hình ảnh/ll2.webp"
-                                                    width="68" height="84" alt="Image-Loading">
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td class="product-name">
-                                        <a class="title" href="single-product.html">Đế lót ly</a><br>
-                                        <a class="type minitext">Phân loại: mặc định</a>
-                                    </td>
-                                    <td class="product-price">
-                                        <span class="price">$95.00</span>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" class="quantity" title="Quantity" id="show" min="1"
-                                            max="1000" name="show" value="1" type="number" onchange="loadJson()">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">
-                                        <span class="price">$95.00</span>
-                                    </td>
-                                </tr>
-                                <tr class="tbody-item">
-                                    <td class="product-remove">
-                                        <a class="remove" href="javascript:void(0)">×</a>
-                                    </td>
-                                    <td class="product-thumbnail">
-                                        <div class="thumb">
-                                            <a href="single-product.html">
-                                                <img src="../../assets/Products/Do trang tri/Đồng hồ treo tường/Hình ảnh/dh1.jpg"
-                                                    width="68" height="84" alt="Image-Loading">
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td class="product-name">
-                                        <a class="title" href="single-product.html">Đồng hồ treo tường</a><br>
-                                        <a class="type minitext">Phân loại: mặc định</a>
-                                    </td>
-                                    <td class="product-price">
-                                        <span class="price">$79.00</span>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" class="quantity" title="Quantity" id="show" min="1"
-                                            max="1000" name="show" value="1" type="number" onchange="loadJson()">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">
-                                        <span class="price">$79.00</span>
-                                    </td>
-                                </tr>
-                                <tr class="tbody-item-actions">
-                                    <td colspan="6">
-                                        <button type="submit" class="btn-update-cart disabled" disabled>Cập
-                                            nhật</button>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </form>
