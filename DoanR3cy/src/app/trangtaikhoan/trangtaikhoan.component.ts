@@ -258,5 +258,3 @@ export class TrangtaikhoanComponent implements OnInit {
   }
 
 }
-
-

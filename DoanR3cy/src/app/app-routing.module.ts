@@ -22,6 +22,7 @@ import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent},
@@ -45,6 +46,7 @@ const routes: Routes = [
   { path: 'manageblog', component: ManageBlogComponent},
   { path: 'product-list', component: ProductListComponent},
   { path: 'product/:id', component: ProductComponent},
+  { path: 'danhgia', component: DanhgiasanphamComponent},
   // { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/manageblog', pathMatch: 'full' }, // Trang mặc định
   {path: "**", component: PageNotFoundComponent}

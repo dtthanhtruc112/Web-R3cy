@@ -30,6 +30,7 @@ import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.component';
 
 
 
@@ -57,7 +58,7 @@ import { ProductListComponent } from './product-list/product-list.component';
     AdminCreateBlogComponent,
     TongquanComponent,
     AdminSidebarComponent, 
-    ManageBlogComponent, ProductComponent, ProductListComponent
+    ManageBlogComponent, ProductComponent, ProductListComponent, DanhgiasanphamComponent
 
   ],
   imports: [

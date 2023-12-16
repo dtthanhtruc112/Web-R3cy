@@ -1,61 +1,353 @@
-div {
+div{
     font-family: Inter-Regular;
 }
-
-.containerAll {
-    width: 70%;
-    margin: auto; /* Center the container */
+.fullpage {
+    /* position: fixed; */
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: #f5f5f5; */
+    /* padding: 40px; */
+    /* margin-top: 20px; */
+    margin: 0;
+    margin-top: 150px;
 }
-
-.containerContent {
+.taikhoan_container {
+    width: 80vw;
+    margin: auto;
     display: flex;
+    margin-top: 5%;
+    justify-content: flex-start;
+    align-items: start;
 }
-
-.Leftt {
-    flex: 1; 
-    /* width: 80%; */
-    margin-right: 20px; /* Margin right 20px */
+h2 {
+    color: var(--color-blue);
 }
-
-.titleBlog,
-#content {
-    width: 100%; /* Take up full width */
-    border: none;
-    border-top: 1px solid var(--color-blue); /* Only border top for the title */
+.bar_container {
+    top: 25px;
+    width: 15vw;
 }
-
 .circle_img {
     width: 110px;
     height: 110px;
     border-radius: 50%;
     overflow: hidden;
     background-color: var(--color-darkBlue);
-    margin: auto;
+    margin: auto
 }
-
 .circle_img img {
     max-width: 100%;
     height: 100%;
     display: block;
 }
-
-.Right {
-    width: 166px; /* Set a fixed width for the Right column */
+.taikhoan_item {
+    background-color: var(--color-white);
+    margin: auto;
+    text-align: center;
+    width: 100%;
 }
+.bar_item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+.bar_item >h4, .bar_item>p{
+    margin: 10px;
+    font-weight: bold;
 
+}
+#taikhoan_content {
+    flex: 1;
+    max-width: 750px;
+    margin: auto;
+    padding: 5px;
+}
+.hoso_container {
+    background-color: var(--color-white);
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    min-height: 50vh;
+}
+input {
+    border: none;
+}
+.hoso_item {
+    display: flex;
+    flex-direction: row;
+}
+.hoso_label {
+    min-width: 150px;
+}
+.hoso_img {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    /* margin-left: 30vw; */
+}
+.hoso_img input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    opacity: 0;
+}
+.hoso_item_content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.hoso_item_row {
+    padding: 10px 0px;
+    display: flex;
+}
+.hoso_item_row>input[type="text"]{
+    font-weight: bold;
+    padding-right: 10px;
+    width: 40%;
+}
+.hoso_item_label {
+    min-width: 12vw;
+}
+#hoso_change {
+    color: var(--color-blue);
+    cursor: pointer;
+    text-decoration: underline;
+}
 .button {
     background-color: var(--color-blue);
     color: var(--color-white);
     border-radius: 10px;
     border: none;
     padding: 10px 20px;
+    /* width: 100px; */
     cursor: pointer;
     font-weight: bold;
 }
-
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu đen với độ trong suốt 50% */
+    /* display: none; */
+    z-index: 1;
+  }
+.popup {
+    /* display: none; */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-white);
+    padding: 40px;
+    /* Điều chỉnh kích thước padding */
+    border-radius: 20px;
+    /* Điều chỉnh kích thước border-radius */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    /* Điều chỉnh kích thước shadow */
+    z-index: 2;
+}
+.popup p {
+    font-size: 20px;
+    /* Điều chỉnh kích thước font */
+    margin-bottom: 20px;
+    /* Điều chỉnh khoảng cách giữa các đoạn văn bản */
+}
+.popup button {
+    padding: 10px 20px;
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 1vw;
+}
+.diachi_container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+.diachi_item {
+    border: 1px solid var(--color-blue);
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+}
+.diachi_item > input{
+    margin: 6px 0;
+    width: 100%;
+}
+.diachi_item_name {
+    font-weight: bold;
+}
+.diachi_item>button, .diachi_item>
+span {
+    margin: 0.5vw;
+}
+.voucher_nhapma {
+    text-align: center;
+}
+.voucher_nhapma > span{
+    font-weight: bold;
+}
+.voucher_nhapma > span, .voucher_nhapma > input, .voucher_nhapma > button{
+    margin-right: 3vw;
+}
+.voucher_nhapma > input {
+    border: 1px solid var(--color-blue);
+    height: 25px;
+}
+.voucher_container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+.voucher_item {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 250px;
+}
+.voucher_item p:nth-child(even) {
+    color: var(--color-red);
+}
+.voucher_item span {
+    color: var(--color-blue);
+}
+.voucher_item #hoso_change{
+    float: right;
+}
+.voucher_item img{
+    width: 30%;
+}
+.donhang_container {
+    display: flex;
+    justify-content: space-evenly;
+}
+.donhang_container>p {
+    margin: 0 5px;
+    cursor: pointer;
+}
+.donhang_container>p:hover {
+    color: var(--color-blue);
+}
+.donhang_container>p.selected {
+    font-weight: bold;
+    text-decoration: underline;
+}
+.donhang_item {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+.donhang_itemdetail{
+    width: 90%;
+    border: 1px solid var(--color-grey);
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin: 10px auto;
+}
+.donhang_itemdetail h5{
+    margin: 5px;
+}
+.donhang_itemdetail p{
+    margin: 5px;
+}
+.donhang_itemdetal_row {
+    display: flex;
+}
+.donhang_itemdetal_row #status{
+    color: var(--color-blue);
+    font-weight: bold;
+    margin-left: 23vw;
+    text-transform: uppercase;
+}
+.donhang_itemdetal_row #totalpayment{
+    margin-left: 17vw;
+    color: var(--color-blue);
+    font-weight: bold;
+}
+.donhang_itemdetal_row #total{
+    margin-left: 20vw;
+}
+.don_item_label{
+    min-width: 160px;
+}
+#newAddress {
+    width: 100%;
+    height: 80px;
+    resize: none;
+    /* Prevent textarea from being resizable by the user */
+    margin-bottom: 10px;
+}
+/* PC - Desktop */
+@media screen and (max-width: 1200px) {
+    
+}
+/* Tablet */
 @media screen and (max-width: 768px) {
-    .Leftt {
-        flex: none; /* On smaller screens, make Left take up full width */
-        margin-right: 0; /* Remove margin right */
+    .circle_img {
+        width: 80px;
+        height: 80px;
     }
+    .taikhoan_item p{
+        font-size: 13px;
+    }
+    .h3{
+        font-size: 20px;
+    }
+    .fullpage{
+        margin-top: 100px;
+    }
+    .donhang_itemdetal_row #totalpayment{
+        margin-left: 18vw;
+    }
+    .donhang_itemdetal_row #total{
+        margin-left: 12vw;
+    }
+}
+/* Mobile */
+@media screen and (max-width: 480px) {
+    .bar_item{
+        flex-direction: row;
+        width: 100%;
+    }
+    .taikhoan_container{
+        flex-direction: column;
+    }
+    .hoso_item{
+        flex-direction: column;
+    }
+
+    .hoso_container{
+        width: 100vw;
+        min-width: 350px;
+    }
+    .fullpage {
+        /* position: fixed; */
+        top: 0px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* background-color: #f5f5f5; */
+        /* padding: 40px; */
+        /* margin-top: 20px; */
+    }
+    .taikhoan_container{
+        width: 100vw;
+    }
+    .hoso_item_row button{
+        margin-left: 28%;
+    }
+    
 }

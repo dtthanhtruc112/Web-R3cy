@@ -16,6 +16,7 @@ body {
     justify-content: center;
     align-items: start;
     flex-wrap: wrap;
+    margin-top: 100px;
     /* Cho phép container chia đều không gian với sidebar */
     /* padding-top: 50px; */
 }
@@ -26,7 +27,7 @@ h2 {
 
 .sidebar {
     min-width: 18vw;
-    max-width: 23vw;
+    max-width: 25vw;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
