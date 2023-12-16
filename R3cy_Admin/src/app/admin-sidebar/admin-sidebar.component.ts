@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ElementRef, NgZone, Renderer2 } from '@angular/core';
 
 @Component({
@@ -7,7 +6,7 @@ import { Component, OnInit, ElementRef, NgZone, Renderer2 } from '@angular/core'
   styleUrls: ['./admin-sidebar.component.css'] // Chú ý ở đây
 })
 export class AdminSidebarComponent implements OnInit {
-  
+
   // ngOnInit(): void {
   //   document.addEventListener('DOMContentLoaded', () => {
   //     const h4Elements = document.querySelectorAll('#sidebar .menuActive');
