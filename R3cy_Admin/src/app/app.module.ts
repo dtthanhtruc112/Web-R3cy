@@ -10,6 +10,7 @@ import { AdminTongquanComponent } from './admin-tongquan/admin-tongquan.componen
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminCustomersComponent } from './admin-customers/admin-customers.component';
+import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AdminCustomersComponent } from './admin-customers/admin-customers.compo
     AdminDonhangComponent,
     AdminSidebarComponent,
     AdminTongquanComponent,
-    AdminCustomersComponent
+    AdminCustomersComponent,
+    ManageBlogComponent
   ],
   imports: [
     BrowserModule,
