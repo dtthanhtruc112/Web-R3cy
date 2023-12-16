@@ -1,0 +1,47 @@
+table{
+    width: 90%;
+
+}
+
+td, th{
+    text-align: left;
+    border-bottom: 1px solid gray;
+
+}
+
+tr, tbody{
+    border-bottom: 1px solid black;
+
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    width: 100%;
+  }
+
+  .container_item {
+    margin: 5px;
+    line-height: 20px;
+  }
+
+  .container_item .find {
+    width: 70%;
+    margin-left: 0;
+  }
+
+  .tieude {
+    flex-direction: column;
+  }
+
+  .tieude h3 {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  table {
+    width: 100%;
+  }
+}
+.title{
+  color: var(--color-blue)
+}

@@ -26,6 +26,7 @@ import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.component';
+import { AdminCustomersComponent } from './admin-customers/admin-customers.component';
 
 
 
@@ -49,7 +50,8 @@ import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.compone
     BlogComponent,
     DetailBlogComponent,
     ManageBlogComponent, ProductComponent, ProductListComponent, DanhgiasanphamComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AdminCustomersComponent
 
   ],
   imports: [
