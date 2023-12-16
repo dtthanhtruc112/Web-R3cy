@@ -22,7 +22,7 @@ div{
     flex: 1;
     max-width: 80vw;
     margin: auto;
-    max-height: 50vh;
+    /* max-height: 50vh; */
     justify-content: center;
     align-items: start;
     /* Cho phép container chia đều không gian với sidebar */
