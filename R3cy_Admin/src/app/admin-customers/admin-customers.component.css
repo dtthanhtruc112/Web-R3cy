@@ -1,6 +1,14 @@
+div{
+  font-family: Inter-Regular;
+}
+
 table{
     width: 90%;
 
+}
+
+.fullpage{
+  margin-left: 270px;
 }
 
 td, th{
