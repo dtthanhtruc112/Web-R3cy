@@ -6,204 +6,214 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Product Cart - R3cy</title> -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="./product-cart.component.css">
+<!-- Style CSS -->
+<link rel="stylesheet" href="./product-cart.component.css">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- ---chưa cài được button quantity-------- -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- ---chưa cài được button quantity-------- -->
 <!-- 
 </head> -->
 
 <!-- <body> -->
 
-    <!--== Wrapper Start ==-->
-    <div class="wrapper">
+<!--== Wrapper Start ==-->
+<div class="wrapper">
 
-        <main class="main-content">
+    <main class="main-content">
 
-            <!--== Start Product Area Wrapper ==-->
-            <section class="section-space">
-                <div class="container">
-                    <div class="shopping-cart-form table-responsive">
-                        <form action="#" method="post">
-                            <table class="table text-center">
-                                <thead>
-                                    <tr>
-                                        <th class="product-remove">&nbsp;</th>
-                                        <th class="product-thumbnail">Sản phẩm</th>
-                                        <th class="product-name">&nbsp;</th>
-                                        <th class="product-price">Giá</th>
-                                        <th class="product-quantity">Số lượng</th>
-                                        <th class="product-subtotal">Tổngg</th>
-                                    </tr>
-                                </thead>
+        <!--== Start Product Area Wrapper ==-->
+        <section class="section-space">
+            <div class="container">
+                <div class="shopping-cart-form table-responsive">
+                    <form action="#" method="post">
+                        <table class="table text-center">
+                            <thead>
+                                <tr>
+                                    <th class="product-remove">&nbsp;</th>
+                                    <th class="product-thumbnail">Sản phẩm</th>
+                                    <th class="product-name">&nbsp;</th>
+                                    <th class="product-price">Giá</th>
+                                    <th class="product-quantity">Số lượng</th>
+                                    <th class="product-subtotal">Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tbody-item">
+                                    <td class="product-remove">
+                                        <a class="remove" href="javascript:void(0)">×</a>
+                                    </td>
+                                    <td class="product-thumbnail">
+                                        <div class="thumb">
+                                            <a href="single-product.html">
+                                                <img src="../../assets/Products/Phu kien/Móc khóa/Móc khóa rùa biển/Hình ảnh/rùa 1.webp"
+                                                    width="100" height="100" alt="Image-Loading">
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="product-name">
+                                        <a class="title"
+                                            href="assets/Products/Phu kien/Móc khóa/Móc khóa rùa biển/Hình ảnh/rùa 2.webp">Móc
+                                            khóa rùa biển</a><br>
+                                        <a class="type minitext">Phân loại: mặc định</a>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="price">250.000</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" class="quantity" title="Quantity" id="show" min="1"
+                                            max="1000" name="show" value="1" type="number" onchange="loadJson()">
+                                        </div>
+
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span class="price">$115.00</span>
+                                    </td>
+                                </tr>
+                                <tr class="tbody-item">
+                                    <td class="product-remove">
+                                        <a class="remove" href="javascript:void(0)">×</a>
+                                    </td>
+                                    <td class="product-thumbnail">
+                                        <div class="thumb">
+                                            <a href="single-product.html">
+                                                <img src="../../assets/Products/Do gia dung/Dia, khay/Lot ly/Hình ảnh/ll2.webp"
+                                                    width="68" height="84" alt="Image-Loading">
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="product-name">
+                                        <a class="title" href="single-product.html">Đế lót ly</a><br>
+                                        <a class="type minitext">Phân loại: mặc định</a>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="price">$95.00</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" class="quantity" title="Quantity" id="show" min="1"
+                                            max="1000" name="show" value="1" type="number" onchange="loadJson()">
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span class="price">$95.00</span>
+                                    </td>
+                                </tr>
+                                <tr class="tbody-item">
+                                    <td class="product-remove">
+                                        <a class="remove" href="javascript:void(0)">×</a>
+                                    </td>
+                                    <td class="product-thumbnail">
+                                        <div class="thumb">
+                                            <a href="single-product.html">
+                                                <img src="../../assets/Products/Do trang tri/Đồng hồ treo tường/Hình ảnh/dh1.jpg"
+                                                    width="68" height="84" alt="Image-Loading">
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="product-name">
+                                        <a class="title" href="single-product.html">Đồng hồ treo tường</a><br>
+                                        <a class="type minitext">Phân loại: mặc định</a>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="price">$79.00</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" class="quantity" title="Quantity" id="show" min="1"
+                                            max="1000" name="show" value="1" type="number" onchange="loadJson()">
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span class="price">$79.00</span>
+                                    </td>
+                                </tr>
+                                <tr class="tbody-item-actions">
+                                    <td colspan="6">
+                                        <button type="submit" class="btn-update-cart disabled" disabled>Cập
+                                            nhật</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="coupon-wrap">
+                            <h4 class="title">Mã giảm giá</h4>
+                            <p class="desc">Nhập mã giảm giá (nếu có)</p>
+                            <input type="text" class="form-control" placeholder="Coupon code">
+                            <button type="button" class="btn-coupon">Áp dụng</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="cart-totals-wrap">
+                            <h2 class="title">Tổng giỏ hàng</h2>
+                            <table>
                                 <tbody>
-                                    <tr class="tbody-item">
-                                        <td class="product-remove">
-                                            <a class="remove" href="javascript:void(0)">×</a>
+                                    <tr class="cart-subtotal">
+                                        <th>Tổng sản phẩm</th>
+                                        <td>
+                                            <span class="amount">$499.00</span>
                                         </td>
-                                        <td class="product-thumbnail">
-                                            <div class="thumb">
-                                                <a href="single-product.html">
-                                                    <img src="../../assets/Products/Phu kien/Móc khóa/Móc khóa rùa biển/Hình ảnh/rùa 1.webp" width="100" height="100"
-                                                        alt="Image-Loading">
-                                                </a>
-                                            </div>
+                                    </tr>
+                                    <tr class="coupon-totals">
+                                        <th>Giảm giá</th>
+                                        <td>
+                                            <span class="amount">$499.00</span>
                                         </td>
-                                        <td class="product-name">
-                                            <a class="title"
-                                                href="assets/Products/Phu kien/Móc khóa/Móc khóa rùa biển/Hình ảnh/rùa 2.webp">Móc
-                                                khóa rùa biển</a><br>
-                                            <a class="type minitext">Phân loại: mặc định</a>
-                                        </td>
-                                        <td class="product-price">
-                                            <span class="price">250.000</span>
-                                        </td>
-                                        <td class="product-quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" class="quantity" title="Quantity" value="1">
+                                    </tr>
+                                    <tr class="shipping-totals">
+                                        <th>Phí vận chuyển</th>
+                                        <td>
+                                            <ul class="shipping-list">
 
-                                            </div>
-                                          
-                                        </td>
-                                        <td class="product-subtotal">
-                                            <span class="price">$115.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="tbody-item">
-                                        <td class="product-remove">
-                                            <a class="remove" href="javascript:void(0)">×</a>
-                                        </td>
-                                        <td class="product-thumbnail">
-                                            <div class="thumb">
-                                                <a href="single-product.html">
-                                                    <img src="../../assets/Products/Do gia dung/Dia, khay/Lot ly/Hình ảnh/ll2.webp"
-                                                        width="68" height="84" alt="Image-Loading">
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="product-name">
-                                            <a class="title" href="single-product.html">Đế lót ly</a><br>
-                                            <a class="type minitext">Phân loại: mặc định</a>
-                                        </td>
-                                        <td class="product-price">
-                                            <span class="price">$95.00</span>
-                                        </td>
-                                        <td class="product-quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" class="quantity" title="Quantity" value="1">
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">
-                                            <span class="price">$95.00</span>
+                                                <li class="radio">
+                                                    <input type="radio" name="shipping" id="save">
+                                                    <label for="save">Tiết kiệm<span style="font-size: 10px;">(4-7
+                                                            ngày)</span>: 15.000đ</label>
+                                                </li>
+                                                <li class="radio">
+                                                    <input type="radio" name="shipping" id="fast">
+                                                    <label for="fast">Nhanh<span style="font-size: 10px;">(3-5
+                                                            ngày)</span>: 35.000đ</label>
+                                                </li>
+
+
+
+                                            </ul>
+                                            <p class="destination">Gửi đến <strong>Địa chỉ lưu sẵn: TP. Thủ
+                                                    Đức</strong>.</p>
+                                            <a href="" routerLink="/trangtaikhoan" routerLinkActive="active"
+                                                class="btn-shipping-address">Thay đổi địa
+                                                chỉ</a>
                                         </td>
                                     </tr>
-                                    <tr class="tbody-item">
-                                        <td class="product-remove">
-                                            <a class="remove" href="javascript:void(0)">×</a>
-                                        </td>
-                                        <td class="product-thumbnail">
-                                            <div class="thumb">
-                                                <a href="single-product.html">
-                                                    <img src="../../assets/Products/Do trang tri/Đồng hồ treo tường/Hình ảnh/dh1.jpg"
-                                                        width="68" height="84" alt="Image-Loading">
-                                                </a>
-                                            </div>
-                                        </td>
-                                        <td class="product-name">
-                                            <a class="title" href="single-product.html">Đồng hồ treo tường</a><br>
-                                            <a class="type minitext">Phân loại: mặc định</a>
-                                        </td>
-                                        <td class="product-price">
-                                            <span class="price">$79.00</span>
-                                        </td>
-                                        <td class="product-quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" class="quantity" title="Quantity" value="1">
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">
-                                            <span class="price">$79.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="tbody-item-actions">
-                                        <td colspan="6">
-                                            <button type="submit" class="btn-update-cart disabled" disabled>Cập
-                                                nhật</button>
+                                    <tr class="order-total">
+                                        <th>Total</th>
+                                        <td>
+                                            <span class="amount">$504.00</span>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <div class="coupon-wrap">
-                                <h4 class="title">Mã giảm giá</h4>
-                                <p class="desc">Nhập mã giảm giá (nếu có)</p>
-                                <input type="text" class="form-control" placeholder="Coupon code">
-                                <button type="button" class="btn-coupon">Áp dụng</button>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="cart-totals-wrap">
-                                <h2 class="title">Tổng giỏ hàng</h2>
-                                <table>
-                                    <tbody>
-                                        <tr class="cart-subtotal">
-                                            <th>Tổng sản phẩm</th>
-                                            <td>
-                                                <span class="amount">$499.00</span>
-                                            </td>
-                                        </tr>
-                                        <tr class="shipping-totals">
-                                            <th>Phí vận chuyển</th>
-                                            <td>
-                                                <ul class="shipping-list">
-
-                                                    <li class="radio">
-                                                        <input type="radio" name="shipping" id="save">
-                                                        <label for="save">Tiết kiệm<span style="font-size: 10px;">(4-7
-                                                                ngày)</span>: 15.000đ</label>
-                                                    </li>
-                                                    <li class="radio">
-                                                        <input type="radio" name="shipping" id="fast">
-                                                        <label for="fast">Nhanh<span style="font-size: 10px;">(3-5
-                                                                ngày)</span>: 35.000đ</label>
-                                                    </li>
-
-
-
-                                                </ul>
-                                                <p class="destination">Gửi đến <strong>Địa chỉ lưu sẵn: TP. Thủ
-                                                        Đức</strong>.</p>
-                                                <a href="" routerLink="/trangtaikhoan" routerLinkActive="active"class="btn-shipping-address">Thay đổi địa
-                                                    chỉ</a>
-                                            </td>
-                                        </tr>
-                                        <tr class="order-total">
-                                            <th>Total</th>
-                                            <td>
-                                                <span class="amount">$504.00</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="text-end">
-                                    <a href="product-checkout.component.html" class="checkout-button">Tiếp tục thanh toán</a>
-                                </div>
+                            <div class="text-end">
+                                <a href="product-checkout.component.html" class="checkout-button">Tiếp tục thanh
+                                    toán</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!--== End Product Area Wrapper ==-->
+            </div>
+        </section>
+        <!--== End Product Area Wrapper ==-->
 
-        </main>
-    </div>
-    <!--== Wrapper End ==-->
+    </main>
+</div>
+<!--== Wrapper End ==-->
 
 
 <!-- </body> -->

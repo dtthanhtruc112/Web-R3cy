@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Checkout-R3cy</title>
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="product-checkout.component.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    function handleCountrySelection(value) {
+        if (value === 'other') {
+            document.getElementById('otherCountryInput').style.display = 'block';
+            document.getElementById('otherCountryInput').focus();
+        } else {
+            document.getElementById('otherCountryInput').style.display = 'none';
+        }
+    }
+    </script>
+    
+
+</head>
+
+<body>
+
+
+    <main class="main-content">
+
+        <!--== Start Shopping Checkout Area Wrapper ==-->
+        <section class="shopping-checkout-wrap section-space">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!--== Start Billing Accordion ==-->
+                        <div class="checkout-billing-details-wrap">
+                            <h2 class="title">Thông tin giao hàng</h2>
+                            <div class="billing-form-wrap">
+                                <form action="#" method="post">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="f_name">Họ và tên <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input id="f_name" type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="country"> Quốc Gia <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <select id="country" class="form-control wide" onchange="handleCountrySelection(this.value)">
+                                                    <option>Việt Nam</option>
+                                                    <option>Thái Lan</option>
+                                                    <option>Pakistan</option>
+                                                    <option>England</option>
+                                                    <option>China</option>
+                                                    <option value="other">Nhập quốc gia khác...</option>                                              
+                                                </select>
+                                                <input type="text" id="otherCountryInput" class="form-control wide" style="display: none">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="pz-code">Postcode / ZIP</label>
+                                                <input id="pz-code" type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="town">Tỉnh/Thành phố <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input id="town" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-4">
+                                            <div class="form-group">
+                                                <label for="district">Quận/Huyện <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input id="district" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="street-address"> Địa chỉ chi tiết <abbr class="required"
+                                                    title="required">*</abbr></label>
+                                            <input id="street-address" type="text" class="form-control"
+                                                placeholder="Số nhà, tên đường">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="phone"> Số điện thoại</label>
+                                                <input id="phone" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="email">Email <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input id="email" type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-0">
+                                                <label for="order-notes"> Ghi chú (Tuỳ chọn)</label>
+                                                <textarea id="order-notes" class="form-control"
+                                                    placeholder="Chú thích cho đơn hàng của bạn"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--== End Billing Accordion ==-->
+                    </div>
+                    <div class="col-lg-6">
+                        <!--== Start Order Details Accordion ==-->
+                        <div class="checkout-order-details-wrap">
+                            <div class="order-details-table-wrap table-responsive">
+                                <h2 class="title mb-25">Đơn hàng của bạn</h2>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name">Sản phẩm</th>
+                                            <th class="product-total">Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-body">
+                                        <tr class="cart-item">
+                                            <td class="product-name">Móc khóa rùa biển <span class="product-quantity">×
+                                                    1</span></td>
+                                            <td class="product-total">$69.99</td>
+                                        </tr>
+                                        <tr class="cart-item">
+                                            <td class="product-name">Đế lót ly <span class="product-quantity">× 1</span>
+                                            </td>
+                                            <td class="product-total">$20.00</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot class="table-foot">
+                                        <tr class="cart-subtotal">
+                                            <th>Tổng cộng</th>
+                                            <td>$89.99</td>
+                                        </tr>
+                                        <tr class="shipping">
+                                            <th>Phí vận chuyển</th>
+                                            <td>Áp dụng giao nhanh/ tiết kiệm</td>
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th>Tổng đơn hàng </th>
+                                            <td>$91.99</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="shop-payment-method">
+                                    <div id="PaymentMethodAccordion">
+                                        <div class="card">
+                                            <div class="card-header" id="check_payments">
+                                                <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemOne"
+                                                    aria-controls="itemOne" aria-expanded="true">Chuyển khoản ngân hàng
+                                                </h5>
+                                            </div>
+                                            <div id="itemOne" class="collapse show" aria-labelledby="check_payments"
+                                                data-bs-parent="#PaymentMethodAccordion">
+                                                <div class="card-body">
+                                                    <p>Chuyển khoản trong vòng 24 giờ sau khi đặt hàng<br>
+                                                        Chủ tài khoản: TRAN KIEU ANH<br>
+                                                        Số tài khoản: 16610000089610<br>
+                                                        Ngân hàng Đầu tư và Phát triển Việt Nam BIDV – Chi nhánh Sở Giao
+                                                        dịch 2<br>
+                                                        Nội dung thanh toán theo cú pháp: [Họ tên] – [Số điện thoại]<br>
+                                                        *Vui lòng thực hiện thanh toán trong vòng 24 giờ sau khi đặt
+                                                        hàng. Đơn hàng sẽ bị hủy nếu chưa nhận được chuyển khoản quá
+                                                        thời gian trên.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-header" id="check_payments3">
+                                                <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemThree"
+                                                    aria-controls="itemTwo" aria-expanded="false">Ví Momo</h5>
+                                            </div>
+                                            <div id="itemThree" class="collapse" aria-labelledby="check_payments3"
+                                                data-bs-parent="#PaymentMethodAccordion">
+                                                <div class="card-body">
+                                                    <img src="momo.png" alt="" width="300px">
+                                                    <p>0911 082 822 – TRAN KIEU ANH</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="check_payments4">
+                                                <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemFour"
+                                                    aria-controls="itemTwo" aria-expanded="false">Thanh toán khi nhận
+                                                    hàng</h5>
+                                            </div>
+                                            <div id="itemFour" class="collapse" aria-labelledby="check_payments4"
+                                                data-bs-parent="#PaymentMethodAccordion">
+                                                <div class="card-body">
+                                                    <p>Thanh toán khi nhận hàng</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="p-text">Dữ liệu cá nhân của chúng tôi sẽ được sử dụng để xử lý đơn đặt
+                                        hàng của bạn, hỗ trợ trải nghiệm của bạn trên trang web này và cho các mục đích
+                                        khác được mô tả trong phần của chúng tôi.
+                                        <a href="#/">Chính sách bảo mật</a>
+                                    </p>
+                                    <div class="agree-policy">
+                                        <div>
+                                            <label for="privacy" class="custom-control-label">
+                                                <span class="checkbox-wrapper">
+                                                    <input type="checkbox" id="privacy">
+                                                </span>
+                                                Tôi đã đọc và đồng ý với các điều khoản và điều kiện của trang web
+                                                <span class="required">*</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <a href="account.html" class="btn-place-order">Đặt hàng</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Order Details Accordion ==-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Shopping Checkout Area Wrapper ==-->
+
+    </main>
+
+</body>
+
+</html>
