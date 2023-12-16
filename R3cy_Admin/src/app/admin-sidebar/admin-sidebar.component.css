@@ -1,3 +1,7 @@
+div{
+  font-family: Inter-Regular;
+}
+
 #sidebar {
   position: fixed;
   width: 250px;
@@ -75,6 +79,7 @@ margin-bottom: auto; /* Đặt margin-bottom là auto để logo nằm ở đầ
   justify-content: space-between;
   align-items: center;
   padding: 10px; /* Thêm padding cho đỡ sát mép màn hình */
+  margin-top: -130px
 }
 
 .containerSetting {

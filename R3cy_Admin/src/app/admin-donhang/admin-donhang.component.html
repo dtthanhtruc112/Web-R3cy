@@ -49,7 +49,7 @@
                         <th>Khách hàng</th>
                         <th>Thanh toán</th>
                         <th>Tổng tiền</th>
-                        <th>Hủy</th>
+                        <th>Từ chối</th>
                     </tr>
                     <tbody>
                         <td>#11432</td>
@@ -107,8 +107,8 @@
                 <button class="p" (click)="closePopup()">Đóng</button>
             </div>
             <div class="popup" *ngIf="reasonPopup">
-                <h2 class="h2">Thêm lý do hủy</h2>
-                <textarea class="p" id="reason" placeholder="Nhập lý do hủy..." [(ngModel)]="reason"></textarea>
+                <h2 class="h2">Thêm lý do từ chối</h2>
+                <textarea class="p" id="reason" placeholder="Nhập lý do từ chối..." [(ngModel)]="reason"></textarea>
                 <br>
                 <button class="p" (click)="addReason()">Cập nhật</button>
                 <button class="p" (click)="closePopup()">Đóng</button>
