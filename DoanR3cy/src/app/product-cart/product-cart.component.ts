@@ -3,6 +3,7 @@ import { product } from '../Interface/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../Service/product.service';
 import { map, switchMap } from 'rxjs';
+import { CartService } from '../Service/cart.service';
 
 
 @Component({
@@ -11,19 +12,18 @@ import { map, switchMap } from 'rxjs';
   styleUrl: './product-cart.component.css'
 })
 export class ProductCartComponent {
-  product: any;
-  errMsg: string ="";
+  cartItems: any[] = [];
 
-  selectedCode: any;
-  constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute) {}
+  constructor(private cartService: CartService) {}
 
-  ngOnInit() {
-    this.productService.getData().subscribe((data: product[]) => {
-      this.product = data;
-    });
+  ngOnInit(): void {
+    this.cartItems = this.cartService.getCartItems();
+  }
+
+  addProductToCart(productt: any): void {
+    this.cartService.addItemToCart(productt);
   }
 
 
-  
 
 }

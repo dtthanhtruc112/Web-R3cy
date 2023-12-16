@@ -39,23 +39,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="tbody-item" *ngFor="let p of product">
+                                <tr class="tbody-item" *ngFor="let item of cartItems">
                                     <td class="product-remove">
                                         <a class="remove" href="javascript:void(0)">×</a>
                                     </td>
                                     <td class="product-thumbnail">
                                         <div class="thumb">
 
-                                            <img [src]="p.img1" width="100" height="100" alt="Image-Loading">
+                                            <img [src]="item.img1" width="100" height="100" alt="Image-Loading">
 
                                         </div>
                                     </td>
                                     <td class="product-name">
-                                        <a class="title" href="">{{p.name}}</a><br>
-                                        <a class="type minitext">Phân loại: {{p.opt1}}</a>
+                                        <a class="title" href="">{{item.name}}</a><br>
+                                        <a class="type minitext">Phân loại: {{item.opt1}}</a>
                                     </td>
                                     <td class="product-price">
-                                        <span class="price">{{p.price}}.000 đ</span>
+                                        <span class="price">{{item.price}}.000 đ</span>
                                     </td>
                                     <td class="product-quantity">
                                         <div class="pro-qty">
