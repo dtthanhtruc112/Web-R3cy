@@ -1,0 +1,102 @@
+div {
+    font-family: Inter-Regular;
+}
+
+.containerAll {
+    width: 70%;
+    height: 100vh;
+    background-color: var(--color-white);
+    color: var(--color-blue);
+    box-sizing: border-box;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+tr {
+    border: 1px solid white;
+}
+
+.btn {
+    padding: 4px 8px;
+    margin-right: 10px;
+    background-color: var(--color-lightblue);
+    border: 0.5px solid var(--color-blue);
+    border-radius: 5px;
+}
+
+.containerTop {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.containerLeft,
+.containerRight {
+    flex: 1; /* Sử dụng flex để tự động chiếm phần còn lại */
+    border: 1px solid #7B7F80;
+    border-radius: 5px;
+}
+
+.containerLeft {
+    padding: 10px;
+}
+
+.containerRight {
+    padding: 10px;
+}
+
+.containerBottom {
+    width: 100%;
+    border: 1px solid #7B7F80;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.dongtittle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Duy trì khoảng cách đều */
+    align-items: flex-end;
+}
+.viewDetail {
+    font-size: 13px;
+    font-style: italic;
+    text-decoration: underline;
+}
+@media screen  and (max-width: 480px){
+    
+    .containerTop {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
+    
+      .containerLeft,
+      .containerRight {
+        width: 100%;
+        margin-right: 0;
+      }
+      .containerLeft,
+        .containerRight,
+        .containerBottom {
+            box-sizing: border-box;
+        }
+    
+      .containerRight {
+        margin-top: 10px;
+      }
+}
