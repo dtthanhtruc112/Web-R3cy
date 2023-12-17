@@ -7,8 +7,8 @@
             <div class="tieude">
                 <h3 class="h3" (click)="showContent('trang-thai-don-hang')" [ngClass]="{ 'selected': selectedbar === 'trang-thai-don-hang' }">Trạng thái đơn hàng</h3>
                 <h3 class="h3" (click)="showContent('don-hang-moi')" [ngClass]="{ 'selected': selectedbar === 'don-hang-moi' }">Đơn hàng mới</h3>
-                <h3 class="h3" (click)="showContent('chua-giao-hang')" [ngClass]="{ 'selected': selectedbar === 'chua-giao-hang' }">Chưa giao hàng</h3>
-                <h3 class="h3" (click)="showContent('chua-thanh-toan')" [ngClass]="{ 'selected': selectedbar === 'chua-thanh-toan' }">Chưa thanh toán</h3>
+                <h3 class="h3" (click)="showContent('chua-nhan-hang')" [ngClass]="{ 'selected': selectedbar === 'chua-nhan-hang' }">Chưa nhận hàng</h3>
+                <h3 class="h3" (click)="showContent('da-giao')" [ngClass]="{ 'selected': selectedbar === 'da-giao' }">Hoàn thành</h3>
             </div>
         </div>
         <div class="container_item">
@@ -27,7 +27,7 @@
                         <th>Mã</th>
                         <th>Ngày tạo</th>
                         <th>Khách hàng</th>
-                        <th>Thanh toán</th>
+                        <th>Phương thức</th>
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
@@ -47,9 +47,9 @@
                         <th>Mã</th>
                         <th>Ngày tạo</th>
                         <th>Khách hàng</th>
-                        <th>Thanh toán</th>
+                        <th>Phương thức</th>
                         <th>Tổng tiền</th>
-                        <th>Từ chối</th>
+                        <th>Xử lý </th>
                     </tr>
                     <tbody>
                         <td>#11432</td>
@@ -57,17 +57,17 @@
                         <td>Đặng Thanh Trúc</td>
                         <td>Bank</td>
                         <td>200.000đ</td>
-                        <td><i class="bi bi-trash3-fill" (click)="openPopup()"></i></td>
+                        <td><i class="bi bi-check-circle-fill"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="selectedbar === 'chua-giao-hang'">
+            <div *ngIf="selectedbar === 'chua-nhan-hang'">
                 <table>
                     <tr>
                         <th>Mã</th>
                         <th>Ngày tạo</th>
                         <th>Khách hàng</th>
-                        <th>Thanh toán</th>
+                        <th>Phương thức</th>
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
@@ -81,13 +81,13 @@
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="selectedbar === 'chua-thanh-toan'">
+            <div *ngIf="selectedbar === 'da-giao'">
                 <table>
                     <tr>
                         <th>Mã</th>
                         <th>Ngày tạo</th>
                         <th>Khách hàng</th>
-                        <th>Thanh toán</th>
+                        <th>Phương thức</th>
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
@@ -96,7 +96,7 @@
                         <td>10/11/2023</td>
                         <td>Đặng Thanh Trúc</td>
                         <td>Bank</td>
-                        <td>Chờ xử lý</td>
+                        <td>Đã giao</td>
                         <td>200.000đ</td>
                     </tbody>
                 </table>

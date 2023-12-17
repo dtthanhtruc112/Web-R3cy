@@ -78,6 +78,12 @@ tr, tbody{
 td >i {
     color: var(--color-blue);
     cursor: pointer;
+    margin: 5px;
+    font-size: 20px;
+}
+
+td >i:hover{
+    color:#85cfef
 }
 
 .overlay {
