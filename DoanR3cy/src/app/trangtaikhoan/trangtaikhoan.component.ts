@@ -277,7 +277,7 @@ export class TrangtaikhoanComponent implements OnInit {
 
   isEligibleForReview(order: Order): boolean {
     // Check if order status is 'Đã giao' and every product in the order has 'danhgia' as ''
-    return order.status === 'Đã giao' && order.products.every(product => product.danhgia === '');
+    return order.status === 'Đã giao' && order.products.every(product => product.feedback === '');
 }
 
   extractOrderIds(): void {

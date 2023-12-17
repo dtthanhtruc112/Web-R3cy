@@ -6,20 +6,22 @@ export interface Product {
     price: number;
     quantity: number;
     productValue?: number;
-    danhgia: string
+    feedback: string;
   }
   
   export interface Order {
     ordernumber: number;
     products: Product[];
     status: string;
+    ordereddate: string;
+    paymentmethod: string;
+    paymentstatus: string;
     totalOrderValue?: number;
   }
   
   export interface UserOrders {
     userid: number;
-    ngaytao: string;
-    thanhtoan: string;
+    channel: string,
     orders: Order[];
   }
   
