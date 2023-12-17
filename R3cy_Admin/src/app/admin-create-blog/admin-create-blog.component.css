@@ -6,6 +6,7 @@ div {
 .containerAll {
     width: 70%;
     margin: auto; /* Center the container */
+    margin-left: 290px;
 }
 
 .containerContent {
@@ -55,4 +56,12 @@ div {
 }
 .Button{
     text-align: center;
+}
+
+@media screen and (max-width: 480px){
+    .containerAll{
+    
+        margin-left: 0px;
+        margin-top: 130px;
+    }
 }
