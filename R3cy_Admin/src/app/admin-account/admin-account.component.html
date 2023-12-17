@@ -1,0 +1,46 @@
+<!-- admin-account.component.html -->
+
+<link rel="stylesheet" href="../../assets/themify-icons-font/themify-icons/themify-icons.css">
+
+<div class="container">
+    <div class="header">
+        <div class="h4 font-bold">Quản lý tài khoản</div>
+      </div>
+      
+      <div class="newadmin">
+          <button class="add-button font-bold" (click)="handleAddAdmin()"><p class="p">Thêm admin</p></button>
+      </div>
+      
+      <div class="p font-bold">Danh sách admin</div>
+      <div class="content">
+          <table>
+            <thead>
+              <tr>
+                <th *ngFor="let columnName of customColumnNames">{{ columnName }}</th>
+              </tr>
+            </thead>
+      
+            <tbody>
+              <tr *ngFor="let user of userData; let i = index">
+                <td>{{ i + 1 }}</td>
+                <ng-container *ngIf="!isEditing || editedUserId !== user.id; else editMode">
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.phone }}</td>
+                </ng-container>
+                <ng-template #editMode>
+                  <td><input type="text" [(ngModel)]="editedUser.name"></td>
+                  <td><input type="text" [(ngModel)]="editedUser.email"></td>
+                  <td><input type="text" [(ngModel)]="editedUser.phone"></td>
+                </ng-template>
+                <td>
+                  <span *ngIf="!isEditing || editedUserId !== user.id" class="ti-pencil" (click)="handleEditClick(user.id)"></span>
+                  <span *ngIf="isEditing && editedUserId === user.id" class="ti-save" (click)="handleSaveClick()"></span>
+                  <span class="ti-trash" (click)="handleDeleteClick(user.id)"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+</div>
+

@@ -1,0 +1,36 @@
+<!-- admin-custom-product.component.html -->
+
+<div class="header">
+  <div class="h4 font-bold">Quản lý sản phẩm custom</div>
+</div>
+
+<div class="container">
+  <div class="sub-header">
+
+    <div class="sort font-bold">
+      <label for="sortInput"><p>Hiển thị </p><input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable()" class="font-bold"></label>
+    </div>
+
+    <div class="search">
+      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchKeyword" (keyup.enter)="handleSearch()">
+    </div>
+  </div>
+
+  <div class="content">
+    <table *ngIf="displayedData.length > 0">
+      <thead>
+        <tr>
+          <th *ngFor="let columnName of customColumnNames">{{ columnName }}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of displayedData">
+          <td *ngFor="let key of getObjectKeys(item)">
+            {{ getItemValue(item, key) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
