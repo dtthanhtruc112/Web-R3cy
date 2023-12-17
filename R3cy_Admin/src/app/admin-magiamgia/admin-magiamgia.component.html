@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+<div class="fullpage">
+    <h3 class="h3">Sản phẩm</h3>
+    <button>+ Thêm sản phẩm mới</button>
+    <br>
+    <div class="container">
+        <div class="container_item">
+            <div class="tieude">
+                <h4 class="h4" (click)="showContent('trang-thai-don-hang')" [ngClass]="{ 'selected': selectedbar === 'trang-thai-don-hang' }">Tất cả sản phẩm</h4>
+                <h4 class="h4" (click)="showContent('don-hang-moi')" [ngClass]="{ 'selected': selectedbar === 'don-hang-moi' }">Tồn kho</h4>
+            </div>
+        </div>
+        <div class="container_item">
+            <label for="show">Hiển thị: 
+                <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1" type="number" onchange="loadJson()">
+            </label>
+        </div>
+        <div class="container_item">
+            <button>Thêm điều kiện lọc</button>
+            <input type="text" placeholder="Tìm kiếm">
+        </div>
+        <div class="container_item">
+            <div *ngIf="selectedbar === 'trang-thai-don-hang'">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Tên</th>
+                        <th>Phân loại</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                    <tbody>
+                        <td></td>
+                        <td>Cốc thủy tinh 300ml</td>
+                        <td>Đồ trang trí</td>
+                        <td>Bank</td>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="selectedbar === 'don-hang-moi'">
+                <table>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Ngày tạo</th>
+                        <th>Khách hàng</th>
+                        <th>Phương thức</th>
+                        <th>Tổng tiền</th>
+                        <th>Xử lý </th>
+                    </tr>
+                    <tbody>
+                        <td>#11432</td>
+                        <td>10/11/2023</td>
+                        <td>Đặng Thanh Trúc</td>
+                        <td>Bank</td>
+                        <td>200.000đ</td>
+                        <td><i class="bi bi-check-circle-fill"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
+                    </tbody>
+                </table>
+            </div>
+            <div class="overlay" *ngIf="showOverlay"></div>
+            <div class="popup" *ngIf="showSuccessPopup">
+                <p class="p">Đã lưu thông tin thành công!</p>
+                <button class="p" (click)="closePopup()">Đóng</button>
+            </div>
+            <div class="popup" *ngIf="reasonPopup">
+                <h2 class="h2">Thêm lý do từ chối</h2>
+                <textarea class="p" id="reason" placeholder="Nhập lý do từ chối..." [(ngModel)]="reason"></textarea>
+                <br>
+                <button class="p" (click)="addReason()">Cập nhật</button>
+                <button class="p" (click)="closePopup()">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

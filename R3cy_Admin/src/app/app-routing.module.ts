@@ -6,6 +6,8 @@ import { AdminTongquanComponent } from './admin-tongquan/admin-tongquan.componen
 import { AdminDonhangComponent } from './admin-donhang/admin-donhang.component';
 import { AdminCustomersComponent } from './admin-customers/admin-customers.component';
 import { ManageBlogComponent } from './manage-blog/manage-blog.component';
+import { AdminSanphamComponent } from './admin-sanpham/admin-sanpham.component';
+import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.component';
 
 const routes: Routes = [  
 { path: 'createblog', component: AdminCreateBlogComponent},
@@ -14,6 +16,8 @@ const routes: Routes = [
 { path: 'donhang', component: AdminDonhangComponent},
 { path: 'customer', component: AdminCustomersComponent},
 { path: 'blog', component: ManageBlogComponent},
+{ path: 'sanpham', component: AdminSanphamComponent},
+{ path: 'magiamgia', component: AdminMagiamgiaComponent},
 { path: '', redirectTo: '/tongquan', pathMatch: 'full' }
 ];
 
