@@ -156,3 +156,11 @@ button{
         margin-top: 130px;
     }
 }
+
+@media screen and (max-width: 480px){
+    .fullpage{
+    
+        margin-left: 0px;
+        margin-top: 130px;
+    }
+}
