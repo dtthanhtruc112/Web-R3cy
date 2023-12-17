@@ -21,6 +21,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.component';
 import { ProductCheckoutComponent } from './product-checkout/product-checkout.component';
+import { ThugomComponent } from './thugom/thugom.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent},
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'product/:id', component: ProductComponent},
   { path: 'danhgia/:id', component: DanhgiasanphamComponent},
   { path: 'checkout', component: ProductCheckoutComponent},
+  { path: 'thugom', component: ThugomComponent},
   // { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/main-page', pathMatch: 'full' }, // Trang mặc định
   {path: "**", component: PageNotFoundComponent}

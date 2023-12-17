@@ -235,6 +235,30 @@ export class TrangtaikhoanComponent implements OnInit {
     this.filterOrders();
   }
 
+  onButtonClick(order: Order): void {
+    if (order.status === 'Chờ xử lí') {
+        // Add logic to cancel the order
+        // For example, you can update the status to "Đã hủy"
+        order.status = 'Đã hủy';
+
+        // You can call a service method to update the order status on the backend
+        // this._orderService.cancelOrder(order.ordernumber).subscribe(response => {
+        //     console.log(`Order ${order.ordernumber} has been canceled.`);
+        // });
+
+        console.log(`Order ${order.ordernumber} has been canceled.`);
+        
+        // You may add additional logic here based on your requirements
+    } else {
+        // Add logic to repurchase the order
+        // You can navigate to the product cart or perform any other action needed for repurchasing
+        console.log(`Repurchase order ${order.ordernumber}`);
+        
+        // Example: Navigate to product-cart
+        // this.router.navigate(['/product-cart']);
+    }
+}
+
 
   days: number[] = Array.from({ length: 31 }, (_, i) => i + 1);
   months: number[] = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -252,8 +276,9 @@ export class TrangtaikhoanComponent implements OnInit {
   }
 
   isEligibleForReview(order: Order): boolean {
-    return order.status === 'Đã giao' && order.danhgia === '';
-  }
+    // Check if order status is 'Đã giao' and every product in the order has 'danhgia' as ''
+    return order.status === 'Đã giao' && order.products.every(product => product.danhgia === '');
+}
 
   extractOrderIds(): void {
     const filteredOrders = this.filteredOrders();

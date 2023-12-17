@@ -1,6 +1,7 @@
 .containerPage {
     font-size: 18px;
     font-family: Inter-Regular;
+    margin-top: 100px;
 }
 
 .containerThugom {
@@ -79,6 +80,5 @@
 }
 h3 .Contact--right{
     font-family: Inter-Inter-Bold;
-    src: url('../../assets/font/Inter-Bold.ttf');
     font-weight: bold;
 }

@@ -6,13 +6,13 @@ export interface Product {
     price: number;
     quantity: number;
     productValue?: number;
+    danhgia: string
   }
   
   export interface Order {
     ordernumber: number;
     products: Product[];
     status: string;
-    danhgia: string;
     totalOrderValue?: number;
   }
   

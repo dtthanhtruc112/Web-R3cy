@@ -1,7 +1,6 @@
 [
     {
         "userid": 1,
-        "ngaytao": "10/11/2023",
         "thanhtoan": "Bank: ACB",
         "kenh": "Website",
         "orders": [
@@ -14,7 +13,8 @@
                         "category2": "dia-khay",
                         "name": "Đĩa nhỏ",
                         "price": 100000,
-                        "quantity": 2
+                        "quantity": 2,
+                        "danhgia": "" 
                     },
                     {
                         "id": 2,
@@ -22,11 +22,13 @@
                         "category2": "dia-khay",
                         "name": "Khay đựng xà phòng",
                         "price": 150000,
-                        "quantity": 1
+                        "quantity": 1,
+                        "danhgia": "" 
                     }
                 ],
                 "status": "Đang giao",
-                "danhgia": ""
+                "danhgia": "",                
+                "ngaytao": "04/01/2023"
             },
             {
                 "ordernumber": 1002,
@@ -37,11 +39,12 @@
                         "category2": "dia-khay",
                         "name": "Lót ly",
                         "price": 90000,
-                        "quantity": 3
+                        "quantity": 3,
+                        "danhgia": "" 
                     }
                 ],
-                "status": "Đã giao",
-                "danhgia": ""
+                "status": "Đã giao",            
+                "ngaytao": "05/03/2023"
             },
             {
                 "ordernumber": 1003,
@@ -52,7 +55,8 @@
                         "category2": "khac",
                         "name": "Giá đỡ laptop",
                         "price": 200000,
-                        "quantity": 1
+                        "quantity": 1,
+                        "danhgia": ""  
                     },
                     {
                         "id": 5,
@@ -60,11 +64,13 @@
                         "category2": "khac",
                         "name": "Giá treo đồ",
                         "price": 150000,
-                        "quantity": 3
+                        "quantity": 3,
+                        "danhgia": ""  
                     }
                 ],
                 "status": "Đang giao",
-                "danhgia": ""
+                              
+                "ngaytao": "06/06/2023"
             },
             {
                 "ordernumber": 1004,
@@ -75,11 +81,12 @@
                         "category2": "dia-khay",
                         "name": "Lót ly",
                         "price": 90000,
-                        "quantity": 5
+                        "quantity": 5,
+                        "danhgia": "Rất tốt"
                     }
                 ],
-                "status": "Đã giao",
-                "danhgia": "Rất tốt"
+                "status": "Đã giao",                             
+                "ngaytao": "24/07/2023"
             },
             {
                 "ordernumber": 1005,
@@ -90,11 +97,28 @@
                         "category2": "dia-khay",
                         "name": "Lót ly",
                         "price": 90000,
-                        "quantity": 7
+                        "quantity": 7,
+                        "danhgia": ""
                     }
                 ],
-                "status": "Đã hủy",
-                "danhgia": ""
+                "status": "Đã hủy",                              
+                "ngaytao": "30/09/2023"
+            },
+            {
+                "ordernumber": 1006,
+                "products": [
+                    {
+                        "id": 3,
+                        "category1": "gia-dung",
+                        "category2": "dia-khay",
+                        "name": "Lót ly",
+                        "price": 90000,
+                        "quantity": 7,
+                        "danhgia": ""  
+                    }
+                ],
+                "status": "Chờ xử lí",                           
+                "ngaytao": "16/12/2023"
             }
         ]
     }
