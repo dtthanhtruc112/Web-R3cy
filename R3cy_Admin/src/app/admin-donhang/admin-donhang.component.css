@@ -51,6 +51,7 @@ h3{
 
 .tieude{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .tieude h4{
