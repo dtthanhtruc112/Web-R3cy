@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { UsersService } from '../Service/users.service';
 import { OrderService } from '../Service/order.service';
-import {UserOrders, Order, Product  } from '../Interface/Order';
+import {Order, Product  } from '../Interface/Order';
 import { ChangeDetectorRef } from '@angular/core';
 
 
@@ -175,71 +175,120 @@ export class TrangtaikhoanComponent implements OnInit {
     });
   }
 
-  Orders: Order[] = [];
+  // Orders: Order[] = [];
+  // totalOrderValue: number = 0;
+  // selectedStatus: string = 'Tất cả đơn hàng';
+  // initialOrders: Order[] = [];
+  
+  // loadOrderInfo(): void {
+  //   this._orderService.getOrderByUserId(1).subscribe((userOrders: Order[] | undefined) => {
+  //     if (userOrders) {
+  //       this.Orders = userOrders.map(order => {
+  //         const mappedOrder: Order = {
+  //           ...order,
+  //           products: order.products.map(product => {
+  //             const productValue = product.quantity * product.price;
+  //             return {
+  //               ...product,
+  //               productValue: productValue
+  //             };
+  //           }),
+  //           totalOrderValue: 0 // Initialize totalOrderValue to 0
+  //         };
+  //         mappedOrder.totalOrderValue = this.calculateTotalOrderValue(mappedOrder); // Calculate totalOrderValue
+  //         console.log(`Order ${order.ordernumber}: Total Order Value=${mappedOrder.totalOrderValue}`);
+  //         return mappedOrder;
+  //       });
+  
+  //       this.initialOrders = [...this.Orders];
+  //       this.filterOrders();
+  
+  //       // Log total order value for each order
+  //       this.Orders.forEach(order => {
+  //         console.log(`Order Number ${order.ordernumber}: Total Order Value = ${order.totalOrderValue}`);
+  //       });
+  //     }
+  //   });
+  // }
+  
+  // calculateTotalOrderValue(order: Order): number {
+  //   return order.products.reduce((orderTotal: number, product: Product) => {
+  //     return orderTotal + (product.productValue || 0);
+  //   }, 0);
+  // }
+  
+
+
+  // resetOrders(): void {
+  //   this.Orders = [...this.initialOrders];
+  // }
+
+  // filterOrders(): void {
+  //   if (this.selectedStatus !== 'Tất cả đơn hàng') {
+  //     this.Orders = this.Orders.filter(order => order.status === this.selectedStatus);
+  //   }
+  // }
+
+  // changeStatusFilter(status: string): void {
+  //   this.selectedStatus = status;
+  //   this.resetOrders();
+  //   this.filterOrders();
+  // }
+
+  Orders: any[] = [];
   totalOrderValue: number = 0;
-  selectedStatus: string = 'Tất cả đơn hàng';
-  initialOrders: Order[] = [];
-  
-  loadOrderInfo(): void {
-    this._orderService.getOrderByUserId(1).subscribe((userOrders: Order[] | undefined) => {
-      if (userOrders) {
-        this.Orders = userOrders.map(order => {
-          const mappedOrder: Order = {
-            ...order,
-            products: order.products.map(product => {
-              const productValue = product.quantity * product.price;
-              return {
-                ...product,
-                productValue: productValue
-              };
-            }),
-            totalOrderValue: 0 // Initialize totalOrderValue to 0
-          };
-          mappedOrder.totalOrderValue = this.calculateTotalOrderValue(mappedOrder); // Calculate totalOrderValue
-          console.log(`Order ${order.ordernumber}: Total Order Value=${mappedOrder.totalOrderValue}`);
-          return mappedOrder;
-        });
-  
-        this.initialOrders = [...this.Orders];
-        this.filterOrders();
-  
-        // Log total order value for each order
-        this.Orders.forEach(order => {
-          console.log(`Order Number ${order.ordernumber}: Total Order Value = ${order.totalOrderValue}`);
-        });
-      }
-    });
-  }
-  
-  calculateTotalOrderValue(order: Order): number {
-    return order.products.reduce((orderTotal: number, product: Product) => {
-      return orderTotal + (product.productValue || 0);
+
+  calculateTotalOrderValue(order: any): number {
+    return order.products.reduce((orderTotal: number, product: any) => {
+      return orderTotal + (product.quantity * product.price);
     }, 0);
   }
   
-
+  loadOrderInfo(): void {
+    this._orderService.getOrder().subscribe((orders: any[]) => {
+      this.Orders = orders.map(order => ({
+        ...order,
+        products: (order.products as any[]).map((product: any) => ({
+          ...product,
+          productValue: product.quantity * product.price
+        })),
+        totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
+      }));
+      
+      this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
+      this.filterOrders();
+      
+      // Now each order has a "totalOrderValue" property representing the total value for that order
+      console.log('Orders with Total Order Value:', this.Orders);
+    });
+  }
+  // Phân loại đơn
+  selectedStatus: string = 'Tất cả đơn hàng';
+  initialOrders: any[] = []; // Lưu trữ danh sách đơn hàng ban đầu
 
   resetOrders(): void {
-    this.Orders = [...this.initialOrders];
+    this.Orders = [...this.initialOrders]; // Khôi phục danh sách về trạng thái ban đầu
   }
 
   filterOrders(): void {
+    // Lọc danh sách đơn hàng dựa trên trạng thái đã chọn
     if (this.selectedStatus !== 'Tất cả đơn hàng') {
-      this.Orders = this.Orders.filter(order => order.status === this.selectedStatus);
+      this.Orders = this.Orders.filter(order => order.order_status === this.selectedStatus);
     }
   }
 
   changeStatusFilter(status: string): void {
     this.selectedStatus = status;
-    this.resetOrders();
+    this.resetOrders(); // Reset danh sách mỗi khi chuyển trạng thái
+
     this.filterOrders();
   }
 
   onButtonClick(order: Order): void {
-    if (order.status === 'Chờ xử lí') {
+    if (order.order_status === 'Chờ xử lí') {
         // Add logic to cancel the order
         // For example, you can update the status to "Đã hủy"
-        order.status = 'Đã hủy';
+        order.order_status = 'Đã hủy';
 
         // You can call a service method to update the order status on the backend
         // this._orderService.cancelOrder(order.ordernumber).subscribe(response => {
@@ -277,7 +326,7 @@ export class TrangtaikhoanComponent implements OnInit {
 
   isEligibleForReview(order: Order): boolean {
     // Check if order status is 'Đã giao' and every product in the order has 'danhgia' as ''
-    return order.status === 'Đã giao' && order.products.every(product => product.feedback === '');
+    return order.order_status === 'Đã giao' && order.products.every(product => product.feedback === '');
 }
 
   extractOrderIds(): void {
@@ -290,6 +339,4 @@ export class TrangtaikhoanComponent implements OnInit {
     });
     
   }
-  
-
 }

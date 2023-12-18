@@ -8,7 +8,7 @@ import { OrderService } from '../Service/order.service';
   templateUrl: './danhgiasanpham.component.html',
   styleUrls: ['./danhgiasanpham.component.css']
 })
-export class DanhgiasanphamComponent implements OnInit {
+export class DanhgiasanphamComponent  {
   order: Order | undefined;
 
   constructor(private route: ActivatedRoute, private orderService: OrderService) {}
@@ -16,13 +16,17 @@ export class DanhgiasanphamComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const orderId = params.get('id');
-      console.log(orderId)
+      console.log(orderId);
 
       if (orderId) {
         const orderIdNumber = +orderId;
-        this.orderService.getOrderById(orderIdNumber).subscribe(order => {
-          if (order) {
-            this.order = order;
+        // Pass the userid to getOrder method
+        this.orderService.getOrder().subscribe((orders: Order[]) => {
+          // Find the order with the specified ID
+          const foundOrder = orders.find(order => order.ordernumber === orderIdNumber);
+
+          if (foundOrder) {
+            this.order = foundOrder;
           } else {
             console.error(`Order with ID ${orderIdNumber} not found.`);
           }

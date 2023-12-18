@@ -165,20 +165,21 @@
                     </div>
                     <div class="donhang_item">
                         <div class="donhang_itemdetail" *ngFor="let order of Orders">
-                          <div class="donhang_itemdetal_row">
-                            <h5 class="p">Đơn hàng {{order.ordernumber}}</h5>
-                            <p class="p" id="status">{{order.status}}</p>
-                          </div>
-                          <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
-                            <img src="" alt="">
-                            <p class="don_item_label p">{{product.name}} <br>x{{product.quantity}}</p>
-                            <p class="p" id="total">{{product.productValue}}</p>
-                            <img src="" alt="">
-                          </div>
+                            <div class="donhang_itemdetal_row">
+                                <h5>Đơn hàng {{order.ordernumber}}</h5>
+                                <p id="status">{{order.order_status }}</p>
+                            </div>
+                            <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
+                                <img src="" alt="">
+                                <p class="don_item_label">{{ product.name }} <br>
+                                    x{{product.quantity}}</p>
+                                <p id="total">{{product.productValue }}</p>
+                                <img src="" alt="">
+                            </div>
                           <hr>
                           <div class="donhang_itemdetal_row">
                             <button class="button p" type="button" (click)="onButtonClick(order)" routerLink="/product-cart" routerLinkActive="active">
-                                {{ order.status === 'Chờ xử lí' ? 'Hủy đơn' : 'Mua lại' }}
+                                {{ order.order_status === 'Chờ xử lí' ? 'Hủy đơn' : 'Mua lại' }}
                             </button>
                             <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
                           </div>
@@ -212,7 +213,7 @@
                         <div class="donhang_itemdetail" *ngFor="let order of filteredOrders()">
                           <div class="donhang_itemdetal_row">
                             <h5 class="p">Đơn hàng {{order.ordernumber}}</h5>
-                            <p class="p" id="status">{{order.status }}</p>
+                            <p class="p" id="status">{{order.order_status }}</p>
                           </div>
                           <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
                             <img src="" alt="">
@@ -223,7 +224,7 @@
                           </div>
                           <hr>
                           <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
-                            <button class="button p" type="button" [routerLink]="['/danhgia', order.ordernumber]">Đánh giá</button>
+                            <button class="button p" type="button" [routerLink]="['/danhgia', order.ordernumber]" routerLinkActive="active" >Đánh giá</button>
                             <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
                           </div>
                         </div>
