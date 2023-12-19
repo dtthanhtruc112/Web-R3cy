@@ -7,7 +7,7 @@
         "sdt": "0123456789",
         "gioitinh": "Nữ",
         "ngaysinh": "18/4/2003",
-        "hinhdaidien": "./assets/img/voucher.png",
+        "hinhdaidien": "",
         "matkhau": "aaaaaaaa1@A",
         "diachi": [{
             "STT": "diachi1",
@@ -28,7 +28,7 @@
         "sdt": "0123456798",
         "gioitinh": "Nữ",
         "ngaysinh": "25/09/2001",
-        "hinhdaidien": "./assets/img/voucher.png",
+        "hinhdaidien": "",
         "matkhau": "aaassaaa1@A",
         "diachi": "KTX ĐHQG.HCM KHU B, HCM"
 
@@ -41,7 +41,7 @@
         "sdt": "0123456333",
         "gioitinh": "Nữ",
         "ngaysinh": "18/11/2002",
-        "hinhdaidien": "./assets/img/voucher.png",
+        "hinhdaidien": "",
         "matkhau": "aaabbba1@A",
         "diachi": "184 Phan Văn Trị, HCM"
 

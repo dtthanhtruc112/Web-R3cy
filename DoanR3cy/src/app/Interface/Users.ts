@@ -11,3 +11,9 @@ export interface Users {
     userid: number;
 
 }
+
+export interface diachi {
+    STT: string;
+    tendiachi: string
+}
+
