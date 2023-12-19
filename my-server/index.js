@@ -28,13 +28,9 @@ const cors=require("cors");
 app.use(cors())
 
 
-// import module
-const Product = require('./models/Product')
-
 // API - import Router (file chứa toàn bộ API) 
 const exampleRouter = require('./routes/example.router')
 app.use('/', exampleRouter)
-
 
 // const { MongoClient, ObjectId } = require('mongodb');
 // client = new MongoClient("mongodb://127.0.0.1:27017");
