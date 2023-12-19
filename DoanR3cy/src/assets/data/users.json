@@ -10,10 +10,8 @@
         "hinhdaidien": "",
         "matkhau": "aaaaaaaa1@A",
         "diachi": [{
-            "STT": "diachi1",
             "tendiachi": "KTX ĐHQG.HCM KHU B, HCM"
         }, {
-            "STT": "diachi2",
             "tendiachi": "184 Phan Văn Trị, HCM"
         }]
             
@@ -30,7 +28,9 @@
         "ngaysinh": "25/09/2001",
         "hinhdaidien": "",
         "matkhau": "aaassaaa1@A",
-        "diachi": "KTX ĐHQG.HCM KHU B, HCM"
+        "diachi": [{
+            "tendiachi": "KTX ĐHQG.HCM KHU B, HCM"
+        }]
 
     },
     {
@@ -43,7 +43,9 @@
         "ngaysinh": "18/11/2002",
         "hinhdaidien": "",
         "matkhau": "aaabbba1@A",
-        "diachi": "184 Phan Văn Trị, HCM"
+        "diachi": [{
+            "tendiachi": "184 Phan Văn Trị, HCM"
+        }]
 
     }
 ]
