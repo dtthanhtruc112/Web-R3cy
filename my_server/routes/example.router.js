@@ -22,6 +22,37 @@ router.get('/orders', async (req, res) => {
     }
 });
 
+// Router cho lấy đơn hàng theo userid
+router.get("/orders/user/:userid", async (req, res) => {
+    try {
+        const orders = await Order.find({ userid: req.params.userid }).populate({ path: 'products', model: 'Product' });
+        res.json(orders);
+    } catch (error) {
+        res.status(500).json({ err: error.message });
+    }
+});
+
+// Router để lấy danh sách mã đơn hàng của một người dùng
+router.get("/orders/user/:userid/:ordernumber", async (req, res) => {
+    try {
+        const { userid, ordernumber } = req.params;
+
+        // Truy vấn để lấy đơn hàng cụ thể của người dùng
+        const order = await Order.findOne({ userid, ordernumber }).populate({ path: 'products', model: 'Product' });
+
+        if (!order) {
+            console.log(`Order not found for ordernumber ${ordernumber} and userid ${userid}`);
+            return res.status(404).json({ err: "Order not found" });
+        }
+
+        res.json(order);
+    } catch (error) {
+        res.status(500).json({ err: error.message });
+    }
+});
+
+
+
 router.get('/users', async (req, res) => {
     try {
         const users = await User.find()
