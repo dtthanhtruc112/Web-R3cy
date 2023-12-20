@@ -25,8 +25,9 @@ export class ProductCartComponent {
   // }
 
   cartItems: Product[] | undefined;
+  quantity: number = 1;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private _route: ActivatedRoute) {}
 
 
   // ngOnInit(): void {
@@ -44,6 +45,10 @@ export class ProductCartComponent {
     // Đăng ký để theo dõi sự thay đổi của giỏ hàng
     this.cartService.cart$.subscribe((items) => {
       this.cartItems = items;
+    });
+
+    this._route.queryParams.subscribe(params => {
+      this.quantity = +params['quantity'] || 1; // Gán giá trị mặc định là 1 nếu không có tham số
     });
   }
 

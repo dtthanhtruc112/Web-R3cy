@@ -60,7 +60,7 @@
                                     <td class="product-quantity">
                                         <div class="pro-qty">
                                             <input type="text" class="quantity" title="Quantity" id="show" min="1"
-                                                max="1000" name="show" value="1" type="number" onchange="loadJson()">
+                                                max="1000" name="show" [(ngModel)]="quantity" type="number" change="loadJson()">
                                         </div>
 
                                     </td>
