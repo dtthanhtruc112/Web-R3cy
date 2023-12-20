@@ -25,7 +25,6 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-// import { Product } from '../Interface/Order';
 import { product } from '../Interface/product';
 
 @Injectable({
