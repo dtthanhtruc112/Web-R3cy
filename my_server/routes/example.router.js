@@ -129,6 +129,24 @@ router.get('/users', async (req, res) => {
 
 
 
+// API để tạo blog
+router.post('/create', async (req, res) => {
+    try {
+      const newBlog = new Blog({
+        title: req.body.title,
+        thumbnail: req.body.thumbnail,
+        author: req.body.author,
+        content: req.body.content,
+      });
+  
+      const savedBlog = await newBlog.save();
+      res.json(savedBlog);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+
 
 
 

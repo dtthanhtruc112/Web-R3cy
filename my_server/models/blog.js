@@ -5,7 +5,7 @@ const Blog = new Schema({
     blogid: { type: Number },
     title: { type: String },
     author: { type: String },
-    date: { type: String }, 
+    date: {type: Date, default: Date.now},  
     content: { type: String },
     thumb: { type: String },
 });
