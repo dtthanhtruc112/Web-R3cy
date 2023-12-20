@@ -17,15 +17,16 @@
             <p>{{productt.description}}</p>
             <br><br>
             <p class="grey">Phân loại:</p>
-            <button type="button">{{productt.opt1}}</button>
-            <button type="button">{{productt.opt2}}</button>
+            <button type="button" (click)="selectOption(productt.opt1)">{{productt.opt1}}</button>
+            <button type="button" (click)="selectOption(productt.opt2)">{{productt.opt2}}</button>
             <br>
 
             <p class="grey">Số lượng:</p>
             <input type="number" [(ngModel)]="quantity">
 
             <br><br>
-            <button type="button" routerLink="/product-cart" routerLinkActive="active" (click)="addToCart(productt)">Thêm vào giỏ hàng</button>
+            <button type="button" routerLink="/product-cart" routerLinkActive="active"
+                (click)="addToCart(productt)">Thêm vào giỏ hàng</button>
             <button type="button" class="cta">Mua hàng</button>
         </div>
     </div>
@@ -57,7 +58,7 @@
             <p class="grey">{{productt.accountfb1}}</p>
             <p>{{productt.fb1}}</p>
         </div>
-        
+
     </div>
 
     <h2>Thảo luận</h2>
@@ -71,7 +72,6 @@
 
     <!-- <h2>Sản phẩm có liên quan</h2> -->
     <div class="relatedProduct1">
-        
-    </div>
-</div>  
 
+    </div>
+</div>

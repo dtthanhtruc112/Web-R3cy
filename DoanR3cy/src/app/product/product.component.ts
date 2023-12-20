@@ -20,7 +20,6 @@ export class ProductComponent implements OnInit {
   pro: product | product[] = [];
   productt: any;
   item: any;
-  quantity: number = 1;
 
   constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService) { }
 
@@ -44,13 +43,23 @@ export class ProductComponent implements OnInit {
 
 
   }
-  // addProductToCart(item: any) {
-  //   // thêm sản phẩm vào giỏ hàng
-  //   this.cartService.addItemToCart(item);
-  // }
+
+  selectOption(option: string) {
+    this.selectedOption = option;
+  }
+ 
+  
+  
 
   addToCart(item: product) {
     // Gọi phương thức addToCart của CartService để thêm sản phẩm vào giỏ hàng
+    if (this.selectOption){
+      const newItem: product = {
+        ...item,
+        option: this.selectOption
+      }
+      
+    }
     
     try{
       this.cartService.addToCart(item);
@@ -61,3 +70,10 @@ export class ProductComponent implements OnInit {
     }
   }
 }
+
+
+
+ // addProductToCart(item: any) {
+  //   // thêm sản phẩm vào giỏ hàng
+  //   this.cartService.addItemToCart(item);
+  // }
