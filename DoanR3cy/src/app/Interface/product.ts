@@ -1,4 +1,5 @@
 export interface product {
+    option: (option: string) => void;
     id: number;
     category1: string,
     category2: string,
