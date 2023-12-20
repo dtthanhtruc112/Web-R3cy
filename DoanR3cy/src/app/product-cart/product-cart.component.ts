@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../Interface/Order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../Service/product.service';
-// import { map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { CartService } from '../Service/cart.service';
 
 
@@ -12,33 +12,11 @@ import { CartService } from '../Service/cart.service';
   styleUrl: './product-cart.component.css'
 })
 export class ProductCartComponent {
-  // cartItems: any[] = [];
-
-  // constructor(private cartService: CartService) {}
-
-  // ngOnInit(): void {
-  //   this.cartItems = this.cartService.getCartItems();
-  // }
-
-  // addProductToCart(productt: any): void {
-  //   this.cartService.addItemToCart(productt);
-  // }
+  
 
   cartItems: Product[] | undefined;
 
   constructor(private cartService: CartService) {}
-
-
-  // ngOnInit(): void {
-  //   this.cartItems = this.cartService.getCartItems();
-  // }
-
-  // addProductToCart(productt: any): void {
-  //   this.cartService.addItemToCart(productt);
-  // }
-
-
-
 
   ngOnInit() {
     // Đăng ký để theo dõi sự thay đổi của giỏ hàng
@@ -46,6 +24,15 @@ export class ProductCartComponent {
       this.cartItems = items;
     });
   }
+  calculateSubtotal(item: any): number {
+    const quantity = 1; // Thay đổi giá trị này bằng số lượng thích hợp
+    const price = Number(item.price); // Chuyển đổi giá trị giá từ string sang number
+
+    // Tính tổng sản phẩm
+    const subtotal = quantity * price;
+
+    return subtotal;
+}
 
 
 }
