@@ -1,7 +1,7 @@
 <br><br><br><br><br>
 
 <div class="main" *ngIf="productt">
-    <p>Sản phẩm/{{productt?.category1}}/{{productt?.category2}}/{{productt.name}}</p>
+    <p>Sản phẩm/{{productt.category1}}/{{productt.category2}}/{{productt.name}}</p>
     <div class="productcontainer">
         <div class="leftcolumn">
             <img [src]="productt.img1">
@@ -22,7 +22,7 @@
             <br>
 
             <p class="grey">Số lượng:</p>
-            <input type="number">
+            <input type="number" [(ngModel)]="quantity">
 
             <br><br>
             <button type="button" routerLink="/product-cart" routerLinkActive="active" (click)="addToCart(productt)">Thêm vào giỏ hàng</button>

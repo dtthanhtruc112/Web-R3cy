@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../Interface/Order';
+import { product } from '../Interface/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../Service/product.service';
-// import { map, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { CartService } from '../Service/cart.service';
 
 
@@ -24,9 +24,10 @@ export class ProductCartComponent {
   //   this.cartService.addItemToCart(productt);
   // }
 
-  cartItems: Product[] | undefined;
+  // cartItems: Product[] | undefined;
+  // quantity: number = 1;
 
-  constructor(private cartService: CartService) {}
+  // constructor(private cartService: CartService, private _route: ActivatedRoute) {}
 
 
   // ngOnInit(): void {
@@ -38,14 +39,35 @@ export class ProductCartComponent {
   // }
 
 
+  cartItems: product[] = [];
+  quantity: number = 1;
 
+  constructor(private cartService: CartService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
     // Đăng ký để theo dõi sự thay đổi của giỏ hàng
     this.cartService.cart$.subscribe((items) => {
       this.cartItems = items;
     });
-  }
 
+    this._route.queryParams.subscribe(params => {
+      this.quantity = +params['quantity'] || 1; // Gán giá trị mặc định là 1 nếu không có tham số
+    });
+  }
+  calculateSubtotal(item: any): number {
+    const price = Number(item.price); // Chuyển đổi giá trị giá từ string sang number
+
+    // Tính tổng sản phẩm
+    const subtotal = this.quantity * price;
+    return subtotal;
+  }
+  
+  //Xóa sản phẩm
+  removeItem(item: product): void {
+    const index = this.cartItems.indexOf(item);
+    if (index !== -1) {
+      this.cartItems.splice(index, 1);
+    }
+  }
 
 }

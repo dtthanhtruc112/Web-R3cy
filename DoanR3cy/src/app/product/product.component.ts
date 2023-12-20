@@ -20,8 +20,9 @@ export class ProductComponent implements OnInit {
   pro: product | product[] = [];
   productt: any;
   item: any;
+  quantity: number = 1;
 
-  constructor(private productService: ProductService, private _router: ActivatedRoute, private cartService: CartService) { }
+  constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService) { }
 
   ngOnInit(): void {
     this._router.paramMap.pipe(
@@ -48,11 +49,13 @@ export class ProductComponent implements OnInit {
   //   this.cartService.addItemToCart(item);
   // }
 
-  addToCart(item: Product) {
+  addToCart(item: product) {
     // Gọi phương thức addToCart của CartService để thêm sản phẩm vào giỏ hàng
     
     try{
       this.cartService.addToCart(item);
+      this.router.navigate(['/product-cart'], { queryParams: { quantity: this.quantity } });
+      
     }catch(err){
       console.log(ErrorEvent)
     }
