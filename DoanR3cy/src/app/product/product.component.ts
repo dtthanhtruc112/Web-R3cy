@@ -49,7 +49,7 @@ export class ProductComponent implements OnInit {
   //   this.cartService.addItemToCart(item);
   // }
 
-  addToCart(item: Product) {
+  addToCart(item: product) {
     // Gọi phương thức addToCart của CartService để thêm sản phẩm vào giỏ hàng
     
     try{
