@@ -46,4 +46,12 @@ export class CartService {
   getCartItems() {
     return this.cartItems;
   }
+  private selectedOptionSource = new BehaviorSubject<string>('');
+  selectedOption$ = this.selectedOptionSource.asObservable();
+
+  setSelectedOption(option: string) {
+    this.selectedOptionSource.next(option);
+  }
+
+
 }

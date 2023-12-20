@@ -41,6 +41,8 @@ export class ProductCartComponent {
 
   cartItems: product[] = [];
   quantity: number = 1;
+  selectedOption: string = '';
+
 
   constructor(private cartService: CartService, private _route: ActivatedRoute) { }
 
@@ -48,12 +50,18 @@ export class ProductCartComponent {
     // Đăng ký để theo dõi sự thay đổi của giỏ hàng
     this.cartService.cart$.subscribe((items) => {
       this.cartItems = items;
+      
     });
+    this.cartService.selectedOption$.subscribe(option => {
+      this.selectedOption = option;
+    });
+    
 
-    this._route.queryParams.subscribe(params => {
-      this.quantity = +params['quantity'] || 1; // Gán giá trị mặc định là 1 nếu không có tham số
-    });
+    // this._route.queryParams.subscribe(params => {
+    //   this.quantity = +params['quantity'] || 1; // Gán giá trị mặc định là 1 nếu không có tham số
+    // });
   }
+  
   calculateSubtotal(item: any): number {
     const price = Number(item.price); // Chuyển đổi giá trị giá từ string sang number
 
@@ -61,7 +69,7 @@ export class ProductCartComponent {
     const subtotal = this.quantity * price;
     return subtotal;
   }
-  
+
   //Xóa sản phẩm
   removeItem(item: product): void {
     const index = this.cartItems.indexOf(item);
@@ -69,5 +77,7 @@ export class ProductCartComponent {
       this.cartItems.splice(index, 1);
     }
   }
+
+  
 
 }
