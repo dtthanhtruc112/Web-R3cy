@@ -181,9 +181,14 @@
                             <!-- <button class="button p" type="button">
                                 {{ order.order_status === 'Chờ xử lí' ? 'Hủy đơn' : 'Mua lại' }}
                               </button> -->
-                              <button *ngIf="order.order_status === 'Chờ xử lí'" class="button p" type="button">
+                              <button *ngIf="order.order_status === 'Chờ xử lí'" class="button p" type="button" (click)="openCancelPopup()">
                                 Hủy đơn
                               </button>
+                              <div class="popup" *ngIf="showCancelPopup">
+                                <p class="p">Bạn có chắc chắn hủy đơn hàng?</p>
+                                <button class="p" (click)="closePopup()">Đóng</button>
+                                <button class="p" (click)="confirmCancel(order)">Xác nhận</button>
+                            </div>
                               
                               <button *ngIf="order.order_status !== 'Chờ xử lí'" class="button p" type="button" routerLink="/product-cart" routerLinkActive="active">
                                 Mua lại
@@ -202,11 +207,7 @@
                 <p class="p">Đã lưu thông tin thành công!</p>
                 <button class="p" (click)="closePopup()">Đóng</button>
             </div>
-            <div class="popup" *ngIf="showCancelPopup">
-                <p class="p">Bạn có chắc chắn hủy đơn hàng?</p>
-                <button class="p" (click)="closePopup()">Đóng</button>
-                <button class="p" (click)="closePopup()">Xác nhận</button>
-            </div>
+            
             <div class="popup" *ngIf="addressPopup">
                 <h2 class="h2">Thêm Địa Chỉ Mới</h2>
                 <textarea class="p" id="newAddress" placeholder="Nhập địa chỉ mới..." [(ngModel)]="newAddress"></textarea>

@@ -113,6 +113,37 @@ export class TrangtaikhoanComponent implements OnInit {
     this.addressPopup = true;
   }
 
+  openCancelPopup(): void{
+    this.showOverlay = true;
+    this.showCancelPopup = true;
+  }
+
+
+  confirmCancel(order: any) {
+    const userId = 1; // Đổi thành id người dùng thực tế
+    const orderNumber = order ? order.ordernumber : null;
+    console.log('Order ID:', order.ordernumber);
+  
+    if (orderNumber) {
+      this._orderService.updateOrderStatus(userId, orderNumber, 'Đã hủy')
+        .subscribe(
+          (updatedOrder) => {
+            // Xử lý khi đơn hàng đã được cập nhật thành công
+            console.log('Order updated successfully:', updatedOrder);
+            
+            // Reload trang để hiển thị lại dữ liệu đơn hàng
+            location.reload();
+          },
+          (error) => {
+            console.error('Error updating order:', error);
+            // Xử lý khi có lỗi xảy ra (hiển thị thông báo, v.v.)
+          }
+        );
+    }
+  }
+  
+  
+
   newAddress: string = '';
   addNewAddress(): void {
     // Thêm logic để xử lý và lưu địa chỉ mới vào cơ sở dữ liệu hoặc nơi cần thiết
@@ -121,6 +152,7 @@ export class TrangtaikhoanComponent implements OnInit {
     // Sau khi xử lý, bạn có thể đóng popup nếu cần
     this.closePopup();
   }
+  
 
 
   userIdToDisplay: number = 1; // Chọn ID cụ thể

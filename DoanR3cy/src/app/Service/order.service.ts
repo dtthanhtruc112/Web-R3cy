@@ -27,6 +27,16 @@ export class OrderService {
     return throwError(() => new Error(err.message));
   }
 
+  updateOrderStatus(userId: number, orderNumber: string, status: string): Observable<Order> {
+    const updateData = { order_status: status };
+
+    return this._http.patch<Order>(`${this._url}/orders/user/${userId}/${orderNumber}`, updateData).pipe(
+      catchError(this.handleErr)
+    );
+  }
+
+  
+
   // private _url: string = "http://localhost:3000";
 
   // constructor(private _http: HttpClient) {}
