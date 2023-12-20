@@ -3,6 +3,9 @@ import { UsersService } from '../Service/users.service';
 import { OrderService } from '../Service/order.service';
 import {Order, Product  } from '../Interface/Order';
 import { ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -18,6 +21,31 @@ export class TrangtaikhoanComponent implements OnInit {
   showContent(contentId: string): void {
     this.selectedbar = contentId;
   }
+
+  ngOnInit(): void {
+    this.loadUserInfo(this.userIdToDisplay);
+    this.loadOrderInfo();
+    this.route.params.subscribe(params => {
+      this.selectedbar = params['id'] || 'hoso_content'; // Set a default value if 'id' is not present
+    });
+  }
+
+   
+
+  // id: any = "overview/";
+  // tabChange(ids:any){
+  //   this.id= ids;
+  //   console.log(this.id)
+  // }
+
+  // constructor(private route: ActivatedRoute) { }
+  
+  // // điều hướng routerLink đến Id thông tin
+  //   ngOnInit() {
+  //     this.route.params.subscribe(params => {
+  //       this.id = params['id'];
+  //     });
+  //   }
 
   // Chỉnh sửa hồ sơ
   chinhsua(inputId: string): void {
@@ -120,7 +148,7 @@ export class TrangtaikhoanComponent implements OnInit {
 
 
   confirmCancel(order: any) {
-    const userId = 1; // Đổi thành id người dùng thực tế
+    const userId = 1; // Replace with the actual user ID
     const orderNumber = order ? order.ordernumber : null;
     console.log('Order ID:', order.ordernumber);
   
@@ -128,15 +156,15 @@ export class TrangtaikhoanComponent implements OnInit {
       this._orderService.updateOrderStatus(userId, orderNumber, 'Đã hủy')
         .subscribe(
           (updatedOrder) => {
-            // Xử lý khi đơn hàng đã được cập nhật thành công
+            // Handle when the order has been successfully updated
             console.log('Order updated successfully:', updatedOrder);
-            
-            // Reload trang để hiển thị lại dữ liệu đơn hàng
-            location.reload();
+  
+            // Navigate to the same route to reload the component
+            this.router.navigate(['/trangtaikhoan/donhang_content']);
           },
           (error) => {
             console.error('Error updating order:', error);
-            // Xử lý khi có lỗi xảy ra (hiển thị thông báo, v.v.)
+            // Handle errors (display a message, etc.)
           }
         );
     }
@@ -170,14 +198,11 @@ export class TrangtaikhoanComponent implements OnInit {
   userAddresses: any[] = [];
 
   constructor(private _userService: UsersService,
-    private _orderService: OrderService, private cdr: ChangeDetectorRef
+    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router
   ) { }
 
 
-  ngOnInit(): void {
-    this.loadUserInfo(this.userIdToDisplay);
-    this.loadOrderInfo();
-  }
+  
 
   loadUserInfo(userId: number): void {
     this._userService.getUserById(userId).subscribe(user => {

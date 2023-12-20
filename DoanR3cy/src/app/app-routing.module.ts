@@ -34,6 +34,7 @@ const routes: Routes = [
   { path: 'chinhsach', component: ChinhsachComponent},
   { path: 'QnA', component: QnAComponent},
   { path: 'trangtaikhoan', component: TrangtaikhoanComponent},
+  { path: 'trangtaikhoan/:id', component: TrangtaikhoanComponent},
   { path: 'product-cart', component: ProductCartComponent},
   { path: 'aboutus', component: AboutUsComponent},
   { path: 'blogs', component: BlogComponent },
