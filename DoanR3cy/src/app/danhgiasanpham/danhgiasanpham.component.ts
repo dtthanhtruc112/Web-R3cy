@@ -20,17 +20,26 @@ export class DanhgiasanphamComponent  {
 
       if (orderId) {
         const orderIdNumber = +orderId;
-        // Pass the userid to getOrder method
-        this.orderService.getOrder().subscribe((orders: Order[]) => {
-          // Find the order with the specified ID
-          const foundOrder = orders.find(order => order.ordernumber === orderIdNumber);
 
-          if (foundOrder) {
-            this.order = foundOrder;
-          } else {
-            console.error(`Order with ID ${orderIdNumber} not found.`);
+        // Assuming user id is 1
+        const userId = 1;
+
+        // Pass the user ID to getOrder method
+        this.orderService.getOrder(userId).subscribe(
+          (orders: Order[]) => {
+            // Find the order with the specified ID
+            const foundOrder = orders.find(order => order.ordernumber === orderIdNumber);
+
+            if (foundOrder) {
+              this.order = foundOrder;
+            } else {
+              console.error(`Order with ID ${orderIdNumber} not found.`);
+            }
+          },
+          (error) => {
+            console.error(`Error fetching orders for user with ID ${userId}: ${error}`);
           }
-        });
+        );
       }
     });
   }

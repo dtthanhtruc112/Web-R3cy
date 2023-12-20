@@ -245,7 +245,9 @@ export class TrangtaikhoanComponent implements OnInit {
   }
   
   loadOrderInfo(): void {
-    this._orderService.getOrder().subscribe((orders: any[]) => {
+    const userId = 1;
+
+    this._orderService.getOrder(userId).subscribe((orders: any[]) => {
       this.Orders = orders.map(order => ({
         ...order,
         products: (order.products as any[]).map((product: any) => ({
@@ -254,10 +256,10 @@ export class TrangtaikhoanComponent implements OnInit {
         })),
         totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
       }));
-      
+
       this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
       this.filterOrders();
-      
+
       // Now each order has a "totalOrderValue" property representing the total value for that order
       console.log('Orders with Total Order Value:', this.Orders);
     });

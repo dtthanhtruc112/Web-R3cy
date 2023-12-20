@@ -14,8 +14,6 @@ router.use(bodyParser.json());
 
 
 
-
-
 router.get('/orders', async (req, res) => {
     try {
         const orders = await Order.find().populate({ path: 'products', model: 'Product' });
@@ -117,10 +115,6 @@ router.put("/orders/user/:userid/:ordernumber", async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 });
-
-
-
-
 
 
 

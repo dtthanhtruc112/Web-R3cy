@@ -12,20 +12,35 @@ export class OrderService {
   //   throw new Error('Method not implemented.');
   // }
 
-  private _url: string = "./assets/data/order.json";
-
- 
+  private _url: string = "http://localhost:3000";
 
   constructor(private _http: HttpClient) { }
-  getOrder(): Observable<Order[]>{
-    return this._http.get<Order[]>(this._url).pipe(
+
+  getOrder(userId: number): Observable<Order[]> {
+    return this._http.get<Order[]>(`${this._url}/orders/user/${userId}`).pipe(
       retry(3),
       catchError(this.handleErr)
     );
   }
-  handleErr(err: HttpErrorResponse){
-    return throwError(() => new Error(err.message))
+
+  handleErr(err: HttpErrorResponse) {
+    return throwError(() => new Error(err.message));
   }
+
+  // private _url: string = "http://localhost:3000";
+
+  // constructor(private _http: HttpClient) {}
+
+  // getProducts(): Observable<Product[]>{
+  //   return this._http.get<Product[]>(`${this._url}/products`).pipe(
+  //     retry(2),
+  //     catchError(this.handleError)
+  //   )
+  // }
+
+  // handleError(error: HttpErrorResponse) {
+  //   return throwError(() => new Error(error.message))
+  // }
 
   // getOrderById(id: number): Observable<any | undefined> {
   //   return this._http.get<any[]>(this._url).pipe(
