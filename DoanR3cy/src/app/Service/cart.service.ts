@@ -1,24 +1,48 @@
-import { Injectable } from "@angular/core";
+// import { Injectable } from "@angular/core";
 
-export const CART_KEY = "cart";
+// export const CART_KEY = "cart";
+
+// @Injectable({
+//     providedIn: 'root'
+// })
+// export class CartService {
+//     cartItems: any[] = [];
+
+//     constructor() {}
+
+//     getCartItems(): any[] {
+//         return this.cartItems;
+//     }
+
+//     addItemToCart(item: any): void {
+//         this.cartItems.push(item);
+//     }
+
+//     // xoa san pham
+
+
+// }
+
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Product } from '../Interface/Order';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
-    cartItems: any[] = [];
+  private cartItems: Product[] = [];
+  private cartSubject = new BehaviorSubject<Product[]>([]);
 
-    constructor() {}
+  cart$ = this.cartSubject.asObservable();
 
-    getCartItems(): any[] {
-        return this.cartItems;
-    }
+  addToCart(item: Product) {
+    this.cartItems.push(item);
+    console.log(this.cartItems);
+    this.cartSubject.next(this.cartItems);
+  }
 
-    addItemToCart(item: any): void {
-        this.cartItems.push(item);
-    }
-
-    // xoa san pham
-
-
+  getCartItems() {
+    return this.cartItems;
+  }
 }

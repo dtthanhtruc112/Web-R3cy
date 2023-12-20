@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { product } from '../Interface/product';
+import { Product } from '../Interface/Order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../Service/product.service';
 // import { map, switchMap } from 'rxjs';
@@ -12,9 +12,9 @@ import { CartService } from '../Service/cart.service';
   styleUrl: './product-cart.component.css'
 })
 export class ProductCartComponent {
-  cartItems: any[] = [];
+  // cartItems: any[] = [];
 
-  constructor(private cartService: CartService) {}
+  // constructor(private cartService: CartService) {}
 
   // ngOnInit(): void {
   //   this.cartItems = this.cartService.getCartItems();
@@ -24,6 +24,28 @@ export class ProductCartComponent {
   //   this.cartService.addItemToCart(productt);
   // }
 
+  cartItems: Product[] | undefined;
+
+  constructor(private cartService: CartService) {}
+
+
+  // ngOnInit(): void {
+  //   this.cartItems = this.cartService.getCartItems();
+  // }
+
+  // addProductToCart(productt: any): void {
+  //   this.cartService.addItemToCart(productt);
+  // }
+
+
+
+
+  ngOnInit() {
+    // Đăng ký để theo dõi sự thay đổi của giỏ hàng
+    this.cartService.cart$.subscribe((items) => {
+      this.cartItems = items;
+    });
+  }
 
 
 }

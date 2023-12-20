@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { product } from '../Interface/product';
 import { CartService } from '../Service/cart.service';
+import { Product } from '../Interface/Order';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ProductComponent implements OnInit {
   product: product[] = [];
   pro: product | product[] = [];
   productt: any;
-item: any;
+  item: any;
 
   constructor(private productService: ProductService, private _router: ActivatedRoute, private cartService: CartService) { }
 
@@ -42,9 +43,18 @@ item: any;
 
 
   }
-  addProductToCart(item: any) {
-    // thêm sản phẩm vào giỏ hàng
-    this.cartService.addItemToCart(item);
-  }
+  // addProductToCart(item: any) {
+  //   // thêm sản phẩm vào giỏ hàng
+  //   this.cartService.addItemToCart(item);
+  // }
 
+  addToCart(item: Product) {
+    // Gọi phương thức addToCart của CartService để thêm sản phẩm vào giỏ hàng
+    
+    try{
+      this.cartService.addToCart(item);
+    }catch(err){
+      console.log(ErrorEvent)
+    }
+  }
 }

@@ -6,7 +6,7 @@
         "order_status": "Đang giao",
         "ordereddate": "04/01/2023",
         "paymentmethod": "Bank",
-        "paymentstatus": "",
+        "paymentstatus": "false",
         "products": [
             {
                 "id": 1,
@@ -35,7 +35,7 @@
         "order_status": "Đã giao",
         "ordereddate": "05/03/2023",
         "paymentmethod": "Momo",
-        "paymentstatus": "",
+        "paymentstatus": "false",
         "products": [
             {
                 "id": 3,
@@ -55,7 +55,7 @@
         "order_status": "Đang giao",
         "ordereddate": "06/06/2023",
         "paymentmethod": "Bank",
-        "paymentstatus": "",
+        "paymentstatus": "false",
         "products": [
             {
                 "id": 4,
@@ -84,7 +84,7 @@
         "order_status": "Đã giao",
         "ordereddate": "24/07/2023",
         "paymentmethod": "COD",
-        "paymentstatus": "",
+        "paymentstatus": "false",
         "products": [
             {
                 "id": 3,
@@ -104,7 +104,7 @@
         "order_status": "Đã hủy",
         "ordereddate": "30/09/2023",
         "paymentmethod": "Bank",
-        "paymentstatus": "",
+        "paymentstatus": "false",
         "products": [
             {
                 "id": 3,
@@ -124,7 +124,7 @@
         "order_status": "Chờ xử lí",
         "ordereddate": "16/12/2023",
         "paymentmethod": "Momo",
-        "paymentstatus": "",
+        "paymentstatus": "false",
         "products": [
             {
                 "id": 3,
