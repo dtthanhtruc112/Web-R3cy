@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Order = require('../models/order')
 const User = require('../models/user')
-
+const Blog = require('../models/blog')
 // 
 router.get('/', (req, res) => {
     res.send('Welcome to NodeJS');
@@ -126,6 +126,34 @@ router.get('/users', async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 });
+
+
+
+// API để tạo blog trong admin
+router.post('/createBlog', async (req, res) => {
+    try {
+      const newBlog = new Blog({
+        title: req.body.title,
+        author: req.body.author,
+        content: req.body.content,
+        thumbnail: req.body.thumbnail,
+        
+      });
+  
+      const savedBlog = await newBlog.save();
+      res.json(savedBlog);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+
+
+
+
+
+
+
 
 
 module.exports = router
