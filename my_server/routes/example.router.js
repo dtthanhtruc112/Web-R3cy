@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Order = require('../models/order')
 const User = require('../models/user')
-
+const Blog = require('../models/blog')
 // 
 router.get('/', (req, res) => {
     res.send('Welcome to NodeJS');
@@ -126,6 +126,14 @@ router.get('/users', async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 });
+
+
+
+
+
+
+
+
 
 
 module.exports = router
