@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { product } from '../Interface/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../Service/product.service';
-import { map, switchMap } from 'rxjs';
+// import { map, switchMap } from 'rxjs';
 import { CartService } from '../Service/cart.service';
 
 
