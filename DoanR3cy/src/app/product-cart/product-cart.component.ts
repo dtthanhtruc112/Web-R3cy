@@ -16,13 +16,13 @@ export class ProductCartComponent {
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {
-    this.cartItems = this.cartService.getCartItems();
-  }
+  // ngOnInit(): void {
+  //   this.cartItems = this.cartService.getCartItems();
+  // }
 
-  addProductToCart(productt: any): void {
-    this.cartService.addItemToCart(productt);
-  }
+  // addProductToCart(productt: any): void {
+  //   this.cartService.addItemToCart(productt);
+  // }
 
 
 
