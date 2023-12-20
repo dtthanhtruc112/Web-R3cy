@@ -24,7 +24,7 @@
         </div>
         <div class="container_item">
             <div *ngIf="selectedbar === 'trang-thai-don-hang'">
-                <table>
+                <table >
                     <tr>
                         <th>Mã</th>
                         <th>Ngày tạo</th>
@@ -33,13 +33,13 @@
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
-                    <tbody>
-                        <td>#11432</td>
-                        <td>10/11/2023</td>
-                        <td>Đặng Thanh Trúc</td>
-                        <td>Bank</td>
-                        <td>Đã giao</td>
-                        <td>200.000đ</td>
+                    <tbody *ngFor="let order of Orders">
+                        <td>{{order.ordernumber}}</td>
+                        <td>{{order.ordereddate}}</td>
+                        <td>{{order.userid}}</td>
+                        <td>{{order.paymentmethod}}</td>
+                        <td>{{order.order_status}}</td>
+                        <td>{{order.totalOrderValue}}</td>
                     </tbody>
                 </table>
             </div>
@@ -53,12 +53,12 @@
                         <th>Tổng tiền</th>
                         <th>Xử lý </th>
                     </tr>
-                    <tbody>
-                        <td>#11432</td>
-                        <td>10/11/2023</td>
-                        <td>Đặng Thanh Trúc</td>
-                        <td>Bank</td>
-                        <td>200.000đ</td>
+                    <tbody *ngFor="let order of getFilteredOrders(['Chờ xử lí'])">
+                        <td>{{order.ordernumber}}</td>
+                        <td>{{order.ordereddate}}</td>
+                        <td>{{order.userid}}</td>
+                        <td>{{order.paymentmethod}}</td>
+                        <td>{{order.totalOrderValue}}</td>
                         <td><i class="bi bi-check-circle-fill"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
                     </tbody>
                 </table>
@@ -73,13 +73,13 @@
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
-                    <tbody>
-                        <td>#11432</td>
-                        <td>10/11/2023</td>
-                        <td>Đặng Thanh Trúc</td>
-                        <td>Bank</td>
-                        <td>Đang giao</td>
-                        <td>200.000đ</td>
+                    <tbody *ngFor="let order of getFilteredOrders(['Đang giao', 'Chờ lấy hàng'])">
+                        <td>{{order.ordernumber}}</td>
+                        <td>{{order.ordereddate}}</td>
+                        <td>{{order.userid}}</td>
+                        <td>{{order.paymentmethod}}</td>
+                        <td>{{order.order_status}}</td>
+                        <td>{{order.totalOrderValue}}</td>
                     </tbody>
                 </table>
             </div>
@@ -93,13 +93,13 @@
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
-                    <tbody>
-                        <td>#11432</td>
-                        <td>10/11/2023</td>
-                        <td>Đặng Thanh Trúc</td>
-                        <td>Bank</td>
-                        <td>Đã giao</td>
-                        <td>200.000đ</td>
+                    <tbody *ngFor="let order of getFilteredOrders(['Đã giao'])">
+                        <td>{{order.ordernumber}}</td>
+                        <td>{{order.ordereddate}}</td>
+                        <td>{{order.userid}}</td>
+                        <td>{{order.paymentmethod}}</td>
+                        <td>{{order.order_status}}</td>
+                        <td>{{order.totalOrderValue}}</td>
                     </tbody>
                 </table>
             </div>
@@ -113,13 +113,13 @@
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
-                    <tbody>
-                        <td>#11432</td>
-                        <td>10/11/2023</td>
-                        <td>Đặng Thanh Trúc</td>
-                        <td>Bank</td>
-                        <td>Đã hủy</td>
-                        <td>200.000đ</td>
+                    <tbody *ngFor="let order of getFilteredOrders(['Đã hủy'])">
+                        <td>{{order.ordernumber}}</td>
+                        <td>{{order.ordereddate}}</td>
+                        <td>{{order.userid}}</td>
+                        <td>{{order.paymentmethod}}</td>
+                        <td>{{order.order_status}}</td>
+                        <td>{{order.totalOrderValue}}</td>
                     </tbody>
                 </table>
             </div>
@@ -133,13 +133,13 @@
                         <th>Trạng thái</th>
                         <th>Tổng tiền</th>
                     </tr>
-                    <tbody>
-                        <td>#11432</td>
-                        <td>10/11/2023</td>
-                        <td>Đặng Thanh Trúc</td>
-                        <td>Bank</td>
-                        <td>Hoàn tiền</td>
-                        <td>200.000đ</td>
+                    <tbody *ngFor="let order of getFilteredOrders(['Trả hàng'])">
+                        <td>{{order.ordernumber}}</td>
+                        <td>{{order.ordereddate}}</td>
+                        <td>{{order.userid}}</td>
+                        <td>{{order.paymentmethod}}</td>
+                        <td>{{order.order_status}}</td>
+                        <td>{{order.totalOrderValue}}</td>
                     </tbody>
                 </table>
             </div>

@@ -14,6 +14,7 @@ const routes: Routes = [
 { path: 'tongquan', component: AdminTongquanComponent},
 { path: 'sidebar', component: AdminSidebarComponent},
 { path: 'donhang', component: AdminDonhangComponent},
+{ path: 'donhang/:id', component: AdminDonhangComponent},
 { path: 'customer', component: AdminCustomersComponent},
 { path: 'blog', component: ManageBlogComponent},
 { path: 'sanpham', component: AdminSanphamComponent},
@@ -26,3 +27,13 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+export const RoutingComponent= [
+  AdminCreateBlogComponent,
+  AdminTongquanComponent,
+  AdminSidebarComponent,
+  AdminDonhangComponent,
+  AdminCustomersComponent,
+  ManageBlogComponent,
+  AdminSanphamComponent,
+  AdminMagiamgiaComponent
+]

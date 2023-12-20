@@ -1,5 +1,4 @@
 export interface Product {
-opt1: any;
   id: number;
   category1: string;
   category2: string;

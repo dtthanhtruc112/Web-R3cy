@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { OrderService } from '../Service/order.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-donhang',
   templateUrl: './admin-donhang.component.html',
   styleUrl: './admin-donhang.component.css'
 })
-export class AdminDonhangComponent {
+export class AdminDonhangComponent implements OnInit {
   selectedbar: string = 'trang-thai-don-hang';
 
   showContent(contentId: string): void {
@@ -52,5 +54,94 @@ export class AdminDonhangComponent {
     // Sau khi xử lý, bạn có thể đóng popup nếu cần
     this.closePopup();
   }
+
+  constructor(
+    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.loadOrderInfo();
+    this.route.params.subscribe(params => {
+      this.selectedbar = params['id'] || 'trang-thai-don-hang'; // Set a default value if 'id' is not present
+    });
+  }
+
+  Orders: any[] = [];
+  totalOrderValue: number = 0;
+
+  calculateTotalOrderValue(order: any): number {
+    return order.products.reduce((orderTotal: number, product: any) => {
+      return orderTotal + (product.quantity * product.price);
+    }, 0);
+  }
+  
+  loadOrderInfo(): void {
+    const userId = 1;
+
+    this._orderService.getOrder(userId).subscribe((orders: any[]) => {
+      this.Orders = orders.map(order => ({
+        ...order,
+        products: (order.products as any[]).map((product: any) => ({
+          ...product,
+          productValue: product.quantity * product.price
+        })),
+        totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
+      }));
+
+      this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
+      this.filterOrders();
+
+      // Now each order has a "totalOrderValue" property representing the total value for that order
+      console.log('Orders with Total Order Value:', this.Orders);
+    });
+  }
+  // Phân loại đơn
+  selectedStatus: string = 'Tất cả đơn hàng';
+  initialOrders: any[] = []; // Lưu trữ danh sách đơn hàng ban đầu
+
+  resetOrders(): void {
+    this.Orders = [...this.initialOrders]; // Khôi phục danh sách về trạng thái ban đầu
+  }
+
+  filterOrders(): void {
+    // Lọc danh sách đơn hàng dựa trên trạng thái đã chọn
+    if (this.selectedStatus !== 'Tất cả đơn hàng') {
+      this.Orders = this.Orders.filter(order => order.order_status === this.selectedStatus);
+    }
+  }
+
+  changeStatusFilter(status: string): void {
+    this.selectedStatus = status;
+    this.resetOrders(); // Reset danh sách mỗi khi chuyển trạng thái
+
+    this.filterOrders();
+  }
+
+  getFilteredOrders(orderStatuses: string[]): any[] {
+    if (this.selectedbar === 'trang-thai-don-hang') {
+      return this.Orders; // Display all orders
+    } else if (this.selectedbar === 'chua-nhan-hang') {
+      // Filter orders based on the given array of 'orderStatuses'
+      return this.Orders.filter(order => orderStatuses.includes(order.order_status));
+    } else if (this.selectedbar === 'da-giao') {
+      // Filter orders based on the given array of 'orderStatuses'
+      return this.Orders.filter(order => orderStatuses.includes(order.order_status));
+    } else if (this.selectedbar === 'da-huy') {
+      // Filter orders based on the given array of 'orderStatuses'
+      return this.Orders.filter(order => orderStatuses.includes(order.order_status));
+    } else if (this.selectedbar === 'don-hang-moi') {
+      // Filter orders based on the given array of 'orderStatuses'
+      return this.Orders.filter(order => orderStatuses.includes(order.order_status));
+    } else if (this.selectedbar === 'hoan-tra') {
+      // Filter orders based on the given array of 'orderStatuses'
+      return this.Orders.filter(order => orderStatuses.includes(order.order_status));
+    } 
+    
+    // Add more conditions as needed for other 'selectedbar' values
+  
+    return []; // Default to an empty array if no matching condition is found
+  }
+  
+  
  
 }

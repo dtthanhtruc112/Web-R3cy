@@ -67,10 +67,13 @@ h3{
 
 table{
     width: 90%;
+    border-collapse: collapse;
 }
 
-td{
+td, th{
     text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid black;
 }
 
 tr, tbody{

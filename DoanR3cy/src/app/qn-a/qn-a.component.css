@@ -2,22 +2,15 @@ div{
     font-family: Inter-Regular;
 }
 
-.h1{
-    font-size: 48px !important;
-    font-weight: bold;
-}
+
 
 .h2{
-    font-size: 28px !important;
     font-weight: bold;
 }
 
-.h3{
-    font-size: 24px !important;
-}
+
 
 .h4{
-    font-size: 20px !important; 
     font-weight: bold;
 }
 
