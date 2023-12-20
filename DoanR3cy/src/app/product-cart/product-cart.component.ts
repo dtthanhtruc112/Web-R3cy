@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../Interface/Order';
+import { product } from '../Interface/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../Service/product.service';
 import { map, switchMap } from 'rxjs';
@@ -14,7 +14,7 @@ import { CartService } from '../Service/cart.service';
 export class ProductCartComponent {
   
 
-  cartItems: Product[] | undefined;
+  cartItems: product[] | undefined;
 
   constructor(private cartService: CartService) {}
 
