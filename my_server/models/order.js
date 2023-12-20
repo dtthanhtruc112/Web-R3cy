@@ -8,7 +8,7 @@ const Order = new Schema({
     order_status: String,
     ordereddate: String,
     paymentmethod: String,
-    paymentstatus: String,
+    paymentstatus: Boolean,
     products: [{
         id: Number,
         category1: String,
