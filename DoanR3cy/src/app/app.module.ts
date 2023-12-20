@@ -27,6 +27,8 @@ import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.component';
 import { ProductCheckoutComponent } from './product-checkout/product-checkout.component';
+import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
+
 
 
 
@@ -59,9 +61,18 @@ import { ProductCheckoutComponent } from './product-checkout/product-checkout.co
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,    
-    HttpClientModule
+    HttpClientModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0); // Cuộn lên đầu trang sau mỗi navigation
+      }
+    });
+  }
+}

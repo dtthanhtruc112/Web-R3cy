@@ -13,6 +13,7 @@ import { ChangeDetectorRef } from '@angular/core';
 
 export class TrangtaikhoanComponent implements OnInit {
   selectedbar: string = 'hoso_content';
+  order: any;
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
@@ -69,12 +70,14 @@ export class TrangtaikhoanComponent implements OnInit {
   // Hiện popup
   showOverlay: boolean = false;
   showSuccessPopup: boolean = false;
+  showCancelPopup: boolean = false;
 
   closePopup(): void {
     console.log('Closing popup...');
     this.showOverlay = false;
     this.showSuccessPopup = false;
     this.addressPopup = false;
+    this.showCancelPopup = false
   }
 
   saveData(): void {
@@ -286,30 +289,7 @@ export class TrangtaikhoanComponent implements OnInit {
     this.filterOrders();
   }
 
-  onButtonClick(order: Order): void {
-    if (order.order_status === 'Chờ xử lí') {
-        // Add logic to cancel the order
-        // For example, you can update the status to "Đã hủy"
-        order.order_status = 'Đã hủy';
-
-        // You can call a service method to update the order status on the backend
-        // this._orderService.cancelOrder(order.ordernumber).subscribe(response => {
-        //     console.log(`Order ${order.ordernumber} has been canceled.`);
-        // });
-
-        console.log(`Order ${order.ordernumber} has been canceled.`);
-        
-        // You may add additional logic here based on your requirements
-    } else {
-        // Add logic to repurchase the order
-        // You can navigate to the product cart or perform any other action needed for repurchasing
-        console.log(`Repurchase order ${order.ordernumber}`);
-        
-        // Example: Navigate to product-cart
-        // this.router.navigate(['/product-cart']);
-    }
-}
-
+ 
 
   days: number[] = Array.from({ length: 31 }, (_, i) => i + 1);
   months: number[] = Array.from({ length: 12 }, (_, i) => i + 1);

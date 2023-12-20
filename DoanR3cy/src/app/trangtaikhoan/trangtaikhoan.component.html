@@ -178,9 +178,16 @@
                             </div>
                           <hr>
                           <div class="donhang_itemdetal_row">
-                            <button class="button p" type="button" (click)="onButtonClick(order)" routerLink="/product-cart" routerLinkActive="active">
+                            <!-- <button class="button p" type="button">
                                 {{ order.order_status === 'Chờ xử lí' ? 'Hủy đơn' : 'Mua lại' }}
-                            </button>
+                              </button> -->
+                              <button *ngIf="order.order_status === 'Chờ xử lí'" class="button p" type="button">
+                                Hủy đơn
+                              </button>
+                              
+                              <button *ngIf="order.order_status !== 'Chờ xử lí'" class="button p" type="button" routerLink="/product-cart" routerLinkActive="active">
+                                Mua lại
+                              </button>
                             <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
                           </div>
                         </div>
@@ -194,6 +201,11 @@
             <div class="popup" *ngIf="showSuccessPopup">
                 <p class="p">Đã lưu thông tin thành công!</p>
                 <button class="p" (click)="closePopup()">Đóng</button>
+            </div>
+            <div class="popup" *ngIf="showCancelPopup">
+                <p class="p">Bạn có chắc chắn hủy đơn hàng?</p>
+                <button class="p" (click)="closePopup()">Đóng</button>
+                <button class="p" (click)="closePopup()">Xác nhận</button>
             </div>
             <div class="popup" *ngIf="addressPopup">
                 <h2 class="h2">Thêm Địa Chỉ Mới</h2>

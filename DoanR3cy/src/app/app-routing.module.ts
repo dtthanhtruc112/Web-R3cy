@@ -56,3 +56,29 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+export const RoutingComponent=[
+  SignUpComponent,
+  LoginComponent,
+  MainPageComponent,
+  ForgotPassComponent,
+  OtpCodeComponent,
+  NewPassComponent,
+  CustomProductComponent,
+  ChinhsachComponent,
+  QnAComponent,
+  TrangtaikhoanComponent,
+  ProductCartComponent,
+  AboutUsComponent,
+  BlogComponent,
+  DetailBlogComponent,
+  TimkiemComponent,
+  ManageBlogComponent,
+  ProductListComponent,
+  ProductComponent,
+  DanhgiasanphamComponent,
+  ProductCheckoutComponent,
+  ThugomComponent,
+  PageNotFoundComponent
+
+]
+
