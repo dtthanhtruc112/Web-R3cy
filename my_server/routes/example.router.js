@@ -9,6 +9,9 @@ router.get('/', (req, res) => {
     res.send('Welcome to NodeJS');
 })
 
+const bodyParser = require('body-parser');
+router.use(bodyParser.json());
+
 
 
 
@@ -50,6 +53,74 @@ router.get("/orders/user/:userid/:ordernumber", async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 });
+
+router.patch("/orders/user/:userid/:ordernumber", async (req, res) => {
+    try {
+        const { userid, ordernumber } = req.params;
+
+        // Tìm đơn hàng theo userid và ordernumber
+        const orderToUpdate = await Order.findOne({ userid, ordernumber });
+
+        if (!orderToUpdate) {
+            return res.status(404).json({ err: "Order not found" });
+        }
+
+        // Cập nhật các trường thông tin
+        if (req.body.order_status) {
+            orderToUpdate.order_status = req.body.order_status;
+        }
+
+        if (req.body.paymentstatus) {
+            orderToUpdate.paymentstatus = req.body.paymentstatus;
+        }
+
+        if (req.body.feedback) {
+            orderToUpdate.feedback = req.body.feedback;
+        }
+
+        // Lưu các thay đổi
+        await orderToUpdate.save();
+
+        // Trả về đơn hàng đã được cập nhật
+        const updatedOrder = await Order.findOne({ userid, ordernumber }).populate({ path: 'products', model: 'Product' });
+        res.json(updatedOrder);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ err: error.message });
+    }
+});
+
+router.put("/orders/user/:userid/:ordernumber", async (req, res) => {
+    try {
+        const { userid, ordernumber } = req.params;
+
+        // Tìm đơn hàng theo userid và ordernumber
+        const orderToUpdate = await Order.findOne({ userid, ordernumber });
+
+        if (!orderToUpdate) {
+            return res.status(404).json({ err: "Order not found" });
+        }
+
+        // Cập nhật các trường thông tin
+        orderToUpdate.order_status = req.body.order_status || orderToUpdate.order_status;
+        orderToUpdate.paymentstatus = req.body.paymentstatus || orderToUpdate.paymentstatus;
+        orderToUpdate.feedback = req.body.feedback || orderToUpdate.feedback;
+
+        // Lưu các thay đổi
+        await orderToUpdate.save();
+
+        // Trả về đơn hàng đã được cập nhật
+        const updatedOrder = await Order.findOne({ userid, ordernumber }).populate({ path: 'products', model: 'Product' });
+        res.json(updatedOrder);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ err: error.message });
+    }
+});
+
+
+
+
 
 
 

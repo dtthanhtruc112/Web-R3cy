@@ -17,6 +17,6 @@ export interface Order {
   order_status: string;
   ordereddate: string;
   paymentmethod: string;
-  paymentstatus: string;
+  paymentstatus: boolean;
   totalOrderValue?: number;
 } 
