@@ -12,7 +12,6 @@ import { CartService } from '../Service/cart.service';
   styleUrl: './product-cart.component.css'
 })
 export class ProductCartComponent {
-<<<<<<< HEAD
   // cartItems: any[] = [];
 
   // constructor(private cartService: CartService) {}
@@ -25,10 +24,10 @@ export class ProductCartComponent {
   //   this.cartService.addItemToCart(productt);
   // }
 
-  cartItems: Product[] | undefined;
-  quantity: number = 1;
+  // cartItems: Product[] | undefined;
+  // quantity: number = 1;
 
-  constructor(private cartService: CartService, private _route: ActivatedRoute) {}
+  // constructor(private cartService: CartService, private _route: ActivatedRoute) {}
 
 
   // ngOnInit(): void {
@@ -38,13 +37,12 @@ export class ProductCartComponent {
   // addProductToCart(productt: any): void {
   //   this.cartService.addItemToCart(productt);
   // }
-=======
->>>>>>> 8c621489bf2ab50e645d7fbad9e0e88ae93e9df6
 
 
   cartItems: product[] = [];
+  quantity: number = 1;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
     // Đăng ký để theo dõi sự thay đổi của giỏ hàng
@@ -57,12 +55,10 @@ export class ProductCartComponent {
     });
   }
   calculateSubtotal(item: any): number {
-    const quantity = 1; // Thay đổi giá trị này bằng số lượng thích hợp
     const price = Number(item.price); // Chuyển đổi giá trị giá từ string sang number
 
     // Tính tổng sản phẩm
-    const subtotal = quantity * price;
-
+    const subtotal = this.quantity * price;
     return subtotal;
   }
   
