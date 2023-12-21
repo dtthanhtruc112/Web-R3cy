@@ -128,6 +128,7 @@ router.get('/users', async (req, res) => {
 });
 
 
+// BLOG 
 
 // API để tạo blog trong admin
 router.post('/createBlog', async (req, res) => {
@@ -149,7 +150,7 @@ router.post('/createBlog', async (req, res) => {
   });
 
 // API để lấy tất cả bài viết
-router.get('/bloglist', async (req, res) => {
+router.get('/blog', async (req, res) => {
     try {
       const blogs = await Blog.find();
       res.json(blogs);
@@ -157,10 +158,27 @@ router.get('/bloglist', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
+// API để lấy chi tiết blog theo id
+router.get('/blog/:id', async (req, res) => {
+    try {
+      const blog = await Blog.findById(req.params.id);
+      res.json(blog);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
-
-
-
-
+// API để xóa blog theo id
+router.delete('/blog/:id', async (req, res) => {
+    try {
+      const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
+      if (!deletedBlog) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+      res.json(deletedBlog);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
 module.exports = router

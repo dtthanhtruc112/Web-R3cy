@@ -8,25 +8,19 @@
         <h2>TẤT CẢ BÀI VIẾT</h2>
     </div>
     <div class="containerBlogList">
-        <!-- Phần chứa danh sách các bài viết -->
-        <div class="container1blog" >
-            <div *ngFor="let blog of blogs" class="blog-card" >
-
-                <div class="imageThumnailOnBlogList"   [routerLink]="['/detail', blog.id]">
-                    <!-- <div class="image"> <img [src]="'../../assets/Image/ImageForBlog/thumnail/' + blog.thumb"   alt="{{ blog.title }}" /> </div> -->
-                    <div class="image"> <img [src]="blog.thumb"   alt="{{ blog.title }}" /> <!-- Hiển thị ảnh --></div>
-                    <!-- gắn hình thumnail dô  -->
-                </div>
-                <div class="sumary1Blog">
-                    <h4 class="title1Blog" [routerLink]="['/detail', blog.id]">{{ blog.title }}</h4>
-                    <P class="paraOfContent">{{blog.content}}</P>
-                    <p class="authorDate">Bởi: {{blog.author}}</p>
-                    <p class="authorDate">Ngày: {{blog.date}}</p>
-                </div>
+        <div *ngFor="let blog of blogs" class="container1blog">
+          <div class="blog-card">
+            <div class="imageThumnailOnBlogList" (click)="viewBlogDetail(blog._id)">
+              <div class="image"> <img [src]="blog.thumbnail" alt="{{ blog.title }}" /></div>
             </div>
-            
+            <div class="sumary1Blog">
+              <h4 class="title1Blog" (click)="viewBlogDetail(blog._id)">{{ blog.title }}</h4>
+              <!-- <p class="paraOfContent" [innerHTML]="blog.content"></p> -->
+              <p class="paraOfContent" [innerHTML]="getSummary(blog.content)"></p>
+              <p class="authorDate">Bởi: {{ blog.author }}</p>
+              <p class="authorDate">Ngày: {{ blog.date | date: 'medium' }}</p>
+            </div>
+          </div>
         </div>
-
+      </div>
     </div>
-</div>
-

@@ -61,13 +61,19 @@
             <a href=""><h2>BLOG</h2></a>
             
         <div class="blogs">
-            <div *ngFor="let relatedBlog of relatedBlogs" class="b1log" [routerLink]="['/detail', relatedBlog.id]">
+            <!-- <div *ngFor="let relatedBlog of relatedBlogs" class="b1log" [routerLink]="['/detail', relatedBlog.id]">
               <div> 
                 <img [src]="relatedBlog.thumb" class="imageThumbCircle" alt="{{ relatedBlog.title }}" />
                  <p class="TitleTextAllPost"> {{ relatedBlog.title }}</p>
             </div>
-            </div>
-          </div>
+            </div> -->
+            <!-- <div *ngFor="let relatedBlog of relatedBlogs" class="b1log" >
+                <div> 
+                  <img [src]="relatedBlog.thumb" class="imageThumbCircle" alt="{{ relatedBlog.title }}" />
+                   <p class="TitleTextAllPost"> {{ relatedBlog.title }}</p>
+              </div>
+              </div>
+        </div> -->
     
         <div class="FAQs">
             <h2>CÂU HỎI THƯỜNG GẶP</h2>

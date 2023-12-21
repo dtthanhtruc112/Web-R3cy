@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BlogPost } from '../Interface/blogPost';
-import { BlogService } from '../blog.service';
+import { BlogService } from '../Service/blog.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 @Component({
@@ -35,30 +35,30 @@ export class MainPageComponent {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      map(params => Number(params.get('id'))),
-      switchMap(id => this.blogService.getBlogById(id).pipe(
-        switchMap(blog => this.blogService.getBlogs().pipe(
-          map(blogs => ({
-            blog,
-            relatedBlogs: blogs
-              .filter(b => b.id !== id)
-              .sort((a, b) => b.id - a.id) // Sắp xếp theo id giảm dần
-              .slice(0, 4) // Lấy 4 bài viết đầu tiên
-          }))
-        ))
-      ))
-    ).subscribe(data => {
-      this.blog = data.blog;
+    // this.route.paramMap.pipe(
+    //   map(params => Number(params.get('id'))),
+    //   switchMap(id => this.blogService.getBlogById(id).pipe(
+    //     switchMap(blog => this.blogService.getBlogs().pipe(
+    //       map(blogs => ({
+    //         blog,
+    //         relatedBlogs: blogs
+    //           .filter(b => b.id !== id)
+    //           .sort((a, b) => b.id - a.id) // Sắp xếp theo id giảm dần
+    //           .slice(0, 4) // Lấy 4 bài viết đầu tiên
+    //       }))
+    //     ))
+    //   ))
+    // ).subscribe(data => {
+    //   this.blog = data.blog;
 
-      if (Array.isArray(data.relatedBlogs)) {
-        this.relatedBlogs = data.relatedBlogs;
-      } else if (typeof data.relatedBlogs === 'object' && data.relatedBlogs !== null) {
-        this.relatedBlogs = [data.relatedBlogs as BlogPost];
-      } else {
-        console.error('Invalid related blogs data:', data.relatedBlogs);
-        this.relatedBlogs = [];
-      }
-    });
+    //   if (Array.isArray(data.relatedBlogs)) {
+    //     this.relatedBlogs = data.relatedBlogs;
+    //   } else if (typeof data.relatedBlogs === 'object' && data.relatedBlogs !== null) {
+    //     this.relatedBlogs = [data.relatedBlogs as BlogPost];
+    //   } else {
+    //     console.error('Invalid related blogs data:', data.relatedBlogs);
+    //     this.relatedBlogs = [];
+    //   }
+    // });
   }
 }

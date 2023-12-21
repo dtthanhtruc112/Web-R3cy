@@ -1,13 +1,11 @@
 export interface BlogPost {
-  id: number;
+  _id: string;
+  id: string;  
   title: string;
   author: string;
   date: string; // Bạn có thể sử dụng kiểu Date nếu lưu ngày làm việc với JavaScript Date Object
-  thumb: string; // Đường dẫn đến hình ảnh thumbnail
-  content: {
-    para: string[];
-    img: string;
-  }[];
+  thumbnail: string; // Đường dẫn đến hình ảnh thumbnail
+  content: string;
 }
 
 // Ví dụ cách sử dụng:

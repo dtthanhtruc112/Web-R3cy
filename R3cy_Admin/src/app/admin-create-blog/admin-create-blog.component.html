@@ -3,12 +3,16 @@
 
     <div class="containerContent">
         <div class="Leftt">
-            <input type="text" placeholder="Nhập tiêu đề" class="titleBlog">
+            <input type="text" placeholder="Nhập tiêu đề" class="titleBlog" [(ngModel)]="titleInputValue">
             <br>
-            <textarea name="Blogcontent" id="content" placeholder="Nhập nội dung bài viết" ></textarea>
-            <div class="Button">
-                <button  class="btn">Đăng bài</button>
-            </div>
+            <!-- <textarea name="Blogcontent" id="content" placeholder="Nhập nội dung bài viết" ></textarea> -->
+
+             <!-- Thay thế textarea bằng AngularEditor -->
+             <angular-editor [(ngModel)]="blogContent" [config]="editorConfig"></angular-editor>
+
+             <div class="Button">
+               <button (click)="createBlog()" class="btn">Đăng bài</button>
+             </div>
         </div>
         <div class="Right">
             <img class="circle_img" #selectedImage [src]="imageSrc" alt=""> 
@@ -17,6 +21,9 @@
             <input type="file" #myfile name="myfile" accept="image/*" (change)="displayImage($event)">
         </div>
 
+    </div>
+    <div>
+        {{blogContent}}
     </div>
     
 </div>
