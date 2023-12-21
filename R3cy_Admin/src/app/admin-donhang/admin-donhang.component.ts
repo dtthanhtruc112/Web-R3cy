@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { OrderService } from '../Service/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgZone } from '@angular/core';
+import { Location } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-admin-donhang',
@@ -47,16 +51,27 @@ export class AdminDonhangComponent implements OnInit {
   }
 
   reason: string = '';
-  addReason(): void {
-    // Thêm logic để xử lý và lưu lý do mới vào cơ sở dữ liệu hoặc nơi cần thiết
-    console.log('Đã thêm lý do:', this.reason);
-
-    // Sau khi xử lý, bạn có thể đóng popup nếu cần
-    this.closePopup();
+  addReason(order: any): void {
+    const userId = order ? order.userid : null; // Replace with the actual user ID
+    const orderNumber = order ? order.ordernumber : null;
+    // Gọi API để cập nhật rejectreason cho đơn hàng
+    this._orderService.updateOrderReason(userId, orderNumber, this.reason)
+      .subscribe(
+        updatedOrder => {
+          console.log('Đã cập nhật lý do:', this.reason);
+          this.updateOrderStatus1(order)
+          // Sau khi cập nhật, đóng popup nếu cần
+          this.closePopup();
+        },
+        error => {
+          console.error('Error updating reject reason:', error);
+          // Xử lý lỗi nếu cần
+        }
+      );
   }
 
   constructor(
-    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router
+    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private zone: NgZone, private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -75,10 +90,29 @@ export class AdminDonhangComponent implements OnInit {
     }, 0);
   }
   
-  loadOrderInfo(): void {
-    const userId = 1;
+  // loadOrderInfo(): void {
+  //   const userId = 1;
 
-    this._orderService.getOrder(userId).subscribe((orders: any[]) => {
+  //   this._orderService.getOrder(userId).subscribe((orders: any[]) => {
+  //     this.Orders = orders.map(order => ({
+  //       ...order,
+  //       products: (order.products as any[]).map((product: any) => ({
+  //         ...product,
+  //         productValue: product.quantity * product.price
+  //       })),
+  //       totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
+  //     }));
+
+  //     this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
+  //     this.filterOrders();
+
+  //     // Now each order has a "totalOrderValue" property representing the total value for that order
+  //     console.log('Orders with Total Order Value:', this.Orders);
+  //   });
+  // }
+
+  loadOrderInfo(): void {
+    this._orderService.getAllOrders().subscribe((orders: any[]) => {
       this.Orders = orders.map(order => ({
         ...order,
         products: (order.products as any[]).map((product: any) => ({
@@ -87,14 +121,15 @@ export class AdminDonhangComponent implements OnInit {
         })),
         totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
       }));
-
+  
       this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
       this.filterOrders();
-
+  
       // Now each order has a "totalOrderValue" property representing the total value for that order
       console.log('Orders with Total Order Value:', this.Orders);
     });
   }
+
   // Phân loại đơn
   selectedStatus: string = 'Tất cả đơn hàng';
   initialOrders: any[] = []; // Lưu trữ danh sách đơn hàng ban đầu
@@ -141,6 +176,83 @@ export class AdminDonhangComponent implements OnInit {
   
     return []; // Default to an empty array if no matching condition is found
   }
+
+  updatePaymentStatus(order: any): void {
+    // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
+
+    const userId = order ? order.userid : null; // Replace with the actual user ID
+    const orderNumber = order ? order.ordernumber : null;
+    console.log('Order ID:', order.ordernumber);
+
+    this._orderService.updateOrderStatus(userId, orderNumber, order.order_status, true)
+    .subscribe(
+      (updatedOrder) => {
+        // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+        console.log('Order updated successfully:', updatedOrder);
+        // Giả sử server trả về là một giá trị boolean
+        // this.zone.run(() => {
+        //   this.router.navigate(['/donhang/don-hang-moi']);
+        // });
+        // window.location.reload();
+        this.router.navigate(['/donhang/don-hang-moi']);
+
+
+      },
+      error => {
+        // Xử lý lỗi khi cập nhật trạng thái thanh toán
+        console.error('Error updating payment status:', error);
+      }
+    );
+  }
+
+  updateOrderStatus(order: any): void {
+    // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
+
+    const userId = order ? order.userid : null;
+    const orderNumber = order ? order.ordernumber : null;
+    console.log('Order ID:', order.ordernumber);
+
+    this._orderService.updateOrderStatus(userId, orderNumber, "Đang giao", order.paymentstatus)
+    .subscribe(
+      (updatedOrder) => {
+        // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+        console.log('Order updated successfully:', updatedOrder);
+        // Giả sử server trả về là một giá trị boolean
+        
+        this.router.navigate(['/donhang/chua-nhan-hang']);
+        window.location.reload();
+      },
+      error => {
+        // Xử lý lỗi khi cập nhật trạng thái thanh toán
+        console.error('Error updating payment status:', error);
+      }
+    );
+  }
+
+  updateOrderStatus1(order: any): void {
+    // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
+
+    const userId = order ? order.userid : null;
+    const orderNumber = order ? order.ordernumber : null;
+    console.log('Order ID:', order.ordernumber);
+
+    this._orderService.updateOrderStatus(userId, orderNumber, "Đã hủy", order.paymentstatus)
+    .subscribe(
+      (updatedOrder) => {
+        // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+        console.log('Order updated successfully:', updatedOrder);
+        // Giả sử server trả về là một giá trị boolean
+        
+        this.router.navigate(['/donhang/da-huy']);
+        window.location.reload();
+      },
+      error => {
+        // Xử lý lỗi khi cập nhật trạng thái thanh toán
+        console.error('Error updating payment status:', error);
+      }
+    );
+  }
+  
   
   
  

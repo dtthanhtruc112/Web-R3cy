@@ -158,9 +158,10 @@ export class TrangtaikhoanComponent implements OnInit {
           (updatedOrder) => {
             // Handle when the order has been successfully updated
             console.log('Order updated successfully:', updatedOrder);
-  
-            // Navigate to the same route to reload the component
             this.router.navigate(['/trangtaikhoan/donhang_content']);
+            window.location.reload();
+            // Navigate to the same route to reload the component
+            
           },
           (error) => {
             console.error('Error updating order:', error);

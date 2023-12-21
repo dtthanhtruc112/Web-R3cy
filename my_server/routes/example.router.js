@@ -76,6 +76,12 @@ router.patch("/orders/user/:userid/:ordernumber", async (req, res) => {
             orderToUpdate.feedback = req.body.feedback;
         }
 
+        if (req.body.rejectreason) {
+            orderToUpdate.rejectreason = req.body.rejectreason;
+        }
+
+        
+
         // Lưu các thay đổi
         await orderToUpdate.save();
 
@@ -103,6 +109,7 @@ router.put("/orders/user/:userid/:ordernumber", async (req, res) => {
         orderToUpdate.order_status = req.body.order_status || orderToUpdate.order_status;
         orderToUpdate.paymentstatus = req.body.paymentstatus || orderToUpdate.paymentstatus;
         orderToUpdate.feedback = req.body.feedback || orderToUpdate.feedback;
+        orderToUpdate.rejectreason = req.body.rejectreason || orderToUpdate.rejectreason;
 
         // Lưu các thay đổi
         await orderToUpdate.save();

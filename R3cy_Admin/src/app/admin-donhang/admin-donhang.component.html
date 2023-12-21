@@ -15,7 +15,7 @@
         </div>
         <div class="container_item">
             <label for="show">Hiển thị: 
-                <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1" type="number" onchange="loadJson()">
+                <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1" type="number">
             </label>
         </div>
         <div class="container_item">
@@ -51,6 +51,7 @@
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
                         <th>Tổng tiền</th>
+                        <th>Trạng thái thanh toán</th>
                         <th>Xử lý </th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Chờ xử lí'])">
@@ -59,7 +60,29 @@
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.totalOrderValue}}</td>
-                        <td><i class="bi bi-check-circle-fill"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
+                        <td>
+                            <!-- Sử dụng ngIf để kiểm tra giá trị của paymentmethod -->
+                            <ng-container *ngIf="order.paymentmethod === 'COD'; else otherPaymentMethod">
+                                {{order.paymentstatus}}
+                            </ng-container>
+                            <ng-template #otherPaymentMethod>
+                                <!-- Hiển thị giá trị "true" nếu paymentstatus là true, ngược lại hiển thị biểu tượng check -->
+                                <ng-container *ngIf="order.paymentstatus; else showCheckIcon">
+                                    {{order.paymentstatus}}
+                                </ng-container>
+                                <ng-template #showCheckIcon>
+                                    <i class="bi bi-check-circle-fill" (click)="updatePaymentStatus(order)" ></i>
+                                </ng-template>
+                            </ng-template>
+                        </td>
+                        <td><i class="bi bi-check-circle-fill" (click)="updateOrderStatus(order)"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
+                        <div class="popup" *ngIf="reasonPopup">
+                            <h2 class="h2">Thêm lý do từ chối</h2>
+                            <textarea class="p" id="reason" placeholder="Nhập lý do từ chối..." [(ngModel)]="reason"></textarea>
+                            <br>
+                            <button class="p" (click)="addReason(order)">Cập nhật</button>
+                            <button class="p" (click)="closePopup()">Đóng</button>
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -148,13 +171,7 @@
                 <p class="p">Đã lưu thông tin thành công!</p>
                 <button class="p" (click)="closePopup()">Đóng</button>
             </div>
-            <div class="popup" *ngIf="reasonPopup">
-                <h2 class="h2">Thêm lý do từ chối</h2>
-                <textarea class="p" id="reason" placeholder="Nhập lý do từ chối..." [(ngModel)]="reason"></textarea>
-                <br>
-                <button class="p" (click)="addReason()">Cập nhật</button>
-                <button class="p" (click)="closePopup()">Đóng</button>
-            </div>
+            
         </div>
     </div>
 </div>
