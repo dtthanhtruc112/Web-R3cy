@@ -30,7 +30,7 @@ import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.compo
     BrowserModule,
     AppRoutingModule,
     FormsModule,    
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
