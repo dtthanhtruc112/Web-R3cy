@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { OrderService } from '../Service/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgZone } from '@angular/core';
+import { Location } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-admin-donhang',
@@ -56,7 +60,7 @@ export class AdminDonhangComponent implements OnInit {
   }
 
   constructor(
-    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router
+    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private zone: NgZone, private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -155,7 +159,12 @@ export class AdminDonhangComponent implements OnInit {
         // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
         console.log('Order updated successfully:', updatedOrder);
         // Giả sử server trả về là một giá trị boolean
-        this.router.navigate(['/donhang/don-hang-moi']);
+        // this.zone.run(() => {
+        //   this.router.navigate(['/donhang/don-hang-moi']);
+        // });
+        window.location.reload();
+
+
       },
       error => {
         // Xử lý lỗi khi cập nhật trạng thái thanh toán
@@ -177,7 +186,9 @@ export class AdminDonhangComponent implements OnInit {
         // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
         console.log('Order updated successfully:', updatedOrder);
         // Giả sử server trả về là một giá trị boolean
+        
         this.router.navigate(['/donhang/chua-nhan-hang']);
+        window.location.reload();
       },
       error => {
         // Xử lý lỗi khi cập nhật trạng thái thanh toán
