@@ -79,10 +79,29 @@ export class AdminDonhangComponent implements OnInit {
     }, 0);
   }
   
-  loadOrderInfo(): void {
-    const userId = 1;
+  // loadOrderInfo(): void {
+  //   const userId = 1;
 
-    this._orderService.getOrder(userId).subscribe((orders: any[]) => {
+  //   this._orderService.getOrder(userId).subscribe((orders: any[]) => {
+  //     this.Orders = orders.map(order => ({
+  //       ...order,
+  //       products: (order.products as any[]).map((product: any) => ({
+  //         ...product,
+  //         productValue: product.quantity * product.price
+  //       })),
+  //       totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
+  //     }));
+
+  //     this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
+  //     this.filterOrders();
+
+  //     // Now each order has a "totalOrderValue" property representing the total value for that order
+  //     console.log('Orders with Total Order Value:', this.Orders);
+  //   });
+  // }
+
+  loadOrderInfo(): void {
+    this._orderService.getAllOrders().subscribe((orders: any[]) => {
       this.Orders = orders.map(order => ({
         ...order,
         products: (order.products as any[]).map((product: any) => ({
@@ -91,14 +110,15 @@ export class AdminDonhangComponent implements OnInit {
         })),
         totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
       }));
-
+  
       this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
       this.filterOrders();
-
+  
       // Now each order has a "totalOrderValue" property representing the total value for that order
       console.log('Orders with Total Order Value:', this.Orders);
     });
   }
+
   // Phân loại đơn
   selectedStatus: string = 'Tất cả đơn hàng';
   initialOrders: any[] = []; // Lưu trữ danh sách đơn hàng ban đầu
@@ -149,7 +169,7 @@ export class AdminDonhangComponent implements OnInit {
   updatePaymentStatus(order: any): void {
     // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
 
-    const userId = 1; // Replace with the actual user ID
+    const userId = order ? order.userid : null; // Replace with the actual user ID
     const orderNumber = order ? order.ordernumber : null;
     console.log('Order ID:', order.ordernumber);
 
@@ -162,7 +182,8 @@ export class AdminDonhangComponent implements OnInit {
         // this.zone.run(() => {
         //   this.router.navigate(['/donhang/don-hang-moi']);
         // });
-        window.location.reload();
+        // window.location.reload();
+        this.router.navigate(['/donhang/don-hang-moi']);
 
 
       },
@@ -176,7 +197,7 @@ export class AdminDonhangComponent implements OnInit {
   updateOrderStatus(order: any): void {
     // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
 
-    const userId = 1; // Replace with the actual user ID
+    const userId = order ? order.userid : null;
     const orderNumber = order ? order.ordernumber : null;
     console.log('Order ID:', order.ordernumber);
 
