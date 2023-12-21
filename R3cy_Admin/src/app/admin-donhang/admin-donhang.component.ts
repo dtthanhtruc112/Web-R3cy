@@ -141,6 +141,51 @@ export class AdminDonhangComponent implements OnInit {
   
     return []; // Default to an empty array if no matching condition is found
   }
+
+  updatePaymentStatus(order: any): void {
+    // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
+
+    const userId = 1; // Replace with the actual user ID
+    const orderNumber = order ? order.ordernumber : null;
+    console.log('Order ID:', order.ordernumber);
+
+    this._orderService.updateOrderStatus(userId, orderNumber, order.order_status, true)
+    .subscribe(
+      (updatedOrder) => {
+        // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+        console.log('Order updated successfully:', updatedOrder);
+        // Giả sử server trả về là một giá trị boolean
+        this.router.navigate(['/donhang/don-hang-moi']);
+      },
+      error => {
+        // Xử lý lỗi khi cập nhật trạng thái thanh toán
+        console.error('Error updating payment status:', error);
+      }
+    );
+  }
+
+  updateOrderStatus(order: any): void {
+    // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
+
+    const userId = 1; // Replace with the actual user ID
+    const orderNumber = order ? order.ordernumber : null;
+    console.log('Order ID:', order.ordernumber);
+
+    this._orderService.updateOrderStatus(userId, orderNumber, "Đang giao", order.paymentstatus)
+    .subscribe(
+      (updatedOrder) => {
+        // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+        console.log('Order updated successfully:', updatedOrder);
+        // Giả sử server trả về là một giá trị boolean
+        this.router.navigate(['/donhang/chua-nhan-hang']);
+      },
+      error => {
+        // Xử lý lỗi khi cập nhật trạng thái thanh toán
+        console.error('Error updating payment status:', error);
+      }
+    );
+  }
+  
   
   
  

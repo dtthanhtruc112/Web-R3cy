@@ -51,6 +51,7 @@
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
                         <th>Tổng tiền</th>
+                        <th>Trạng thái thanh toán</th>
                         <th>Xử lý </th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Chờ xử lí'])">
@@ -59,7 +60,22 @@
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.totalOrderValue}}</td>
-                        <td><i class="bi bi-check-circle-fill"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
+                        <td>
+                            <!-- Sử dụng ngIf để kiểm tra giá trị của paymentmethod -->
+                            <ng-container *ngIf="order.paymentmethod === 'COD'; else otherPaymentMethod">
+                                {{order.paymentstatus}}
+                            </ng-container>
+                            <ng-template #otherPaymentMethod>
+                                <!-- Hiển thị giá trị "true" nếu paymentstatus là true, ngược lại hiển thị biểu tượng check -->
+                                <ng-container *ngIf="order.paymentstatus; else showCheckIcon">
+                                    {{order.paymentstatus}}
+                                </ng-container>
+                                <ng-template #showCheckIcon>
+                                    <i class="bi bi-check-circle-fill" (click)="updatePaymentStatus(order)" ></i>
+                                </ng-template>
+                            </ng-template>
+                        </td>
+                        <td><i class="bi bi-check-circle-fill" (click)="updateOrderStatus(order)"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
                     </tbody>
                 </table>
             </div>

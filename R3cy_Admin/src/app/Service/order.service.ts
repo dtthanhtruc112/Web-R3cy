@@ -27,12 +27,17 @@ export class OrderService {
     return throwError(() => new Error(err.message));
   }
 
-  updateOrderStatus(userId: number, orderNumber: string, status: string): Observable<Order> {
-    const updateData = { order_status: status };
-
+  updateOrderStatus(userId: number, orderNumber: string, status: string, paymentStatus: boolean): Observable<Order> {
+    const updateData = {
+      order_status: status,
+      paymentstatus: paymentStatus
+    };
+  
     return this._http.patch<Order>(`${this._url}/orders/user/${userId}/${orderNumber}`, updateData).pipe(
       catchError(this.handleErr)
     );
   }
+
+  
   
 }
