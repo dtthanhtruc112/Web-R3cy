@@ -6,6 +6,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { product } from '../Interface/product';
 import { CartService } from '../Service/cart.service';
 import { NavigationExtras } from '@angular/router'
+import { CartItem } from '../models/cart';
 
 @Component({
   selector: 'app-product',
@@ -44,38 +45,48 @@ export class ProductComponent implements OnInit {
 
   }
 
-  selectOption(option: string) {
-    this.selectedOption = option;
-    this.cartService.setSelectedOption(option);
-  }
+  // selectOption(option: string) {
+  //   this.selectedOption = option;
+  //   this.cartService.setSelectedOption(option);
+  // }
   
-  addToCart(item: product) {
+  // addToCart(item: product) {
     // Gọi phương thức addToCart của CartService để thêm sản phẩm vào giỏ hàng
-    if (this.selectOption){
-      const NavigationExtras: NavigationExtras = {
-        queryParams: {
-          option: this.selectOption
-        }
-      };
-      this.router.navigate(['/product-cart'], NavigationExtras);
+    // if (this.selectOption){
+    //   const NavigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       option: this.selectOption
+    //     }
+    //   };
+    //   this.router.navigate(['/product-cart'], NavigationExtras);
       
-    }else {
+    // }else {
 
-    }
+    // }
     
-    try{
-      this.cartService.addToCart(item);
+    // try{
+      // this.cartService.addToCart(item);
       // this.router.navigate(['/product-cart'], { queryParams: { quantity: this.quantity } });
       
-    }catch(err){
-      console.log(ErrorEvent)
+  //   }catch(err){
+  //     console.log(ErrorEvent)
+  //   }
+  // }
+  addProductToCart() {
+    // thêm sản phẩm vào giỏ hàng
+    const cartItem: CartItem={
+      id: this.productt.id,
+      quantity: 1
     }
+    this.cartService.setCartItem(cartItem);
   }
+
+
+
+
+
 }
 
 
 
- // addProductToCart(item: any) {
-  //   // thêm sản phẩm vào giỏ hàng
-  //   this.cartService.addItemToCart(item);
-  // }
+ 

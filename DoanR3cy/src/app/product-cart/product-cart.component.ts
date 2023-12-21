@@ -52,9 +52,9 @@ export class ProductCartComponent {
       this.cartItems = items;
       
     });
-    this.cartService.selectedOption$.subscribe(option => {
-      this.selectedOption = option;
-    });
+    // this.cartService.selectedOption$.subscribe(option => {
+    //   this.selectedOption = option;
+    // });
     
 
     // this._route.queryParams.subscribe(params => {

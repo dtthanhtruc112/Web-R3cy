@@ -16,18 +16,20 @@
             <p class="oldprice">{{productt.oldprice}}.000đ</p>
             <p>{{productt.description}}</p>
             <br><br>
-            <p class="grey">Phân loại:</p>
+            <!-- <p class="grey">Phân loại:</p>
             <button type="button" (click)="selectOption(productt.opt1)">{{productt.opt1}}</button>
             <button type="button" (click)="selectOption(productt.opt2)">{{productt.opt2}}</button>
             <button type="button" (click)="selectOption(productt.opt3)">{{productt.opt3}}</button>
-            <br>
+            <br> -->
 
             <p class="grey">Số lượng:</p>
             <!-- <input type="number" [(ngModel)]="quantity"> -->
 
             <br><br>
+            <!-- <button type="button" routerLink="/product-cart" routerLinkActive="active"
+                (click)="addToCart(productt)">Thêm vào giỏ hàng</button> -->
             <button type="button" routerLink="/product-cart" routerLinkActive="active"
-                (click)="addToCart(productt)">Thêm vào giỏ hàng</button>
+                (click)="addProductToCart()">Thêm vào giỏ hàng</button>
             <button type="button" class="cta">Mua hàng</button>
         </div>
     </div>

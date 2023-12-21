@@ -28,6 +28,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.component';
 import { ProductCheckoutComponent } from './product-checkout/product-checkout.component';
 import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
+import { CartIconComponent } from './cart-icon/cart-icon.component';
 
 
 
@@ -54,6 +55,7 @@ import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
     ManageBlogComponent, ProductComponent, ProductListComponent, DanhgiasanphamComponent,
     PageNotFoundComponent,
     ProductCheckoutComponent,
+    CartIconComponent,
 
   ],
   imports: [
