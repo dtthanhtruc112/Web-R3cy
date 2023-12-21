@@ -51,12 +51,23 @@ export class AdminDonhangComponent implements OnInit {
   }
 
   reason: string = '';
-  addReason(): void {
-    // Thêm logic để xử lý và lưu lý do mới vào cơ sở dữ liệu hoặc nơi cần thiết
-    console.log('Đã thêm lý do:', this.reason);
-
-    // Sau khi xử lý, bạn có thể đóng popup nếu cần
-    this.closePopup();
+  addReason(order: any): void {
+    const userId = order ? order.userid : null; // Replace with the actual user ID
+    const orderNumber = order ? order.ordernumber : null;
+    // Gọi API để cập nhật rejectreason cho đơn hàng
+    this._orderService.updateOrderReason(userId, orderNumber, this.reason)
+      .subscribe(
+        updatedOrder => {
+          console.log('Đã cập nhật lý do:', this.reason);
+          this.updateOrderStatus1(order)
+          // Sau khi cập nhật, đóng popup nếu cần
+          this.closePopup();
+        },
+        error => {
+          console.error('Error updating reject reason:', error);
+          // Xử lý lỗi nếu cần
+        }
+      );
   }
 
   constructor(
@@ -209,6 +220,30 @@ export class AdminDonhangComponent implements OnInit {
         // Giả sử server trả về là một giá trị boolean
         
         this.router.navigate(['/donhang/chua-nhan-hang']);
+        window.location.reload();
+      },
+      error => {
+        // Xử lý lỗi khi cập nhật trạng thái thanh toán
+        console.error('Error updating payment status:', error);
+      }
+    );
+  }
+
+  updateOrderStatus1(order: any): void {
+    // Gọi hàm cập nhật trạng thái thanh toán và cập nhật giá trị trên server
+
+    const userId = order ? order.userid : null;
+    const orderNumber = order ? order.ordernumber : null;
+    console.log('Order ID:', order.ordernumber);
+
+    this._orderService.updateOrderStatus(userId, orderNumber, "Đã hủy", order.paymentstatus)
+    .subscribe(
+      (updatedOrder) => {
+        // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+        console.log('Order updated successfully:', updatedOrder);
+        // Giả sử server trả về là một giá trị boolean
+        
+        this.router.navigate(['/donhang/da-huy']);
         window.location.reload();
       },
       error => {

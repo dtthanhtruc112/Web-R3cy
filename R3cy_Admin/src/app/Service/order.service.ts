@@ -45,6 +45,12 @@ export class OrderService {
     );
   }
 
+  updateOrderReason(userId: number, orderNumber: string, rejectReason: string): Observable<any> {
+    const updateData = { rejectreason: rejectReason };
+
+    return this._http.patch<any>(`${this._url}/orders/user/${userId}/${orderNumber}`, updateData);
+  }
+
   
   
 }

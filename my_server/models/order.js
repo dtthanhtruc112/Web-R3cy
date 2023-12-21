@@ -18,6 +18,7 @@ const Order = new Schema({
         quantity: Number,
         feedback: String,
     }],
+    rejectreason: String
 });
 
 module.exports = mongoose.model('Order', Order);
