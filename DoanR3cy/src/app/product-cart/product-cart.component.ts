@@ -48,10 +48,10 @@ export class ProductCartComponent {
 
   ngOnInit() {
     // Đăng ký để theo dõi sự thay đổi của giỏ hàng
-    this.cartService.cart$.subscribe((items) => {
-      this.cartItems = items;
+    // this.cartService.cart$.subscribe((items) => {
+    //   this.cartItems = items;
       
-    });
+    // });
     // this.cartService.selectedOption$.subscribe(option => {
     //   this.selectedOption = option;
     // });

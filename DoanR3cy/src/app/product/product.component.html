@@ -18,12 +18,12 @@
             <br><br>
             <!-- <p class="grey">Phân loại:</p>
             <button type="button" (click)="selectOption(productt.opt1)">{{productt.opt1}}</button>
-            <button type="button" (click)="selectOption(productt.opt2)">{{productt.opt2}}</button>
+            <button type="button" (click)="selectOption.(productt.opt2)">{{productt.opt2}}</button>
             <button type="button" (click)="selectOption(productt.opt3)">{{productt.opt3}}</button>
             <br> -->
 
             <p class="grey">Số lượng:</p>
-            <!-- <input type="number" [(ngModel)]="quantity"> -->
+            <input type="number" [(ngModel)]="quantity" mode="decimal" inputId="quantity" [min]="1" [max]="1000">
 
             <br><br>
             <!-- <button type="button" routerLink="/product-cart" routerLinkActive="active"

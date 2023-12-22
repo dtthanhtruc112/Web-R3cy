@@ -12,7 +12,11 @@ export class CartIconComponent {
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cartCount = this.cartService.getCart().items?.length
+    this.cartService.cart$.subscribe(cart => {
+      this.cartCount = cart.items?.length ?? 0;
+    })
+    
+
   }
 
 }

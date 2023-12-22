@@ -2,11 +2,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductService } from '../Service/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { product } from '../Interface/product';
 import { CartService } from '../Service/cart.service';
 import { NavigationExtras } from '@angular/router'
 import { CartItem } from '../models/cart';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -20,7 +21,8 @@ export class ProductComponent implements OnInit {
   pro: product | product[] = [];
   productt: any;
   item: any;
-  selectedOption: string = '';
+  endSubs$: Subject<any> = new Subject();
+  quantity = 1 ;
 
   constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService) { }
 
@@ -73,12 +75,28 @@ export class ProductComponent implements OnInit {
   //   }
   // }
   addProductToCart() {
-    // thêm sản phẩm vào giỏ hàng
-    const cartItem: CartItem={
+    const cartItem : CartItem = {
       id: this.productt.id,
-      quantity: 1
+      quantity: this.quantity
     }
+
     this.cartService.setCartItem(cartItem);
+
+    // thêm sản phẩm vào giỏ hàng
+    // const cartItem: CartItem={
+    //   id: this.productt.id,
+    //   quantity: 1
+    // }
+    // this.cartService.setCartItem(cartItem);
+  }
+
+  private _getProduct(id: string){
+    this.productService
+    .getProduct(id)
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe((resProduct: any)=> {
+      this.productt = resProduct
+    })
   }
 
 

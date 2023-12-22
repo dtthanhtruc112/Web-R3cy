@@ -7,6 +7,9 @@ import { product } from '../Interface/product';
   providedIn: 'root'
 })
 export class ProductService {
+  getProduct(id: string) {
+    throw new Error('Method not implemented.');
+  }
 
   _url: string = "./assets/data/product.json";
 
