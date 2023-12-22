@@ -17,6 +17,7 @@ export class AdminCreateBlogComponent {
   titleInputValue: string = '';
   blogContent: string = '';
   imageSrc: string = '';
+  authorInputValue: string = '';
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -72,7 +73,7 @@ export class AdminCreateBlogComponent {
     // Gọi service để tạo blog
     this.blogService.createBlog({
       title: this.titleInputValue,  // Thay thế bằng title thực tế
-      author: 'your-author',  // Thay thế bằng author thực tế
+      author: this.authorInputValue,  // Thay thế bằng author thực tế
       content: this.blogContent,
       thumbnail: this.imageSrc
     }).subscribe(
