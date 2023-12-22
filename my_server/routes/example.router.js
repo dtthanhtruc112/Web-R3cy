@@ -166,7 +166,7 @@ router.get('/blog', async (req, res) => {
     }
   });
 // API để lấy các bài viết mới nhất
-router.get('/blogs/latestBlogs', async (req, res) => {
+router.get('/blog/latestBlogs', async (req, res) => {
   try {
     const latestBlogs = await Blog.find().sort({ date: -1 }).limit(4);
     res.json(latestBlogs);

@@ -28,10 +28,11 @@
                 </div>
                   <div class="containerList">
                     <div *ngFor="let relatedBlog of relatedBlogs" class="listRelated" >
-                      <div> <img [src]="relatedBlog.thumbnail" class="imageThumbCircle" alt="{{ relatedBlog.title }}" /> </div>
+                      <div (click)="viewRelatedBlogDetails(relatedBlog._id)"> <img [src]="relatedBlog.thumbnail" class="imageThumbCircle" alt="{{ relatedBlog.title }}" /> 
                       <div class="TitleTextAllPost">
                         {{ relatedBlog.title }}
                       </div>
+                    </div>
                     </div>
                   </div>
                 
