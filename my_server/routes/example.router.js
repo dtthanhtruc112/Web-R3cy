@@ -5,6 +5,8 @@ const Order = require('../models/order')
 const User = require('../models/user')
 const Blog = require('../models/blog')
 const AccountCustomer = require('../models/accountcustomer.js');
+const bcrypt = require('bcrypt');
+
 const cors = require('cors');
 // 
 router.get('/', (req, res) => {
@@ -200,7 +202,7 @@ router.delete('/blog/:id', async (req, res) => {
     }
   });
 
-  // Xử lý route đăng ký
+// Xử lý route đăng ký
 
 router.get("/accounts", cors(), async (req, res) => {
   const customers = await AccountCustomer.find({}).lean();
@@ -238,6 +240,35 @@ router.post('/accounts', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// API đăng nhập
+router.post('/login', cors(), async (req, res) => {
+  try {
+    const { phonenumber, password } = req.body;
+
+    // Tìm kiếm tài khoản với số điện thoại tương ứng
+    const user = await AccountCustomer.findOne({ phonenumber });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Số điện thoại không tồn tại' });
+    }
+
+    // Kiểm tra mật khẩu
+    const isPasswordMatch = password === user.password;
+    
+    if (isPasswordMatch) {
+      // Đăng nhập thành công
+      res.status(200).json({ message: 'Đăng nhập thành công', user });
+    } else {
+      // Mật khẩu không đúng
+      res.status(401).json({ message: 'Mật khẩu không đúng' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 
 module.exports = router

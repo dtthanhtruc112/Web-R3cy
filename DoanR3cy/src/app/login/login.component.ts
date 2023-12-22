@@ -1,70 +1,84 @@
 // login.component.ts
 
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../Service/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AccountcustomerService } from '../Service/accountcustomer.service'
+import { ReturnStatement } from '@angular/compiler';
+import { AccountCustomer } from '../Interface/AccountCustomer';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
-    this.loginForm = this.formBuilder.group({
-      textEp: ['', [Validators.required, this.customValidator()]],
-      textPass: ['', [Validators.required]]
-    });
+export class LoginComponent implements OnInit{
+  phonenumber: string= '';
+  password: string= '';
+  rememberMe: boolean =false;
+
+  constructor(
+    private authService: AuthService,
+    private router:Router,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    ) {}
+
+  isPhoneNumberValid: boolean = true;
+
+  checkPhoneNumber(): void {
+    const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/; //kiểm tra chuỗi đã nhập là số điện thoại hợp lệ không?
+    this.isPhoneNumberValid = phoneNumberRegex.test(this.phonenumber);
   }
 
-  customValidator() {
-    return (control: AbstractControl) => {
-      const value = control.value as string; // Ép kiểu control.value thành string
-
-      if (this.isValidEmail(value) || this.isValidPhoneNumber(value)) {
-        return null; // Giá trị hợp lệ
-      } else {
-        return { customValidator: true }; // Giá trị không hợp lệ
-      }
-    };
+  ngOnInit(){
+          // Nếu cookie "phonenumber" và "password" đã tồn tại thì sử dụng lại thông tin đăng nhập
+          const phonenumber = this.authService.getCookie('phonenumber');
+          const password = this.authService.getCookie('password');
+          if (phonenumber && password) {
+            this.phonenumber = phonenumber;
+            this.password = password;
+            this.rememberMe = true;
+          }
   }
 
-  private isValidEmail(value: string): boolean {
-    // Kiểm tra xem giá trị có phải là email không
-    return /\b[A-Za-z0-9._%+-]+@gmail.com\b/.test(value);
-  }
-
-  private isValidPhoneNumber(value: string): boolean {
-    // Kiểm tra xem giá trị có phải là số điện thoại không
-    return /^\d{10,11}$/.test(value);
-  }
-
-  submitForm(): void {
-    // Kiểm tra xem tất cả các trường đã được tương tác (chạm) chưa
-    if (this.loginForm.touched) {
-      // Kiểm tra xem tất cả các trường đã được điền và làm mới trang nếu hợp lệ
-      if (this.loginForm.valid) {
-        alert('Bạn đã đăng nhập thành công');
-        setTimeout(() => {
-          this.router.navigate(['/main-page']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 200);
-        }, 200);
-      } else {
-        // Hiển thị cảnh báo khi form không hợp lệ
-        alert('Email/ Số điện thoại không hợp lệ.');
-      }
-    } else {
-      // Hiển thị cảnh báo khi người dùng chưa tương tác với các trường
-      alert('Vui lòng nhập đầy đủ thông tin.');
+  onSubmit() {
+    if(!this.isPhoneNumberValid){
+      alert('Vui lòng nhập đúng số điện thoại!');
+      return false
+    }
+    else{
+      this.authService.login(this.phonenumber, this.password).subscribe(
+        (user) => {
+          // Đăng nhập thành công, chuyển hướng người dùng đến trang chính
+          this.authService.setCurrentUser(user);
+          
+          // Lưu cookie nếu checkbox "Remember me" được chọn
+        if (this.rememberMe) {
+          // nếu chọn "nhớ mật khẩu" thì lưu thông tin đăng nhập
+          this.authService.setCookie('phonenumber', this.phonenumber, 30);
+          this.authService.setCookie('password', this.password, 30);
+        } else {
+          this.authService.deleteCookie('phonenumber');
+          this.authService.deleteCookie('password');
+        }
+          alert("Đăng nhập thành công!")
+          this.router.navigate(['/main-page'], { relativeTo: this.route });
+          
+        },
+        (error) => {
+          // Hiển thị thông báo lỗi
+          alert('Đăng nhập không thành công');
+        }
+      );
+      return false
     }
   }
-
   navigateToForgotPass(): void {
     // Chuyển hướng đến trang forgot-pass khi người dùng bấm "Quên mật khẩu?"
     this.router.navigate(['/forgot-pass']);
   }
 }
+  
