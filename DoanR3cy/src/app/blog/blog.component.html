@@ -17,7 +17,7 @@
               <h4 class="title1Blog" (click)="viewBlogDetail(blog._id)">{{ blog.title }}</h4>
               <!-- <p class="paraOfContent" [innerHTML]="blog.content"></p> -->
               <p class="paraOfContent" [innerHTML]="getSummary(blog.content)"></p>
-              <p class="authorDate">Bởi: {{ blog.author }}</p>
+              <p class="authorDate">Tác giả: {{ blog.author }}</p>
               <p class="authorDate">Ngày: {{ blog.date | date: 'medium' }}</p>
             </div>
           </div>
