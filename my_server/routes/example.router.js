@@ -4,6 +4,8 @@ const router = express.Router();
 const Order = require('../models/order')
 const User = require('../models/user')
 const Blog = require('../models/blog')
+const AccountCustomer = require('../models/accountcustomer.js');
+const cors = require('cors');
 // 
 router.get('/', (req, res) => {
     res.send('Welcome to NodeJS');
@@ -197,5 +199,45 @@ router.delete('/blog/:id', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
+
+  // Xử lý route đăng ký
+
+router.get("/accounts", cors(), async (req, res) => {
+  const customers = await AccountCustomer.find({}).lean();
+  res.send(customers);
+});
+
+router.post("/account", cors(), async (req, res) => {
+  try {
+    const customers = await AccountCustomer.find({}).lean(); // Sử dụng lean() để trả về dữ liệu dưới dạng JavaScript object thay vì document Mongoose
+    res.send(customers);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ err: error.message });
+  }
+});
+
+router.post('/accounts', async (req, res) => {
+  try {
+    // Nhận dữ liệu từ request body
+    const { Name, phonenumber, Mail, password } = req.body;
+
+    // Tạo một instance mới của AccountCustomer từ dữ liệu nhận được
+    const newAccount = new AccountCustomer({
+      Name,
+      phonenumber,
+      Mail,
+      password
+    });
+
+    // Lưu account mới vào database
+    const savedAccount = await newAccount.save();
+
+    res.status(201).json(savedAccount); // Trả về thông tin của account vừa tạo
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 module.exports = router

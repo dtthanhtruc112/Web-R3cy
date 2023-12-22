@@ -77,6 +77,10 @@
               "buildTarget": "DoanR3cy:build:development"
             }
           },
+          "options":{
+            "buildTarget": "DoanR3cy:build:development",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
