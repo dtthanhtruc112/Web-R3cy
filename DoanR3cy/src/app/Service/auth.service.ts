@@ -3,15 +3,18 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Router, ActivatedRoute } from '@angular/router';
 import { catchError, map, Observable, retry, throwError } from 'rxjs';
 import { AccountCustomer } from '../Interface/AccountCustomer';
+import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
-  login(phonenumber: string, password: string) {
+  login(phonenumber: string, password: string): Observable<AccountCustomer> {
     const url = 'http://localhost:3000/login';
     const data = { phonenumber, password };
-    return this.http.post(url, data);
+    return this.http.post<AccountCustomer>(url, data).pipe(
+      tap(user => console.log('User from server:', user)), 
+    );
   }
 
   logout() {

@@ -255,10 +255,9 @@ router.post('/login', cors(), async (req, res) => {
 
     // Kiểm tra mật khẩu
     const isPasswordMatch = password === user.password;
-    
     if (isPasswordMatch) {
       // Đăng nhập thành công
-      res.status(200).json({ message: 'Đăng nhập thành công', user });
+      res.status(200).json({ message: 'Đăng nhập thành công', user: { ...user.toObject(), role: user.role } });
     } else {
       // Mật khẩu không đúng
       res.status(401).json({ message: 'Mật khẩu không đúng' });
