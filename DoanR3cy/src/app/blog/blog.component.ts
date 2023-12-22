@@ -20,7 +20,7 @@ export class BlogComponent implements OnInit {
     });
   }
   viewBlogDetail(blogId: string) {
-    this.router.navigate(['/detail', blogId]);
+    this.router.navigate(['/blog', blogId]);
     console.log(blogId)
   }
 

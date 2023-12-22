@@ -25,16 +25,16 @@ export class BlogService {
   private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
-
+// gọi API hiển thị toàn bộ blog
   getBlogs(): Observable<BlogPost[]> {
     return this.http.get<BlogPost[]>(`${this.apiUrl}/blog`);
   }
-
+//gọi API hiển thị bài viết mới nhất
   getLatestBlogs(): Observable<BlogPost[]> {
-    const url = `${this.apiUrl}/blogs/latestBlogs`;
+    const url = `${this.apiUrl}/blog/latestBlogs`;
     return this.http.get<BlogPost[]>(url);
   }
-  
+// gọi API hiển thị bài viết chi tiết theo Id
   getBlogById(blogId: string): Observable<BlogPost> {
     return this.http.get<BlogPost>(`${this.apiUrl}/blog/${blogId}`);
   }

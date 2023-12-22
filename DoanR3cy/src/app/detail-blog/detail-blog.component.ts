@@ -42,4 +42,7 @@ export class DetailBlogComponent implements OnInit {
       }
     });
   }
+  viewRelatedBlogDetails(blogId: string): void {
+    this.router.navigate(['/blog', blogId]);
+  }
 }
