@@ -30,6 +30,11 @@ export class BlogService {
     return this.http.get<BlogPost[]>(`${this.apiUrl}/blog`);
   }
 
+  getLatestBlogs(): Observable<BlogPost[]> {
+    const url = `${this.apiUrl}/blogs/latestBlogs`;
+    return this.http.get<BlogPost[]>(url);
+  }
+  
   getBlogById(blogId: string): Observable<BlogPost> {
     return this.http.get<BlogPost>(`${this.apiUrl}/blog/${blogId}`);
   }

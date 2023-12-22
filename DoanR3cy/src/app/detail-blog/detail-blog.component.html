@@ -24,16 +24,8 @@
             <div class="Right">
                 <!-- các bài viết còn lại -->
                 <div class="TitleTextAllPost">
-                    <h3>BÀI VIẾT LIÊN QUAN</h3>
+                    <h3>BÀI VIẾT MỚI NHẤT</h3>
                 </div>
-                <!-- <div class="containerList">
-                    <div *ngFor="let relatedBlog of relatedBlogs" class="listRelated" [routerLink]="['/detail', relatedBlog.id]">
-                      <div> <img [src]="relatedBlog.thumb" class="imageThumbCircle" alt="{{ relatedBlog.title }}" /> </div>
-                      <div class="TitleTextAllPost">
-                        {{ relatedBlog.title }}
-                      </div>
-                    </div>
-                  </div> -->
                   <div class="containerList">
                     <div *ngFor="let relatedBlog of relatedBlogs" class="listRelated" >
                       <div> <img [src]="relatedBlog.thumbnail" class="imageThumbCircle" alt="{{ relatedBlog.title }}" /> </div>

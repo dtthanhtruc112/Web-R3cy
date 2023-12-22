@@ -90,14 +90,14 @@ export class ProductComponent implements OnInit {
     // this.cartService.setCartItem(cartItem);
   }
 
-  private _getProduct(id: string){
-    this.productService
-    .getProduct(id)
-    .pipe(takeUntil(this.endSubs$))
-    .subscribe((resProduct: any)=> {
-      this.productt = resProduct
-    })
-  }
+  // private _getProduct(id: string){
+  //   this.productService
+  //   .getProduct(id)
+  //   .pipe(takeUntil(this.endSubs$))
+  //   .subscribe((resProduct: any)=> {
+  //     this.productt = resProduct
+  //   })
+  // }
 
 
 

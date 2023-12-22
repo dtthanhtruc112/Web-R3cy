@@ -165,6 +165,16 @@ router.get('/blog', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
+// API để lấy các bài viết mới nhất
+router.get('/blogs/latestBlogs', async (req, res) => {
+  try {
+    const latestBlogs = await Blog.find().sort({ date: -1 }).limit(4);
+    res.json(latestBlogs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // API để lấy chi tiết blog theo id
 router.get('/blog/:id', async (req, res) => {
     try {
