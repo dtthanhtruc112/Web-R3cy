@@ -23,13 +23,13 @@
 
             <div class="type-review">
                 <h4>Đánh giá sản phẩm</h4>
-                <textarea name="review" id="review" cols="165" rows="10"
+                <textarea name="review" id="review" cols="165" rows="10" [(ngModel)]="feedbackText"
                     placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé..."></textarea>
             </div>
 
             <div class="button">
-                <button class="huy">Hủy</button>
-                <button class="gui">Gửi</button>
+                <button class="huy" routerLink="/trangtaikhoan/danhgia_content" routerLinkActive="active">Hủy</button>
+                <button class="gui" (click)="saveFeedback()">Gửi</button>
             </div>
         </div>
     </div>
