@@ -116,6 +116,10 @@ button{
     color: var(--color-blue);
 }
 
+#otp-button:hover{
+    color: var(--color-darkblue)
+}
+
 /* ============Responsive============ */
 /* Tablet */
 @media screen and (max-width:768px){
