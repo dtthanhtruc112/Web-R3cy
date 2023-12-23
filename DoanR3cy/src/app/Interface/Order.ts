@@ -19,4 +19,6 @@ export interface Order {
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
+  rejectreason: string
+
 } 

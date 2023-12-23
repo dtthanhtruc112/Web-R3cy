@@ -169,6 +169,9 @@
                                 <h5>Đơn hàng {{order.ordernumber}}</h5>
                                 <p id="status">{{order.order_status }}</p>
                             </div>
+                            <div class="donhang_itemdetal_row" *ngIf="order.rejectreason !== ''">
+                                <p>Lý do hủy: {{ order.rejectreason }}</p>
+                            </div>                            
                             <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
                                 <img src="" alt="">
                                 <p class="don_item_label">{{ product.name }} <br>
