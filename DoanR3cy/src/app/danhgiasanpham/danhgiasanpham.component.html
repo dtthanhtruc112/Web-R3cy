@@ -1,39 +1,43 @@
-<!-- <div class="main">
+<div class="main">
     <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
     <div class="productcontainer">
-        <div class="product-info">
+        <div class="product-info" *ngIf="order">
             <div class="img">
                 <img [src]='' alt="">
             </div>
-            <div class="info">
-                <h4>Móc khóa rùa biển</h4>
-                <p class="grey-para">Phân loại:</p>
+            <h2>Đánh giá đơn hàng {{ order.ordernumber }}</h2>
+            <div *ngFor="let product of order.products" class="info">
+                <h4>{{ product.name }}</h4>
+                <p>Giá: {{ product.price | currency:'VND' }}</p>
+                <p>Số lượng: {{ product.quantity }}</p>
+            </div>
+            <div class="rate">
+                <div class="header">
+                    <h4>Chất lượng sản phẩm và dịch vụ người bán:</h4>
+                </div>
+
+                <div class="star">
+
+                </div>
+            </div>
+
+            <div class="type-review">
+                <h4>Đánh giá sản phẩm</h4>
+                <textarea name="review" id="review" cols="165" rows="10"
+                    placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé..."></textarea>
+            </div>
+
+            <div class="button">
+                <button class="huy">Hủy</button>
+                <button class="gui">Gửi</button>
             </div>
         </div>
     </div>
 
-    <div class="rate">
-        <div class="header">
-            <h4>Chất lượng sản phẩm và dịch vụ người bán:</h4>
-        </div>
 
-        <div class="star">
+</div>
 
-        </div>
-    </div>
-
-    <div class="type-review">
-        <h4>Đánh giá sản phẩm</h4>
-        <textarea name="review" id="review" cols="165" rows="10"></textarea>
-    </div>
-
-    <div class="button">
-        <button class="huy">Hủy</button>
-        <button class="gui">Gửi</button>
-    </div>
-</div> -->
-
-<div class="fullpage" *ngIf="order">
+<!-- <div class="fullpage" *ngIf="order">
     <h2>Đánh giá đơn hàng {{ order.ordernumber }}</h2>
   
     <div *ngFor="let product of order.products" class="product-item">
@@ -49,5 +53,4 @@
   
   <div *ngIf="!order">
     <p>Không tìm thấy đơn hàng.</p>
-  </div>
-  
+  </div> -->
