@@ -34,7 +34,7 @@ db.connect();
 //+++++++++Router++++++++++
 const exampleRouter = require('./routes/example.router')
 app.use('/', exampleRouter)
-
+// app.use('/send-email', routes);
 
 app.listen(port, () => {
     console.log (`My server's listening on port: ${port}`)
