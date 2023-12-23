@@ -9,9 +9,9 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
-  login(phonenumber: string, password: string): Observable<AccountCustomer> {
+  login(Mail: string, password: string): Observable<AccountCustomer> {
     const url = 'http://localhost:3000/login';
-    const data = { phonenumber, password };
+    const data = { Mail, password };
     return this.http.post<AccountCustomer>(url, data).pipe(
       tap(user => console.log('User from server:', user)), 
     );

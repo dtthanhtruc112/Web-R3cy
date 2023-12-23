@@ -244,20 +244,20 @@ router.post('/accounts', async (req, res) => {
 // API đăng nhập
 router.post('/login', cors(), async (req, res) => {
   try {
-    const { phonenumber, password } = req.body;
+    const { Mail, password } = req.body;
 
-    // Tìm kiếm tài khoản với số điện thoại tương ứng
-    const user = await AccountCustomer.findOne({ phonenumber });
+    // Tìm kiếm tài khoản với email tương ứng
+    const user = await AccountCustomer.findOne({ Mail });
 
     if (!user) {
-      return res.status(401).json({ message: 'Số điện thoại không tồn tại' });
+      return res.status(401).json({ message: 'Email không tồn tại' });
     }
 
     // Kiểm tra mật khẩu
     const isPasswordMatch = password === user.password;
     if (isPasswordMatch) {
       // Đăng nhập thành công
-      res.status(200).json({ message: 'Đăng nhập thành công', user: { ...user.toObject(), role: user.role } });
+      res.status(200).json({ message: 'Đăng nhập thành công', user: { ...user.toObject()} });
     } else {
       // Mật khẩu không đúng
       res.status(401).json({ message: 'Mật khẩu không đúng' });
@@ -268,6 +268,32 @@ router.post('/login', cors(), async (req, res) => {
   }
 });
 
+// API otp code
+// router.get("/accounts", cors(), async (req, res) => {
+//   try {
+//     const { phonenumber } = req.body;
+//     const user = await AccountCustomer.findOne({ phonenumber });
 
+//     if (!user) {
+//       return res.status(401).json({ message: 'Số điện thoại không tồn tại' });
+//     }
 
+//     // Trả về thông tin tài khoản
+//     res.status(200).json({ message: 'Lấy thông tin tài khoản thành công', user });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+router.get("/accounts/:Mail", cors(), async (req, res) => {
+
+    try {
+      const phone = req.params.Mail;
+      const user = await AccountCustomer.findOne({ Mail: phone});
+      res.send(user);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 module.exports = router
