@@ -252,6 +252,47 @@ export class AdminDonhangComponent implements OnInit {
       }
     );
   }
+
+  sortBy: string | null = null;
+  sortOrder: 'asc' | 'desc' = 'asc';
+
+  
+
+  // Function to parse the date string in the format dd/mm/yyyy to a Date object
+parseDate(dateString: string): Date {
+  const parts = dateString.split('/');
+  // Month is 0-based, so subtract 1
+  const year = parseInt(parts[2], 10);
+  const month = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[0], 10);
+  return new Date(year, month, day);
+}
+
+// Modify your sortTable method to use the parseDate function
+sortTable(column: string) {
+  if (this.sortBy === column) {
+    // If clicking on the same column, reverse the order
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+  } else {
+    // If clicking on a different column, set the new column and order to ascending
+    this.sortBy = column;
+    this.sortOrder = 'asc';
+  }
+
+  // Sort the Orders array based on the selected column and order
+  this.Orders.sort((a, b) => {
+    const aValue = column === 'ordereddate' ? this.parseDate(a[column]) : a[column];
+    const bValue = column === 'ordereddate' ? this.parseDate(b[column]) : b[column];
+
+    if (aValue > bValue) {
+      return this.sortOrder === 'asc' ? 1 : -1;
+    } else if (aValue < bValue) {
+      return this.sortOrder === 'asc' ? -1 : 1;
+    } else {
+      return 0;
+    }
+  });
+}
   
   
   
