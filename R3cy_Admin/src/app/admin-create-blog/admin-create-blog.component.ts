@@ -4,6 +4,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { BlogService } from '../Service/blog.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 @Component({
   selector: 'app-admin-create-blog',
   templateUrl: './admin-create-blog.component.html',
