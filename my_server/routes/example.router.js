@@ -14,7 +14,11 @@ router.get('/', (req, res) => {
 })
 
 const bodyParser = require('body-parser');
-router.use(bodyParser.json());
+
+router.use(bodyParser.json({ limit: '10mb' })); // Hoặc giá trị lớn hơn tùy vào nhu cầu của bạn
+router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
+
 
 
 
