@@ -29,7 +29,7 @@ export class AdminLoginComponent implements OnInit{
   }
 
   ngOnInit(){
-          // Nếu cookie "phonenumber" và "password" đã tồn tại thì sử dụng lại thông tin đăng nhập
+          // Nếu cookie "email" và "password" đã tồn tại thì sử dụng lại thông tin đăng nhập
           const Mail = this.authService.getCookie('Mail');
           const password = this.authService.getCookie('password');
           if (Mail && password) {
