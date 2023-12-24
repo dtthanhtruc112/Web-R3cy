@@ -8,18 +8,24 @@ import { AdminCustomersComponent } from './admin-customers/admin-customers.compo
 import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 import { AdminSanphamComponent } from './admin-sanpham/admin-sanpham.component';
 import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.component';
+import { AdminCustomProductComponent } from './admin-custom-product/admin-custom-product.component';
+import { AdminLoginComponent } from './login/login.component';
+
+import { AuthGuard } from './Service/auth.guard';
 
 const routes: Routes = [  
-{ path: 'createblog', component: AdminCreateBlogComponent},
-{ path: 'tongquan', component: AdminTongquanComponent},
+{ path: '', redirectTo: '/login', pathMatch: 'full' },
+{ path: 'tongquan', component: AdminTongquanComponent, canActivate: [AuthGuard]},
+{ path: 'login', component: AdminLoginComponent, canActivate: [AuthGuard]},
+{ path: 'createblog', component: AdminCreateBlogComponent, canActivate: [AuthGuard]},
 { path: 'sidebar', component: AdminSidebarComponent},
-{ path: 'donhang', component: AdminDonhangComponent},
-{ path: 'donhang/:id', component: AdminDonhangComponent},
-{ path: 'customer', component: AdminCustomersComponent},
-{ path: 'blog', component: ManageBlogComponent},
-{ path: 'sanpham', component: AdminSanphamComponent},
-{ path: 'magiamgia', component: AdminMagiamgiaComponent},
-{ path: '', redirectTo: '/tongquan', pathMatch: 'full' }
+{ path: 'donhang', component: AdminDonhangComponent, canActivate: [AuthGuard]},
+{ path: 'donhang/:id', component: AdminDonhangComponent, canActivate: [AuthGuard]},
+{ path: 'customer', component: AdminCustomersComponent, canActivate: [AuthGuard]},
+{ path: 'blog', component: ManageBlogComponent, canActivate: [AuthGuard]},
+{ path: 'sanpham', component: AdminSanphamComponent, canActivate: [AuthGuard]},
+{ path: 'magiamgia', component: AdminMagiamgiaComponent, canActivate: [AuthGuard]},
+{ path: 'customproduct', component: AdminCustomProductComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
@@ -35,5 +41,7 @@ export const RoutingComponent= [
   AdminCustomersComponent,
   ManageBlogComponent,
   AdminSanphamComponent,
-  AdminMagiamgiaComponent
+  AdminCustomProductComponent,
+  AdminMagiamgiaComponent,
+  AdminLoginComponent
 ]

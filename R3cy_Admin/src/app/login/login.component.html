@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./login.component.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="box-container">
+                <p class="h2 font-bold">Đăng nhập</p>
+                <form (ngSubmit)="onSubmit()" class="login_form">
+                    <!-- Nhập email, số điện thoại -->
+                    <div class="text-ep">
+                      <input type="text" class="form-control" placeholder="Email/ Số điện thoại" name="phonenumber" [(ngModel)]="phonenumber" required (blur)="checkPhoneNumber()" id="phone" value="{{ phonenumber }}" required>
+                      <div *ngIf="!isPhoneNumberValid" class="error-message" style="color: red;">Số điện thoại không hợp lệ!</div>
+                    </div>
+                    <!-- Nhập mật khẩu -->
+                    <div class="text-pass">
+                      <input type="text" class="form-control" placeholder="Mật khẩu" name="psw" [(ngModel)]="password" required id="password" value="{{ password }}" required>
+                      <div class="clear"></div>
+                    </div>
+                  
+                    <div class="btn-sigin">
+                      <input type="submit" value="Đăng Nhập" id="submit-log" class="form-sbm" name="btn-sigin">
+                    </div>
+                    <div class="clear"></div>
+                  </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
