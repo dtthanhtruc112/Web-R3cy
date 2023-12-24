@@ -13,10 +13,10 @@
             <div class="box-container">
                 <p class="h2 font-bold">Đăng nhập</p>
                 <form (ngSubmit)="onSubmit()" class="login_form">
-                    <!-- Nhập email, số điện thoại -->
+                    <!-- Nhập email -->
                     <div class="text-ep">
-                      <input type="text" class="form-control" placeholder="Email/ Số điện thoại" name="phonenumber" [(ngModel)]="phonenumber" required (blur)="checkPhoneNumber()" id="phone" value="{{ phonenumber }}" required>
-                      <div *ngIf="!isPhoneNumberValid" class="error-message" style="color: red;">Số điện thoại không hợp lệ!</div>
+                      <input type="text" class="form-control" placeholder="Email" name="Mail" [(ngModel)]="Mail" required (blur)="checkMail()" id="mail" value="{{ Mail }}" required>
+                      <div *ngIf="!isMailValid" class="error-message" style="color: red;">Email không hợp lệ!</div>
                     </div>
                     <!-- Nhập mật khẩu -->
                     <div class="text-pass">
