@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { SafeHtmlPipe } from './safeHtml.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,8 +31,12 @@ import { AuthService } from './Service/auth.service';
     ManageBlogComponent,
     AdminSanphamComponent,
     AdminMagiamgiaComponent,
+<<<<<<< HEAD
     AdminCustomProductComponent,
     AdminLoginComponent,
+=======
+    SafeHtmlPipe
+>>>>>>> 4939de56a086241179cc227fc124f7b96f292b78
   ],
   imports: [
     BrowserModule,

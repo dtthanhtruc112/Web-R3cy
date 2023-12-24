@@ -117,7 +117,8 @@ button{
 }
 
 #otp-button:hover{
-    color: var(--color-darkblue)
+    color: var(--color-darkblue);
+    cursor: pointer
 }
 
 /* ============Responsive============ */

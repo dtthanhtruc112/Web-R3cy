@@ -35,28 +35,29 @@
                 <form action="app-login" method="get" >
                     <!-- Nhập email, số điện thoại -->
                     <div class="text-epr">
-                        <input required type="tel" placeholder="Email/ Số điện thoại" required>
+                        <input required type="text" [(ngModel)]="Mail" name="Mail" (blur)="checkMail()" placeholder="Email" required>
                     </div>
-                    <!-- <div *ngIf="!isPhoneNumberValid" class="error-message">Số điện thoại không hợp lệ!</div> -->
+                    <div *ngIf="!isMailValid" class="error-message">Mail không hợp lệ!</div>
 
-                    <button id="otp-send">Gửi mã</button>
+                    <button id="otp-send" (click)="sendCode()">Gửi mã</button>
 
                     <div class="container__input--item">
                         <div>
                             <!-- <label for="uname">Nhập mã xác nhận: </label> -->
-                            <input type="text" id="otp-input" placeholder="Nhập mã xác nhận">
+                            <input type="text" id="otp-input" placeholder="Nhập mã xác nhận" [(ngModel)]="verificationCode" name="verificationCode">
+                            <!-- (blur)="checkVerificationCode()" -->
                         </div>
-                        <!-- <div *ngIf="!isVerificationCodeValid" class="error-message">Mã xác nhận không hợp lệ</div> -->
+                        <div *ngIf="!isVerificationCodeValid" class="error-message">Mã xác nhận không hợp lệ</div>
         
                         <div class="reset-OTP">
                           <span class="p">Chưa nhận được mã? </span>
-                          <a id="otp-button" class="p font-bold">Gửi lại mã</a>
+                          <a id="otp-button" class="p font-bold" (click)="resend()">Gửi lại mã</a>
                         </div>
                       </div>
 
                       <div class="btn-sigup">
-                        <input type="submit" class="reset_button" value="Hoàn tất">
-                        <!-- <div *ngIf="!phoneNumberExist">Số điện thoại không tồn tại trong hệ thống!</div> -->
+                        <input type="submit" class="reset_button" value="Hoàn tất" (click)="onComplete()">
+                        <div *ngIf="!MailExist">Mail không tồn tại trong hệ thống!</div>
                     </div>
 
                 </form>

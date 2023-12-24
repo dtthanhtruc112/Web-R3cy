@@ -11,7 +11,7 @@ export class AccountcustomerService {
 
   constructor(private _http: HttpClient) { }
 
-  checkPhoneNumberExist(phonenumber: string): Observable<any> {
+  checkMailExist(Mail: string): Observable<any> {
     const headers = new HttpHeaders().set(
       'Content-Type',
       'text/plain;charset=utf8'
@@ -20,12 +20,14 @@ export class AccountcustomerService {
       headers: headers,
       responseType: 'text',
     };
-    return this._http.get<any>(`${this.apiUrl}/accounts/${phonenumber}`, requestOptions).pipe(
+    return this._http.get<any>("/accounts/" + Mail, requestOptions).pipe(
       map(res => JSON.parse(res) as Array<AccountCustomer>),
       retry(3),
       catchError(this.handleError)
     );
   }
+
+  
 
   handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.message));

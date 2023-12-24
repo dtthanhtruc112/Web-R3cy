@@ -11,39 +11,36 @@
         </div>
         <div class="Table">
             <table>
-                <tr>
-                    <th>Tiêu đề</th>
-                    <th>Thời gian</th>
-                    <th>Người đăng</th>
-                    <th>Xóa</th>
-                </tr>
-                <tr>
-                    <td class="titleLine">
-                        <img src="../../assets/Image/ImageForBlog/thumbnail/1.png" alt="" class="thumb">
-                        <span class="TiltleBlog">Tiêu đề bài viết 1 </span>
-                    </td>
-                    <td>11/11/2023</td>
-                    <td>R3cy</td>
-                    <td><i class="fa-solid fa-trash"></i></td>
-                </tr>
-                <tr>
-                    <td class="titleLine">
-                        <img src="../../assets/Image/ImageForBlog/thumbnail/1.png" alt="" class="thumb">
-                        <span class="TiltleBlog">Tiêu đề bài viết 1 </span>
-                    </td>
-                    <td>11/11/2023</td>
-                    <td>R3cy</td>
-                    <td><i class="fa-solid fa-trash"></i></td>
-                </tr>
-                <tr>
-                    <td class="titleLine">
-                        <img src="../../assets/Image/ImageForBlog/thumbnail/1.png" alt="" class="thumb">
-                        <span class="TiltleBlog">Tiêu đề bài viết 1 </span>
-                    </td>
-                    <td>11/11/2023</td>
-                    <td>R3cy</td>
-                    <td><i class="fa-solid fa-trash"></i></td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Tiêu đề</th>
+                        <th>Thời gian</th>
+                        <th>Tác giả</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let blog of blogs">
+                        <td class="titleLine">
+                          <!-- <img [src]="blog.thumbnail" alt="" class="thumb"> -->
+                          <img [src]="blog.thumbnail | safeHtml" alt="" class="thumb">
+                          <span class="TiltleBlog">{{ blog.title }}</span>
+                        </td>
+                        <td>{{ blog.date | date }}</td>
+                        <td>{{ blog.author }}</td>
+                        <td><i class="fa-solid fa-trash"></i></td>
+                      </tr>
+                    <!-- <tr>
+                        <td class="titleLine">
+                            <img src="../../assets/Image/ImageForBlog/thumbnail/1.png" alt="" class="thumb">
+                            <span class="TiltleBlog">Tiêu đề bài viết 1 </span>
+                        </td>
+                        <td>11/11/2023</td>
+                        <td>R3cy</td>
+                        <td><i class="fa-solid fa-trash"></i></td>
+                    </tr> -->
+                </tbody>
+                
             </table>
         </div>
     </div>

@@ -15,9 +15,10 @@ import { AccountCustomer } from '../Interface/AccountCustomer';
 })
 
 export class LoginComponent implements OnInit{
-  phonenumber: string= '';
+  Mail: string= '';
   password: string= '';
-  rememberMe: boolean =false;
+  isMailValid: boolean = true;
+
 
   constructor(
     private authService: AuthService,
@@ -26,30 +27,28 @@ export class LoginComponent implements OnInit{
     private http: HttpClient,
     ) {}
 
-  isPhoneNumberValid: boolean = true;
-
-  checkPhoneNumber(): void {
-    const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/; //kiểm tra chuỗi đã nhập là số điện thoại hợp lệ không?
-    this.isPhoneNumberValid = phoneNumberRegex.test(this.phonenumber);
-  }
+  checkMail(): void {
+    const MailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Kiểm tra chuỗi đã nhập là địa chỉ email hợp lệ không?
+    this.isMailValid = MailRegex.test(this.Mail);
+  }  
 
   ngOnInit(){
           // Nếu cookie "phonenumber" và "password" đã tồn tại thì sử dụng lại thông tin đăng nhập
-          const phonenumber = this.authService.getCookie('phonenumber');
+          const Mail = this.authService.getCookie('Mail');
           const password = this.authService.getCookie('password');
-          if (phonenumber && password) {
-            this.phonenumber = phonenumber;
+          if (Mail && password) {
+            this.Mail = Mail;
             this.password = password;
           }
   }
 
   onSubmit() {
-    if(!this.isPhoneNumberValid){
-      alert('Vui lòng nhập đúng số điện thoại!');
+    if(!this.isMailValid){
+      alert('Vui lòng nhập đúng Email!');
       return false
     }
     else{
-      this.authService.login(this.phonenumber, this.password).subscribe(
+      this.authService.login(this.Mail, this.password).subscribe(
         (user) => {
           // Đăng nhập thành công, chuyển hướng người dùng đến trang chính
           this.authService.setCurrentUser(user);

@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 const port = 3000
 const cors=require('cors')
 app.use(cors())
@@ -34,7 +36,7 @@ db.connect();
 //+++++++++Router++++++++++
 const exampleRouter = require('./routes/example.router')
 app.use('/', exampleRouter)
-
+// app.use('/send-email', routes);
 
 app.listen(port, () => {
     console.log (`My server's listening on port: ${port}`)

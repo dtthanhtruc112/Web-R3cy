@@ -14,7 +14,11 @@ router.get('/', (req, res) => {
 })
 
 const bodyParser = require('body-parser');
-router.use(bodyParser.json());
+
+router.use(bodyParser.json({ limit: '10mb' })); // Hoặc giá trị lớn hơn tùy vào nhu cầu của bạn
+router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
+
 
 
 
@@ -56,6 +60,56 @@ router.get("/orders/user/:userid/:ordernumber", async (req, res) => {
     }
 });
 
+// Lấy danh sách sản phẩm trong order
+router.get("/orders/user/:userid/:ordernumber/products", async (req, res) => {
+  try {
+      const { userid, ordernumber } = req.params;
+
+      // Truy vấn để lấy đơn hàng cụ thể của người dùng
+      const order = await Order.findOne({ userid, ordernumber }).populate({ path: 'products', model: 'Product' });
+
+      if (!order) {
+          console.log(`Order not found for ordernumber ${ordernumber} and userid ${userid}`);
+          return res.status(404).json({ err: "Order not found" });
+      }
+
+      // Trả về danh sách sản phẩm trong đơn hàng
+      res.json(order.products);
+  } catch (error) {
+      res.status(500).json({ err: error.message });
+  }
+});
+
+// Cụ thể 1 product 
+router.get("/orders/user/:userid/:ordernumber/products/:productid", async (req, res) => {
+  try {
+      const { userid, ordernumber, productid } = req.params;
+
+      // Truy vấn để lấy đơn hàng cụ thể của người dùng
+      const order = await Order.findOne({ userid, ordernumber }).populate({ path: 'products', model: 'Product' });
+
+      if (!order) {
+          console.log(`Order not found for ordernumber ${ordernumber} and userid ${userid}`);
+          return res.status(404).json({ err: "Order not found" });
+      }
+
+      // Tìm kiếm sản phẩm trong danh sách sản phẩm của đơn hàng
+      const product = order.products.find(product => product.id === parseInt(productid));
+
+      if (!product) {
+          console.log(`Product not found for productid ${productid} in order ${ordernumber}`);
+          return res.status(404).json({ err: "Product not found" });
+      }
+
+      // Trả về thông tin của sản phẩm cụ thể
+      res.json(product);
+  } catch (error) {
+      res.status(500).json({ err: error.message });
+  }
+});
+
+
+// Cập nhật order
 router.patch("/orders/user/:userid/:ordernumber", async (req, res) => {
     try {
         const { userid, ordernumber } = req.params;
@@ -137,6 +191,47 @@ router.get('/users', async (req, res) => {
         res.status(500).json({ err: error.message });
     }
 });
+
+// Cập nhật sản phẩm trong order 
+router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req, res) => {
+  try {
+      const { userid, ordernumber, productid } = req.params;
+
+      // Truy vấn để lấy đơn hàng cụ thể của người dùng
+      const order = await Order.findOne({ userid, ordernumber }).populate({ path: 'products', model: 'Product' });
+
+      if (!order) {
+          console.log(`Order not found for ordernumber ${ordernumber} and userid ${userid}`);
+          return res.status(404).json({ err: "Order not found" });
+      }
+
+      // Tìm kiếm sản phẩm trong danh sách sản phẩm của đơn hàng
+      const product = order.products.find(product => product.id === parseInt(productid));
+
+      if (!product) {
+          console.log(`Product not found for productid ${productid} in order ${ordernumber}`);
+          return res.status(404).json({ err: "Product not found" });
+      }
+
+      // Cập nhật các trường thông tin nếu có trong body của PATCH request
+      if (req.body.quantity !== undefined) {
+          product.quantity = req.body.quantity;
+      }
+
+      if (req.body.feedback !== undefined) {
+          product.feedback = req.body.feedback;
+      }
+
+      // Lưu các thay đổi
+      await order.save();
+
+      // Trả về thông tin đã cập nhật của sản phẩm
+      res.json(product);
+  } catch (error) {
+      res.status(500).json({ err: error.message });
+  }
+});
+
 
 
 // BLOG 
@@ -244,20 +339,20 @@ router.post('/accounts', async (req, res) => {
 // API đăng nhập
 router.post('/login', cors(), async (req, res) => {
   try {
-    const { phonenumber, password } = req.body;
+    const { Mail, password } = req.body;
 
-    // Tìm kiếm tài khoản với số điện thoại tương ứng
-    const user = await AccountCustomer.findOne({ phonenumber });
+    // Tìm kiếm tài khoản với email tương ứng
+    const user = await AccountCustomer.findOne({ Mail });
 
     if (!user) {
-      return res.status(401).json({ message: 'Số điện thoại không tồn tại' });
+      return res.status(401).json({ message: 'Email không tồn tại' });
     }
 
     // Kiểm tra mật khẩu
     const isPasswordMatch = password === user.password;
     if (isPasswordMatch) {
       // Đăng nhập thành công
-      res.status(200).json({ message: 'Đăng nhập thành công', user: { ...user.toObject(), role: user.role } });
+      res.status(200).json({ message: 'Đăng nhập thành công', user: { ...user.toObject()} });
     } else {
       // Mật khẩu không đúng
       res.status(401).json({ message: 'Mật khẩu không đúng' });
@@ -268,6 +363,33 @@ router.post('/login', cors(), async (req, res) => {
   }
 });
 
+// API otp code
+// router.get("/accounts", cors(), async (req, res) => {
+//   try {
+//     const { phonenumber } = req.body;
+//     const user = await AccountCustomer.findOne({ phonenumber });
 
+//     if (!user) {
+//       return res.status(401).json({ message: 'Số điện thoại không tồn tại' });
+//     }
+
+//     // Trả về thông tin tài khoản
+//     res.status(200).json({ message: 'Lấy thông tin tài khoản thành công', user });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+router.get("/accounts/:Mail", cors(), async (req, res) => {
+
+    try {
+      const phone = req.params.Mail;
+      const user = await AccountCustomer.findOne({ Mail: phone});
+      res.send(user);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
 module.exports = router

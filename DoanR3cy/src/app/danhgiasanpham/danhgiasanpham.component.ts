@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Order } from '../Interface/Order';
+import { Order, Product } from '../Interface/Order';
 import { OrderService } from '../Service/order.service';
 
 @Component({
@@ -41,6 +41,33 @@ export class DanhgiasanphamComponent  {
           }
         );
       }
+
+      
     });
+  }
+
+  feedbackText: string = '';
+  saveFeedback() {
+    // Check if there is an order and at least one product
+    if (this.order && this.order.products.length > 0) {
+      const firstProduct = this.order.products[0]; // Assuming you want to update feedback for the first product
+
+      // Assuming user id is 1
+      const userId = 1;
+
+      // Assuming the feedback text is stored in the feedbackText property
+      const feedback = this.feedbackText;
+
+      this.orderService.updateProductFeedback(userId, this.order.ordernumber, firstProduct.id, feedback).subscribe(
+        (updatedProduct: Product) => {
+          console.log('Product feedback updated successfully:', updatedProduct);
+          this.feedbackText = '';
+          // Optionally, you can perform additional actions after successful feedback submission
+        },
+        (error) => {
+          console.error('Error updating product feedback:', error);
+        }
+      );
+    }
   }
 }

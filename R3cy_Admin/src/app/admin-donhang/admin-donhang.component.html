@@ -27,11 +27,11 @@
                 <table >
                     <tr>
                         <th>Mã</th>
-                        <th>Ngày tạo</th>
+                        <th (click)="sortTable('ordereddate')">Ngày tạo</th>
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
                         <th>Trạng thái</th>
-                        <th>Tổng tiền</th>
+                        <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of Orders">
                         <td>{{order.ordernumber}}</td>
@@ -47,10 +47,10 @@
                 <table>
                     <tr>
                         <th>Mã</th>
-                        <th>Ngày tạo</th>
+                        <th (click)="sortTable('ordereddate')">Ngày tạo</th>
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
-                        <th>Tổng tiền</th>
+                        <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                         <th>Trạng thái thanh toán</th>
                         <th>Xử lý </th>
                     </tr>
@@ -90,11 +90,11 @@
                 <table>
                     <tr>
                         <th>Mã</th>
-                        <th>Ngày tạo</th>
+                        <th (click)="sortTable('ordereddate')">Ngày tạo</th>
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
                         <th>Trạng thái</th>
-                        <th>Tổng tiền</th>
+                        <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Đang giao', 'Chờ lấy hàng'])">
                         <td>{{order.ordernumber}}</td>
@@ -110,11 +110,11 @@
                 <table>
                     <tr>
                         <th>Mã</th>
-                        <th>Ngày tạo</th>
+                        <th (click)="sortTable('ordereddate')">Ngày tạo</th>
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
                         <th>Trạng thái</th>
-                        <th>Tổng tiền</th>
+                        <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Đã giao'])">
                         <td>{{order.ordernumber}}</td>
@@ -130,11 +130,11 @@
                 <table>
                     <tr>
                         <th>Mã</th>
-                        <th>Ngày tạo</th>
+                        <th (click)="sortTable('ordereddate')">Ngày tạo</th>
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
                         <th>Trạng thái</th>
-                        <th>Tổng tiền</th>
+                        <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Đã hủy'])">
                         <td>{{order.ordernumber}}</td>
@@ -150,11 +150,11 @@
                 <table>
                     <tr>
                         <th>Mã</th>
-                        <th>Ngày tạo</th>
+                        <th (click)="sortTable('ordereddate')">Ngày tạo</th>
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
                         <th>Trạng thái</th>
-                        <th>Tổng tiền</th>
+                        <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Trả hàng'])">
                         <td>{{order.ordernumber}}</td>

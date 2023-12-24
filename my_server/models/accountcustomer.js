@@ -6,6 +6,7 @@
 //   });
 
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema
 
 const accountCustomerSchema = new mongoose.Schema({
@@ -30,7 +31,11 @@ const accountCustomerSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
+  userid: {
+    type: Number,
+  },
 });
+accountCustomerSchema.plugin(AutoIncrement, { inc_field: 'userid', start_seq: 1 });
 
 const AccountCustomer = mongoose.model('AccountCustomer', accountCustomerSchema);
 

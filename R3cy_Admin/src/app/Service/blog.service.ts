@@ -14,4 +14,8 @@ export class BlogService {
     createBlog(blogData: any): Observable<any> {
       return this.http.post(`${this.apiUrl}/createBlog`, blogData);
     }
+    // Lấy tất cả các bài viết
+  getAllBlogs(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/blog`);
+  }
 }
