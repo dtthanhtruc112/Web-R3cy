@@ -9,13 +9,46 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
+  // login(Mail: string, password: string): Observable<AccountCustomer> {
+  //   const url = 'http://localhost:3000/login';
+  //   const data = { Mail, password };
+  //   return this.http.post<AccountCustomer>(url, data).pipe(
+  //     tap(user => console.log('User from server:', user)), 
+  //   );
+  // }
+
+  saveUserIdToSessionStorage(userid: number): void {
+    sessionStorage.setItem('userid', userid.toString());
+  }
+
   login(Mail: string, password: string): Observable<AccountCustomer> {
     const url = 'http://localhost:3000/login';
     const data = { Mail, password };
+
     return this.http.post<AccountCustomer>(url, data).pipe(
-      tap(user => console.log('User from server:', user)), 
+      tap(user => {
+        console.log('User from server:', user);
+
+        // Check if login was successful based on the user
+        if (user && user.userid) {
+          // Store userid in sessionStorage upon successful login
+          this.saveUserIdToSessionStorage(user.userid);
+
+          // Store the entire user object in sessionStorage
+          this.setCurrentUser(user);
+        } else {
+          // Handle unsuccessful login (show error message, redirect, etc.)
+          console.error('Login unsuccessful');
+        }
+      }),
     );
   }
+
+  // Add a new method to get userid from sessionStorage
+  getUserId(): string | null {
+    return sessionStorage.getItem('userid');
+  }
+  
 
   logout() {
     sessionStorage.removeItem('CurrentUser');

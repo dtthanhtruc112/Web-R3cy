@@ -43,27 +43,35 @@ export class LoginComponent implements OnInit{
   }
 
   onSubmit() {
-    if(!this.isMailValid){
+    if (!this.isMailValid) {
       alert('Vui lòng nhập đúng Email!');
-      return false
-    }
-    else{
+      return false;
+    } else {
       this.authService.login(this.Mail, this.password).subscribe(
         (user) => {
-          // Đăng nhập thành công, chuyển hướng người dùng đến trang chính
-          this.authService.setCurrentUser(user);
-          
-          // Lưu cookie nếu checkbox "Remember me" được chọn
-          alert("Đăng nhập thành công!")
-          this.router.navigate(['/main-page'], { relativeTo: this.route });
-          
+          if (user && user.userid) {
+            // Lưu userid vào sessionStorage
+            this.authService.saveUserIdToSessionStorage(user.userid);
+
+            // Lưu thông tin người dùng vào sessionStorage
+            this.authService.setCurrentUser(user);
+
+            // Lưu cookie nếu checkbox "Remember me" được chọn
+            alert('Đăng nhập thành công!');
+            
+            // Chuyển hướng người dùng đến trang chính
+            this.router.navigate(['/main-page'], { relativeTo: this.route });
+          } else {
+            // Xử lý khi đăng nhập không thành công
+            console.error('Đăng nhập không thành công');
+          }
         },
         (error) => {
-          // Hiển thị thông báo lỗi
+          // Xử lý khi có lỗi trong quá trình đăng nhập
           alert('Đăng nhập không thành công');
         }
       );
-      return false
+      return false;
     }
   }
   navigateToForgotPass(): void {
