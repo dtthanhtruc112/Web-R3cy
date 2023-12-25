@@ -15,7 +15,7 @@ export class NewPassComponent {
   @ViewChild('passwordInput') passwordInput: any;
   @ViewChild('confirmPasswordInput') confirmPasswordInput: any;
 
-  constructor(private AuthService: AuthService) {}
+  constructor(private AuthService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // Lấy giá trị temporaryMail từ AuthService
@@ -40,6 +40,7 @@ export class NewPassComponent {
     if (this.confirmPassword.trim().length === passwordInput.value) {
       this.confirmPasswordInput.value = true;;
       alert('Đổi mật khẩu thành công');
+      this.router.navigate(['/login']);
 
     } else
     if (passwordInput.value !== confirmPasswordInput.value) {
@@ -62,6 +63,7 @@ export class NewPassComponent {
       // Gọi service để cập nhật mật khẩu trong cơ sở dữ liệu
       const response = this.AuthService.updatePassword(this.AuthService.getCurrentUser().Mail, this.password)
       alert(response);
+      this.router.navigate(['/login']);
     } else {
       alert('Đổi mật khẩu không thành công');
     }

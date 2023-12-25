@@ -1,61 +1,124 @@
-// custom-product.component.ts
+// import { Component } from '@angular/core';
+// import { CustomProductService } from '../Service/customproduct.service'; // Import your service
+// import { CustomProduct } from '../Interface/CustomProduct'; // Import your interface
+// import { Router } from '@angular/router';
+
+// @Component({
+//   selector: 'app-custom-product',
+//   templateUrl: './custom-product.component.html',
+//   styleUrls: ['./custom-product.component.css']
+// })
+// export class CustomProductComponent {
+//   custom: CustomProduct = new CustomProduct();
+//   isValidEmail: boolean = true;
+//   isPhoneNumberValid: boolean = true;
+
+//   constructor(
+//     private customProductService: CustomProductService,
+//     private router: Router
+//   ) {}
+
+//   checkMail() {
+//     const MailRegex = /\S+@\S+\.\S+/; 
+//     if (this.custom.Mail.trim().length === 0) {
+//       this.isValidEmail = true;
+//     } else {
+//       this.isValidEmail = MailRegex.test(this.custom.Mail);
+//     }
+//   }
+
+//   checkPhoneNumber() {
+//     const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/; 
+//     if (this.custom.phonenumber.trim().length === 0) {
+//       this.isPhoneNumberValid = true;
+//     } else {
+//       this.isPhoneNumberValid = phoneNumberRegex.test(this.custom.phonenumber);
+//     }
+//   }
+
+//   onFileSelected(event: any): void {
+//     const file = event.target.files[0];
+//     this.custom.pfile = file;
+//   }
+
+//   postCustom() {
+//     if (this.isValidEmail && this.isPhoneNumberValid) {
+//       this.customProductService.postCustom(this.custom).subscribe(
+//         (response) => {
+//           console.log('Data saved successfully:', response);
+//           alert('Gửi yêu cầu custom thành công. R3cy sẽ liên hệ với bạn trong thời gian sớm nhất.');
+//           this.router.navigate(['/custom-product']);
+//         },
+//         (error) => {
+//           console.error('Error saving data:', error);
+//           alert('Có lỗi xảy ra khi lưu dữ liệu.');
+//         }
+//       );
+//     } else {
+//       alert('Vui lòng nhập thông tin hợp lệ.');
+//     }
+//   }
+// }
+
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomProductService } from '../Service/customproduct.service';
+import { CustomProduct } from '../Interface/CustomProduct';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sign-up',
+  selector: 'app-custom-product',
   templateUrl: './custom-product.component.html',
   styleUrls: ['./custom-product.component.css']
 })
 export class CustomProductComponent {
-  customProduct: FormGroup;
-  showAlert = false;
+  custom: CustomProduct = new CustomProduct();
+  isValidEmail: boolean = true;
+  isPhoneNumberValid: boolean = true;
 
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.customProduct = this.fb.group({
-      textName: ['', Validators.required],
-      textEmail: ['', Validators.required],
-      textPhone: ['', Validators.required],
-      textPname: ['', Validators.required],
-      textPdes: ['', Validators.required],
-    });
-  }
+  constructor(
+    private customProductService: CustomProductService,
+    private router: Router
+  ) {}
 
-  isValidEmailOrPhone(): boolean {
-    // Kiểm tra định dạng email hoặc số điện thoại
-    const emailPattern = /\b[A-Za-z0-9._%+-]+@gmail.com\b/;
-    const phonePattern = /^\d{10,11}$/;
-
-    const textEmailValue = this.customProduct.controls['textEmail'].value;
-    const textPhoneValue = this.customProduct.controls['textPhone'].value;
-
-    if (emailPattern.test(textEmailValue) || phonePattern.test(textPhoneValue)) {
-      return true;
+  checkMail() {
+    const MailRegex = /\S+@\S+\.\S+/; 
+    if (this.custom.Mail.trim().length === 0) {
+      this.isValidEmail = true;
     } else {
-      return false;
+      this.isValidEmail = MailRegex.test(this.custom.Mail);
     }
   }
 
-  submitForm(): void {
-    // Kiểm tra xem tất cả các trường đã được tương tác (chạm) chưa
-    if (this.customProduct.touched) {
-      // Kiểm tra xem tất cả các trường đã được điền và làm mới trang nếu hợp lệ
-      if (this.customProduct.valid && this.isValidEmailOrPhone()) {
-        alert('Bạn đã yêu cầu custom thành công');
-        setTimeout(() => {
-          this.router.navigate(['/custom-product']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 200);
-        }, 200);
-      } else {
-        // Hiển thị cảnh báo khi form không hợp lệ
-        alert('Email/ Số điện thoại không hợp lệ.');
-      }
+  checkPhoneNumber() {
+    const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/; 
+    if (this.custom.phonenumber.trim().length === 0) {
+      this.isPhoneNumberValid = true;
     } else {
-      // Hiển thị cảnh báo khi người dùng chưa tương tác với các trường
-      alert('Vui lòng nhập đầy đủ thông tin.');
+      this.isPhoneNumberValid = phoneNumberRegex.test(this.custom.phonenumber);
+    }
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    this.custom.pfile = file;
+  }
+
+  postCustom() {
+    if (this.isValidEmail && this.isPhoneNumberValid && this.custom.pfile) {
+      this.customProductService.postCustom(this.custom, this.custom.pfile).subscribe(
+        (response) => {
+          console.log('Data saved successfully:', response);
+          alert('Gửi yêu cầu custom thành công. R3cy sẽ liên hệ với bạn trong thời gian sớm nhất.');
+          this.router.navigate(['/custom-product']);
+        },
+        (error) => {
+          console.error('Error saving data:', error);
+          alert('Có lỗi xảy ra khi lưu dữ liệu.');
+        }
+      );
+    } else {
+      alert('Vui lòng nhập thông tin hợp lệ và chọn một file.');
     }
   }
 }
+

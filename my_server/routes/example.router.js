@@ -4,10 +4,17 @@ const router = express.Router();
 const Order = require('../models/order')
 const User = require('../models/user')
 const Blog = require('../models/blog')
-const AccountCustomer = require('../models/accountcustomer.js');
+const AccountCustomer = require('../models/accountcustomer.js')
+const CustomProduct = require('../models/customproduct.js')
 const bcrypt = require('bcrypt');
 
 const cors = require('cors');
+
+const multer = require('multer');
+
+const storage = multer.memoryStorage(); // Lưu trữ tệp trong bộ nhớ
+const upload = multer({ storage: storage });
+
 // 
 router.get('/', (req, res) => {
     res.send('Welcome to NodeJS');
@@ -429,5 +436,88 @@ router.put('/update-password', async (req, res) => {
   }
 });
 
+// // POST route to handle custom product data
+// router.post('/customProducts', async (req, res) => {
+//   try {
+//     const customData = req.body;
+
+//     // Validate customData if necessary
+
+//     // Lưu dữ liệu vào cơ sở dữ liệu sử dụng mô hình CustomProduct
+//     const savedCustomProduct = await CustomProduct.create(customData);
+
+//     res.status(201).json(savedCustomProduct);
+//   } catch (error) {
+//     console.error('Lỗi khi lưu dữ liệu sản phẩm tùy chỉnh:', error);
+//     res.status(500).json({ error: error.message || 'Lỗi Nội Bộ của Máy Chủ' });
+//   }
+// });
+
+
+// // GET route to retrieve all custom products
+// router.get('/customProducts', async (req, res) => {
+//   try {
+//     const customProducts = await CustomProduct.find();
+//     res.json(customProducts);
+//   } catch (error) {
+//     console.error('Error retrieving custom products:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
+// POST route to handle custom product data with file upload
+// router.post('/customProducts', upload.single('pfile'), async (req, res) => {
+//   try {
+//     const customData = req.body;
+//     const fileData = req.file;
+
+//     // Thực hiện xử lý tệp tin ở đây, ví dụ: lưu nó vào cơ sở dữ liệu hoặc hệ thống tệp tin
+
+//     // Thêm dữ liệu tệp tin vào customData
+//     customData.pfile = {
+//       data: fileData.buffer,
+//       contentType: fileData.mimetype,
+//       filename: fileData.originalname
+//     };
+
+//     // Lưu dữ liệu vào cơ sở dữ liệu sử dụng mô hình CustomProduct
+//     const savedCustomProduct = await CustomProduct.create(customData);
+
+//     res.status(201).json(savedCustomProduct);
+//   } catch (error) {
+//     console.error('Lỗi khi lưu dữ liệu sản phẩm tùy chỉnh:', error);
+//     res.status(500).json({ error: error.message || 'Lỗi Nội Bộ của Máy Chủ' });
+//   }
+// });
+
+// POST route to handle custom product data with file upload
+router.post('/customProducts', upload.single('pfile'), async (req, res) => {
+  try {
+    const customData = req.body;
+    const fileData = req.file;
+
+    // Thêm dữ liệu tệp tin vào customData
+    customData.pfile = fileData.buffer; // Gán trực tiếp giá trị Buffer
+
+    // Lưu dữ liệu vào cơ sở dữ liệu sử dụng mô hình CustomProduct
+    const savedCustomProduct = await CustomProduct.create(customData);
+
+    res.status(201).json(savedCustomProduct);
+  } catch (error) {
+    console.error('Lỗi khi lưu dữ liệu sản phẩm tùy chỉnh:', error);
+    res.status(500).json({ error: error.message || 'Lỗi Nội Bộ của Máy Chủ' });
+  }
+});
+
+// GET route to retrieve all custom products
+router.get('/customProducts', async (req, res) => {
+  try {
+    const customProducts = await CustomProduct.find();
+    res.json(customProducts);
+  } catch (error) {
+    console.error('Error retrieving custom products:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = router
