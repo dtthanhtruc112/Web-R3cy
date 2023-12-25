@@ -28,20 +28,19 @@ export class AuthService {
     return this.http.post<AccountCustomer>(url, data).pipe(
       tap(user => {
         console.log('User from server:', user);
-
-        // Check if login was successful based on the user
+        console.log('user', user.Name);
+    
         if (user && user.userid) {
-          // Store userid in sessionStorage upon successful login
           this.saveUserIdToSessionStorage(user.userid);
-
-          // Store the entire user object in sessionStorage
           this.setCurrentUser(user);
+          console.log('Login successful');
         } else {
-          // Handle unsuccessful login (show error message, redirect, etc.)
-          console.error('Login unsuccessful');
+          console.error('Login unsuccessful. User or userid is null.');
+          // console.log('user:', user);
         }
       }),
     );
+    
   }
 
   // Add a new method to get userid from sessionStorage
