@@ -363,23 +363,6 @@ router.post('/login', cors(), async (req, res) => {
   }
 });
 
-// API otp code
-// router.get("/accounts", cors(), async (req, res) => {
-//   try {
-//     const { phonenumber } = req.body;
-//     const user = await AccountCustomer.findOne({ phonenumber });
-
-//     if (!user) {
-//       return res.status(401).json({ message: 'Số điện thoại không tồn tại' });
-//     }
-
-//     // Trả về thông tin tài khoản
-//     res.status(200).json({ message: 'Lấy thông tin tài khoản thành công', user });
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 
 router.get("/accounts/:Mail", cors(), async (req, res) => {
 
@@ -390,6 +373,61 @@ router.get("/accounts/:Mail", cors(), async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  });
+});
+
+
+// API đổi mật khẩu
+  // API đổi mật khẩu
+// router.put('/change-password', async (req, res) => {
+//   try {
+//     const { Mail, oldPassword, newPassword } = req.body;
+
+//     // Tìm kiếm tài khoản với email tương ứng
+//     const user = await AccountCustomer.findOne({ Mail });
+
+//     if (!user) {
+//       return res.status(401).json({ message: 'Email không tồn tại' });
+//     }
+
+//     // Thêm một điều kiện kiểm tra mật khẩu mới
+//     if (oldPassword !== user.password) {
+//       return res.status(401).json({ message: 'Mật khẩu cũ không đúng' });
+//     }
+
+//     // Cập nhật mật khẩu mới trong database
+//     await AccountCustomer.updateOne({ Mail }, { $set: { password: newPassword } });
+
+//     res.status(200).json({ message: 'Đổi mật khẩu thành công' });
+//   } catch (error) {
+//     console.error('Error:', error);
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
+router.put('/update-password', async (req, res) => {
+  try {
+    const Mail = req.body.Mail;
+    const newPassword = req.body.newPassword;
+
+    // Update the password in the database
+    const user = await AccountCustomer.find({ Mail});
+    await AccountCustomer.updateOne({ Mail }, { $set: { password: newPassword} });
+    
+    if (!user) {
+      // If the user with the specified email is not found
+      return res.status(404).json({ error: 'User not found' });
+    }
+    else {
+      res.send({ message: 'Password updated successfully' });
+    }
+
+    // Send a success response
+    res.json({ message: ' Password updated successfully' });
+  } catch (error) {
+    console.error('Error updating password:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 module.exports = router

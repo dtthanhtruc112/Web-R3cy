@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../Service/auth.service';
 
 @Component({
   selector: 'app-new-pass',
@@ -8,59 +9,101 @@ import { Router } from '@angular/router';
   styleUrls: ['./new-pass.component.css']
 })
 export class NewPassComponent {
-  newPassForm: FormGroup;
+  password: string='';
+  confirmPassword: string= '';
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
-    this.newPassForm = this.formBuilder.group({
-      newPass: ['', [Validators.required]],
-      reNewPass: ['', [Validators.required]]
-    });
+  @ViewChild('passwordInput') passwordInput: any;
+  @ViewChild('confirmPasswordInput') confirmPasswordInput: any;
+
+  constructor(private AuthService: AuthService) {}
+
+  ngOnInit(): void {
+    // Lấy giá trị temporaryMail từ AuthService
+    const Mail = this.AuthService.getCurrentUser();
+    console.log('Temporary Mail:', Mail.Mail);
+    // console.log('Temporary Mail:', Mail); 
   }
 
-  // submitForm() {
-  //   const newPass = this.newPassForm.value.newPass;
-  //   const reNewPass = this.newPassForm.value.reNewPass;
+  onChecked() {
+    const passwordInput = this.passwordInput.nativeElement;
+    if (this.password.trim().length === 0) {
+    this.passwordInput.value = true;
+    return;
+  }
+  }
 
-  //   // Kiểm tra nếu form hợp lệ và mật khẩu mới khớp
-  //   // if (this.newPassForm.valid && newPass === reNewPass) {
-  //     // Thông báo thành công
-  //   if (this.newPassForm.valid && newPass === reNewPass) {
-  //     // Chuyển đến trang main-page nếu form hợp lệ
-  //     alert('Mật khẩu mới đã được cập nhật thành công!');
-  //     setTimeout(() => {
-  //       this.router.navigate(['/main-page']);
-  //     }, 200);
+  checkPasswordsMatch() {
+
+    const passwordInput = this.passwordInput.nativeElement;
+    const confirmPasswordInput = this.confirmPasswordInput.nativeElement;
+    
+    if (this.confirmPassword.trim().length === passwordInput.value) {
+      this.confirmPasswordInput.value = true;;
+      alert('Đổi mật khẩu thành công');
+
+    } else
+    if (passwordInput.value !== confirmPasswordInput.value) {
+      alert('Mật khẩu không khớp. Vui lòng nhập lại mật khẩu.');
+    }
+  }
+
+  isPasswordValid(password: string): boolean {
+    // Thêm các điều kiện kiểm tra tính hợp lệ của mật khẩu ở đây
+    // Ví dụ: ít nhất 6 ký tự, chứa ít nhất một chữ cái và một số.
+    return /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/.test(password);
+  }
+
+  async updatePassword() {
+    // console.log(this.password)
+    // Kiểm tra mật khẩu mới có hợp lệ không
+    if (this.isPasswordValid(this.password)) {
+      // const Mail = this.AuthService.temporaryMail;
+
+      // Gọi service để cập nhật mật khẩu trong cơ sở dữ liệu
+      const response = this.AuthService.updatePassword(this.AuthService.getCurrentUser().Mail, this.password)
+      alert(response);
+    } else {
+      alert('Đổi mật khẩu không thành công');
+    }
+  }
+
+
+  // // Trong NewPassComponent
+
+  // updatePassword() {
+  //   if (this.AuthService.isPasswordValid(this.password)) {
+  //     const currentUser = this.AuthService.getCurrentUser();
+
+  //     if (currentUser) {
+  //       const { Mail, password } = currentUser;
+  //       this.AuthService.updatePassword(Mail, password, this.password).subscribe(
+  //         (response) => {
+  //           alert('Đổi mật khẩu thành công');
+  //           console.log('Update password success:', response);
+  //           // Thực hiện các bước tiếp theo sau khi cập nhật mật khẩu thành công
+  //         },
+  //         (error) => {
+  //           alert('Đổi mật khẩu không thành công');
+  //           console.error('Update password error:', error);
+  //         }
+  //       );
+  //     }
   //   } else {
-  //     // Hiển thị thông báo hoặc xử lý khi form không hợp lệ hoặc mật khẩu mới không khớp
-  //     alert('Mật khẩu mới không khớp. Vui lòng kiểm tra lại!');
+  //     alert('Mật khẩu mới không hợp lệ');
   //   }
   // }
 
-  submitForm(): void  {
-    const newPass = this.newPassForm.value.newPass;
-    const reNewPass = this.newPassForm.value.reNewPass;
 
-    // Kiểm tra xem tất cả các trường đã được tương tác (chạm) chưa
-    if (this.newPassForm.touched) {
-      // Kiểm tra xem tất cả các trường đã được điền và làm mới trang nếu hợp lệ
-      // Kiểm tra nếu form hợp lệ và mật khẩu mới khớp
-      // if (this.newPassForm.valid && newPass === reNewPass) {
-      // Thông báo thành công
-      if (this.newPassForm.valid && newPass === reNewPass) {
-      // Chuyển đến trang main-page nếu form hợp lệ
-        alert('Mật khẩu mới đã được cập nhật thành công!');
-        setTimeout(() => {
-        this.router.navigate(['/main-page']);
-      }, 200);
-      } else {
-        // Hiển thị thông báo hoặc xử lý khi form không hợp lệ hoặc mật khẩu mới không khớp
-        alert('Mật khẩu mới không khớp. Vui lòng kiểm tra lại!');
-      }
-    } else {
-      // Hiển thị cảnh báo khi người dùng chưa tương tác với các trường
-      alert('Vui lòng nhập đầy đủ thông tin.');
-    }
-  }
+  // Form: any
+  // constructor(private _FormBuilder: FormBuilder) { }
+  // ngOnInit(): void {
+  //   this.Form = this._FormBuilder.group({
+  //     pwd: ['', [Validators.required]]
+  //   })
+  // }
+  //   get pwd(){
+  //     return this.Form.controls['pwd']
+  //   }
 
 
 }
