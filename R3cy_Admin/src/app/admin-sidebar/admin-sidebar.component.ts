@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, NgZone, Renderer2 } from '@angular/core';
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -7,18 +8,7 @@ import { Component, OnInit, ElementRef, NgZone, Renderer2 } from '@angular/core'
 })
 export class AdminSidebarComponent implements OnInit {
 
-  // ngOnInit(): void {
-  //   document.addEventListener('DOMContentLoaded', () => {
-  //     const h4Elements = document.querySelectorAll('#sidebar .menuActive');
-
-  //     h4Elements.forEach((h4Element) => {
-  //       h4Element.addEventListener('click', () => {
-  //         h4Element.classList.toggle('active');
-  //       });
-  //     });
-  //   });
-  // }
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, public AuthService: AuthService) {}
 
   ngOnInit(): void {
     document.addEventListener('DOMContentLoaded', () => {
