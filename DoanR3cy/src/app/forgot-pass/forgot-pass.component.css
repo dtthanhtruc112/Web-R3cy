@@ -31,7 +31,7 @@ div{
 .content{
     background-color: var(--color-white);
     width: 740px;
-    height: 350px;
+    height: 480px;
     box-sizing: border-box;
     box-shadow: 0 3px 10px 0 rgba(0,0,0,.14);
     border-radius: 4px;
@@ -46,7 +46,7 @@ div{
     margin-bottom: 48px;
 }
 
-.form-control{
+input{
     width: 98%;
     height: 40px;
     border-radius: 5px;
@@ -76,17 +76,49 @@ input{
 .btn-sigup > input{
     width: 100%;
     height: 40px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     background-color: var(--color-blue);
     border-radius: 10px;
     color: var(--color-white);
     font-weight: bold;
     border: none;
     cursor: pointer;
+    margin-top: 30px;
 }
 
 .text-epr > input{
     padding-left: 10px;
+}
+
+button{
+    background-color: var(--color-blue);
+    border-radius: 10px;
+    color: var(--color-white);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    width: 30%;
+    height: 40px;
+    margin-bottom: 30px;
+}
+
+/* .container__input--item {
+    display: flex;
+} */
+
+#otp-input {
+    margin-bottom: 18px;
+}
+
+#otp-button{
+    text-decoration: none;
+    color: var(--color-blue);
+}
+
+#otp-button:hover{
+    color: var(--color-darkblue);
+    cursor: pointer
 }
 
 /* ============Responsive============ */
@@ -94,7 +126,7 @@ input{
 @media screen and (max-width:768px){
     .content{
         width: 650px;
-        height: 350px;
+        height: 480px;
     }
 
     .box-container{
@@ -111,7 +143,7 @@ input{
     }
     .content{
         width: 350px;
-        height: 300px;
+        height: 450px;
     }
 
     .h2{

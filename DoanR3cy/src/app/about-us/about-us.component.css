@@ -4,9 +4,9 @@ div{
 }
 
 *{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+    /* padding: 0;
+    margin: 0; */
+    /* box-sizing: border-box; */
     color: var(--color-darkBlue)
 }
 
@@ -22,24 +22,27 @@ div{
     font-weight: bold;
 }
 
-/* Container chính */
-.container {
-    /* max-width: 1200px; */
-    margin: 0 auto;
-    padding: 0 20 20 20;
-    width: 80%;
+.mb-60{
+    margin-bottom: 60px;
 }
+
+.mt-60{
+    margin-top: 60px;
+}
+
+/* Container chính */
 
 .header-img{
     padding-top: 50%;
     background: url(../../assets/about-us/banner.png) top center/ cover no-repeat;
+    ;
 }
 
-.slogan{
+/* .slogan{
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .slogan > .h4{
     margin-top: 30px;
@@ -160,7 +163,7 @@ div{
 
 .btn-sp button{
     background-color: var(--color-blue);
-    width: 130px;
+    width: 150px;
     height: 40px;
     border: none;
     border-radius: 10px;
@@ -228,12 +231,20 @@ div{
         margin: 0px;
         padding: 30px 15px 30px 15px;
     }
+
+    .btn-sp button{
+        width: 150px;
+    }
 }
 
 /* Mobile */
 @media screen and (max-width:480px){
     .slogan{
         max-width: 100%;
+    }
+
+    .btn-sp button{
+        width: 150px;
     }
     
 }

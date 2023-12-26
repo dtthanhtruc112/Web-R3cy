@@ -31,10 +31,18 @@ export class DetailBlogComponent implements OnInit {
         this.blogService.getBlogById(blogId).subscribe((data: BlogPost) => {
           this.blog = data;
         });
+       // Lấy các bài viết mới nhất
+       this.blogService.getLatestBlogs().subscribe((data: BlogPost[]) => {
+        // Loại bỏ bài viết chi tiết khỏi danh sách các bài viết mới nhất
+        this.relatedBlogs = data.filter(blog => blog._id !== blogId);
+      });
       } else {
         // Redirect to the blog list page or handle the case where id is null
         this.router.navigate(['/blog']);
       }
     });
+  }
+  viewRelatedBlogDetails(blogId: string): void {
+    this.router.navigate(['/blog', blogId]);
   }
 }

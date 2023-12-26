@@ -1,3 +1,24 @@
+
+    <!-- <div class="container">
+        <div class="content">
+            <div class="box-container">
+                <p class="h2 font-bold">Đặt lại mật khẩu</p>
+                <form [formGroup]="forgotPassForm" (ngSubmit)="redirectToOtpPage()">
+
+                Nhập email, số điện thoại
+                <div class="text-epr">
+                    <input type="email" formControlName="textEp" class="form-control" id="form-input" placeholder="Email/ Số điện thoại" required>
+                  </div>
+                
+                <div class="btn-sigup">
+                    <input type="submit" value="Tiếp theo" id="submit" class="form-sbm" name="btn-next">
+                </div> -->
+                <!-- forgot-pass.component.html -->
+                <!-- <div class="btn-sigup">
+                    <input type="submit" value="Tiếp theo" id="submit" class="form-sbm" name="btn-next">
+                </div> -->
+  
+                  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,27 +32,42 @@
         <div class="content">
             <div class="box-container">
                 <p class="h2 font-bold">Đặt lại mật khẩu</p>
-                <form [formGroup]="forgotPassForm" (ngSubmit)="redirectToOtpPage()">
+                <form action="app-login" method="get" >
+                    <!-- Nhập email, số điện thoại -->
+                    <div class="text-epr">
+                        <input required type="text" [(ngModel)]="Mail" name="Mail" (blur)="checkMail()" placeholder="Email" required>
+                    </div>
+                    <div *ngIf="!isMailValid" class="error-message">Mail không hợp lệ!</div>
 
-                <!-- Nhập email, số điện thoại -->
-                <div class="text-epr">
-                    <input type="email" formControlName="textEp" class="form-control" id="form-input" placeholder="Email/ Số điện thoại" required>
-                  </div>
-                
-                <!-- <div class="btn-sigup">
-                    <input type="submit" value="Tiếp theo" id="submit" class="form-sbm" name="btn-next">
-                </div> -->
-                <!-- forgot-pass.component.html -->
-                <div class="btn-sigup">
-                    <input type="submit" value="Tiếp theo" id="submit" class="form-sbm" name="btn-next">
-                </div>
-  
-                  
+                    <button id="otp-send" (click)="sendCode()">Gửi mã</button>
 
-            </form>
+                    <div class="container__input--item">
+                        <div>
+                            <!-- <label for="uname">Nhập mã xác nhận: </label> -->
+                            <input type="text" id="otp-input" placeholder="Nhập mã xác nhận" [(ngModel)]="verificationCode" name="verificationCode">
+                            <!-- (blur)="checkVerificationCode()" -->
+                        </div>
+                        <div *ngIf="!isVerificationCodeValid" class="error-message">Mã xác nhận không hợp lệ</div>
+        
+                        <div class="reset-OTP">
+                          <span class="p">Chưa nhận được mã? </span>
+                          <a id="otp-button" class="p font-bold" (click)="resend()">Gửi lại mã</a>
+                        </div>
+                      </div>
+
+                      <div class="btn-sigup">
+                        <input type="submit" class="reset_button" value="Hoàn tất" (click)="onComplete()">
+                        <div *ngIf="!MailExist">Mail không tồn tại trong hệ thống!</div>
+                    </div>
+
+                </form>
             </div>
+            
         </div>
     </div>
 </body>
 </html>
+                
+                
+
 

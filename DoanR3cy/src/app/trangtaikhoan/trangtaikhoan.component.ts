@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { UsersService } from '../Service/users.service';
 import { OrderService } from '../Service/order.service';
-import {Order, Product  } from '../Interface/Order';
+import { Order, Product } from '../Interface/Order';
 import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthService } from '../Service/auth.service';
+
 
 
 
@@ -30,7 +32,7 @@ export class TrangtaikhoanComponent implements OnInit {
     });
   }
 
-   
+
 
   // id: any = "overview/";
   // tabChange(ids:any){
@@ -39,7 +41,7 @@ export class TrangtaikhoanComponent implements OnInit {
   // }
 
   // constructor(private route: ActivatedRoute) { }
-  
+
   // // điều hướng routerLink đến Id thông tin
   //   ngOnInit() {
   //     this.route.params.subscribe(params => {
@@ -141,37 +143,41 @@ export class TrangtaikhoanComponent implements OnInit {
     this.addressPopup = true;
   }
 
-  openCancelPopup(): void{
+  openCancelPopup(): void {
     this.showOverlay = true;
     this.showCancelPopup = true;
   }
 
 
   confirmCancel(order: any) {
-    const userId = 1; // Replace with the actual user ID
-    const orderNumber = order ? order.ordernumber : null;
-    console.log('Order ID:', order.ordernumber);
-  
-    if (orderNumber) {
-      this._orderService.updateOrderStatus(userId, orderNumber, 'Đã hủy')
-        .subscribe(
-          (updatedOrder) => {
-            // Handle when the order has been successfully updated
-            console.log('Order updated successfully:', updatedOrder);
-            this.router.navigate(['/trangtaikhoan/donhang_content']);
-            window.location.reload();
-            // Navigate to the same route to reload the component
-            
-          },
-          (error) => {
-            console.error('Error updating order:', error);
-            // Handle errors (display a message, etc.)
-          }
-        );
+    const userid = this.authService.getUserId();
+    if (userid !== null) {
+      const userId = parseInt(userid, 10);
+      const orderNumber = order ? order.ordernumber : null;
+      console.log('Order ID:', order.ordernumber);
+
+      if (orderNumber) {
+        this._orderService.updateOrderStatus(userId, orderNumber, 'Đã hủy')
+          .subscribe(
+            (updatedOrder) => {
+              // Handle when the order has been successfully updated
+              console.log('Order updated successfully:', updatedOrder);
+              this.router.navigate(['/trangtaikhoan/donhang_content']);
+              window.location.reload();
+              // Navigate to the same route to reload the component
+
+            },
+            (error) => {
+              console.error('Error updating order:', error);
+              // Handle errors (display a message, etc.)
+            }
+          );
+      }
     }
+
   }
-  
-  
+
+
 
   newAddress: string = '';
   addNewAddress(): void {
@@ -181,7 +187,7 @@ export class TrangtaikhoanComponent implements OnInit {
     // Sau khi xử lý, bạn có thể đóng popup nếu cần
     this.closePopup();
   }
-  
+
 
 
   userIdToDisplay: number = 1; // Chọn ID cụ thể
@@ -199,11 +205,11 @@ export class TrangtaikhoanComponent implements OnInit {
   userAddresses: any[] = [];
 
   constructor(private _userService: UsersService,
-    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router
+    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private authService: AuthService,
   ) { }
 
 
-  
+
 
   loadUserInfo(userId: number): void {
     this._userService.getUserById(userId).subscribe(user => {
@@ -240,7 +246,7 @@ export class TrangtaikhoanComponent implements OnInit {
   // totalOrderValue: number = 0;
   // selectedStatus: string = 'Tất cả đơn hàng';
   // initialOrders: Order[] = [];
-  
+
   // loadOrderInfo(): void {
   //   this._orderService.getOrderByUserId(1).subscribe((userOrders: Order[] | undefined) => {
   //     if (userOrders) {
@@ -260,10 +266,10 @@ export class TrangtaikhoanComponent implements OnInit {
   //         console.log(`Order ${order.ordernumber}: Total Order Value=${mappedOrder.totalOrderValue}`);
   //         return mappedOrder;
   //       });
-  
+
   //       this.initialOrders = [...this.Orders];
   //       this.filterOrders();
-  
+
   //       // Log total order value for each order
   //       this.Orders.forEach(order => {
   //         console.log(`Order Number ${order.ordernumber}: Total Order Value = ${order.totalOrderValue}`);
@@ -271,13 +277,13 @@ export class TrangtaikhoanComponent implements OnInit {
   //     }
   //   });
   // }
-  
+
   // calculateTotalOrderValue(order: Order): number {
   //   return order.products.reduce((orderTotal: number, product: Product) => {
   //     return orderTotal + (product.productValue || 0);
   //   }, 0);
   // }
-  
+
 
 
   // resetOrders(): void {
@@ -304,26 +310,35 @@ export class TrangtaikhoanComponent implements OnInit {
       return orderTotal + (product.quantity * product.price);
     }, 0);
   }
-  
+
   loadOrderInfo(): void {
-    const userId = 1;
+    const userid = this.authService.getUserId();
 
-    this._orderService.getOrder(userId).subscribe((orders: any[]) => {
-      this.Orders = orders.map(order => ({
-        ...order,
-        products: (order.products as any[]).map((product: any) => ({
-          ...product,
-          productValue: product.quantity * product.price
-        })),
-        totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
-      }));
+    console.log('Original userid:', userid);
 
-      this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
-      this.filterOrders();
+    if (userid !== null) {
+      const userId = parseInt(userid, 10);
+      this._orderService.getOrder(userId).subscribe((orders: any[]) => {
+        this.Orders = orders.map(order => ({
+          ...order,
+          products: (order.products as any[]).map((product: any) => ({
+            ...product,
+            productValue: product.quantity * product.price
+          })),
+          totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
+        }));
 
-      // Now each order has a "totalOrderValue" property representing the total value for that order
-      console.log('Orders with Total Order Value:', this.Orders);
-    });
+        this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
+        this.filterOrders();
+
+        // Now each order has a "totalOrderValue" property representing the total value for that order
+        console.log('Orders with Total Order Value:', this.Orders);
+      });
+    } else {
+      console.error('User ID is null. Cannot load orders.');
+    }
+
+
   }
   // Phân loại đơn
   selectedStatus: string = 'Tất cả đơn hàng';
@@ -347,7 +362,7 @@ export class TrangtaikhoanComponent implements OnInit {
     this.filterOrders();
   }
 
- 
+
 
   days: number[] = Array.from({ length: 31 }, (_, i) => i + 1);
   months: number[] = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -367,16 +382,16 @@ export class TrangtaikhoanComponent implements OnInit {
   isEligibleForReview(order: Order): boolean {
     // Check if order status is 'Đã giao' and every product in the order has 'danhgia' as ''
     return order.order_status === 'Đã giao' && order.products.every(product => product.feedback === '');
-}
+  }
 
   extractOrderIds(): void {
     const filteredOrders = this.filteredOrders();
-    
+
     // Log giá trị của ordernumber
     filteredOrders.forEach(order => {
       console.log('Order ID:', order.ordernumber);
       return order.ordernumber
     });
-    
+
   }
 }

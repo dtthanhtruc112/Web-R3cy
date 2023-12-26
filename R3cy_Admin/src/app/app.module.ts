@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { SafeHtmlPipe } from './safeHtml.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +15,11 @@ import { AdminCustomersComponent } from './admin-customers/admin-customers.compo
 import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 import { AdminSanphamComponent } from './admin-sanpham/admin-sanpham.component';
 import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.component';
+import { AdminCustomProductComponent } from './admin-custom-product/admin-custom-product.component';
+import { AdminLoginComponent } from './login/login.component';
 
+import { AuthGuard } from './Service/auth.guard';
+import { AuthService } from './Service/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +31,9 @@ import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.compo
     ManageBlogComponent,
     AdminSanphamComponent,
     AdminMagiamgiaComponent,
+    AdminCustomProductComponent,
+    AdminLoginComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -34,7 +42,7 @@ import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.compo
     HttpClientModule,
     AngularEditorModule,
   ],
-  providers: [],
+  providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

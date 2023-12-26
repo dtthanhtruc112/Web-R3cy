@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './Service/auth.service';
 
 
 @Component({
@@ -27,17 +28,25 @@ export class AppComponent implements OnInit  {
     }
   }
 
-  constructor(private router: Router) {}
+  userLink(): string[] {
+    // Lấy giá trị userid từ AuthService
+    const userId = this.authService.getUserId();
 
-  navigateToOtherPage(destination: string): void {
-    // Sử dụng tham số để xác định trang đích cần chuyển hướng
-    this.router.navigate([`/${destination}`]);
+    // Nếu userid tồn tại, chuyển hướng tới trang tài khoản, ngược lại chuyển hướng tới trang đăng nhập
+    return userId ? ['/trangtaikhoan'] : ['/login'];
   }
 
-  navigateToForgotPass(): void {
-    // Chuyển hướng đến trang forgot-pass khi người dùng bấm "Quên mật khẩu?"
-    this.router.navigate(['/QnA']);
-  }
+  constructor(private router: Router, private authService: AuthService,) {}
+
+  // navigateToOtherPage(destination: string): void {
+  //   // Sử dụng tham số để xác định trang đích cần chuyển hướng
+  //   this.router.navigate([`/${destination}`]);
+  // }
+
+  // navigateToForgotPass(): void {
+  //   // Chuyển hướng đến trang forgot-pass khi người dùng bấm "Quên mật khẩu?"
+  //   this.router.navigate(['/QnA']);
+  // }
 
   // isSearchVisible: boolean = false;
   // searchTerm: string = '';

@@ -21,7 +21,7 @@
                         <li><a href="#">Đồ trang trí</a></li>
                     </ul>
                 </li>
-                <li><a href="#"  routerLink="/blogs" class="h3">Blog</a></li>
+                <li><a href="#"  routerLink="/blog" class="h3">Blog</a></li>
                 <li><a href="#" routerLink="/QnA" routerLinkActive="active" class="h3">FAQ</a></li>
             </ul>
     
@@ -31,7 +31,9 @@
                 </a>
                 <a href="" routerLink="/cart" routerLinkActive="active"><i class="bi bi-cart3 icon_item icon_item text-3xl" pBadge value=cartCount></i></a>
               
-                <a href="" routerLink="/trangtaikhoan" routerLinkActive="active"><i class="bi bi-person-circle icon_item"></i></a>
+                <a [routerLink]="userLink()" routerLinkActive="active">
+                  <i class="bi bi-person-circle icon_item"></i>
+                </a>
     
     
             </div>
@@ -69,13 +71,13 @@
       <div class="col-md-3 nhom">
         <h4 >TRỢ GIÚP</h4>
         <ul class="list-inline">
-          <li class="list-inline-item "><a class="a-footer" href="#">Custom sản phẩm</a></li>
+          <li class="list-inline-item "><a class="a-footer" href="#" routerLink="custom-product" routerLinkActive="active">Custom sản phẩm</a></li>
           <br>
-          <li class="list-inline-item" ><a href="#">Thu gom nhựa cũ</a></li>
+          <li class="list-inline-item"><a href="#" routerLink="thugom" routerLinkActive="active">Thu gom nhựa cũ</a></li>
           <br>
           <li class="list-inline-item"><a href="#">Hướng dẫn sử dụng</a></li>
           <br>
-          <li class="list-inline-item "><a href="#">FAQ</a></li>
+          <li class="list-inline-item " ><a href="#" routerLink="QnA" routerLinkActive="active">FAQ</a></li>
         </ul>
       </div>
       <div class="col-md-3 nhom">

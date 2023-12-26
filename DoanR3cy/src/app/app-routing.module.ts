@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ForgotPassComponent } from './forgot-pass/forgot-pass.component';
-import { OtpCodeComponent } from './forgot-pass/otp-code/otp-code.component';
-import { NewPassComponent } from './forgot-pass/otp-code/new-pass/new-pass.component';
+import { NewPassComponent } from './forgot-pass/new-pass/new-pass.component';
 import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -28,7 +27,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main-page', component: MainPageComponent },
   { path: 'forgot-pass', component: ForgotPassComponent },
-  { path: 'otp-code', component: OtpCodeComponent },
   { path: 'new-pass', component: NewPassComponent },
   { path: 'custom-product', component: CustomProductComponent},
   { path: 'chinhsach', component: ChinhsachComponent},
@@ -40,8 +38,9 @@ const routes: Routes = [
   // { path: 'product-cart', component: ProductCartComponent},
   { path: 'cart', component: ProductCartComponent},
   { path: 'aboutus', component: AboutUsComponent},
-  { path: 'blogs', component: BlogComponent },
-  { path: 'detail/:id', component: DetailBlogComponent },
+  { path: 'blog', component: BlogComponent },
+  // { path: 'detail/:id', component: DetailBlogComponent },
+  { path: 'blog/:id', component: DetailBlogComponent },
   { path: 'timkiem', component: TimkiemComponent},
   { path: 'manageblog', component: ManageBlogComponent},
   { path: 'product-list', component: ProductListComponent},
@@ -65,7 +64,6 @@ export const RoutingComponent=[
   LoginComponent,
   MainPageComponent,
   ForgotPassComponent,
-  OtpCodeComponent,
   NewPassComponent,
   CustomProductComponent,
   ChinhsachComponent,

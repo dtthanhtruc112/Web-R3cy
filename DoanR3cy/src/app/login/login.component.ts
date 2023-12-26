@@ -1,70 +1,162 @@
-// login.component.ts
+// // login.component.ts
 
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../Service/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AccountcustomerService } from '../Service/accountcustomer.service'
+import { ReturnStatement } from '@angular/compiler';
+import { AccountCustomer } from '../Interface/AccountCustomer';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
-    this.loginForm = this.formBuilder.group({
-      textEp: ['', [Validators.required, this.customValidator()]],
-      textPass: ['', [Validators.required]]
-    });
+export class LoginComponent implements OnInit{
+  Mail: string= '';
+  password: string= '';
+  isMailValid: boolean = true;
+
+
+  constructor(
+    private authService: AuthService,
+    private router:Router,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    ) {}
+
+  checkMail(): void {
+    const MailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Kiểm tra chuỗi đã nhập là địa chỉ email hợp lệ không?
+    this.isMailValid = MailRegex.test(this.Mail);
+  }  
+
+  ngOnInit(){
+          // Nếu cookie "phonenumber" và "password" đã tồn tại thì sử dụng lại thông tin đăng nhập
+          const Mail = this.authService.getCookie('Mail');
+          const password = this.authService.getCookie('password');
+          if (Mail && password) {
+            this.Mail = Mail;
+            this.password = password;
+          }
   }
 
-  customValidator() {
-    return (control: AbstractControl) => {
-      const value = control.value as string; // Ép kiểu control.value thành string
-
-      if (this.isValidEmail(value) || this.isValidPhoneNumber(value)) {
-        return null; // Giá trị hợp lệ
-      } else {
-        return { customValidator: true }; // Giá trị không hợp lệ
-      }
-    };
-  }
-
-  private isValidEmail(value: string): boolean {
-    // Kiểm tra xem giá trị có phải là email không
-    return /\b[A-Za-z0-9._%+-]+@gmail.com\b/.test(value);
-  }
-
-  private isValidPhoneNumber(value: string): boolean {
-    // Kiểm tra xem giá trị có phải là số điện thoại không
-    return /^\d{10,11}$/.test(value);
-  }
-
-  submitForm(): void {
-    // Kiểm tra xem tất cả các trường đã được tương tác (chạm) chưa
-    if (this.loginForm.touched) {
-      // Kiểm tra xem tất cả các trường đã được điền và làm mới trang nếu hợp lệ
-      if (this.loginForm.valid) {
-        alert('Bạn đã đăng nhập thành công');
-        setTimeout(() => {
-          this.router.navigate(['/main-page']);
-          setTimeout(() => {
-            window.location.reload();
-          }, 200);
-        }, 200);
-      } else {
-        // Hiển thị cảnh báo khi form không hợp lệ
-        alert('Email/ Số điện thoại không hợp lệ.');
-      }
+  onSubmit() {
+    if (!this.isMailValid) {
+      alert('Vui lòng nhập đúng Email!');
+      return false;
     } else {
-      // Hiển thị cảnh báo khi người dùng chưa tương tác với các trường
-      alert('Vui lòng nhập đầy đủ thông tin.');
+      this.authService.login(this.Mail, this.password).subscribe(
+        (user) => {
+          if (user && user.userid) {
+            // Lưu userid vào sessionStorage
+            this.authService.saveUserIdToSessionStorage(user.userid);
+
+            // Lưu thông tin người dùng vào sessionStorage
+            this.authService.setCurrentUser(user);
+
+            // Lưu cookie nếu checkbox "Remember me" được chọn
+            alert('Đăng nhập thành công!');
+            
+            // Chuyển hướng người dùng đến trang chính
+            this.router.navigate(['/main-page'], { relativeTo: this.route });
+          } else {
+            // Xử lý khi đăng nhập không thành công
+            console.error('Đăng nhập không thành công');
+          }
+        },
+        (error) => {
+          // Xử lý khi có lỗi trong quá trình đăng nhập
+          alert('Đăng nhập không thành công');
+        }
+      );
+      return false;
     }
   }
-
   navigateToForgotPass(): void {
     // Chuyển hướng đến trang forgot-pass khi người dùng bấm "Quên mật khẩu?"
     this.router.navigate(['/forgot-pass']);
   }
 }
+
+// // login.component.ts
+
+// import { Component, OnInit } from '@angular/core';
+// import { AuthService } from '../Service/auth.service';
+// import { ActivatedRoute, Router } from '@angular/router';
+// import { HttpClient } from '@angular/common/http';
+// import { AccountcustomerService } from '../Service/accountcustomer.service'
+// import { ReturnStatement } from '@angular/compiler';
+// import { AccountCustomer } from '../Interface/AccountCustomer';
+
+// @Component({
+//   selector: 'app-login',
+//   templateUrl: './login.component.html',
+//   styleUrls: ['./login.component.css']
+// })
+
+// export class LoginComponent implements OnInit {
+//   phonenumber: string = '';
+//   password: string = '';
+
+//   constructor(
+//     private authService: AuthService,
+//     private router: Router,
+//     private route: ActivatedRoute,
+//     private http: HttpClient,
+//   ) {}
+
+//   isPhoneNumberValid: boolean = true;
+
+//   checkPhoneNumber(): void {
+//     const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/;
+//     this.isPhoneNumberValid = phoneNumberRegex.test(this.phonenumber);
+//   }
+
+//   ngOnInit() {
+//     const phonenumber = this.authService.getCookie('phonenumber');
+//     if (phonenumber) {
+//       this.phonenumber = phonenumber;
+//     }
+//   }
+
+//   onSubmit() {
+//     if (!this.isPhoneNumberValid) {
+//       alert('Vui lòng nhập đúng số điện thoại!');
+//       return false;
+//     } else {
+//       this.authService.login(this.phonenumber, this.password).subscribe(
+//         (user: AccountCustomer) => {
+//           // Đảm bảo kiểm tra cả trường "role" và "admin" đều khớp
+//           const userRole = user.role || 'user'; // Giả sử vai trò mặc định là 'user' nếu không có dữ liệu về vai trò
+//           console.log('UserRole:', userRole); // Thêm console log ở đây
+//           this.authService.setCurrentUser({ ...user, role: userRole });
+          
+//           // Log giá trị userRole để kiểm tra
+//           console.log('UserRole:', userRole);
+
+//           // Kiểm tra vai trò của người dùng và chuyển hướng đến trang chủ tương ứng
+//           if (userRole === 'admin') {
+//             this.router.navigate(['../../../../tongquan'], { relativeTo: this.route });
+//           } else {
+//             this.router.navigate(['/main-page']);
+//           }
+      
+//           // Thêm thông báo đăng nhập thành công
+//           alert('Đăng nhập thành công!');
+//         },
+//         (error) => {
+//           alert('Đăng nhập không thành công');
+//         }
+//       );
+  
+//       return false;
+//     }  
+//   }
+
+//   navigateToForgotPass(): void {
+//     this.router.navigate(['/forgot-pass']);
+//   }
+// }
+

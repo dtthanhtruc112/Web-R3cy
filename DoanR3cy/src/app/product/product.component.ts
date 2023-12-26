@@ -95,6 +95,7 @@ export class ProductComponent implements OnInit {
   }
   
 
+
   private getProduct(id: string){
     this.productService
     .getProduct(id)
@@ -106,6 +107,7 @@ export class ProductComponent implements OnInit {
     }  )
 
   }
+
 }
 
 

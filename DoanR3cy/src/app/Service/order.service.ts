@@ -29,13 +29,23 @@ export class OrderService {
     return throwError(() => new Error(err.message));
   }
 
-  updateOrderStatus(userId: number, orderNumber: string, status: string): Observable<Order> {
+  updateOrderStatus(userId: number, orderNumber: number, status: string): Observable<Order> {
     const updateData = { order_status: status };
 
     return this._http.patch<Order>(`${this._url}/orders/user/${userId}/${orderNumber}`, updateData).pipe(
       catchError(this.handleErr)
     );
   }
+
+  updateProductFeedback(userId: number, orderNumber: number, productId: number, feedback: string): Observable<Product> {
+    const updateData = { feedback };
+
+    return this._http.patch<Product>(`${this._url}/orders/user/${userId}/${orderNumber}/products/${productId}`, updateData).pipe(
+      catchError(this.handleErr)
+    );
+  }
+
+ 
 
   
 
