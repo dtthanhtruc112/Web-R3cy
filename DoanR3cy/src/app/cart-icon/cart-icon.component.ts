@@ -7,14 +7,17 @@ import { CartService } from '../Service/cart.service';
   styleUrl: './cart-icon.component.css'
 })
 export class CartIconComponent {
-  cartCount: number | undefined;
+  // cartCount: number | undefined;
+  cartCount= 0;
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cartService.cart$.subscribe(cart => {
-      this.cartCount = cart?.items?.length ?? 0;
-    })
+    // this.cartService.cart$.subscribe(cart => {
+    //   this.cartCount = cart?.items?.length ?? 0;
+    // })
+
+    this.cartCount = this.cartService.getCart().items?.length ?? 0;
     
 
   }

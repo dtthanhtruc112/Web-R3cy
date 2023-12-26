@@ -28,8 +28,12 @@
             <br><br>
             <!-- <button type="button" routerLink="/product-cart" routerLinkActive="active"
                 (click)="addToCart(productt)">Thêm vào giỏ hàng</button> -->
-            <button type="button" routerLink="/cart" routerLinkActive="active"
-                (click)="addProductToCart()">Thêm vào giỏ hàng</button>
+            <!-- <button type="button" routerLink="/cart" routerLinkActive="active"
+                (click)="addProductToCart()">Thêm vào giỏ hàng</button> -->
+                <button type="button" 
+                *ngIf="productt" (click)="addProductToCart()">Thêm vào giỏ hàng</button>
+
+
             <button type="button" class="cta">Mua hàng</button>
         </div>
     </div>

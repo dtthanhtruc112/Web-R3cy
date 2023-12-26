@@ -1,3 +1,10 @@
-<div class="card flex justify-content-center">
-    <i class="bi bi-cart3 icon_item text-3xl" pBadge value=cartCount routerLink="/product-cart"> </i>
+<!-- <div class="card flex justify-content-center">
+    <i class="bi bi-cart3 icon_item text-3xl" pBadge value=cartCount routerLink="/cart"> </i>
+</div> -->
+<!-- 
+<i class="bi bi-cart3 icon_item "></i>
+<small>{{cartCount}}</small> -->
+<div class="icon">
+    <i class="pi pi-shopping-cart p-mr-4 p-text-secondary" pBadge [value]="cartCount.toString()" severity="warning"></i>
+
 </div>

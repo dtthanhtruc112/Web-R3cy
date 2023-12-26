@@ -28,6 +28,7 @@ export interface Order {
   country: string;
   phone: string;
   totalPrice: string;
+  rejectreason: string;
 
 } 
 export interface Orders {
@@ -48,7 +49,6 @@ export interface OrderItem {
 }
 
 
-  // rejectreason: string;
 
 
 

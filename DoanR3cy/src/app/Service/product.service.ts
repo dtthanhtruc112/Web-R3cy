@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { product } from '../Interface/product';
@@ -7,13 +7,14 @@ import { product } from '../Interface/product';
   providedIn: 'root'
 })
 export class ProductService {
-  // getProduct(id: string) {
-  //   throw new Error('Method not implemented.');
-  // }
 
-  getProduct(id: string): Observable<product> { // <-- Trả về Observable
-    return this._http.get<any>(`/api/products/${id}`); // Ví dụ gọi API
+  getProduct(id: string) {
+    throw new Error('Method not implemented.');
   }
+
+  // getProduct(id: string): Observable<product> { // <-- Trả về Observable
+  //   return this._http.get<any>(`/api/products/${id}`); // Ví dụ gọi API
+  // }
 
   
 
@@ -30,5 +31,24 @@ export class ProductService {
       map(products => products.find(product => product.id === id) ?? undefined)
     );
   }
+
+  // getProductById(id: number): Observable<product | undefined> {
+  //   return this._http.get<product[]>(this._url).pipe(
+  //     map(products => products.find(product => product.id === id) ?? undefined)
+  //   );
+  // }
+
+  // getProductById(id: number): Observable<product | undefined> {
+  //   return this._http.get<product>(this._url + `/products/${id}`)
+  //     .pipe(
+  //       catch((error: HttpErrorResponse) => {
+  //         if (error.status === 404) {
+  //           return undefined;
+  //         } else {
+  //           throw error;
+  //         }
+  //       })
+  //     );
+  // }
   
 }

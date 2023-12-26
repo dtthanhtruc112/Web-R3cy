@@ -30,6 +30,8 @@ import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { UsersFormComponent } from './users-form/users-form.component';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { BadgeModule } from 'primeng/badge';
+import { CartService } from './Service/cart.service';
 
 
 
@@ -67,18 +69,21 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ReactiveFormsModule,
     FormsModule,    
     HttpClientModule,
-    InputNumberModule
+    InputNumberModule,
+    BadgeModule
 
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private router: Router) {
+  constructor(private router: Router, cartService: CartService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         window.scrollTo(0, 0); // Cuộn lên đầu trang sau mỗi navigation
       }
     });
-  }
+    cartService.initCartLocalStorage();
+
+  };
 }
