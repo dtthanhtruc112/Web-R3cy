@@ -90,37 +90,13 @@ export class CartService {
 
   
 
-  // setCartItem(cartItem: CartItem, updateCartItem: boolean= false): Cart {
-  //   console.log('cartItem:', cartItem);
-  //   const cart = this.getCart() 
-  //   if (cart.items) {
-  //   const existingItemIndex = cart.items?.findIndex((item) => item.id === cartItem.id);
   
-  //   if (existingItemIndex !== undefined) {
-  //     const existingItem = cart.items[existingItemIndex];
-  //     if (existingItem.quantity && cartItem.quantity) { // Kiểm tra cả hai quantity trước khi cộng
-  //       existingItem.quantity += cartItem.quantity;
-  //     }
-  //   } else {
-  //     cart.items.push(cartItem);
-  //   }
-  // } else {
-  //   cart.items = [];
-  //   cart.items.push(cartItem);
-  // }
-  
-  //   this.saveCart(cart); // Lưu trữ giỏ hàng sau khi cập nhật
-  //   this.cart$.next(cart); // Thông báo cho các subscriber
-  
-  //   return cart;
-  // } 
-
   
   // // Hàm lưu trữ giỏ hàng vào localStorage
-  // private saveCart(cart: Cart) {
-  //   const cartJson = JSON.stringify(cart);
-  //   localStorage.setItem(CART_KEY, cartJson);
-  // }
+  private saveCart(cart: Cart) {
+    const cartJson = JSON.stringify(cart);
+    localStorage.setItem(CART_KEY, cartJson);
+  }
 
 
   deleteCartItem(id: string) {

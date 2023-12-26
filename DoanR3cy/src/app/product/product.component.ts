@@ -140,35 +140,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  // private getProductById(id: string) {
-  //   console.log('Lấy sản phẩm theo ID:', id);
-  //   this.productService
-  //     .getProductById(id)
-  //     .pipe(takeUntil(this.endSubs$))
-  //     .subscribe(
-  //       (respProduct: any) => {
-  //         this.productt = respProduct;
-  //       },
-  //       (error: any) => {
-  //         console.error('Lỗi tải sản phẩm:', error);
-  //       }
-  //     );
-  // }
   
-
-
-  // private getProduct(id: string){
-  //   console.log('Lấy sản phẩm theo ID:', id);
-  //   this.productService
-  //   .getProduct(id)
-  //   .pipe(takeUntil(this.endSubs$))
-  //   .subscribe((respProduct: any)=> {
-  //     this.productt = respProduct
-  //   }, (error: any) => {
-
-  //   }  )
-
-  // }
 
 }
 
