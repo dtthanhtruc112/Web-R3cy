@@ -1,4 +1,12 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import {  OrderItem, Orders } from '../Interface/Order';
+import { CartService } from '../Service/cart.service';
+import { Cart } from '../models/cart';
+import { OrderService } from '../Service/order.service';
+
+
 
 @Component({
   selector: 'app-product-checkout',
@@ -6,29 +14,18 @@ import { Component } from '@angular/core';
   styleUrl: './product-checkout.component.css'
 })
 export class ProductCheckoutComponent {
-  customer: { name: string } = { name: '' };
-  nameInvalid = false;
-  nameTouched = false;
-
-  checkNameValidity(): void {
-    this.nameInvalid = this.customer.name.trim() === '';
-    this.nameTouched = true;
-  }
-
-  clearValidation(): void {
-    this.nameInvalid = false;
-    this.nameTouched = false;
-  }
-  handleCountrySelection(value: string): void {
-    if (value === 'other') {
-      const otherCountryInput = document.getElementById('otherCountryInput') as HTMLInputElement;
-      otherCountryInput.style.display = 'block';
-      otherCountryInput.focus();
-    } else {
-      const otherCountryInput = document.getElementById('otherCountryInput') as HTMLInputElement;
-      otherCountryInput.style.display = 'none';
+  constructor( private formBuilder: FormBuilder, 
+    private router: Router, 
+    private cartService: CartService, 
+    private orderService: OrderService )  {
+      this.checkoutFormGroup = this.formBuilder.group({});
     }
-  }
+
+  checkoutFormGroup: FormGroup;
+  isSubmitted = false;
+  orderItems: OrderItem[] = [];
+  
+
   // Hiện popup
   showOverlay: boolean = false;
   showSuccessPopup: boolean = false;
@@ -58,4 +55,69 @@ export class ProductCheckoutComponent {
   }
 
 
+
+  ngOnInit(): void{
+    this._initCheckoutForm();
+    this._getCartItems();
+  }
+
+
+  backtoCart() {
+    this.router.navigate(['/cart'])
+  }
+
+  private _initCheckoutForm() {
+    this.checkoutFormGroup = this.formBuilder.group({
+      name:['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
+      phone: [''],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      zip: ['', Validators.required],
+      district: ['', Validators.required],
+      street: ['', Validators.required]
+    });
+
+    // this.orderService.createOrder(orders).subscribe(()=> {
+    //   // đặt hàng thành công pop up
+    // })
+  }
+
+
+
+  private _getCartItems() {
+    const cart: Cart = this.cartService.getCart();
+    this.orderItems = cart.items?.map(item => {
+      return {
+        product: item.id,
+        quantity: item.quantity
+      }
+    }) ?? []
+  }
+
+  placeOrder() {
+    this.isSubmitted = true;
+    if(this.checkoutFormGroup.invalid) {
+      return;
+    }
+
+    const orders: Orders = {
+      orderItems: this.orderItems,
+      street: this.checkoutForm['street'].value,
+      city: this.checkoutForm['city'].value,
+      zip: this.checkoutForm['zip'].value,
+      country: this.checkoutForm['country'].value,
+      phone: this.checkoutForm['phone'].value,
+      ordereddate: `${Date.now()}`
+    };
+
+    // this.orderService.createOrder(order).subscribe(()=>{
+    //   // redirect to popup
+    // })
+
+  }
+
+  get checkoutForm() {
+    return this.checkoutFormGroup.controls;
+  }
 }

@@ -19,4 +19,31 @@ export interface Order {
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
+
+  id: string;
+  orderItems?: OrderItem[];
+  street: string;
+  city: string;
+  zip: string;
+  country: string;
+  phone: string;
+  totalPrice: string;
+
 } 
+export interface Orders {
+ 
+  ordereddate: string;
+  orderItems?: OrderItem[];
+  street: string;
+  city: string;
+  zip: string;
+  country: string;
+  phone: string;
+
+} 
+
+export interface OrderItem {
+  product?: string;
+  quantity?: number;
+}
+

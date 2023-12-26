@@ -76,38 +76,115 @@ export class CartService {
 
 
   getCart(): Cart {
-    const cartJsonString: string = localStorage.getItem(CART_KEY) ?? '';
-    const cart: Cart = JSON.parse(cartJsonString);
-    return cart
+  //   const cartJsonString: string = localStorage.getItem(CART_KEY) ?? '';
+  //   const cart: Cart = JSON.parse(cartJsonString);
+  //   return cart
+    
+  // }
+  // catch (error: any) {
+  //   console.error('Lỗi khi parse JSON:', error);
+  //   return null;
 
+  // try {
+  //   const cartJsonString: string = localStorage.getItem(CART_KEY) ?? '';
+  //   if (!cartJsonString) {
+  //     return null;
+  //   }
 
+  //   const cart: Cart = JSON.parse(cartJsonString);
+  //   if (!cart || !cart.items) {
+  //     return null;
+  //   }
+
+  //   return cart
+  // } catch (error) {
+  //   console.error('Lỗi khi parse JSON:', error);
+  //   return null;
+  // }
+
+  // try {
+  //   const cartJsonString: string = localStorage.getItem(CART_KEY) ?? '';
+  //   if (!cartJsonString) {
+  //     return this.cart; // Trả về giá trị mặc định nếu cart không hợp lệ
+  //   }
+
+  //   const cart: Cart = JSON.parse(cartJsonString);
+  //   if (!cart || !cart.items) {
+  //     return this.cart; // Trả về giá trị mặc định nếu cart không hợp lệ
+  //   }
+
+  //   return cart;
+  // } catch (error) {
+  //   console.error('Lỗi khi parse JSON:', error);
+  //   return cart; // Trả về giá trị mặc định nếu lỗi xảy ra
+  // }
+
+  let cart: Cart;
+  try {
+    const cartJsonString: string = localStorage.getItem(CART_KEY) || '';
+    if (!cartJsonString) {
+      cart = {
+        items: []
+      };
+    } else {
+      cart = JSON.parse(cartJsonString);
+      if (!cart || !cart.items) {
+        cart = {
+          items: []
+        };
+      }
+    }
+  } catch (error) {
+    console.error('Lỗi khi parse JSON:', error);
+    cart = {
+      items: []
+    };
+  }
+  return cart;
   }
 
-  setCartItem(cartItem: CartItem): Cart {
+
+  setCartItem(cartItem: CartItem, updateCartItem?: boolean): Cart {
 
     const cart = this.getCart();
 
     const cartItemExist = cart.items?.find((item) => item.id === cartItem.id);
     if (cartItemExist) {
       cart.items?.map((item) => {
-        if(item.id === cartItem.id) {
-          item.quantity = item.quantity? + cartItem.quantity! :0 ;
+        if (item.id === cartItem.id) {
+          if (updateCartItem) {
+            item.quantity = cartItem.quantity;
+          } else {
+            item.quantity = cartItem.quantity ?? 0;
+          }
           return item;
         }
         return item;
       })
-     
+
 
     } else {
       cart.items?.push(cartItem);
     }
-    cart.items?.push(cartItem);
     const cartJson = JSON.stringify(cart);
     localStorage.setItem(CART_KEY, cartJson);
     this.cart$.next(cart);
 
     return cart;
 
+
+  }
+
+  deleteCartItem(id: string) {
+    const cart = this.getCart();
+    const newCart = cart.items?.filter(item => item.id !== id)
+
+    cart.items = newCart;
+
+    const cartJsonString = JSON.stringify(cart);
+    localStorage.setItem(CART_KEY, cartJsonString);
+
+    this.cart$.next(cart);
 
   }
 

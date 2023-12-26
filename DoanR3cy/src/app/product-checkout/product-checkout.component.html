@@ -14,7 +14,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+    <!-- <script>
         function handleCountrySelection(value) {
             if (value === 'other') {
                 document.getElementById('otherCountryInput').style.display = 'block';
@@ -23,7 +23,7 @@
                 document.getElementById('otherCountryInput').style.display = 'none';
             }
         }
-    </script>
+    </script> -->
 
 
 </head>
@@ -39,11 +39,15 @@
 
                 <div class="row">
                     <div class="col-lg-6">
+                        <div>
+                            <p-button label="backtocart" icon="pi pi-angle-left" (onClick)="backtoCart()"></p-button>
+
+                        </div>
                         <!--== Start Billing Accordion ==-->
                         <div class="checkout-billing-details-wrap">
                             <h2 class="title">Thông tin giao hàng</h2>
-                            <div class="billing-form-wrap">
-                                <form action="#" method="post">
+                            <div class="billing-form-wrap checkout-form">
+                                <form action="#" method="post" [formGroup]="checkoutFormGroup">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <!-- <div class="form-group">
@@ -60,85 +64,178 @@
                                                 </small>
                                               </div> -->
 
-                                              <div class="form-group">
-                                                <label for="name">Họ và tên <abbr class="required" title="required">*</abbr></label>
-                                                <input id="name" type="text" [(ngModel)]="customer.name" class="form-control" (blur)="checkNameValidity()" [class.is-invalid]="nameInvalid && nameTouched" />
-                                                <small class="text-danger" [class.d-none]="!nameInvalid || !nameTouched">
-                                                  Bạn chưa điền vào trường này
-                                                </small>
-                                              </div>
-                                        </div>
-
-
-                                        <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="country"> Quốc Gia <abbr class="required"
+                                                <label for="name">Họ và tên <abbr class="required"
                                                         title="required">*</abbr></label>
-                                                <select id="country" class="form-control wide"
-                                                    onchange="handleCountrySelection(this.value)">
-                                                    <option>Việt Nam</option>
-                                                    <option>Thái Lan</option>
-                                                    <option>Pakistan</option>
-                                                    <option>England</option>
-                                                    <option>China</option>
-                                                    <option value="other">Nhập quốc gia khác...</option>
-                                                </select>
-                                                <input type="text" id="otherCountryInput" class="form-control wide"
-                                                    style="display: none">
+                                                <input formControlName="name" id="name" type="text" class="form-control"
+                                                    pInputText />
+                                                <small *ngIf="checkoutForm['name'].invalid && isSubmitted"
+                                                    class="p-error">Bạn chưa điền vào trường này</small>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="name">Email <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input formControlName="email" id="email" type="text"
+                                                    class="form-control" pInputText />
+                                                <small *ngIf="checkoutForm['email'].invalid && isSubmitted"
+                                                    class="p-error">Bạn chưa điền vào trường này</small>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="name">Số điện thoại <abbr class="required"
+                                                        title="required">*</abbr></label>
+
+                                                <p-inputMask formControlName="phone" id="phone"
+                                                    class="form-control"></p-inputMask>
 
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="pz-code">Postcode / ZIP</label>
-                                                <input id="pz-code" type="text" class="form-control">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="town">Tỉnh/Thành phố <abbr class="required"
+                                                <label for="name">Quốc gia <abbr class="required"
                                                         title="required">*</abbr></label>
-                                                <input id="town" type="text" class="form-control">
+
+                                                <input formControlName="city" id="city" type="text" class="form-control"
+                                                    pInputText />
+                                                <small *ngIf="checkoutForm['country'].invalid && isSubmitted"
+                                                    class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 mb-4">
+
                                             <div class="form-group">
-                                                <label for="district">Quận/Huyện <abbr class="required"
-                                                        title="required">*</abbr></label>
-                                                <input id="district" type="text" class="form-control">
+                                                <label for="name">Postcode / ZIP </label>
+                                                <input formControlName="zip" id="zip" type="text" class="form-control"
+                                                    pInputText />
+                                                    <small *ngIf="checkoutForm['zip'].invalid && isSubmitted"
+                                                    class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label for="name">Tỉnh/Thành phố <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input formControlName="city" id="city" type="text" class="form-control"
+                                                    pInputText />
+                                                <small *ngIf="checkoutForm['city'].invalid && isSubmitted"
+                                                    class="p-error">Bạn chưa điền vào trường này</small>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="name">Quận/Huyện <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input formControlName="district" id="district" type="text"
+                                                    class="form-control" pInputText />
+                                                <small *ngIf="checkoutForm['district'].invalid && isSubmitted"
+                                                    class="p-error">Bạn chưa điền vào trường này</small>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="name">Địa chỉ chi tiết <abbr class="required"
+                                                        title="required">*</abbr></label>
+                                                <input formControlName="street" id="street" type="text"
+                                                    class="form-control" pInputText />
+                                                <small *ngIf="checkoutForm['street'].invalid && isSubmitted"
+                                                    class="p-error">Bạn chưa điền vào trường này</small>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="form-group mb-0">
+                                                    <label for="order-notes"> Ghi chú (Tuỳ chọn)</label>
+                                                    <textarea formControlName="order-notes" id="order-notes"
+                                                        class="form-control"
+                                                        placeholder="Chú thích cho đơn hàng của bạn"></textarea>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
+                                            <!-- [(ngModel)]="customer.name" class="form-control"
+                                            (blur)="checkNameValidity()" [class.is-invalid]="nameInvalid && nameTouched"
+                                            />
+                                            <small class="text-danger" [class.d-none]="!nameInvalid || !nameTouched">
+                                                Bạn chưa điền vào trường này
+                                            </small>
                                         </div>
+                                    </div>
+
+
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="street-address"> Địa chỉ chi tiết <abbr class="required"
+                                            <label for="country"> Quốc Gia <abbr class="required"
                                                     title="required">*</abbr></label>
-                                            <input id="street-address" type="text" class="form-control"
-                                                placeholder="Số nhà, tên đường">
-                                        </div>
+                                            <select id="country" class="form-control wide"
+                                                onchange="handleCountrySelection(this.value)">
+                                                <option>Việt Nam</option>
+                                                <option>Thái Lan</option>
+                                                <option>Pakistan</option>
+                                                <option>England</option>
+                                                <option>China</option>
+                                                <option value="other">Nhập quốc gia khác...</option>
+                                            </select>
+                                            <input type="text" id="otherCountryInput" class="form-control wide"
+                                                style="display: none">
 
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="phone"> Số điện thoại</label>
-                                                <input id="phone" type="text" class="form-control">
-                                            </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="email">Email <abbr class="required"
-                                                        title="required">*</abbr></label>
-                                                <input id="email" type="text" class="form-control">
-                                            </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="zip">Postcode / ZIP</label>
+                                            <input id="pz-code" type="text" class="form-control">
                                         </div>
+                                    </div>
 
-                                        <div class="col-md-12">
-                                            <div class="form-group mb-0">
-                                                <label for="order-notes"> Ghi chú (Tuỳ chọn)</label>
-                                                <textarea id="order-notes" class="form-control"
-                                                    placeholder="Chú thích cho đơn hàng của bạn"></textarea>
-                                            </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="city">Tỉnh/Thành phố <abbr class="required"
+                                                    title="required">*</abbr></label>
+                                            <input id="town" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-4">
+                                        <div class="form-group">
+                                            <label for="district">Quận/Huyện <abbr class="required"
+                                                    title="required">*</abbr></label>
+                                            <input id="district" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="street"> Địa chỉ chi tiết <abbr class="required"
+                                                title="required">*</abbr></label>
+                                        <input id="street-address" type="text" class="form-control"
+                                            placeholder="Số nhà, tên đường">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="phone"> Số điện thoại</label>
+                                            <input id="phone" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="email">Email <abbr class="required"
+                                                    title="required">*</abbr></label>
+                                            <input id="email" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-0">
+                                            <label for="order-notes"> Ghi chú (Tuỳ chọn)</label>
+                                            <textarea id="order-notes" class="form-control"
+                                                placeholder="Chú thích cho đơn hàng của bạn"></textarea>
+                                        </div>
+                                    </div> -->
+
+
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                         <!--== End Billing Accordion ==-->
@@ -242,10 +339,10 @@
                                     <p class="p-text">Dữ liệu cá nhân của chúng tôi sẽ được sử dụng để xử lý đơn đặt
                                         hàng của bạn, hỗ trợ trải nghiệm của bạn trên trang web này và cho các mục đích
                                         khác được mô tả trong phần của chúng tôi.
-                                        <a href="#/">Chính sách bảo mật</a>
+                                        <a href="#" routerLink="/chinhsach/chinh-sach-bao-mat" routerLinkActive="active">Chính sách bảo mật</a>
                                     </p>
 
-                                    <a href="account.html" class="btn-place-order">Đặt hàng</a>
+                                    <a class="btn-place-order" (onclick)="placeOrder()">Đặt hàng</a>
                                 </div>
                             </div>
                         </div>

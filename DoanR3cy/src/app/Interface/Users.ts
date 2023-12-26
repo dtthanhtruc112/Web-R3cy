@@ -10,6 +10,14 @@ export interface Users {
     diachi: string;
     userid: number;
 
+    name: string;
+    phone: string;
+    street: string;
+    zip: string;
+    city: string;
+    district: string;
+    country: string;
+
 }
 
 export interface diachi {

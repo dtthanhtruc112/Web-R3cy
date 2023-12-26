@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -29,11 +29,15 @@ import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.compone
 import { ProductCheckoutComponent } from './product-checkout/product-checkout.component';
 import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
+import { UsersFormComponent } from './users-form/users-form.component';
+import { InputNumberModule } from 'primeng/inputnumber';
+
 
 
 
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     ChinhsachComponent,
@@ -56,6 +60,7 @@ import { CartIconComponent } from './cart-icon/cart-icon.component';
     PageNotFoundComponent,
     ProductCheckoutComponent,
     CartIconComponent,
+    UsersFormComponent,
 
   ],
   imports: [
@@ -64,6 +69,7 @@ import { CartIconComponent } from './cart-icon/cart-icon.component';
     ReactiveFormsModule,
     FormsModule,    
     HttpClientModule,
+    InputNumberModule
 
   ],
   providers: [],

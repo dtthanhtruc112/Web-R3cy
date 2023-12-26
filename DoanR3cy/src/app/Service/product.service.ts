@@ -7,9 +7,15 @@ import { product } from '../Interface/product';
   providedIn: 'root'
 })
 export class ProductService {
-  getProduct(id: string) {
-    throw new Error('Method not implemented.');
+  // getProduct(id: string) {
+  //   throw new Error('Method not implemented.');
+  // }
+
+  getProduct(id: string): Observable<product> { // <-- Trả về Observable
+    return this._http.get<any>(`/api/products/${id}`); // Ví dụ gọi API
   }
+
+  
 
   _url: string = "./assets/data/product.json";
 
