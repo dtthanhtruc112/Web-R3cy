@@ -9,13 +9,45 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
+  // login(Mail: string, password: string): Observable<AccountCustomer> {
+  //   const url = 'http://localhost:3000/login';
+  //   const data = { Mail, password };
+  //   return this.http.post<AccountCustomer>(url, data).pipe(
+  //     tap(user => console.log('User from server:', user)), 
+  //   );
+  // }
+
+  saveUserIdToSessionStorage(userid: number): void {
+    sessionStorage.setItem('userid', userid.toString());
+  }
+
   login(Mail: string, password: string): Observable<AccountCustomer> {
     const url = 'http://localhost:3000/login';
     const data = { Mail, password };
+
     return this.http.post<AccountCustomer>(url, data).pipe(
-      tap(user => console.log('User from server:', user)), 
+      tap(user => {
+        console.log('User from server:', user);
+        console.log('user', user.Name);
+    
+        if (user && user.userid) {
+          this.saveUserIdToSessionStorage(user.userid);
+          this.setCurrentUser(user);
+          console.log('Login successful');
+        } else {
+          console.error('Login unsuccessful. User or userid is null.');
+          // console.log('user:', user);
+        }
+      }),
     );
+    
   }
+
+  // Add a new method to get userid from sessionStorage
+  getUserId(): string | null {
+    return sessionStorage.getItem('userid');
+  }
+  
 
   logout() {
     sessionStorage.removeItem('CurrentUser');
