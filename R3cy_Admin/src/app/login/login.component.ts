@@ -50,7 +50,6 @@ export class AdminLoginComponent implements OnInit{
           if (user && user.user.role === 'admin') {
             // Đăng nhập thành công, chuyển hướng người dùng đến trang chính
             this.authService.setCurrentUser(user);
-            // Lưu cookie nếu checkbox "Remember me" được chọn
             alert("Đăng nhập thành công!")
             this.router.navigate(['/tongquan'], { relativeTo: this.route });
           } else {

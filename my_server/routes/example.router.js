@@ -412,12 +412,6 @@ router.put('/update-password', async (req, res) => {
 router.post('/customProducts', upload.single('pfile'), async (req, res) => {
   try {
     const customData = req.body;
-    // const fileData = req.file;
-
-    // Thêm dữ liệu tệp tin vào customData
-    // customData.pfile = fileData.buffer; // Gán trực tiếp giá trị Buffer
-
-    // Lưu dữ liệu vào cơ sở dữ liệu sử dụng mô hình CustomProduct
     const savedCustomProduct = await CustomProduct.create(customData);
 
     res.status(201).json(savedCustomProduct);
@@ -438,15 +432,5 @@ router.get('/customProducts', async (req, res) => {
   }
 });
 
-// // Đường dẫn API để lấy dữ liệu sản phẩm tùy chỉnh
-// router.get('/customProducts', async (req, res) => {
-//   try {
-//     const customProducts = await CustomProduct.find().select();
-//     res.json(customProducts);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
 
 module.exports = router
