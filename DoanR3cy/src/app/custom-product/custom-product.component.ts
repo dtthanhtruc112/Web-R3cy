@@ -78,10 +78,10 @@ export class CustomProductComponent {
   constructor(
     private customProductService: CustomProductService,
     private router: Router
-  ) {}
+  ) { }
 
   checkMail() {
-    const MailRegex = /\S+@\S+\.\S+/; 
+    const MailRegex = /\S+@\S+\.\S+/;
     if (this.custom.Mail.trim().length === 0) {
       this.isValidEmail = true;
     } else {
@@ -90,7 +90,7 @@ export class CustomProductComponent {
   }
 
   checkPhoneNumber() {
-    const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/; 
+    const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/;
     if (this.custom.phonenumber.trim().length === 0) {
       this.isPhoneNumberValid = true;
     } else {
@@ -98,14 +98,30 @@ export class CustomProductComponent {
     }
   }
 
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    this.custom.pfile = file;
+  // onFileSelected(event: any): void {
+  //   const file = event.target.files[0];
+  //   this.custom.pfile = file;
+  // }
+
+  public setFashion(f: CustomProduct) {
+    this.custom = f
+  }
+  onFileSelected(event: any, custom: CustomProduct) {
+    let me = this;
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      custom.pfile = reader.result!.toString()
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
   }
 
   postCustom() {
-    if (this.isValidEmail && this.isPhoneNumberValid && this.custom.pfile) {
-      this.customProductService.postCustom(this.custom, this.custom.pfile).subscribe(
+    if (this.isValidEmail && this.isPhoneNumberValid) {
+      this.customProductService.postCustom(this.custom).subscribe(
         (response) => {
           console.log('Data saved successfully:', response);
           alert('Gửi yêu cầu custom thành công. R3cy sẽ liên hệ với bạn trong thời gian sớm nhất.');

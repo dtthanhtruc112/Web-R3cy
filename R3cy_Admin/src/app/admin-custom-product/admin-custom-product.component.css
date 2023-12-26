@@ -2,6 +2,10 @@ div{
     font-family: Inter-Regular;
 }
 
+.max-box{
+    margin-left: 280px;
+}
+
 .font-bold{
     font-weight: bold;
 }

@@ -382,35 +382,6 @@ router.get("/accounts/:Mail", cors(), async (req, res) => {
     }
 });
 
-
-// API đổi mật khẩu
-  // API đổi mật khẩu
-// router.put('/change-password', async (req, res) => {
-//   try {
-//     const { Mail, oldPassword, newPassword } = req.body;
-
-//     // Tìm kiếm tài khoản với email tương ứng
-//     const user = await AccountCustomer.findOne({ Mail });
-
-//     if (!user) {
-//       return res.status(401).json({ message: 'Email không tồn tại' });
-//     }
-
-//     // Thêm một điều kiện kiểm tra mật khẩu mới
-//     if (oldPassword !== user.password) {
-//       return res.status(401).json({ message: 'Mật khẩu cũ không đúng' });
-//     }
-
-//     // Cập nhật mật khẩu mới trong database
-//     await AccountCustomer.updateOne({ Mail }, { $set: { password: newPassword } });
-
-//     res.status(200).json({ message: 'Đổi mật khẩu thành công' });
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ error: error.message });
-//   }
-// });
-
 router.put('/update-password', async (req, res) => {
   try {
     const Mail = req.body.Mail;
@@ -436,68 +407,14 @@ router.put('/update-password', async (req, res) => {
   }
 });
 
-// // POST route to handle custom product data
-// router.post('/customProducts', async (req, res) => {
-//   try {
-//     const customData = req.body;
-
-//     // Validate customData if necessary
-
-//     // Lưu dữ liệu vào cơ sở dữ liệu sử dụng mô hình CustomProduct
-//     const savedCustomProduct = await CustomProduct.create(customData);
-
-//     res.status(201).json(savedCustomProduct);
-//   } catch (error) {
-//     console.error('Lỗi khi lưu dữ liệu sản phẩm tùy chỉnh:', error);
-//     res.status(500).json({ error: error.message || 'Lỗi Nội Bộ của Máy Chủ' });
-//   }
-// });
-
-
-// // GET route to retrieve all custom products
-// router.get('/customProducts', async (req, res) => {
-//   try {
-//     const customProducts = await CustomProduct.find();
-//     res.json(customProducts);
-//   } catch (error) {
-//     console.error('Error retrieving custom products:', error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
-
-// POST route to handle custom product data with file upload
-// router.post('/customProducts', upload.single('pfile'), async (req, res) => {
-//   try {
-//     const customData = req.body;
-//     const fileData = req.file;
-
-//     // Thực hiện xử lý tệp tin ở đây, ví dụ: lưu nó vào cơ sở dữ liệu hoặc hệ thống tệp tin
-
-//     // Thêm dữ liệu tệp tin vào customData
-//     customData.pfile = {
-//       data: fileData.buffer,
-//       contentType: fileData.mimetype,
-//       filename: fileData.originalname
-//     };
-
-//     // Lưu dữ liệu vào cơ sở dữ liệu sử dụng mô hình CustomProduct
-//     const savedCustomProduct = await CustomProduct.create(customData);
-
-//     res.status(201).json(savedCustomProduct);
-//   } catch (error) {
-//     console.error('Lỗi khi lưu dữ liệu sản phẩm tùy chỉnh:', error);
-//     res.status(500).json({ error: error.message || 'Lỗi Nội Bộ của Máy Chủ' });
-//   }
-// });
-
 // POST route to handle custom product data with file upload
 router.post('/customProducts', upload.single('pfile'), async (req, res) => {
   try {
     const customData = req.body;
-    const fileData = req.file;
+    // const fileData = req.file;
 
     // Thêm dữ liệu tệp tin vào customData
-    customData.pfile = fileData.buffer; // Gán trực tiếp giá trị Buffer
+    // customData.pfile = fileData.buffer; // Gán trực tiếp giá trị Buffer
 
     // Lưu dữ liệu vào cơ sở dữ liệu sử dụng mô hình CustomProduct
     const savedCustomProduct = await CustomProduct.create(customData);
@@ -519,5 +436,16 @@ router.get('/customProducts', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+// // Đường dẫn API để lấy dữ liệu sản phẩm tùy chỉnh
+// router.get('/customProducts', async (req, res) => {
+//   try {
+//     const customProducts = await CustomProduct.find().select();
+//     res.json(customProducts);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
 module.exports = router

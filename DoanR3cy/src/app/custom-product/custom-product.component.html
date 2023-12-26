@@ -34,7 +34,8 @@
 
       <!-- Up file -->
       <div class="up-file">
-        <input type="file" id="fileInput" name="pfile" (change)="onFileSelected($event)" required>
+        <input type="file" id="fileInput" name="pfile" [(ngModel)]="custom.pfile"
+        (change)="onFileSelected($event,custom)" required>
       </div>
 
       <!-- Button gửi -->

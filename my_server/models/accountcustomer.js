@@ -35,6 +35,7 @@ const accountCustomerSchema = new mongoose.Schema({
     type: Number,
   },
 });
+
 accountCustomerSchema.plugin(AutoIncrement, { inc_field: 'userid', start_seq: 1 });
 
 const AccountCustomer = mongoose.model('AccountCustomer', accountCustomerSchema);
