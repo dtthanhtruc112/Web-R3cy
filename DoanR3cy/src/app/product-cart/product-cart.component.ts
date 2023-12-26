@@ -5,6 +5,8 @@ import { Subject, catchError, map, switchMap, take, takeUntil } from 'rxjs';
 import { CartService } from '../Service/cart.service';
 import { OrderService } from '../Service/order.service';
 import { CartItemDetailed, CartItem, Cart } from '../models/cart';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ProductService } from '../Service/product.service';
 
 
 
@@ -14,31 +16,7 @@ import { CartItemDetailed, CartItem, Cart } from '../models/cart';
   styleUrl: './product-cart.component.css'
 })
 export class ProductCartComponent implements OnInit, OnDestroy {
-  // cartItems: any[] = [];
-
-  // constructor(private cartService: CartService) {}
-
-  // ngOnInit(): void {
-  //   this.cartItems = this.cartService.getCartItems();
-  // }
-
-  // addProductToCart(productt: any): void {
-  //   this.cartService.addItemToCart(productt);
-  // }
-
-  // cartItems: Product[] | undefined;
-  // quantity: number = 1;
-
-  // constructor(private cartService: CartService, private _route: ActivatedRoute) {}
-
-
-  // ngOnInit(): void {
-  //   this.cartItems = this.cartService.getCartItems();
-  // }
-
-  // addProductToCart(productt: any): void {
-  //   this.cartService.addItemToCart(productt);
-  // }
+  
 
 
   cartItems: product[] = [];
@@ -47,32 +25,21 @@ export class ProductCartComponent implements OnInit, OnDestroy {
   cartItemsDetailed: CartItemDetailed[] = [];
   cartCount = 0;
   endSubs$: Subject<any> = new Subject();
-  totalPrice: number | undefined;
-  // isCheckout = false;
+  totalPrice: number = 0;
+  product: product[] = [];
 
 
-  constructor(private cartService: CartService, private _route: ActivatedRoute, private orderService: OrderService) { 
+
+  constructor(private cartService: CartService, private _route: ActivatedRoute, private productService: ProductService) { 
     // this.router.url.includes('product-cart') ? this.isCheckout =true : this.isCheckout=false;
 
   }
 
   ngOnInit() {
     this._getCartDetails();
-    this._getOrderSummary();
+    // this._getOrderSummary();
 
-    // Đăng ký để theo dõi sự thay đổi của giỏ hàng
-    // this.cartService.cart$.subscribe((items) => {
-    //   this.cartItems = items;
-
-    // });
-    // this.cartService.selectedOption$.subscribe(option => {
-    //   this.selectedOption = option;
-    // });
-
-
-    // this._route.queryParams.subscribe(params => {
-    //   this.quantity = +params['quantity'] || 1; // Gán giá trị mặc định là 1 nếu không có tham số
-    // });
+    
   }
 
   ngOnDestroy() {
@@ -82,41 +49,23 @@ export class ProductCartComponent implements OnInit, OnDestroy {
   }
 
   private _getCartDetails() {
-    this.cartService.cart$.pipe(takeUntil(this.endSubs$)).subscribe(respCart => {
-      this.cartItemsDetailed = [];
-      this.cartCount = respCart?.items?.length ?? 0;
+   
 
-      // respCart.items?.filter((CartItem) => this.cartItems.id)? forEach(cartItem => {
-      //   this.orderService.getProduct(cartItem.id).subscribe((respProduct) => {
-      //     this.cartItemsDetailed.push({
-      //       product: respProduct,
-      //       quantity: cartItem.quantity
+    // this.cartService.cart$.pipe(takeUntil(this.endSubs$)).subscribe(respCart => {
+    //   this.cartItemsDetailed = respCart?.items ?? [];  // Gán sản phẩm vào cartItemsDetailed
+    //   this.cartCount = this.cartItemsDetailed.length;
+    // });
 
-      //     })
-      //   })
-
-      // })
+    this.cartService.cart$.pipe().subscribe((respCart) => {
+      respCart.items?.forEach((cartItem) => {
+        this.productService.getProduct(cartItem.id).subscribe(product => {})
+      })
     })
   }
 
-  // calculateSubtotal(cartItem: any): number {
-  //   const price = Number(cartItem.price); // Chuyển đổi giá trị giá từ string sang number
+    
 
-  //   // Tính tổng sản phẩm
-  //   const subtotal = this.quantity * price;
-  //   return subtotal;
-  // }
-
-
-
-  //Xóa sản phẩm
-  // deleteCartItem(item: product): void {
-  //   const index = this.cartItems.indexOf(item);
-  //   if (index !== -1) {
-  //     this.cartItems.splice(index, 1);
-  //   }
-  // }
-
+// tính tổng sản phẩm
   calculateSubtotal(cartItem: any): number {
     const price = cartItem.product.price;
     const quantity = cartItem.quantity;
@@ -125,30 +74,11 @@ export class ProductCartComponent implements OnInit, OnDestroy {
     return subtotal;
   }
 
+  // xóa item
   deleteCartItem(cartItem: CartItemDetailed) {
     this.cartService.deleteCartItem(cartItem.product.id)
   }
-
-  _getOrderSummary() {
-    this.cartService.cart$.pipe(takeUntil(this.endSubs$)).subscribe((cart) => {
-      this.totalPrice = 0;
-      if (cart) {
-        cart.items?.map((item) => {
-          if (item.id) {
-            this.orderService
-              .getProduct(item.id)
-              .pipe(take(1))
-              .subscribe((product) => {
-                if (item.quantity) {
-                  // this.totalPrice += product.price * item.quantity;
-                }
-              })
-          }
-        })
-      }
-    }
-    )
-  }
+ 
 
   updateCartItemQuantity(event: { value: any; }, cartItem: CartItemDetailed) {
 
@@ -161,7 +91,7 @@ export class ProductCartComponent implements OnInit, OnDestroy {
 
 }
 
-function forEach(arg0: (cartItem: any) => void) {
-  throw new Error('Function not implemented.');
-}
+
+
+
 

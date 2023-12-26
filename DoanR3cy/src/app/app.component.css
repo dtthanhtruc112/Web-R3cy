@@ -129,7 +129,11 @@ div{
     justify-content: space-evenly;
 }
 
+
+
 .icon_item {
+    position: relative;
+
     margin: 5px 25px;
     color: var(--color-blue);
     font-size: 25px;

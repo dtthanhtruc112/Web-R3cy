@@ -113,9 +113,9 @@ export class OrderService {
   //   return throwError(() => new Error(err.message))
   // }
   
-getProduct(id: string): Observable<any> {
-  return this._http.get<any>(`${this._url}/${id}`)
-}
+// getProduct(id: string): Observable<any> {
+//   return this._http.get<any>(`${this._url}/${id}`)
+// }
 
 createOrder(orders: Orders) : Observable<Orders> {
   return this._http.post<Orders>(this._url, orders);
