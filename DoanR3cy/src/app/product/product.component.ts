@@ -85,28 +85,62 @@ export class ProductComponent implements OnInit {
   //   }
   // }
 
+  // addProductToCart() {
+  //   const cartItem: CartItem = {
+  //     id: this.productt.id,
+  //     quantity: this.quantity
+  //   }
+  
+  //   this.cartService.setCartItem(cartItem);
+  // }
+
+  // addProductToCart() {
+  //   console.log('productt:', this.productt);
+  // console.log('quantity:', this.quantity);
+  //   if (this.productt) {
+  //     const cartItem: CartItem = {
+  //       id: this.productt.id,
+  //       quantity: this.quantity
+  //     };
+  //     this.cartService.setCartItem(cartItem);
+  //   } else {
+  //     // Xử lý trường hợp sản phẩm chưa được tải
+  //     console.error('Sản phẩm chưa được tải');
+  //   }
+  // }
+
+  // addProductToCart() {
+  //   console.log('productt:', this.productt);
+  //   console.log('quantity:', this.quantity);
+  //   if (this.productt && this.quantity) {
+  //     const cartItem: CartItem = {
+  //       id: this.productt.id,
+  //       quantity: this.quantity
+  //     };
+  //     this.cartService.setCartItem(cartItem);
+  //   } else {
+  //     console.error('Sản phẩm hoặc số lượng chưa được tải');
+  //   }
+  // }
+
   addProductToCart() {
-    const cartItem: CartItem = {
-      id: this.productt.id,
-      quantity: this.quantity
+    console.log('productt:', this.productt);
+    console.log('quantity:', this.quantity);
+    if (this.productt) {
+      const cartItem: CartItem = {
+        id: this.productt.id,
+        quantity: this.quantity
+      };
+      this.cartService.setCartItem(cartItem);
+    } else {
+      // Xử lý trường hợp sản phẩm chưa được tải
+      console.error('Sản phẩm chưa được tải');
+      // Hiển thị thông báo lỗi
+      alert('Sản phẩm chưa được tải');
     }
-  
-    this.cartService.setCartItem(cartItem);
   }
+
   
-
-
-  private getProduct(id: string){
-    this.productService
-    .getProduct(id)
-    .pipe(takeUntil(this.endSubs$))
-    .subscribe((respProduct: any)=> {
-      this.productt = respProduct
-    }, (error: any) => {
-
-    }  )
-
-  }
 
 }
 

@@ -15,6 +15,16 @@ export class AppComponent implements OnInit  {
   navMenu: HTMLElement | null = null;
 
   ngOnInit() {
+    document.addEventListener('DOMContentLoaded', () => {
+      const h4Elements = document.querySelectorAll('footer h4');
+
+      h4Elements.forEach((h4Element) => {
+        h4Element.addEventListener('click', () => {
+          h4Element.classList.toggle('active');
+        });
+      });
+    });
+    
     this.mobileMenu = document.getElementById("mobile-menu");
     this.navMenu = document.getElementById("nav");
 

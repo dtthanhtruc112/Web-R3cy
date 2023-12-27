@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../Service/blog.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { catchError, retry } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 
 @Component({
@@ -11,26 +13,46 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ManageBlogComponent implements OnInit  {
 
   blogs: any[] = [];
+  errorMessage: string = '';
 
-  constructor(private blogService: BlogService, private sanitizer: DomSanitizer) {}
+   constructor(private blogService: BlogService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.getAllBlogs();
   }
-
   getAllBlogs() {
-    this.blogService.getAllBlogs().subscribe(
+    this.blogService.getAllBlogs().pipe(
+      retry(3),
+      catchError(this.handleError)
+    ).subscribe(
       (response) => {
         this.blogs = response;
-
-        // Chuyển đổi base64 thành SafeResourceUrl
-        this.blogs.forEach(blog => {
-          blog.thumbnail = this.sanitizer.bypassSecurityTrustResourceUrl(blog.thumbnail);
-        });
       },
       (error) => {
         console.error('Đã xảy ra lỗi khi lấy dữ liệu blog:', error);
+        this.errorMessage = 'Đã xảy ra lỗi khi lấy dữ liệu blog.';
       }
     );
   }
+
+  private handleError(error: any) {
+    console.error('Có lỗi xảy ra:', error);
+    return throwError('Có lỗi xảy ra khi lấy dữ liệu blog, vui lòng thử lại sau.');
+  }
+
+
+  // Thêm phương thức xóa blog
+  deleteBlog(blogId: string) {
+    this.blogService.deleteBlog(blogId).subscribe(
+      (response) => {
+        // Nếu xóa thành công, cập nhật danh sách bài viết
+        this.getAllBlogs();
+      },
+      (error) => {
+        console.error('Đã xảy ra lỗi khi xóa blog:', error);
+      }
+    );
+  }
+
+
 }
