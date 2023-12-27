@@ -43,16 +43,18 @@ export class ManageBlogComponent implements OnInit  {
 
   // Thêm phương thức xóa blog
   deleteBlog(blogId: string) {
-    this.blogService.deleteBlog(blogId).subscribe(
-      (response) => {
-        // Nếu xóa thành công, cập nhật danh sách bài viết
-        this.getAllBlogs();
-      },
-      (error) => {
-        console.error('Đã xảy ra lỗi khi xóa blog:', error);
-      }
-    );
+    const confirmDelete = window.confirm('Bạn chắc chắn muốn xóa bài viết này?');
+
+    if (confirmDelete) {
+      this.blogService.deleteBlog(blogId).subscribe(
+        (response) => {
+          // Nếu xóa thành công, cập nhật danh sách bài viết
+          this.getAllBlogs();
+        },
+        (error) => {
+          console.error('Đã xảy ra lỗi khi xóa blog:', error);
+        }
+      );
+    }
   }
-
-
 }

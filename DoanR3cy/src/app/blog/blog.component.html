@@ -11,7 +11,9 @@
         <div *ngFor="let blog of blogs" class="container1blog">
           <div class="blog-card">
             <div class="imageThumnailOnBlogList" (click)="viewBlogDetail(blog._id)">
-              <div class="image"> <img [src]="blog.thumbnail" alt="{{ blog.title }}" /></div>
+              <div class="image"> <img [src]="'http://localhost:3000/image/' + blog.thumbnail" alt="{{ blog.title }}" /></div>
+
+              
             </div>
             <div class="sumary1Blog">
               <h4 class="title1Blog" (click)="viewBlogDetail(blog._id)">{{ blog.title }}</h4>
