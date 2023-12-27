@@ -17,6 +17,7 @@
                         <th>Thời gian</th>
                         <th>Tác giả</th>
                         <th>Xóa</th>
+                        <th>Chỉnh sửa</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,7 @@
                         <td>{{ blog.author }}</td>
                         <!-- <td><i class="fa-solid fa-trash"></i></td> -->
                         <td><i class="fa-solid fa-trash" (click)="deleteBlog(blog._id)"></i></td>
+                        <td><button class="btn" (click)="editBlog(blog._id)">Chỉnh sửa</button></td>
                       </tr>
                 </tbody>
                 
