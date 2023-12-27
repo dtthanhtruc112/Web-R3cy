@@ -29,7 +29,7 @@
                     <div *ngIf="!isPhoneNumberValid" class="error-message">Số điện thoại không hợp lệ!</div>
                   
                     <div class="text-pass">
-                      <input type="password" class="form-control" id="form-input" placeholder="Mật khẩu" name="psw" [(ngModel)]="account.password" #name="ngModel" #passwordInputrequired>
+                      <input type="password" class="form-control" id="form-input" placeholder="Mật khẩu" name="psw" [(ngModel)]="account.password" #name="ngModel" (blur)="checkPassword()" #passwordInputrequired>
                     </div>
                   
                     <div class="btn-sigup">
