@@ -29,9 +29,15 @@
                 <a href="" routerLink="/timkiem" routerLinkActive="active">
                     <i class="bi bi-search icon_item" ></i>
                 </a>
-                <a href="" routerLink="/product-cart" routerLinkActive="active"><i class="bi bi-cart3 icon_item icon_item text-3xl" pBadge value=cartCount></i></a>
+                <!-- <a href="" routerLink="/cart" routerLinkActive="active"><i class="bi bi-cart3 icon_item icon_item text-3xl" pBadge value=cartCount></i></a> -->
+            <a href="" routerLink="/cart" routerLinkActive="active"><i class="bi bi-cart3 icon_item "></i></a>
+                 <span><app-cart-icon></app-cart-icon>
+                 </span> 
               
-                <a href="" routerLink="/trangtaikhoan" routerLinkActive="active"><i class="bi bi-person-circle icon_item"></i></a>
+              
+                <a [routerLink]="userLink()" routerLinkActive="active">
+                  <i class="bi bi-person-circle icon_item"></i>
+                </a>
     
     
             </div>

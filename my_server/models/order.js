@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 const Schema = mongoose.Schema;
 
 const Order = new Schema({
@@ -20,5 +22,7 @@ const Order = new Schema({
     }],
     rejectreason: String
 });
+
+// Order.plugin(AutoIncrement, {inc_field: 'ordernumber', start_seq: 1007})
 
 module.exports = mongoose.model('Order', Order);

@@ -1,0 +1,130 @@
+/* @import '../app.component.css';
+ */
+
+ div{
+    font-family: Inter-Regular;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.clear{
+    clear: both
+}
+
+.text-center{
+    text-align: center;
+}
+
+.font-bold{
+    font-weight: bold;
+}
+
+.container{
+    background-color: var(--color-lightblue);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100vh;
+}
+
+.content{
+    background-color: var(--color-white);
+    width: 740px;
+    height: 480px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 10px 0 rgba(0,0,0,.14);
+    border-radius: 4px;
+}
+
+.box-container{
+    margin: 60px;
+}
+
+.box-container .h2{
+    color: var(--color-blue);
+    margin-bottom: 48px;
+}
+
+.form-control{
+    width: 98%;
+    height: 40px;
+    border-radius: 5px;
+    border: solid var(--color-grey) 1px;
+    padding-left: 2%;
+}
+
+/* #forminput{
+    padding-left: 16px;
+} */
+
+::placeholder {
+  color: var(--color-grey);
+  font-size: 16px;
+  /* padding-left: 16px; */
+}
+
+input{
+    font-size: 16px;
+}
+
+.text-ep{
+    margin-bottom: 30px;
+}
+
+.text-pass{
+    margin-bottom: 16px;
+}
+
+.forget-pass, .p{
+    /* margin-left: auto; */
+    color: var(--color-blue);
+    margin-bottom: 32px;
+}
+
+.btn-sigin > input{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--color-blue);
+    border-radius: 10px;
+    color: var(--color-white);
+    font-weight: bold;
+    border: none;
+}
+
+.text-pass .text-ep > input{
+    padding-left: 10px;
+}
+
+/* ============Responsive============ */
+/* Tablet */
+@media screen and (max-width:768px){
+    .content{
+        width: 650px;
+        height: 450px;
+    }
+
+    .box-container{
+        margin: 60px 30px 30px 30px
+    }
+
+}
+
+/* Mobile */
+@media screen and (max-width:480px){
+
+    .box-container{
+        margin: 40px 30px 30px 30px
+    }
+    .content{
+        width: 350px;
+        height: 420px;
+    }
+
+    .h2{
+        font-size: 18px
+    }
+}

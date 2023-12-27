@@ -1,0 +1,194 @@
+[{
+  "_id": {
+    "$oid": "6581bfe170dc1b7a11d26d45"
+  },
+  "userid": 1,
+  "channel": "Website",
+  "ordernumber": 1001,
+  "order_status": "Đang giao",
+  "ordereddate": "04/01/2023",
+  "paymentmethod": "Bank",
+  "paymentstatus": false,
+  "products": [
+    {
+      "id": 1,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Đĩa nhỏ",
+      "price": 100000,
+      "quantity": 2,
+      "feedback": ""
+    },
+    {
+      "id": 2,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Khay đựng xà phòng",
+      "price": 150000,
+      "quantity": 1,
+      "feedback": ""
+    }
+  ],
+  "rejectreason": ""
+},
+{
+  "_id": {
+    "$oid": "6581bfe170dc1b7a11d26d46"
+  },
+  "userid": 1,
+  "channel": "Website",
+  "ordernumber": 1002,
+  "order_status": "Đã giao",
+  "ordereddate": "05/03/2023",
+  "paymentmethod": "Momo",
+  "paymentstatus": false,
+  "products": [
+    {
+      "id": 3,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Lót ly",
+      "price": 90000,
+      "quantity": 3,
+      "feedback": ""
+    }
+  ],
+  "rejectreason": ""
+},
+{
+  "_id": {
+    "$oid": "6581bfe170dc1b7a11d26d47"
+  },
+  "userid": 1,
+  "channel": "Website",
+  "ordernumber": 1003,
+  "order_status": "Đang giao",
+  "ordereddate": "01/06/2023",
+  "paymentmethod": "Bank",
+  "paymentstatus": false,
+  "products": [
+    {
+      "id": 4,
+      "category1": "gia-dung",
+      "category2": "khac",
+      "name": "Giá đỡ laptop",
+      "price": 200000,
+      "quantity": 1,
+      "feedback": ""
+    },
+    {
+      "id": 5,
+      "category1": "gia-dung",
+      "category2": "khac",
+      "name": "Giá treo đồ",
+      "price": 150000,
+      "quantity": 3,
+      "feedback": ""
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6581bfe170dc1b7a11d26d48"
+  },
+  "userid": 1,
+  "channel": "Website",
+  "ordernumber": 1004,
+  "order_status": "Chờ xử lí",
+  "ordereddate": "24/07/2023",
+  "paymentmethod": "COD",
+  "paymentstatus": false,
+  "products": [
+    {
+      "id": 3,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Lót ly",
+      "price": 90000,
+      "quantity": 5,
+      "feedback": "Rất tốt"
+    }
+  ],
+  "rejectreason": ""
+},
+{
+  "_id": {
+    "$oid": "6581bfe170dc1b7a11d26d49"
+  },
+  "userid": 1,
+  "channel": "Website",
+  "ordernumber": 1005,
+  "order_status": "Đã hủy",
+  "ordereddate": "30/09/2023",
+  "paymentmethod": "Bank",
+  "paymentstatus": false,
+  "products": [
+    {
+      "id": 3,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Lót ly",
+      "price": 90000,
+      "quantity": 7,
+      "feedback": ""
+    }
+  ],
+  "rejectreason": ""
+},
+{
+  "_id": {
+    "$oid": "6581bfe170dc1b7a11d26d4a"
+  },
+  "userid": 1,
+  "channel": "Website",
+  "ordernumber": 1006,
+  "order_status": "Đã hủy",
+  "ordereddate": "16/12/2023",
+  "paymentmethod": "Momo",
+  "paymentstatus": true,
+  "products": [
+    {
+      "id": 3,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Lót ly",
+      "price": 90000,
+      "quantity": 7,
+      "feedback": ""
+    }
+  ],
+  "rejectreason": "Hết hàng rồi "
+},
+{
+  "_id": {
+    "$oid": "6589314cfa7d7b9dbbed6d19"
+  },
+  "userid": 2,
+  "channel": "Website",
+  "ordernumber": 1007,
+  "order_status": "Đang giao",
+  "ordereddate": "04/01/2023",
+  "paymentmethod": "Bank",
+  "paymentstatus": false,
+  "products": [
+    {
+      "id": 1,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Đĩa nhỏ",
+      "price": 100000,
+      "quantity": 2,
+      "feedback": ""
+    },
+    {
+      "id": 2,
+      "category1": "gia-dung",
+      "category2": "dia-khay",
+      "name": "Khay đựng xà phòng",
+      "price": 150000,
+      "quantity": 1,
+      "feedback": ""
+    }
+  ],
+  "rejectreason": ""
+}]

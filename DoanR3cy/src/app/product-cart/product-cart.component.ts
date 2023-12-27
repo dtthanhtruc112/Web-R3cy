@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { product } from '../Interface/product';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../Service/product.service';
-import { map, switchMap } from 'rxjs';
+import { Subject, catchError, map, switchMap, take, takeUntil } from 'rxjs';
 import { CartService } from '../Service/cart.service';
+import { OrderService } from '../Service/order.service';
+import { CartItemDetailed, CartItem, Cart } from '../models/cart';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ProductService } from '../Service/product.service';
+
 
 
 @Component({
@@ -11,73 +15,83 @@ import { CartService } from '../Service/cart.service';
   templateUrl: './product-cart.component.html',
   styleUrl: './product-cart.component.css'
 })
-export class ProductCartComponent {
-  // cartItems: any[] = [];
-
-  // constructor(private cartService: CartService) {}
-
-  // ngOnInit(): void {
-  //   this.cartItems = this.cartService.getCartItems();
-  // }
-
-  // addProductToCart(productt: any): void {
-  //   this.cartService.addItemToCart(productt);
-  // }
-
-  // cartItems: Product[] | undefined;
-  // quantity: number = 1;
-
-  // constructor(private cartService: CartService, private _route: ActivatedRoute) {}
-
-
-  // ngOnInit(): void {
-  //   this.cartItems = this.cartService.getCartItems();
-  // }
-
-  // addProductToCart(productt: any): void {
-  //   this.cartService.addItemToCart(productt);
-  // }
+export class ProductCartComponent implements OnInit, OnDestroy {
+  
 
 
   cartItems: product[] = [];
   quantity: number = 1;
   selectedOption: string = '';
+  cartItemsDetailed: CartItemDetailed[] = [];
+  cartCount = 0;
+  endSubs$: Subject<any> = new Subject();
+  totalPrice: number = 0;
+  product: product[] = [];
 
 
-  constructor(private cartService: CartService, private _route: ActivatedRoute) { }
+
+  constructor(private cartService: CartService, private _route: ActivatedRoute, private productService: ProductService) { 
+    // this.router.url.includes('product-cart') ? this.isCheckout =true : this.isCheckout=false;
+
+  }
 
   ngOnInit() {
-    // Đăng ký để theo dõi sự thay đổi của giỏ hàng
-    // this.cartService.cart$.subscribe((items) => {
-    //   this.cartItems = items;
-      
+    this._getCartDetails();
+    // this._getOrderSummary();
+
+    
+  }
+
+  ngOnDestroy() {
+    this.endSubs$.next(null);
+    this.endSubs$.complete();
+
+  }
+
+  private _getCartDetails() {
+   
+
+    // this.cartService.cart$.pipe(takeUntil(this.endSubs$)).subscribe(respCart => {
+    //   this.cartItemsDetailed = respCart?.items ?? [];  // Gán sản phẩm vào cartItemsDetailed
+    //   this.cartCount = this.cartItemsDetailed.length;
     // });
-    // this.cartService.selectedOption$.subscribe(option => {
-    //   this.selectedOption = option;
-    // });
+
+    // this.cartService.cart$.pipe().subscribe((respCart) => {
+    //   respCart.items?.forEach((cartItem) => {
+    //     this.productService.getProduct(cartItem.id).subscribe(product => {})
+    //   })
+    // })
+  }
+
     
 
-    // this._route.queryParams.subscribe(params => {
-    //   this.quantity = +params['quantity'] || 1; // Gán giá trị mặc định là 1 nếu không có tham số
-    // });
-  }
-  
-  calculateSubtotal(item: any): number {
-    const price = Number(item.price); // Chuyển đổi giá trị giá từ string sang number
+// tính tổng sản phẩm
+  calculateSubtotal(cartItem: any): number {
+    const price = cartItem.product.price;
+    const quantity = cartItem.quantity;
+    const subtotal = price * quantity;
 
-    // Tính tổng sản phẩm
-    const subtotal = this.quantity * price;
     return subtotal;
   }
 
-  //Xóa sản phẩm
-  removeItem(item: product): void {
-    const index = this.cartItems.indexOf(item);
-    if (index !== -1) {
-      this.cartItems.splice(index, 1);
-    }
+  // xóa item
+  deleteCartItem(cartItem: CartItemDetailed) {
+    this.cartService.deleteCartItem(cartItem.product.id)
+  }
+ 
+
+  updateCartItemQuantity(event: { value: any; }, cartItem: CartItemDetailed) {
+
+    this.cartService.setCartItem({
+      id: cartItem.product.id,
+      quantity: event.value
+    }, true)
   }
 
-  
 
 }
+
+
+
+
+

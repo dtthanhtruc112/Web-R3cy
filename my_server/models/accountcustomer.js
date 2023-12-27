@@ -6,6 +6,7 @@
 //   });
 
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema
 
 const accountCustomerSchema = new mongoose.Schema({
@@ -30,7 +31,24 @@ const accountCustomerSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
+  userid: {
+    type: Number,
+  },
 });
+
+// accountCustomerSchema.plugin(AutoIncrement, { inc_field: 'userid', start_seq: 1 });
+
+// Sử dụng hook 'pre' để thực hiện logic tăng giảm chỉ số trước khi lưu vào cơ sở dữ liệu
+accountCustomerSchema.pre('save', async function (next) {
+  if (!this.userid) {
+    // Nếu userid không tồn tại, thực hiện logic tăng giảm chỉ số
+    const maxUserId = await mongoose.model('AccountCustomer').findOne({}, { userid: 1 }, { sort: { userid: -1 } });
+    this.userid = maxUserId ? maxUserId.userid + 1 : 1;
+  }
+
+  next();
+});
+
 
 const AccountCustomer = mongoose.model('AccountCustomer', accountCustomerSchema);
 

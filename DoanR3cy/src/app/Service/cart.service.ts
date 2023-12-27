@@ -1,27 +1,4 @@
-// import { Injectable } from "@angular/core";
 
-// export const CART_KEY = "cart";
-
-// @Injectable({
-//     providedIn: 'root'
-// })
-// export class CartService {
-//     cartItems: any[] = [];
-
-//     constructor() {}
-
-//     getCartItems(): any[] {
-//         return this.cartItems;
-//     }
-
-//     addItemToCart(item: any): void {
-//         this.cartItems.push(item);
-//     }
-
-//     // xoa san pham
-
-
-// }
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -37,26 +14,7 @@ export const CART_KEY = "cart";
 
 
 export class CartService {
-  // private cartItems: product[] = [];
-  // private cartSubject = new BehaviorSubject<product[]>([]);
-
-  // cart$ = this.cartSubject.asObservable();
-
-  // addToCart(item: product) {
-  //   this.cartItems.push(item);
-  //   console.log(this.cartItems);
-  //   this.cartSubject.next(this.cartItems);
-  // }
-
-  // getCartItems() {
-  //   return this.cartItems;
-  // }
-  // private selectedOptionSource = new BehaviorSubject<string>('');
-  // selectedOption$ = this.selectedOptionSource.asObservable();
-
-  // setSelectedOption(option: string) {
-  //   this.selectedOptionSource.next(option);
-  // }
+ 
   cart$: BehaviorSubject<Cart> = new BehaviorSubject(this.getCart());
   constructor() { }
 
@@ -69,45 +27,89 @@ export class CartService {
       }
       const intialCartJson = JSON.stringify(intialCart);
       localStorage.setItem(CART_KEY, intialCartJson);
+    } else{
+      this.cart$.next(cart);
+      
     }
 
   }
+
 
 
 
   getCart(): Cart {
-    const cartJsonString: string = localStorage.getItem(CART_KEY) ?? '';
-    const cart: Cart = JSON.parse(cartJsonString);
-    return cart
+    let cart: Cart;
+    try {
+      const cartJsonString: string = localStorage.getItem(CART_KEY) || '';
+      if (!cartJsonString) {
+        cart = {
+          items: []
+        };
+      } else {
+        cart = JSON.parse(cartJsonString);
+        if (!cart || !cart.items) {
+          cart = {
+            items: []
+          };
+        }
+      }
+    } catch (error) {
+      console.error('Lỗi khi parse JSON:', error);
+      cart = {
+        items: []
+      };
+    }
+    return cart;
+  }
 
+  setCartItem(cartItem :CartItem, updateCartItemQuantity?: boolean) : Cart {
+    const cart = this.getCart();
+    cart.items = cart.items ?? [];
+    const cartItemExist = cart.items?.find((item)=> item.id === cartItem.id)
+    if(cartItemExist) {
+      for (const item of cart.items) {
+        if (item.id === cartItem.id) {
+          if (cartItem.quantity) {
+            if (item.quantity) {
+            item.quantity += cartItem.quantity;
+          }
+          break;
+        }
+      }}
+
+    } else{
+      cart.items?.push(cartItem);
+
+
+    }
+  
+    const cartJson = JSON.stringify(cart);
+    localStorage.setItem(CART_KEY, cartJson);
+    return cart;
 
   }
 
-  setCartItem(cartItem: CartItem): Cart {
+  
 
-    const cart = this.getCart();
-
-    const cartItemExist = cart.items?.find((item) => item.id === cartItem.id);
-    if (cartItemExist) {
-      cart.items?.map((item) => {
-        if(item.id === cartItem.id) {
-          item.quantity = item.quantity? + cartItem.quantity! :0 ;
-          return item;
-        }
-        return item;
-      })
-     
-
-    } else {
-      cart.items?.push(cartItem);
-    }
-    cart.items?.push(cartItem);
+  
+  
+  // // Hàm lưu trữ giỏ hàng vào localStorage
+  private saveCart(cart: Cart) {
     const cartJson = JSON.stringify(cart);
     localStorage.setItem(CART_KEY, cartJson);
+  }
+
+
+  deleteCartItem(id: string) {
+    const cart = this.getCart();
+    const newCart = cart.items?.filter(item => item.id !== id)
+
+    cart.items = newCart;
+
+    const cartJsonString = JSON.stringify(cart);
+    localStorage.setItem(CART_KEY, cartJsonString);
+
     this.cart$.next(cart);
-
-    return cart;
-
 
   }
 

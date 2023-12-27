@@ -1,46 +1,10 @@
-// import { Component } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { Router } from '@angular/router';
-
-// @Component({
-//   selector: 'app-forgot-pass',
-//   templateUrl: './forgot-pass.component.html',
-//   styleUrls: ['./forgot-pass.component.css']
-// })
-// // export class ForgotPassComponent {
-// //   constructor(private router: Router) {}
-
-// //   redirectToOtpPage(): void {
-// //     // Thực hiện các logic xử lý trước khi chuyển trang (nếu cần)
-// //     this.router.navigate(['/otp-code']);
-// //   }
-// // }
-// export class ForgotPassComponent {
-//   forgotPassForm: FormGroup;
-
-//   constructor(private formBuilder: FormBuilder, private router: Router) {
-//     this.forgotPassForm = this.formBuilder.group({
-//       textEp: ['', [Validators.email]]
-//     });
-//   }
-
-//   redirectToOtpPage(): void {
-//     if (this.forgotPassForm.valid) {
-//       // Form hợp lệ, chuyển đến trang otp-code
-//       this.router.navigate(['/otp-code']);
-//     } else {
-//       // Hiển thị thông báo hoặc xử lý khi form không hợp lệ
-//       alert('Vui lòng điền đầy đủ thông tin');
-//     }
-//   }
-// }
-
 import { Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountcustomerService } from '../Service/accountcustomer.service';
 import { OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-forgot-pass',
@@ -62,7 +26,8 @@ export class ForgotPassComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private accountService: AccountcustomerService
+    private accountService: AccountcustomerService,
+    private AuthService: AuthService,
   ){}
 
   ngOnInit() {
@@ -86,6 +51,15 @@ export class ForgotPassComponent implements OnInit {
             this.verificationCode = this.generateRandomOtp();
             this.generatedOtp = this.verificationCode;
             alert('Mã OTP đã được gửi đến email của bạn.\nMã OTP: ' + this.generatedOtp);
+            // Lưu thông tin người dùng vào sessionStorage
+            const user = {
+              Mail: this.Mails.Mail,
+              // Các thông tin khác nếu có
+            };
+            this.AuthService.setCurrentUser(user);
+
+            console.log('this.Mails:', this.Mails);
+            console.log('this.generatedOtp:', this.generatedOtp);
           }
         },
         error: (err) => {
@@ -95,29 +69,6 @@ export class ForgotPassComponent implements OnInit {
       });
     }
   }
-  
-  // resend(){
-  //   if (!this.isMailValid) {
-  //     alert('Vui lòng nhập đúng Email!');
-  //   }
-  //   else if(this.Mail.trim().length === 0){
-  //     alert('Vui lòng nhập Mail!');     
-  //   }
-  //   else {
-  //     this.accountService.checkMailExist(this.Mail).subscribe({
-  //       next: (data) => {
-  //         this.Mails = data;
-  //         if (this.Mails.Mail == this.Mail) {
-  //           alert('Đã gửi lại mã xác nhận!')
-  //         }
-  //       },
-  //       error: (err) => {
-  //         this.errorMessage = err;
-  //         alert('Email không tồn tại!');
-  //       }
-  //     });
-  //   }
-  // }
 
   resend() {
     if (!this.isMailValid) {
@@ -125,18 +76,22 @@ export class ForgotPassComponent implements OnInit {
     } else if (this.Mail.trim().length === 0) {
       alert('Vui lòng nhập Email!');
     } else {
-      this.verificationCode = this.generateRandomOtp();
-
+      // Gửi lại mã OTP mới
+      this.generatedOtp = this.generateRandomOtp(); // Cập nhật giá trị mới ở đây
   
-      // Gửi lại mã xác nhận
+      // Gọi service để kiểm tra Email và gửi lại mã OTP
       this.accountService.checkMailExist(this.Mail).subscribe({
         next: (data) => {
           this.Mails = data;
           if (this.Mails.Mail == this.Mail) {
+            // Hiển thị mã OTP mới trong cửa sổ thông báo
             alert('Đã gửi lại mã xác nhận!');
+            alert('Mã OTP mới đã được gửi đến email của bạn.\nMã OTP mới: ' + this.generatedOtp);
+            // Gọi service để gửi mã OTP mới
+            // this.sendCode();
+            console.log('this.Mails:', this.Mails);
+            console.log('this.generatedOtp:', this.generatedOtp);
           }
-          // Hiển thị mã OTP mới trong cửa sổ thông báo
-        alert('Mã OTP mới đã được gửi đến email của bạn.\nMã OTP mới: ' + this.verificationCode);
         },
         error: (err) => {
           this.errorMessage = err;
@@ -145,7 +100,6 @@ export class ForgotPassComponent implements OnInit {
       });
     }
   }
-
   //-----FE
   checkMail(): void {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -163,75 +117,10 @@ export class ForgotPassComponent implements OnInit {
     // Tạo mã OTP ngẫu nhiên có 5 chữ số
     return Math.floor(10000 + Math.random() * 90000).toString();
   }
-  
 
-  //kiểm tra mã xác nhận
-
-  // checkVerificationCode() {
-  //   // if (this.verificationCode.trim().length === 0) {
-  //   //   this.isVerificationCodeValid = true;
-  //   // } else
-  //   // if (this.verificationCode === '666666') {
-  //   //   this.isVerificationCodeValid = true;
-  //   // } else {
-  //   //   this.isVerificationCodeValid = false;
-  //   // }
-  //   if (this.verificationCode.trim().length === 0) {
-  //     this.isVerificationCodeValid = true;
-  //   } else if (/^\d{5}$/.test(this.verificationCode)) {
-  //     this.isVerificationCodeValid = true;
-  //   } else {
-  //     this.isVerificationCodeValid = false;
-  //   }
-  // }
-
-//   onComplete() {
-//       // Kiểm tra mail hợp lệ và mã xác nhận đúng
-//       if (!this.isMailValid) {
-//         alert('Vui lòng nhập đúng Email!');
-//         return false
-//       }
-//       else if(this.Mail.trim().length === 0){
-//         alert('Vui lòng nhập Email!');
-//         return false     
-//       }
-//     else if(this.isVerificationCodeValid===false){
-//       alert('Vui lòng nhập đúng mã xác nhận!');
-//       return false;
-//       }
-//     else if(this.verificationCode.trim().length === 0){
-//       alert('Vui lòng nhập mã xác nhận!');
-//       return false;
-//     }
-//     else if(!this.isMailValid || !this.isVerificationCodeValid) {
-//       alert('Vui lòng nhập đúng Email và mã xác nhận!');
-//       return false;
-//     }
-//     else {
-//       this.accountService.checkMailExist(this.Mail).subscribe({
-//     next: (data) => {
-//     this.Mails = data;
-//     // console.log('Data from service:', this.phoneNumbers); // Log để kiểm tra dữ liệu
-
-//     // Kiểm tra dữ liệu trả về theo cách thích hợp
-//     if (this.Mails && this.Mails.Mail === this.Mail) {
-//       // alert('Mã xác nhận hợp lê!');
-//       this.router.navigate(['/new-pass']);
-//     } else {
-//       alert('Email không tồn tại!');
-//     }
-//   },
-//   error: (err) => {
-//     this.errorMessage = err;
-//     alert('Email không tồn tại!');
-//   },
-// });
-//       return
-//     }
-//   }
 
 onComplete() {
-  // Kiểm tra mail hợp lệ và mã xác nhận đúng
+
   if (!this.isMailValid) {
     alert('Vui lòng nhập đúng Email!');
     return false;
@@ -252,7 +141,9 @@ onComplete() {
       next: (data) => {
         this.Mails = data;
         // Kiểm tra dữ liệu trả về theo cách thích hợp
-        if (this.Mails && this.Mails.Mail === this.Mail && this.Mails.OTP === this.generatedOtp) {
+        if (this.Mails && this.Mails.Mail === this.Mail && this.verificationCode === this.generatedOtp) {
+          // console.log('this.Mail:', this.Mail);
+          // console.log('this.generatedOtp:', this.generatedOtp);
           alert('Mã xác nhận hợp lệ!');
           this.router.navigate(['/new-pass']);
         } else {
@@ -264,6 +155,7 @@ onComplete() {
         alert('Email không tồn tại!');
       },
     });
+
     return;
   }
 }

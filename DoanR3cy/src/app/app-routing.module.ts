@@ -21,6 +21,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.component';
 import { ProductCheckoutComponent } from './product-checkout/product-checkout.component';
 import { ThugomComponent } from './thugom/thugom.component';
+import { CartIconComponent } from './cart-icon/cart-icon.component';
 
 const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent},
@@ -35,7 +36,8 @@ const routes: Routes = [
   { path: 'QnA/:id', component: QnAComponent},
   { path: 'trangtaikhoan', component: TrangtaikhoanComponent},
   { path: 'trangtaikhoan/:id', component: TrangtaikhoanComponent},
-  { path: 'product-cart', component: ProductCartComponent},
+  // { path: 'product-cart', component: ProductCartComponent},
+  { path: 'cart', component: ProductCartComponent},
   { path: 'aboutus', component: AboutUsComponent},
   { path: 'blog', component: BlogComponent },
   // { path: 'detail/:id', component: DetailBlogComponent },
@@ -47,6 +49,7 @@ const routes: Routes = [
   { path: 'danhgia/:id', component: DanhgiasanphamComponent},
   { path: 'checkout', component: ProductCheckoutComponent},
   { path: 'thugom', component: ThugomComponent},
+  { path: 'carticon', component: CartIconComponent},
   // { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/main-page', pathMatch: 'full' }, // Trang mặc định
   {path: "**", component: PageNotFoundComponent}

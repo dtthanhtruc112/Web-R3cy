@@ -11,22 +11,23 @@
         <div class="content">
             <div class="box-container">
                 <p class="h2 font-bold">Nhập mật khẩu mới</p>
-                <form [formGroup]="newPassForm" (ngSubmit)="submitForm()">
+                <form>
                     <!-- Nhập mật khẩu -->
                     <div class="new-pass">
                         <!-- Sử dụng formControlName để liên kết với FormControl -->
-                        <input type="password" class="form-control" formControlName="newPass" placeholder="Mật khẩu" required>
+                        <input type="password" class="form-control" type="password" id="pwd" [(ngModel)]="password" (blur)="onChecked()" #passwordInput placeholder="Mật khẩu" [ngModelOptions]="{standalone: true}" required>
                     </div>
 
                     <!-- Nhập mật khẩu mới -->
                     <div class="re-new-pass">
                         <!-- Sử dụng formControlName để liên kết với FormControl -->
-                        <input type="password" class="form-control" formControlName="reNewPass" placeholder="Nhập lại mật khẩu" required>
+                        <input type="password" class="form-control"
+                        [(ngModel)]="confirmPassword" name="confirmPassword" #confirmPasswordInput (blur)="checkPasswordsMatch()" placeholder="Nhập lại mật khẩu" [ngModelOptions]="{standalone: true}" required>
                         <div class="clear"></div>
                     </div>
 
                     <div class="btn-reset">
-                        <input type="submit" value="Xác Nhận" id="submit-pass" class="form-sbm" name="btn-reset">
+                        <input type="submit" value="Xác Nhận" id="submit-pass" class="form-sbm" name="btn-reset" (click)="updatePassword()">
                     </div>
                 </form>
             </div>
