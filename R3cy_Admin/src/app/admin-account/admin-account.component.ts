@@ -1,14 +1,30 @@
 import { Component } from '@angular/core';
+import { AccountCustomer } from '../Interface/AccountCustomer';
+import { AccountcustomerService } from '../Service/accountcustomer.service';
 
 @Component({
   selector: 'app-admin-account',
   templateUrl: './admin-account.component.html',
-  styleUrls: ['./admin-account.component.css']
+  styleUrl: './admin-account.component.css'
 })
 export class AdminAccountComponent {
+  account = new AccountCustomer();
+  errMessage: string = '';
+  constructor(
+    private _service: AccountcustomerService,
+  ) {}
+  public setAccount(a: AccountCustomer) {
+    this.account = a;
+  }
+
+  isPhoneNumberValid: boolean = true;
+  phoneNumberExist = true;
+  phoneNumbers: any;
+  isAddAdminPopupVisible = false;
+  // newAdmin = { name: '', phone: '', email: '', password: '' };
   // Define custom column names
   customColumnNames: string[] = ['STT', 'Tên', 'Email', 'Số điện thoại', 'Tùy chỉnh'];
-
+  
   // Sample data
   userData: any[] = [
     { id: 1, name: 'Người dùng 1', email: 'user1@example.com', phone: '123456789' },
@@ -50,15 +66,64 @@ export class AdminAccountComponent {
     }
   }
 
+  toggleAddAdminPopup() {
+    this.isAddAdminPopupVisible = !this.isAddAdminPopupVisible;
+  }
+
+
+  checkPhoneNumber(): void {
+    const phoneNumberRegex = /^(\+84|0)[1-9][0-9]{7,8}$/; 
+    if (this.account.phonenumber.trim().length === 0) {
+      this.isPhoneNumberValid = true;
+    } else {
+      this.isPhoneNumberValid = phoneNumberRegex.test(this.account.phonenumber);
+    }
+  }
+
+  isValidEmail: boolean =true;
+  checkMail(){
+    const MailRegex = /\S+@\S+\.\S+/; 
+    if (this.account.Mail.trim().length === 0) {
+      this.isValidEmail = true;
+    } else {
+      this.isValidEmail = MailRegex.test(this.account.Mail);
+    }
+  }
+
   handleAddAdmin(): void {
     // Add a new row to userData with default values
-    const newAdmin = {
-      id: this.userData.length + 1,
-      name: 'New Admin',
-      email: 'newadmin@example.com',
-      phone: '1234567890'
-    };
-
-    this.userData.push(newAdmin);
+    // const newAdmin = {
+    //   id: this.userData.length + 1,
+    //   name: 'New Admin',
+    //   email: 'newadmin@example.com',
+    //   phone: '1234567890'
+    // };
+    if (!this.isPhoneNumberValid) {
+      alert('Vui lòng nhập đúng số điện thoại!');
+      return 
+    }
+    else if (!this.isValidEmail) {
+      alert('Vui lòng nhập đúng email!');
+      return  
+    }else if(this.account.phonenumber.trim().length === 0 || this.account.Name.trim().length === 0 || this.account.password.trim().length === 0){
+      alert('Vui lòng nhập đủ thông tin bắt buộc')
+      return 
+    }
+    else {
+      this._service.postAccount(this.account).subscribe({
+        next: (data) => {
+          this.account = data;
+          // Đóng popup sau khi thêm admin
+          this.toggleAddAdminPopup();
+          alert('Đăng ký thành công');
+        },
+        error: (err) => {
+          this.errMessage = err;
+          alert('Đăng ký không thành công');
+        },
+      });
+    }
   }
+
+  
 }

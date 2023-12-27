@@ -10,6 +10,7 @@ import { AdminSanphamComponent } from './admin-sanpham/admin-sanpham.component';
 import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.component';
 import { AdminCustomProductComponent } from './admin-custom-product/admin-custom-product.component';
 import { AdminLoginComponent } from './login/login.component';
+import { AdminAccountComponent } from './admin-account/admin-account.component';
 
 import { AuthGuard } from './Service/auth.guard';
 
@@ -25,7 +26,8 @@ const routes: Routes = [
 { path: 'blog', component: ManageBlogComponent, canActivate: [AuthGuard]},
 { path: 'sanpham', component: AdminSanphamComponent, canActivate: [AuthGuard]},
 { path: 'magiamgia', component: AdminMagiamgiaComponent, canActivate: [AuthGuard]},
-{ path: 'customproduct', component: AdminCustomProductComponent, canActivate: [AuthGuard]}
+{ path: 'customproduct', component: AdminCustomProductComponent, canActivate: [AuthGuard]},
+{ path: 'adminaccount', component: AdminAccountComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
@@ -43,5 +45,6 @@ export const RoutingComponent= [
   AdminSanphamComponent,
   AdminCustomProductComponent,
   AdminMagiamgiaComponent,
-  AdminLoginComponent
+  AdminLoginComponent,
+  AdminAccountComponent
 ]

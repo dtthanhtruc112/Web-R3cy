@@ -1,6 +1,6 @@
 <!-- admin-account.component.html -->
 
-<link rel="stylesheet" href="../../assets/themify-icons-font/themify-icons/themify-icons.css">
+<link rel="stylesheet" href="../../assets/themify-icons/themify-icons.css">
 
 <div class="container">
     <div class="header">
@@ -8,9 +8,51 @@
       </div>
       
       <div class="newadmin">
-          <button class="add-button font-bold" (click)="handleAddAdmin()"><p class="p">Thêm admin</p></button>
+          <button class="add-button font-bold" (click)="toggleAddAdminPopup()"><p class="p">Thêm admin</p></button>
       </div>
-      
+
+      <!-- Popup -->
+      <div *ngIf="isAddAdminPopupVisible" class="popup">
+        <div class="popup-content">
+          <!-- Nội dung form -->
+          <form class="form-addNew">
+            <!-- <input type="text" id="adminName" placeholder="Nhập họ và tên" [(ngModel)]="newAdmin.name" class="form-control">
+
+            <input type="text" id="adminPhoneNumber" placeholder="Nhập số điện thoại" [(ngModel)]="newAdmin.phone" class="form-control">
+
+            <input type="text" id="adminMail" placeholder="Nhập email" [(ngModel)]="newAdmin.email" class="form-control">
+
+            <input type="password" id="adminPassword" placeholder="Nhập password" [(ngModel)]="newAdmin.password" class="form-control"> -->
+
+            <div class="text-name">
+              <input type="text" class="form-control" id="form-input" placeholder="Họ và tên" name="name" [(ngModel)]="account.Name" #name="ngModel" required>
+            </div>
+          
+            <div class="text-email">
+              <input type="text" class="form-control" id="form-input" placeholder="Email" name="email" [(ngModel)]="account.Mail" #name="ngModel" (blur)="checkMail()" required>
+            </div>
+
+            <div class="error-message-mail" *ngIf="!isValidEmail">Email không hợp lệ!</div>
+
+            <div class="text-phone">
+              <input type="text" class="form-control" id="form-input" placeholder="Số điện thoại" name="phonenumber" [(ngModel)]="account.phonenumber" #name="ngModel" (blur)="checkPhoneNumber()" required>
+            </div>
+
+            <div *ngIf="!isPhoneNumberValid" class="error-message">Số điện thoại không hợp lệ!</div>
+          
+            <div class="text-pass">
+              <input type="password" class="form-control" id="form-input" placeholder="Mật khẩu" name="psw" [(ngModel)]="account.password" #name="ngModel" #passwordInputrequired>
+            </div>
+
+            <!-- Các nút để thao tác với form -->
+            <div class="btn-group">
+              <button type="button" (click)="handleAddAdmin()" class="form-sbm">Thêm Admin</button>
+              <button type="button" (click)="toggleAddAdminPopup()" class="form-close">Đóng</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
       <div class="p font-bold">Danh sách admin</div>
       <div class="content">
           <table>
