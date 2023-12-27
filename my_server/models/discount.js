@@ -7,6 +7,7 @@ const DiscountSchema = new mongoose.Schema({
   description: String,
   status: String,
   activate_date: String,
+  expired_date: String,
   createAt: { type: Date, default: Date.now }
 });
 const Discount = mongoose.model('Discount', DiscountSchema);

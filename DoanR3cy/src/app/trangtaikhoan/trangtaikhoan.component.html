@@ -129,7 +129,7 @@
                             <span class="minitext" id="hoso_change" routerLink="/cart" routerLinkActive="active">Dùng ngay</span>
                             <p class="minitext" >{{discount.code}} <br>
                                 {{discount.description}}</p>
-                            <p class="minitext" >Sắp hết hạn: Còn 2 ngày <span class="minitext" >Điều kiện</span></p>
+                            <p class="minitext" >Sắp hết hạn: Còn {{ calculateDaysDifference(discount.expired_date) }} ngày <span class="minitext" >Điều kiện</span></p>
                         </div>
                     </div>
                 </div>

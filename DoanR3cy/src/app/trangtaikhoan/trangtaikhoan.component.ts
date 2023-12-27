@@ -125,6 +125,22 @@ export class TrangtaikhoanComponent implements OnInit {
       );
   }
 
+  // Tính số ngày còn lại:
+  calculateDaysDifference(expiredDate: string): number {
+    const parts = expiredDate.split('/');
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const year = parseInt(parts[2], 10);
+
+    const expiredDateObj = new Date(year, month, day);
+    const currentDate = new Date();
+
+    const timeDiff = expiredDateObj.getTime() - currentDate.getTime();
+    const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return dayDiff;
+  }
+
 
 
   // Xóa địa chỉ

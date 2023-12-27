@@ -4,4 +4,5 @@ export interface Discount {
     description: String,
     status: String,
     activate_date: String,
+    expired_date: String,
 }
