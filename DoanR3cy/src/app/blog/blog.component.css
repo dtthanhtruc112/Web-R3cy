@@ -33,7 +33,7 @@
     height: auto;
     margin-right: 20px;
   } */
-  .imageThumnailOnBlogList {
+  .imageThumnailOnBlogList img {
     max-width: 300px;
     height: 188px;
     margin-right: 20px;
