@@ -192,7 +192,7 @@
     margin: 0px 16px;
     width: 28%;
     max-width: 260px;
-    border: 1px var(--color-blue) solid;
+    /* border: 1px var(--color-blue) solid; */
 }
 
 /* CSS chỉ áp dụng cho class b1log trong phần BLOG */

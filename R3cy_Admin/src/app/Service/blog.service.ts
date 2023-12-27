@@ -18,6 +18,10 @@ export class BlogService {
     createBlog(formData: FormData): Observable<any> {
       return this.http.post<any>(`${this.apiUrl}/createBlog`, formData);
     }
+
+    updateBlog(blogId: string, blogData: any): Observable<any> {
+      return this.http.patch(`${this.apiUrl}/blog/${blogId}`, blogData);
+    }
     
     // Phương thức xóa blog
     deleteBlog(blogId: string): Observable<any> {
@@ -30,9 +34,22 @@ export class BlogService {
       catchError(this.handleError)
     );
   }
+  
   private handleError(error: any) {
     console.error('Có lỗi xảy ra:', error);
     return throwError('Có lỗi xảy ra, vui lòng thử lại sau.'); 
   }
+
+  // Phương thức để lấy thông tin blog theo ID
+getBlogById(blogId: string): Observable<any> {
+  return this.http.get(`${this.apiUrl}/blog/${blogId}`).pipe(
+    catchError(this.handleError)
+  );
+}
+// Phương thức cập nhật blog
+  // updateBlog(blogId: string, formData: FormData): Observable<any> {
+  //   return this.http.patch(`${this.apiUrl}/blog/${blogId}`, formData);
+  // }
+
   
 }

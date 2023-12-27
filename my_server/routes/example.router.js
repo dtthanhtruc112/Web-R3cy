@@ -325,6 +325,37 @@ router.post('/createBlog', upload.single('thumbnail'), async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// Router để cập nhật blog
+router.patch('/blog/:id', upload.single('thumbnail'), async (req, res) => {
+  try {
+    const blogId = req.params.id;
+
+    // Kiểm tra xem có tệp ảnh mới được tải lên không
+    if (req.file && req.file.path) {
+      // Nếu có, cập nhật thông tin blog và thumbnail
+      const updatedBlog = await Blog.findByIdAndUpdate(blogId, {
+        title: req.body.title,
+        author: req.body.author,
+        content: req.body.content,
+        thumbnail: req.file.filename,
+      }, { new: true });
+
+      res.json(updatedBlog);
+    } else {
+      // Nếu không có ảnh mới, chỉ cập nhật thông tin blog
+      const updatedBlog = await Blog.findByIdAndUpdate(blogId, {
+        title: req.body.title,
+        author: req.body.author,
+        content: req.body.content,
+      }, { new: true });
+
+      res.json(updatedBlog);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //xử lý hình ảnh
 router.get('/image/:id', cors(), (req, res) => {
@@ -374,6 +405,9 @@ router.get('/blog/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+  
 
 
 // Middleware để xóa ảnh

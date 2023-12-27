@@ -11,7 +11,7 @@ export class CartItem {
 }
 
 export class CartItemDetailed {
-    product?: any;
+    productt?: any;
     quantity?: number;
 
 }

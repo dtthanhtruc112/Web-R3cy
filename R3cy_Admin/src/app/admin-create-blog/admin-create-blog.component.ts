@@ -4,7 +4,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { BlogService } from '../Service/blog.service';
 import { Router } from '@angular/router';
 import * as imageSize from 'image-size';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-admin-create-blog',
   templateUrl: './admin-create-blog.component.html',
@@ -14,6 +14,8 @@ export class AdminCreateBlogComponent {
   @ViewChild('myfile') fileInput!: ElementRef;
   @ViewChild('selectedImage') selectedImage!: ElementRef;
 
+  isEdit: boolean = false;
+  blogId: string = '';
   titleInputValue: string = '';
   blogContent: string = '';
   imageSrc: string = '';
@@ -28,7 +30,7 @@ export class AdminCreateBlogComponent {
     sanitize: false,
   };
 
-  constructor(private blogService: BlogService, private router: Router) {}
+  constructor(private blogService: BlogService, private router: Router, private route: ActivatedRoute) {}
 
   private convertImageToBlob(file: File): Promise<Blob> {
     return new Promise((resolve, reject) => {
@@ -41,6 +43,31 @@ export class AdminCreateBlogComponent {
     });
   }
 
+  async ngOnInit(): Promise<void> {
+    this.route.queryParams.subscribe(params => {
+      this.isEdit = params['edit'] === 'true';
+      this.blogId = params['id'] || '';
+      if (this.isEdit && this.blogId) {
+        this.getBlogForEdit(this.blogId);
+      }
+    });
+  }
+
+  getBlogForEdit(blogId: string): void {
+    this.blogService.getBlogById(blogId).subscribe(
+      (response) => {
+        const blogData = response;
+        this.titleInputValue = blogData.title;
+        this.authorInputValue = blogData.author;
+        this.blogContent = blogData.content;
+        this.imageSrc = `http://localhost:3000/image/${blogData.thumbnail}`;
+      },
+      (error) => {
+        console.error('Đã xảy ra lỗi khi lấy dữ liệu blog:', error);
+      }
+    );
+  }
+
   async displayImage(event: any): Promise<void> {
     const input = this.fileInput?.nativeElement as HTMLInputElement;
     const image = this.selectedImage?.nativeElement as HTMLImageElement;
@@ -49,42 +76,57 @@ export class AdminCreateBlogComponent {
       const blob = await this.convertImageToBlob(input.files[0]);
       this.imageSrc = URL.createObjectURL(blob);
       image.src = this.imageSrc;
-      console.log('Blob:', blob);
     }
   }
-
-  
 
   createBlog(): void {
     if (!this.imageSrc) {
       console.error('Hình ảnh chưa được chọn.');
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('title', this.titleInputValue);
     formData.append('author', this.authorInputValue);
     formData.append('content', this.blogContent);
-    formData.append('thumbnail', this.fileInput.nativeElement.files[0]); // Sử dụng input.files[0] trực tiếp
-  
-    this.blogService.createBlog(formData).subscribe(
-      (response) => {
-        console.log('Tạo blog thành công', response);
-        alert('Blog đã được tạo thành công!');
-        this.titleInputValue = '';
-        this.authorInputValue = '';
-        this.blogContent = '';
-        this.imageSrc = '';
-      },
-      (error) => {
-        console.error('Đã xảy ra lỗi khi tạo blog:', error);
-        if (error instanceof HttpErrorResponse) {
-          console.error('Lỗi từ server:', error);
-          alert('Đã xảy ra lỗi khi tạo blog: ' + (error.error.message || 'Lỗi không xác định'));
-        } else {
-          alert('Đã xảy ra lỗi khi tạo blog. Vui lòng thử lại!');
+    formData.append('thumbnail', this.fileInput.nativeElement.files[0]);
+
+    if (this.isEdit && this.blogId) {
+      this.blogService.updateBlog(this.blogId, formData).subscribe(
+        (response) => {
+          console.log('Cập nhật blog thành công', response);
+          alert('Blog đã được cập nhật thành công!');
+          this.router.navigate(['/blog']);
+        },
+        (error) => {
+          console.error('Đã xảy ra lỗi khi cập nhật blog:', error);
+          this.handleBlogError(error);
         }
-      }
-    );
+      );
+    } else {
+      this.blogService.createBlog(formData).subscribe(
+        (response) => {
+          console.log('Tạo blog thành công', response);
+          alert('Blog đã được tạo thành công!');
+          this.titleInputValue = '';
+          this.authorInputValue = '';
+          this.blogContent = '';
+          this.imageSrc = '';
+        },
+        (error) => {
+          console.error('Đã xảy ra lỗi khi tạo blog:', error);
+          this.handleBlogError(error);
+        }
+      );
+    }
+  }
+
+  private handleBlogError(error: any): void {
+    if (error instanceof HttpErrorResponse) {
+      console.error('Lỗi từ server:', error);
+      alert('Đã xảy ra lỗi khi tạo blog: ' + (error.error.message || 'Lỗi không xác định'));
+    } else {
+      alert('Đã xảy ra lỗi khi tạo blog. Vui lòng thử lại!');
+    }
   }
 }

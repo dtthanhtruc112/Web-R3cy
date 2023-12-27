@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, filter, map, of, retry, tap } from 'rxjs';
 import { product } from '../Interface/product';
 
 @Injectable({
@@ -8,9 +8,9 @@ import { product } from '../Interface/product';
 })
 export class ProductService {
 
-  getProduct(id: string) {
-    throw new Error('Method not implemented.');
-  }
+  // getProduct(id: string) {
+  //   throw new Error('Method not implemented.');
+  // }
 
   // getProduct(id: string): Observable<product> { // <-- Trả về Observable
   //   return this._http.get<any>(`/api/products/${id}`); // Ví dụ gọi API
@@ -18,9 +18,27 @@ export class ProductService {
 
   
 
+
+  // _url: string = "./assets/data/product.json";
+
   _url: string = "http://localhost:3000/product";
 
   constructor(private _http: HttpClient) { }
+
+
+  getProduct(id: string): Observable<product> {
+    const url = `${this._url}/${id}`;
+    return this._http.get<product>(url);
+  }
+
+
+
+
+
+  handleError(handleError: any): import("rxjs").OperatorFunction<product[], any> {
+    throw new Error('Method not implemented.');
+  }
+
 
   getData(): Observable<product[]> {
     return this._http.get<product[]>(this._url);
