@@ -6,6 +6,7 @@ const User = require('../models/user')
 const Blog = require('../models/blog')
 const AccountCustomer = require('../models/accountcustomer.js')
 const CustomProduct = require('../models/customproduct.js')
+const Product = require('../models/product.js')
 const bcrypt = require('bcrypt');
 
 const cors = require('cors');
@@ -25,8 +26,56 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.json({ limit: '10mb' })); // Hoặc giá trị lớn hơn tùy vào nhu cầu của bạn
 router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
+// Router lấy thông tin sản phẩm
+router.get('/product', cors(), (req, res) =>
+    Product.find()
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
 
+//Router lấy thông tin sản phẩm theo từng phân loại
+router.get('/product/gia-dung', cors(), (req, res) =>
+    Product.find({category1: "Gia dụng"})
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
 
+router.get('/product/trang-tri', cors(), (req, res) =>
+    Product.find({category1: "Trang trí"})
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
+
+router.get('/product/phu-kien', cors(), (req, res) =>
+    Product.find({category1: "Phụ kiện"})
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
+
+//Router lấy sản phẩm theo từng mức giá
+router.get('/product/duoi-100', cors(), (req, res) =>
+    Product.find({price: { $lt: 100 }})
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
+
+router.get('/product/100-den-200', cors(), (req, res) =>
+    Product.find({price: { $gte: 100, $lte: 200}})
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
+
+router.get('/product/200-den-300', cors(), (req, res) =>
+    Product.find({price: { $gte: 200, $lte: 300}})
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
+
+router.get('/product/tren-300', cors(), (req, res) =>
+    Product.find({price: { $gt: 300 }})
+        .then(data => { res.json(data) })
+        .catch(error => { res.status(500).json({ err: error.mesage }) }
+        ));
 
 
 router.get('/orders', async (req, res) => {

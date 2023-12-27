@@ -18,7 +18,7 @@ export class ProductService {
 
   
 
-  _url: string = "./assets/data/product.json";
+  _url: string = "http://localhost:3000/product";
 
   constructor(private _http: HttpClient) { }
 
@@ -30,6 +30,11 @@ export class ProductService {
     return this._http.get<product[]>(this._url).pipe(
       map(products => products.find(product => product.id === id) ?? undefined)
     );
+  }
+
+  getDataByCategory(category: string): Observable<product[]> {
+    const url = `${this._url}/${category}`;
+    return this._http.get<product[]>(url);
   }
 
   // getProductById(id: number): Observable<product | undefined> {

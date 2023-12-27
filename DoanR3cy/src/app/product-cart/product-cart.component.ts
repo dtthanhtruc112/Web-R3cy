@@ -56,11 +56,11 @@ export class ProductCartComponent implements OnInit, OnDestroy {
     //   this.cartCount = this.cartItemsDetailed.length;
     // });
 
-    this.cartService.cart$.pipe().subscribe((respCart) => {
-      respCart.items?.forEach((cartItem) => {
-        this.productService.getProduct(cartItem.id).subscribe(product => {})
-      })
-    })
+    // this.cartService.cart$.pipe().subscribe((respCart) => {
+    //   respCart.items?.forEach((cartItem) => {
+    //     this.productService.getProduct(cartItem.id).subscribe(product => {})
+    //   })
+    // })
   }
 
     
