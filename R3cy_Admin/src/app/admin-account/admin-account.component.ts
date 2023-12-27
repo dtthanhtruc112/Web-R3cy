@@ -112,6 +112,19 @@ export class AdminAccountComponent implements OnInit {
     }
   }
 
+  isValidPassword: boolean =true;
+  checkPassword(): void {
+    // Kiểm tra mật khẩu có ít nhất 6 ký tự, chứa ít nhất một chữ cái, một số và một ký tự đặc biệt
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+    if (this.account.password.trim().length === 0) {
+      this.isValidPassword = true;
+      alert('Vui lòng nhập mật khẩu!');
+    } else if (!passwordRegex.test(this.account.password)) {
+      alert('Mật khẩu phải có ít nhất 6 ký tự, chứa ít nhất một chữ cái, một số và một ký tự đặc biệt!');
+    }
+  }
+
   handleAddAdmin(): void {
     console.log(this.account)
     if (!this.isPhoneNumberValid) {
@@ -129,8 +142,8 @@ export class AdminAccountComponent implements OnInit {
       this._service.postAccount(this.account).subscribe({
         next: (data) => {
           this.account = data;
-          alert('Đăng ký thành công');
-          location.reload()
+          alert('Đăng ký tài khoản admin thành công!');
+          this.getAdminAccounts(); // Lấy dữ liệu mới sau khi cập nhật
         },
         error: (err) => {
           this.errMessage = err;

@@ -113,13 +113,18 @@ span{
     height: 40px;
     border-radius: 5px;
     border-color: var(--color-blue);
-    border-width: 3px;
+    border-width: 1px;
     border-style: solid;
     border-radius: 10px;
     color: var(--color-blue);
     font-weight: bold;
     margin-top: 10px;
     background-color: transparent;
+}
+
+input, button {
+    font-family: Inter-Regular;
+    font-size: 16px;
 }
 
 @media screen and (max-width: 768px) {
