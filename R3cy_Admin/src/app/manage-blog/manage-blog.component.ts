@@ -43,27 +43,18 @@ export class ManageBlogComponent implements OnInit  {
 
   // Thêm phương thức xóa blog
   deleteBlog(blogId: string) {
-    this.blogService.deleteBlog(blogId).subscribe(
-      (response) => {
-        // Nếu xóa thành công, cập nhật danh sách bài viết
-        this.getAllBlogs();
-      },
-      (error) => {
-        console.error('Đã xảy ra lỗi khi xóa blog:', error);
-      }
-    );
-  }
-  // Thêm phương thức xóa hình ảnh
-  deleteImage(blogId: string) {
-    this.blogService.deleteImage(blogId).subscribe(
-      (response) => {
-        console.log('Đã xóa hình ảnh thành công');
-      },
-      (error) => {
-        console.error('Đã xảy ra lỗi khi xóa hình ảnh:', error);
-      }
-    );
-  }
+    const confirmDelete = window.confirm('Bạn chắc chắn muốn xóa bài viết này?');
 
-
+    if (confirmDelete) {
+      this.blogService.deleteBlog(blogId).subscribe(
+        (response) => {
+          // Nếu xóa thành công, cập nhật danh sách bài viết
+          this.getAllBlogs();
+        },
+        (error) => {
+          console.error('Đã xảy ra lỗi khi xóa blog:', error);
+        }
+      );
+    }
+  }
 }

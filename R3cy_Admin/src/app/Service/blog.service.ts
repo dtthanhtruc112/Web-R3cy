@@ -23,9 +23,6 @@ export class BlogService {
     deleteBlog(blogId: string): Observable<any> {
       return this.http.delete(`${this.apiUrl}/blog/${blogId}`);
     }
-    deleteImage(blogId: string): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/blog/${blogId}`);
-    }
     // Lấy tất cả các bài viết
   getAllBlogs(): Observable<any> {
     return this.http.get(`${this.apiUrl}/blog`).pipe(
