@@ -59,11 +59,6 @@ import { CartService } from './Service/cart.service';
     PageNotFoundComponent,
     ProductCheckoutComponent,
     CartIconComponent,
-<<<<<<< HEAD
-=======
-    UsersFormComponent,
-
->>>>>>> 711f25f31a16c8556037e87f7e40009267d52a20
   ],
   imports: [
     BrowserModule,

@@ -295,8 +295,8 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 
 const path = require('path');
 const fs = require('fs');
-const multer = require('multer');
-const storage = multer.diskStorage({
+// const multer = require('multer');
+const storages = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/'); 
   },
@@ -304,8 +304,8 @@ const storage = multer.diskStorage({
     cb(null, file.originalname); // Giữ nguyên tên file
   }
 });
-const upload = multer({ storage: storage });
-router.post('/createBlog', upload.single('thumbnail'), async (req, res) => {
+const uploads = multer({ storages: storages });
+router.post('/createBlog', uploads.single('thumbnail'), async (req, res) => {
   try {
     // Kiểm tra xem có tệp nào được tải lên không
     if (req.file && req.file.path) {
