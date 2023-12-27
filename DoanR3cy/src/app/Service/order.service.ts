@@ -120,5 +120,10 @@ export class OrderService {
 createOrder(orders: Orders) : Observable<Orders> {
   return this._http.post<Orders>(this._url, orders);
 }
+
+
+// apiURLProducts = environment.apiUrl + 'products'
+
+
 }
 

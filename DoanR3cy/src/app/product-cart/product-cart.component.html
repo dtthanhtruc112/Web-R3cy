@@ -1,10 +1,4 @@
-<!-- <!DOCTYPE html>
-<html class="no-js" lang="zxx">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Product Cart - R3cy</title> -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 
@@ -25,7 +19,7 @@
         <!--== Start Product Area Wrapper ==-->
         <section class="section-space">
             <div class="container">
-                <h2>GIỎ HÀNG</h2>
+                <h3>GIỎ HÀNG</h3>
                 <div class="shopping-cart-form table-responsive">
                     <form action="#" method="post">
                         <table class="table text-center">
@@ -40,35 +34,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr class="tbody-item" *ngFor="let item of cartItems">
-                                    <td class="product-remove">
-                                        <a class="remove" (click)="removeItem(item)">×</a>
-                                        <a class="remove" (click)="deleteCartItem(item)">×</a>
-                                    </td>
-                                    <td class="product-thumbnail">
-                                        <div class="thumb">
-                                            <img src="{{item.img1}}" alt="" width="100" height="100"
-                                                alt="Image-Loading">
-                                        </div>
-                                    </td>
-                                    <td class="product-name">
-                                        <a class="title" href="">{{item.name}}</a><br>
-                                        <a class="type minitext">Phân loại: {{selectedOption}}</a>
-                                    </td>
-                                    <td class="product-price">
-                                        <span class="price">{{item.price}}.000 đ</span>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" class="quantity" title="Quantity" id="show" min="1"
-                                                max="1000" name="show" value="1" type="number" onchange="loadJson()">
-                                        </div>
-
-                                    </td>
-                                    <td class="product-subtotal">
-                                        <span class="price">{{ calculateSubtotal(item) }}.000 đ</span>
-                                    </td>
-                                </tr> -->
 
                                 <tr class="tbody-item" *ngFor="let cartItem of cartItemsDetailed">
                                     <td class="product-remove">
@@ -76,42 +41,38 @@
                                     </td>
                                     <td class="product-thumbnail">
                                         <div class="thumb">
-                                            <img src="{{cartItem.product.img1}}" alt="" width="100" height="100"
+                                            <img src="{{cartItem.productt.img1}}" alt="" width="100" height="100"
                                                 alt="Image-Loading">
 
 
                                         </div>
                                     </td>
                                     <td class="product-name">
-                                        <a class="title" href="">{{cartItem.product.name}}</a><br>
+                                        <a class="title" href="">{{cartItem.productt.name}}</a><br>
                                         <a class="type minitext">Phân loại: {{selectedOption}}</a>
                                     </td>
                                     <td class="product-price">
-                                        <span class="price">{{cartItem.product.price}}.000 đ</span>
+                                        <span class="price">{{cartItem.productt.price}}.000 đ</span>
                                     </td>
                                     <td class="product-quantity">
                                         <div class="pro-qty">
-                                            <!-- <input type="text" 
-                                            class="quantity"
-                                             title="Quantity" 
-                                             id="show" 
-                                             min="1"
-                                            max="1000" 
-                                            name="show" 
-                                            value="1" 
-                                            type="number" > -->
 
-                                            <p-inputNumber mode="decimal" [showButtons]="true"
-                                                [inputId]="cartItem.product.id" [min]="1" [max]="1000" ,
+                                            <p-inputNumber mode="decimal" 
+                                            [showButtons]="true"
+                                                [inputId]="cartItem.productt.id" 
+                                                [min]="1" [max]="1000" 
+                                                [type]="'number'"
                                                 [(ngModel)]="cartItem.quantity"
                                                 (onInput)="updateCartItemQuantity($event, cartItem )">
                                             </p-inputNumber>
                                         </div>
 
                                     </td>
+
                                     <td class="product-subtotal">
                                         <span class="">{{ calculateSubtotal(cartItem) }}.000 đ</span>
                                     </td>
+                                  
 
                                     <!-- <td class="product-subtotal">
                                         <span class="subtotal">{{ cartItem.product.price * cartItem.quantity}}.000 đ</span>
@@ -180,9 +141,3 @@
 
     </main>
 </div>
-<!--== Wrapper End ==-->
-
-
-<!-- </body> -->
-
-<!-- </html> -->
