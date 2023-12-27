@@ -236,24 +236,59 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 
 // BLOG 
 
-// API để tạo blog trong admin
-router.post('/createBlog', async (req, res) => {
-    try {
+
+const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); 
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Giữ nguyên tên file
+  }
+});
+const upload = multer({ storage: storage });
+router.post('/createBlog', upload.single('thumbnail'), async (req, res) => {
+  try {
+    // Kiểm tra xem có tệp nào được tải lên không
+    if (req.file && req.file.path) {
       const newBlog = new Blog({
-        blogid: req.body.blogid,
         title: req.body.title,
         author: req.body.author,
         content: req.body.content,
-        thumbnail: req.body.thumbnail,
-        
+        thumbnail: req.file.filename,
       });
-  
+
       const savedBlog = await newBlog.save();
       res.json(savedBlog);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } else {
+      res.status(400).json({ error: 'Không có tệp nào được tải lên.' });
     }
-  });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//xử lý hình ảnh
+router.get('/image/:id', cors(), (req, res) => {
+  try {
+    const id = req.params.id;
+    const imagePath = path.join(__dirname, 'uploads', id);
+
+    // Kiểm tra xem tệp tồn tại không trước khi gửi nó
+    if (fs.existsSync(imagePath)) {
+      res.sendFile(imagePath);
+    } else {
+      res.status(404).json({ error: 'Không tìm thấy hình ảnh' });
+    }
+  } catch (error) {
+    console.error('Error in /image/:id endpoint:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // API để lấy tất cả bài viết
 router.get('/blog', async (req, res) => {
@@ -264,6 +299,7 @@ router.get('/blog', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
+
 // API để lấy các bài viết mới nhất
 router.get('/blog/latestBlogs', async (req, res) => {
   try {

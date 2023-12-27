@@ -31,7 +31,6 @@ import { CartIconComponent } from './cart-icon/cart-icon.component';
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +53,6 @@ import { CartIconComponent } from './cart-icon/cart-icon.component';
     PageNotFoundComponent,
     ProductCheckoutComponent,
     CartIconComponent,
-
   ],
   imports: [
     BrowserModule,
