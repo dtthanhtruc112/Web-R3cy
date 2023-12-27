@@ -22,23 +22,14 @@
                 <tbody>
                     <tr *ngFor="let blog of blogs">
                         <td class="titleLine">
-                          <!-- <img [src]="blog.thumbnail" alt="" class="thumb"> -->
-                          <img [src]="blog.thumbnail | safeHtml" alt="" class="thumb">
+                          <img [src]="'http://localhost:3000/image/' + blog.thumbnail" alt="" class="thumb">
                           <span class="TiltleBlog">{{ blog.title }}</span>
                         </td>
                         <td>{{ blog.date | date }}</td>
                         <td>{{ blog.author }}</td>
-                        <td><i class="fa-solid fa-trash"></i></td>
+                        <!-- <td><i class="fa-solid fa-trash"></i></td> -->
+                        <td><i class="fa-solid fa-trash" (click)="deleteBlog(blog._id)"></i></td>
                       </tr>
-                    <!-- <tr>
-                        <td class="titleLine">
-                            <img src="../../assets/Image/ImageForBlog/thumbnail/1.png" alt="" class="thumb">
-                            <span class="TiltleBlog">Tiêu đề bài viết 1 </span>
-                        </td>
-                        <td>11/11/2023</td>
-                        <td>R3cy</td>
-                        <td><i class="fa-solid fa-trash"></i></td>
-                    </tr> -->
                 </tbody>
                 
             </table>

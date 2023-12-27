@@ -73,6 +73,19 @@ export class ProductCartComponent implements OnInit, OnDestroy {
       }})
     })
   } 
+   
+
+    // this.cartService.cart$.pipe(takeUntil(this.endSubs$)).subscribe(respCart => {
+    //   this.cartItemsDetailed = respCart?.items ?? [];  // Gán sản phẩm vào cartItemsDetailed
+    //   this.cartCount = this.cartItemsDetailed.length;
+    // });
+
+    // this.cartService.cart$.pipe().subscribe((respCart) => {
+    //   respCart.items?.forEach((cartItem) => {
+    //     this.productService.getProduct(cartItem.id).subscribe(product => {})
+    //   })
+    // })
+  
 
 
 

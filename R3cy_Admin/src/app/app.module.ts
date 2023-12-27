@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { SafeHtmlPipe } from './safeHtml.pipe';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminCreateBlogComponent } from './admin-create-blog/admin-create-blog.component';
@@ -17,6 +18,7 @@ import { AdminSanphamComponent } from './admin-sanpham/admin-sanpham.component';
 import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.component';
 import { AdminCustomProductComponent } from './admin-custom-product/admin-custom-product.component';
 import { AdminLoginComponent } from './login/login.component';
+import { AdminAccountComponent } from './admin-account/admin-account.component';
 
 import { AuthGuard } from './Service/auth.guard';
 import { AuthService } from './Service/auth.service';
@@ -33,6 +35,7 @@ import { AuthService } from './Service/auth.service';
     AdminMagiamgiaComponent,
     AdminCustomProductComponent,
     AdminLoginComponent,
+    AdminAccountComponent,
     SafeHtmlPipe
   ],
   imports: [

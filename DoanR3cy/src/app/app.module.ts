@@ -36,7 +36,6 @@ import { CartService } from './Service/cart.service';
 
 
 
-
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
@@ -60,8 +59,6 @@ import { CartService } from './Service/cart.service';
     PageNotFoundComponent,
     ProductCheckoutComponent,
     CartIconComponent,
-    UsersFormComponent,
-
   ],
   imports: [
     BrowserModule,
