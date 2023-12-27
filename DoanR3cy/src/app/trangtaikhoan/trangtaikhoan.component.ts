@@ -6,6 +6,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../Service/auth.service';
+import { DiscountService } from '../Service/discount.service';
 
 
 
@@ -31,23 +32,6 @@ export class TrangtaikhoanComponent implements OnInit {
       this.selectedbar = params['id'] || 'hoso_content'; // Set a default value if 'id' is not present
     });
   }
-
-
-
-  // id: any = "overview/";
-  // tabChange(ids:any){
-  //   this.id= ids;
-  //   console.log(this.id)
-  // }
-
-  // constructor(private route: ActivatedRoute) { }
-
-  // // điều hướng routerLink đến Id thông tin
-  //   ngOnInit() {
-  //     this.route.params.subscribe(params => {
-  //       this.id = params['id'];
-  //     });
-  //   }
 
   // Chỉnh sửa hồ sơ
   chinhsua(inputId: string): void {
@@ -110,6 +94,9 @@ export class TrangtaikhoanComponent implements OnInit {
     this.showCancelPopup = false
   }
 
+  discountCode: string = ''; // Property to bind to the input field
+  discounts: any[] = []; // Property to store the fetched discount information
+
   saveData(): void {
     // alert('Đã lưu thông tin');
     // Hiển thị overlay
@@ -123,6 +110,19 @@ export class TrangtaikhoanComponent implements OnInit {
       this.closePopup();
       this.cdr.detectChanges(); // Manually trigger change detection
     }, 3000);
+
+    this.discountService.getDiscountByCode(this.discountCode)
+      .subscribe(
+        (data) => {
+          // Add the new discount to the array
+          this.discounts.push(data);
+          // Handle data or update your component as needed
+        },
+        (error) => {
+          console.error('Error fetching discount:', error);
+          // Handle error as needed
+        }
+      );
   }
 
 
@@ -205,7 +205,7 @@ export class TrangtaikhoanComponent implements OnInit {
   userAddresses: any[] = [];
 
   constructor(private _userService: UsersService,
-    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private authService: AuthService,
+    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private authService: AuthService, private discountService: DiscountService
   ) { }
 
 
@@ -394,4 +394,7 @@ export class TrangtaikhoanComponent implements OnInit {
     });
 
   }
+
+ 
+
 }

@@ -119,23 +119,16 @@
                     <hr>
                     <div class="voucher_nhapma">
                         <span class="p">Nhập mã Voucher:</span>
-                        <input type="text" id="voucher" name="voucher">
+                        <input type="text" id="voucher" name="voucher" [(ngModel)]="discountCode">
                         <button type="button" class="button p" (click)="saveData()">Lưu</button>
 
                     </div>
                     <div class="voucher_container">
-                        <div class="voucher_item">
+                        <div class="voucher_item"  *ngFor="let discount of discounts">
                             <img src="../../assets/img/voucher.png" alt="">
-                            <span class="minitext" id="hoso_change" routerLink="/product-cart" routerLinkActive="active">Dùng ngay</span>
-                            <p class="minitext" >Giảm 8% <br>
-                                Đơn tối thiểu 500k Giảm tối đa 30k</p>
-                            <p class="minitext" >Sắp hết hạn: Còn 2 ngày <span class="minitext" >Điều kiện</span></p>
-                        </div>
-                        <div class="voucher_item">
-                            <img src="../../assets/img/voucher.png" alt="">
-                            <span class="minitext"  id="hoso_change">Dùng ngay</span>
-                            <p class="minitext" >Giảm 8% <br>
-                                Đơn tối thiểu 500k Giảm tối đa 30k</p>
+                            <span class="minitext" id="hoso_change" routerLink="/cart" routerLinkActive="active">Dùng ngay</span>
+                            <p class="minitext" >{{discount.code}} <br>
+                                {{discount.description}}</p>
                             <p class="minitext" >Sắp hết hạn: Còn 2 ngày <span class="minitext" >Điều kiện</span></p>
                         </div>
                     </div>
@@ -152,8 +145,8 @@
                             [ngClass]="{ 'selected': selectedStatus=== 'Tất cả đơn hàng' }">Tất cả đơn hàng</p>
                         <p class="p" (click)="changeStatusFilter('Chờ xử lí')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Chờ xử lí' }">Chờ xử lí</p>
-                        <p class="p" (click)="changeStatusFilter('Chờ lấy hàng')"
-                            [ngClass]="{ 'selected': selectedStatus=== 'Chờ lấy hàng' }">Chờ lấy hàng</p>
+                        <!-- <p class="p" (click)="changeStatusFilter('Chờ lấy hàng')"
+                            [ngClass]="{ 'selected': selectedStatus=== 'Chờ lấy hàng' }">Chờ lấy hàng</p> -->
                         <p class="p" (click)="changeStatusFilter('Đang giao')"
                             [ngClass]="{ 'selected': selectedStatus=== 'Đang giao' }">Đang giao</p>
                         <p class="p" (click)="changeStatusFilter('Đã giao')"
@@ -193,7 +186,7 @@
                                 <button class="p" (click)="confirmCancel(order)">Xác nhận</button>
                             </div>
                               
-                              <button *ngIf="order.order_status !== 'Chờ xử lí'" class="button p" type="button" routerLink="/product-cart" routerLinkActive="active">
+                              <button *ngIf="order.order_status !== 'Chờ xử lí'" class="button p" type="button" routerLink="/cart" routerLinkActive="active">
                                 Mua lại
                               </button>
                             <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>

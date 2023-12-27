@@ -1,5 +1,5 @@
 export interface Discount {
-    Code: String,
+    code: String,
     title: String,
     description: String,
     status: String,
