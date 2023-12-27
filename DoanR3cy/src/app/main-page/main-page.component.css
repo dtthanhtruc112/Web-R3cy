@@ -1,269 +1,11 @@
-/* div{
-    font-family: Inter-Regular;
-}
-H2{
-    margin: 20PX 0PX;
-}
 
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    color: var(--color-darkBlue);
-    line-height: 1.7;
-}
-.slogan > .h4{
-    margin-top: 30px;
-}
-.containerBanner img{
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-.containerContent{
-    margin: 0px 30px;
-}
-
-.Blog2NoiBat{
-    display: flex;
-    margin-left: 0;
-    margin-right: 0;
-    width: 628px;
-    height: 368px;
-    object-fit: cover;
-
-}
-.ImgBlogLeft img{
-    margin-left: 80px;
-    margin-right: 12px;
-}
-.ImgBlogRight img{
-    margin-left: 12px;
-    margin-right: 80px;
-}
-.text-center{
-    text-align: center;
-}
-.Welcome p{
-    max-width: 80%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.slogan {
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.box-slogan{
-    background-color: var(--color-lightblue);
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-}
-
-.slogan-img{
-    padding-top: 30%;
-    background: url('../../assets/about-us/about-pdt.png') top center/ cover no-repeat;
-    flex: 1;
-    width: 100%;
-}
-
-.slogan-txt {
-    flex: 1;
-    padding-left: 80px;
-    width: 100%;
-}
-.recycleProcess{
-    max-width: 100%;
-    margin: 0;
-}
-.containerimg{
-    display: flex;
-    margin: 0 30px;
-    width: 100%;
-}
-.imgRecycle img,
-.imgRecycle p{
-    width: 100%;
-    height: auto;
-    text-align: center;
-}
-
-.blogs{
-    display: flex;
-}
-
-
-.containerBlog .b1log img,
-.containerBlog .b1log p {
-    width: 260px;
-    height: auto;
-    object-fit: cover;
-    margin: 8px 20px;
-}
-
-.FAQs{
-    width: 70%;
-}
-.qa-section {
-    border-top: 1px solid var(--color-blue);
-    width: 80%;
-    margin: auto;
-}
-
-.question {
-    border-bottom: 1px solid var(--color-blue);
-    border-top: 1px solid var(--color-blue);
-    padding: 10px;
-    transition: max-height 0.5s ease;
-    padding: 20PX;
-}
-.question3{
-    border-bottom: none;
-}
-.question1{
-    border-top: none;
-}
-
-.question-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.question-header a{
-    font-size: 16px;
-}
-
-.toggleBtn {
-    color: #31B9F4;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-}
-
-.toggleBtn.active a {
-    transform: rotate(180deg);
-}
-
-@media screen and (max-width:1440px){
-    .containerBlog img, .containerBlog p{
-        display: flex;
-        width: 100%;
-        flex-wrap: wrap;
-        margin: 0px;
-    }
-    .containerimg img,  .containerimg p{
-        display: flex;
-        width: 100%;
-        flex-wrap: wrap;
-        margin: 0px;
-    }
-    .imgRecycle{
-        width: 300px;
-        margin: 10px;
-    }
-}
-
-@media screen and (max-width:768px){
-    .box-slogan, .box-collect, .box-ship {
-        display: flex;
-        flex-direction: column;
-        height: 100%
-    }
-
-    .box-clean{
-        display: flex;
-        flex-direction: column-reverse;
-        height: 100%
-    }
-
-    .slogan-img,
-    .collect-img,
-    .clean-img
-    {
-        padding-top: 100%;
-        margin-bottom: 30px;
-    }
-
-    .slogan-txt,
-    .collect-txt,
-    .clean-txt
-    {
-        padding-left: 15px;
-        padding-right: 15px;
-        margin-bottom: 30px;
-        padding-right: 0px;
-    }
-
-    .process-container{
-        margin-bottom: 60px;
-    }
-
-    .process-list{
-        display: none
-    }
-
-    .clean-txt > .h4{
-        margin-bottom: 0px;
-    }
-    
-    .ship-txtr{
-        display: none
-    }
-
-    .ship-txtl{
-        margin: 0px;
-        padding: 30px 15px 30px 15px;
-    }
-    .FAQs{
-        width: 100%;
-    }
-    .imgRecycle2{
-        margin: 0 20px;
-    
-    }
-    .recycleProcess{
-        max-width: 100%;
-        margin: 0;
-    }
-    .containerimg img,  .containerimg p{
-        display: flex;
-        width: 100%;
-        flex-wrap: wrap;
-    }
-    .imgRecycle{
-        width: 200px;
-        margin: 10px;
-    }
-}
-
-@media screen and (max-width:480px){
-    .slogan{
-        max-width: 100%;
-    }
-    .containerimg img,  .containerimg p{
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-    }
-    .imgRecycle img{
-        width: 300px;
-        margin: 20px;
-
-    }
-}
- */
  div {
     font-family: Inter-Regular;
 }
 
-H2 {
+.containerAll H2 {
     margin: 20PX 0PX;
+    font-weight: bold;
 }
 
 * {
@@ -277,6 +19,68 @@ H2 {
 .containerAll{
     margin-top: 50px;
 }
+.containerProduct{
+    text-align: center;
+}
+/* .container1 {
+    text-align: center;
+} */
+
+.product-show{
+    border: 1px solid #31B9F4;
+    background-color: #DDF5FF;
+    border-radius: 10px;
+    width: 28%;
+    max-width: 250px;
+    display: inline-block;
+    margin: 10px;
+}
+.product-show img{
+    width: 100%;
+    height: 250px;
+    border: 2px solid #31B9F4;
+    border-radius: 10px;
+}
+
+.product-show>p{
+    width: 100%;
+    margin: 10px 0;
+}
+
+.product-show>.name{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #31B9F4;
+    margin-bottom: 0;
+    
+}
+
+.pricecontainer{
+    padding: 0 20px;
+}
+.oldprice{
+    color: gray;
+    font-size: 13px;
+    text-decoration: line-through;
+    display: inline;
+    font-style: italic;
+    text-align: right;
+}
+
+.product-show>.pricecontainer>.price{
+    display: inline-block;
+    width: 50%;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.product-show>.pricecontainer>.oldprice{
+    display: inline-block;
+    width: 50%;
+}
+
 
 .slogan > .h4 {
     margin-top: 30px;
@@ -313,7 +117,11 @@ H2 {
 .text-center {
     text-align: center;
 }
-
+.Welcome{
+    padding: 20px;
+    /* border: 1px solid var(--color-lightblue); */
+    width: 100%;
+}
 .Welcome p {
     max-width: 80%;
     text-align: center;
@@ -357,14 +165,9 @@ H2 {
     margin: 0 30px;
     width: 100%;
     flex-wrap: wrap; /* Added for responsiveness */
+    text-align: center;
 }
 
-/* .imgRecycle img,
-.imgRecycle p {
-    width: 100%;
-    height: auto;
-    text-align: center;
-} */
 .containerimg img,
 .containerimg p {
     display: flex;
@@ -377,6 +180,9 @@ H2 {
     width: 300px;
     margin: 30px;
 }
+.containerBlog{
+    /* border: 1px var(--color-blue) solid; */
+}
 .blogs {
     display: flex;
     flex-wrap: wrap;
@@ -384,7 +190,9 @@ H2 {
 }
 .b1log{
     margin: 0px 16px;
-    width: 260px;
+    width: 28%;
+    max-width: 260px;
+    border: 1px var(--color-blue) solid;
 }
 
 /* CSS chỉ áp dụng cho class b1log trong phần BLOG */
