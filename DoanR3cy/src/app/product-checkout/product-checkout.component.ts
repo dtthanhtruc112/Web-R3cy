@@ -95,6 +95,7 @@ export class ProductCheckoutComponent {
     }) ?? []
   }
 
+  // đặt hàng
   placeOrder() {
     this.isSubmitted = true;
     if(this.checkoutFormGroup.invalid) {

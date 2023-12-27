@@ -35,8 +35,6 @@ export class CartService {
   }
 
 
-
-
   getCart(): Cart {
     let cart: Cart;
     try {
@@ -89,9 +87,6 @@ export class CartService {
 
   }
 
-  
-
-  
   
   // // Hàm lưu trữ giỏ hàng vào localStorage
   private saveCart(cart: Cart) {

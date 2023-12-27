@@ -100,7 +100,9 @@ img {
 hr {
     border-top-width: 2px
 }
-
+h3{
+    color: var(--color-blue)
+}
 .bg-img {
     background: no-repeat 50%;
     background-size: cover
@@ -313,7 +315,7 @@ only screen and (min-width:768px) and (max-width:991px) {
 }
 
 .coupon-wrap .title {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--color-white);
     font-size: 18px;
     margin: 0 0 22px;
     padding: 0 0 10px;
@@ -531,128 +533,6 @@ only screen and (min-width:768px) and (max-width:991px) {
 }
 
 
-
-
-/* ------------------------ */
-:root {
-    --color-blue: #31B9F4;
-    /* Màu chữ xanh nhạt, màu background cho footer */
-    --color-darkBlue: #3771C8;
-    /* Màu chữ xanh đậm */
-    --color-red: red;
-    /* Màu chữ đỏ, deadline của voucher ở trang Tài khoản - Kho voucher */
-    --color-grey: grey;
-    /* Màu chữ xám, của các ô cần nhập nội dung */
-    --color-lightblue: #DDF5FF;
-    /* Màu nền xanh nhạt ở trang Về thương hiệu, chi tiết sản phẩm */
-    --color-lastfooter: #08A3E6;
-    /* Box màu xanh đậm cho footer */
-    --color-white: white;
-}
-
-
-
-.h1 {
-    font-size: 48px;
-}
-
-.h2 {
-    font-size: 28px;
-    color:var(--color-blue)
-}
-
-.h3 {
-    font-size: 24px;
-}
-
-.h4 {
-    font-size: 20px;
-}
-
-.p {
-    font-size: 16px;
-}
-
-.minitext {
-    font-size: 13px;
-}
-
-/* ------------ Khung text area, button ---------- */
-
-.box-textarea {
-    border-color: var(--color-grey);
-}
-
-/* Phần có thể gõ chữ vào: ví dụ nhập email, nhập thông tin ở trang profile */
-
-.box-otp--box {
-    background-color: var(--color-grey);
-    border-radius: 10px;
-    color: var(--color-white);
-}
-
-/* Box ở phần nhập OTP code */
-
-.box-product {
-    background-color: var(--color-lightblue);
-    border-radius: 10px;
-    border-color: var(--color-blue);
-    border-width: 1px;
-    width: 300px;
-    height: 390px;
-}
-
-/* Box chứa sản phẩm ở trang sản phẩm */
-
-
-.btn-active,
-.btn:active {
-    background-color: var(--color-blue);
-    border-radius: 10px;
-    color: var(--color-white)
-}
-
-/* Button khi đã chọn*/
-
-.btn-disabled,
-.btn:disabled {
-    background-color: var(--color-white);
-    border-color: var(--color-blue);
-    border-radius: 10px
-}
-
-/* Button khi chưa chọn */
-
-/* ------------ Dropdown menu / ul, li ---------- */
-
-ul,
-li {
-    text-decoration: none;
-    list-style: none;
-}
-
-/* Phần xổ xuống có sử dụng ul, li */
-
-/* ------------ Line ---------- */
-
-.line--blue {
-    color: var(--color-blue);
-    stroke-width: 1px;
-}
-
-/* Đường kẻ màu xanh */
-
-.line--grey {
-    color: var(--color-grey);
-    stroke-width: 1px;
-}
-
-/* Đường kẻ màu xám */
-
-/* -------------Link-------------- */
-a {
-    text-decoration: none;
-}
 
 
 
