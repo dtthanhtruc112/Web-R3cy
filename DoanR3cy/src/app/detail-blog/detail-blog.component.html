@@ -14,7 +14,7 @@
                 </div>
                 
                 <div class="thumbnail">
-                    <div class="imageThumBig"> <img [src]="blog.thumbnail"   alt="{{ blog.title }}" /> <!-- Hiển thị ảnh --></div>
+                    <div class="imageThumBig"> <img [src]="'http://localhost:3000/image/' + blog.thumbnail"   alt="{{ blog.title }}" /> <!-- Hiển thị ảnh --></div>
                 </div>
 
                 <div [innerHTML]="blog.content"></div>
@@ -28,7 +28,7 @@
                 </div>
                   <div class="containerList">
                     <div *ngFor="let relatedBlog of relatedBlogs" class="listRelated" >
-                      <div (click)="viewRelatedBlogDetails(relatedBlog._id)"> <img [src]="relatedBlog.thumbnail" class="imageThumbCircle" alt="{{ relatedBlog.title }}" /> 
+                      <div (click)="viewRelatedBlogDetails(relatedBlog._id)"> <img [src]="'http://localhost:3000/image/' + relatedBlog.thumbnail" class="imageThumbCircle" alt="{{ relatedBlog.title }}" /> 
                       <div class="TitleTextAllPost">
                         {{ relatedBlog.title }}
                       </div>

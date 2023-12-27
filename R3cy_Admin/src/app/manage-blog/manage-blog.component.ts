@@ -53,6 +53,17 @@ export class ManageBlogComponent implements OnInit  {
       }
     );
   }
+  // Thêm phương thức xóa hình ảnh
+  deleteImage(blogId: string) {
+    this.blogService.deleteImage(blogId).subscribe(
+      (response) => {
+        console.log('Đã xóa hình ảnh thành công');
+      },
+      (error) => {
+        console.error('Đã xảy ra lỗi khi xóa hình ảnh:', error);
+      }
+    );
+  }
 
 
 }

@@ -9,11 +9,11 @@ const CustomProduct = require('../models/customproduct.js')
 const Product = require('../models/product.js')
 const bcrypt = require('bcrypt');
 
+const { next } = require('express');
 const cors = require('cors');
-
+const bodyParser = require('body-parser');
+// Xử lí hình ảnh lúc upload
 const multer = require('multer');
-
-// const storage = multer.memoryStorage(); // Lưu trữ tệp trong bộ nhớ
 
 const path = require('path');
 const fs = require('fs');
@@ -26,12 +26,13 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
-// 
+
+
+//API  
 router.get('/', (req, res) => {
     res.send('Welcome to NodeJS');
 })
 
-const bodyParser = require('body-parser');
 
 router.use(bodyParser.json({ limit: '10mb' })); // Hoặc giá trị lớn hơn tùy vào nhu cầu của bạn
 router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
@@ -373,18 +374,66 @@ router.get('/blog/:id', async (req, res) => {
     }
   });
 
-// API để xóa blog theo id
-router.delete('/blog/:id', async (req, res) => {
-    try {
-      const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
-      if (!deletedBlog) {
-        return res.status(404).json({ message: 'Blog not found' });
-      }
-      res.json(deletedBlog);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+
+// Middleware để xóa ảnh
+const deleteImageMiddleware = async (req, res, next) => {
+  try {
+    const blogId = req.params.id;
+    const blog = await Blog.findById(blogId);
+
+    if (blog && blog.thumbnail) {
+      const imagePath = path.join(__dirname, '../uploads/', blog.thumbnail);
+
+      // Sử dụng Promise để bao bọc fs.unlink
+      const unlinkPromise = () => {
+        return new Promise((resolve, reject) => {
+          fs.unlink(imagePath, (err) => {
+            if (err) {
+              console.error('Error deleting image:', err);
+              reject(err);
+            } else {
+              console.log(`Deleted image: ${imagePath}`);
+              resolve();
+            }
+          });
+        });
+      };
+
+      // Sử dụng await để đợi promise hoàn thành
+      await unlinkPromise();
     }
-  });
+
+    // Gọi next mà không truyền tham số để báo hiệu kết thúc middleware
+    next();
+  } catch (err) {
+    console.error('Error during deleteImageMiddleware:', err);
+    // Gọi next với tham số để báo hiệu có lỗi và kết thúc middleware
+    next(err);
+  }
+};
+
+
+
+router.use(deleteImageMiddleware);
+router.delete('/blog/:id', deleteImageMiddleware, async (req, res) => {
+  try {
+    const blogId = req.params.id;
+
+    // Xóa blog khỏi cơ sở dữ liệu
+    const deletedBlog = await Blog.findByIdAndDelete(blogId);
+
+    if (!deletedBlog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+
+    res.json(deletedBlog);
+  } catch (error) {
+    console.error('Error deleting blog:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 
 // Xử lý route đăng ký
 
