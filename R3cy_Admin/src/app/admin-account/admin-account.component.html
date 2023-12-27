@@ -16,13 +16,6 @@
         <div class="popup-content">
           <!-- Nội dung form -->
           <form class="form-addNew">
-            <!-- <input type="text" id="adminName" placeholder="Nhập họ và tên" [(ngModel)]="newAdmin.name" class="form-control">
-
-            <input type="text" id="adminPhoneNumber" placeholder="Nhập số điện thoại" [(ngModel)]="newAdmin.phone" class="form-control">
-
-            <input type="text" id="adminMail" placeholder="Nhập email" [(ngModel)]="newAdmin.email" class="form-control">
-
-            <input type="password" id="adminPassword" placeholder="Nhập password" [(ngModel)]="newAdmin.password" class="form-control"> -->
 
             <div class="text-name">
               <input type="text" class="form-control" id="form-input" placeholder="Họ và tên" name="name" [(ngModel)]="account.Name" #name="ngModel" required>
@@ -41,7 +34,7 @@
             <div *ngIf="!isPhoneNumberValid" class="error-message">Số điện thoại không hợp lệ!</div>
           
             <div class="text-pass">
-              <input type="password" class="form-control" id="form-input" placeholder="Mật khẩu" name="psw" [(ngModel)]="account.password" #name="ngModel" #passwordInputrequired>
+              <input type="password" class="form-control" id="form-input" placeholder="Mật khẩu" name="psw" [(ngModel)]="account.password" #name="ngModel" (blur)="checkPassword()" #passwordInputrequired>
             </div>
 
             <!-- Các nút để thao tác với form -->
