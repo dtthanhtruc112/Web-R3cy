@@ -70,6 +70,7 @@ display: none;
 .logo {
 margin-bottom: auto; /* Đặt margin-bottom là auto để logo nằm ở đầu */
 }
+
 @media screen and (max-width: 480px) {
 #sidebar {
   width: 100%;

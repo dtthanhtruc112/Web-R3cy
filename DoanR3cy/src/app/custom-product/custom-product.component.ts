@@ -64,6 +64,8 @@ export class CustomProductComponent {
           console.log('Data saved successfully:', response);
           alert('Gửi yêu cầu custom thành công. R3cy sẽ liên hệ với bạn trong thời gian sớm nhất.');
           this.router.navigate(['/custom-product']);
+          // Reload trang chỉ khi dữ liệu được lưu thành công
+          location.reload();
         },
         (error) => {
           console.error('Error saving data:', error);

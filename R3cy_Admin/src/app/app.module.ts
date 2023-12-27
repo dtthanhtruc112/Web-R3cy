@@ -18,6 +18,7 @@ import { AdminSanphamComponent } from './admin-sanpham/admin-sanpham.component';
 import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.component';
 import { AdminCustomProductComponent } from './admin-custom-product/admin-custom-product.component';
 import { AdminLoginComponent } from './login/login.component';
+import { AdminAccountComponent } from './admin-account/admin-account.component';
 
 import { AuthGuard } from './Service/auth.guard';
 import { AuthService } from './Service/auth.service';
@@ -34,6 +35,7 @@ import { AuthService } from './Service/auth.service';
     AdminMagiamgiaComponent,
     AdminCustomProductComponent,
     AdminLoginComponent,
+    AdminAccountComponent,
     SafeHtmlPipe
   ],
   imports: [

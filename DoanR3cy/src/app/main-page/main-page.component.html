@@ -1,18 +1,10 @@
-<p>Này là main page test. Nếu có trang chủ mới, đổi code tại login.component.ts để sau khi đăng nhập thành công sẽ chuyển qua trang chủ</p>
+
 
 <div class="containerAll">
     <div class="containerBanner">
         <img src="../../assets/img/Homepage/bannerHomepage.png" alt="">
     </div>
-    <div class="containerContent">
-        <!-- <div class="Blog2NoiBat">
-            <div class="ImgBlogLeft">
-                <img src="../../assets/img/ImageForBlog/thumbnail/1.png" alt="">
-            </div>
-            <div class="ImgBlogRight">
-                <img src="../../assets/img/ImageForBlog/thumbnail/3.png" alt="">
-            </div>
-        </div> -->
+    <div class=" container1 containerContent">
         <div class=" Welcome">
             <p class="h3 text-center mt-60 font-bold">Chào mừng đến với R3cy!</p>
     
@@ -20,14 +12,23 @@
             R3cy mang trên mình câu chuyện đầy ý nghĩa với thành phố. R3cy mong muốn tạo ra các vật dụng không chỉ bền chắc, đẹp mắt mà còn cùng bạn góp phần bảo vệ môi trường.</p>
         </div>
     
-        <div class="ProductsNoiBat">
-            <a href=""><h2>SẢN PHẨM NỔI BẬT</h2></a>
+        <div class="container1  ProductsNoiBat">
+            <h2>SẢN PHẨM NỔI BẬT</h2>
+            <div class="containerProduct">
+                <div class="product-show" *ngFor="let p of productsHighlight" [routerLink]="['/product', p.id]">
+                    <!-- <p class="mainimg">{{p.img1}}</p> -->
+                    <img [src]="p.img1">
+                    <p class="name">{{p.name}}</p>
+                    <div class="pricecontainer">
+                        <p class="price">{{p.price}}.000đ</p>
+                        <p class="oldprice">{{p.oldprice}}.000đ</p>
+                    </div>  
+                </div>
             
-    
-    
+            </div>
         </div>
-        <div class="brandStory">
-            <a href=""><h2>CÂU CHUYỆN THƯƠNG HIỆU</h2></a>
+        <div class="container1 brandStory">
+           <h2>CÂU CHUYỆN THƯƠNG HIỆU</h2>
             <div class="box-slogan">
                 <div class="slogan-img"></div>
     
@@ -38,9 +39,25 @@
                 </div>           
             </div>
         </div>
+
+        <div class="container1  ProductsNoiBat">
+            <h2>GỢI Ý CHO BẠN</h2>
+            <div class="containerProduct">
+                <div class="product-show" *ngFor="let p of productsSuggestion" [routerLink]="['/product', p.id]">
+                    <!-- <p class="mainimg">{{p.img1}}</p> -->
+                    <img [src]="p.img1">
+                    <p class="name">{{p.name}}</p>
+                    <div class="pricecontainer">
+                        <p class="price">{{p.price}}.000đ</p>
+                        <p class="oldprice">{{p.oldprice}}.000đ</p>
+                    </div>  
+                </div>
+            
+            </div>
+        </div>
     
-        <div class="recycleProcess">
-            <a href=""><h2>QUY TRÌNH TÁI CHẾ</h2></a>
+        <div class="container1  recycleProcess">
+           <h2>QUY TRÌNH TÁI CHẾ</h2>
             
             <div class="containerimg">
                 <div class="imgRecycle imgRecycle1">
@@ -57,23 +74,24 @@
                 </div>
             </div>
         </div>
-        <div class="containerBlog">
-            <a href=""><h2>BLOG</h2></a>
+        
+        <div class=" containerBlog">
+           <h2>BLOG</h2>
             
         <div class="blogs">
-            <!-- <div *ngFor="let relatedBlog of relatedBlogs" class="b1log" [routerLink]="['/detail', relatedBlog.id]">
-              <div> 
-                <img [src]="relatedBlog.thumb" class="imageThumbCircle" alt="{{ relatedBlog.title }}" />
-                 <p class="TitleTextAllPost"> {{ relatedBlog.title }}</p>
-            </div>
-            </div> -->
-            <!-- <div *ngFor="let relatedBlog of relatedBlogs" class="b1log" >
-                <div> 
-                  <img [src]="relatedBlog.thumb" class="imageThumbCircle" alt="{{ relatedBlog.title }}" />
-                   <p class="TitleTextAllPost"> {{ relatedBlog.title }}</p>
+            <div *ngFor="let blog of blogs" class="b1log">
+                <div class="blog-card">
+                  <div class="imageThumnailOnBlogList" (click)="viewBlogDetail(blog._id)">
+                    <div class="image"> <img [src]="'http://localhost:3000/image/' + blog.thumbnail" class="imageThumbCircle" alt="{{ blog.title }}" /></div>
+      
+                    
+                  </div>
+                  <div class="sumary1Blog">
+                    <p class="TitleTextAllPost" (click)="viewBlogDetail(blog._id)">{{ blog.title }}</p>
+                  </div>
+                </div>
               </div>
-              </div>
-        </div> -->
+        </div>
     
         <div class="FAQs">
             <h2>CÂU HỎI THƯỜNG GẶP</h2>
