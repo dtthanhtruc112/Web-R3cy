@@ -13,9 +13,19 @@ const cors = require('cors');
 
 const multer = require('multer');
 
-const storage = multer.memoryStorage(); // Lưu trữ tệp trong bộ nhớ
-const upload = multer({ storage: storage });
+// const storage = multer.memoryStorage(); // Lưu trữ tệp trong bộ nhớ
 
+const path = require('path');
+const fs = require('fs');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); 
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Giữ nguyên tên file
+  }
+});
+const upload = multer({ storage: storage });
 // 
 router.get('/', (req, res) => {
     res.send('Welcome to NodeJS');
@@ -292,20 +302,7 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 
 // BLOG 
 
-
-const path = require('path');
-const fs = require('fs');
-// const multer = require('multer');
-const storages = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); 
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname); // Giữ nguyên tên file
-  }
-});
-const uploads = multer({ storages: storages });
-router.post('/createBlog', uploads.single('thumbnail'), async (req, res) => {
+router.post('/createBlog', upload.single('thumbnail'), async (req, res) => {
   try {
     // Kiểm tra xem có tệp nào được tải lên không
     if (req.file && req.file.path) {
