@@ -62,6 +62,7 @@ export class DanhgiasanphamComponent  {
         (updatedProduct: Product) => {
           console.log('Product feedback updated successfully:', updatedProduct);
           this.feedbackText = '';
+          window.alert('Thông tin đã được gửi thành công. Cảm ơn quý khách!');
           // Optionally, you can perform additional actions after successful feedback submission
         },
         (error) => {

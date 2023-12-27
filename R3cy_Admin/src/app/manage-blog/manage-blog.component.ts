@@ -3,7 +3,7 @@ import { BlogService } from '../Service/blog.service';
 import { catchError, retry } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-blog',
@@ -11,11 +11,11 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrl: './manage-blog.component.css'
 })
 export class ManageBlogComponent implements OnInit  {
-
+  
   blogs: any[] = [];
   errorMessage: string = '';
 
-   constructor(private blogService: BlogService, private sanitizer: DomSanitizer) {}
+   constructor(private blogService: BlogService, private sanitizer: DomSanitizer, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.getAllBlogs();
@@ -34,6 +34,18 @@ export class ManageBlogComponent implements OnInit  {
       }
     );
   }
+  // Phương thức chỉnh sửa blog
+  editBlog(blogId: string) {
+    // Lấy thông tin blog cần chỉnh sửa
+    const blogToEdit = this.blogs.find(blog => blog._id === blogId);
+
+    // Kiểm tra xem blog có tồn tại không
+    if (blogToEdit) {
+      // Chuyển hướng đến trang chỉnh sửa với thông tin blog được truyền qua
+      this.router.navigate(['/createblog'], { queryParams: { edit: 'true', id: blogId } });
+    }
+  }
+  
 
   private handleError(error: any) {
     console.error('Có lỗi xảy ra:', error);
@@ -57,4 +69,5 @@ export class ManageBlogComponent implements OnInit  {
       );
     }
   }
+  
 }

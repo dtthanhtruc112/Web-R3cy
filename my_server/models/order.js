@@ -11,6 +11,7 @@ const Order = new Schema({
     ordereddate: String,
     paymentmethod: String,
     paymentstatus: Boolean,
+    shipfee: Number,
     products: [{
         id: Number,
         category1: String,
@@ -24,5 +25,16 @@ const Order = new Schema({
 });
 
 // Order.plugin(AutoIncrement, {inc_field: 'ordernumber', start_seq: 1007})
+Order.pre('save', async function (next) {
+    if (!this.ordernumber) {
+        // Nếu ordernumber không tồn tại, thực hiện logic tăng giảm chỉ số
+        const maxordernumber = await mongoose.model('Order').findOne({}, { ordernumber: 1 }, { sort: { ordernumber: -1 } });
+        this.ordernumber = maxordernumber ? maxordernumber.ordernumber + 1 : 1;
+    }
+
+    next();
+});
+
+
 
 module.exports = mongoose.model('Order', Order);
