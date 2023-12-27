@@ -1,5 +1,4 @@
 export class AccountCustomer{
-  user: any;
   constructor(
     public _id: any = null,
     public Name: string='',
