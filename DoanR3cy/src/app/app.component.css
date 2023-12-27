@@ -319,18 +319,23 @@ div{
 } */
 footer {
     background-color: #31B9F4;
-    padding-top: 10px;
+    padding-top: 16px;
     margin-top: 50px;
+
   }
 
 footer h4{
     font-size: 20px;
+    margin-bottom: 16px;
+    margin-top: 10px;
+    font-weight: bolder;
     /* font-family: Inter-Bold; */
 }
 
   ul, li {
     list-style: none;
     font-size: 16px;
+    margin-bottom: 10px;
     /* font-family: Inter-Bold; */
   }
   .social-icon {
