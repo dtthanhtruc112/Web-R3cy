@@ -2,6 +2,10 @@ div{
     font-family: Inter-Regular;
 }
 
+.max-box{
+    margin-left: 280px;
+}
+
 .font-bold{
     font-weight: bold;
 }
@@ -38,8 +42,8 @@ th, td {
 .sub-header{
     display: flex;
     flex-direction: row;
-    position: sticky;
-    top: 0;
+    /* position: sticky; */
+    /* top: 0; */
     width: 100vw;
     margin: 15px;
 }

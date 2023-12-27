@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './Service/auth.service';
 
 
 @Component({
@@ -14,6 +15,16 @@ export class AppComponent implements OnInit  {
   navMenu: HTMLElement | null = null;
 
   ngOnInit() {
+    document.addEventListener('DOMContentLoaded', () => {
+      const h4Elements = document.querySelectorAll('footer h4');
+
+      h4Elements.forEach((h4Element) => {
+        h4Element.addEventListener('click', () => {
+          h4Element.classList.toggle('active');
+        });
+      });
+    });
+    
     this.mobileMenu = document.getElementById("mobile-menu");
     this.navMenu = document.getElementById("nav");
 
@@ -27,7 +38,15 @@ export class AppComponent implements OnInit  {
     }
   }
 
-  constructor(private router: Router) {}
+  userLink(): string[] {
+    // Lấy giá trị userid từ AuthService
+    const userId = this.authService.getUserId();
+
+    // Nếu userid tồn tại, chuyển hướng tới trang tài khoản, ngược lại chuyển hướng tới trang đăng nhập
+    return userId ? ['/trangtaikhoan'] : ['/login'];
+  }
+
+  constructor(private router: Router, private authService: AuthService,) {}
 
   // navigateToOtherPage(destination: string): void {
   //   // Sử dụng tham số để xác định trang đích cần chuyển hướng

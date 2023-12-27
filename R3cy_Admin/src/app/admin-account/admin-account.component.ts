@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
+<<<<<<< HEAD
 import { AccountCustomer } from '../Interface/AccountCustomer';
 import { AccountcustomerService } from '../Service/accountcustomer.service';
+=======
+import { FormsModule } from '@angular/forms';
+>>>>>>> 7f4d70912f009cdbb7679042a577e5b73d9ceb82
 
 @Component({
   selector: 'app-admin-account',

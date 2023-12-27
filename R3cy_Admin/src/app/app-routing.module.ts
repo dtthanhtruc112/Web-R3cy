@@ -15,7 +15,7 @@ import { AdminAccountComponent } from './admin-account/admin-account.component';
 import { AuthGuard } from './Service/auth.guard';
 
 const routes: Routes = [  
-{ path: '', redirectTo: '/login', pathMatch: 'full' },
+{ path: '', redirectTo: '/tongquan', pathMatch: 'full' },
 { path: 'tongquan', component: AdminTongquanComponent, canActivate: [AuthGuard]},
 { path: 'login', component: AdminLoginComponent, canActivate: [AuthGuard]},
 { path: 'createblog', component: AdminCreateBlogComponent, canActivate: [AuthGuard]},

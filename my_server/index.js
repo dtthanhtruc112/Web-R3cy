@@ -6,6 +6,7 @@ const port = 3000
 const cors=require('cors')
 app.use(cors())
 const mongoose = require('mongoose')
+app.use('/image', express.static('uploads'));
 
 // Mongoose connect mongodb cloud
 // mongoose.connect(process.env.CONNECTION_STRING)

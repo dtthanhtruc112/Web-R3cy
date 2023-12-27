@@ -19,6 +19,36 @@ export interface Order {
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
-  rejectreason: string
+
+  id: string;
+  orderItems?: OrderItem[];
+  street: string;
+  city: string;
+  zip: string;
+  country: string;
+  phone: string;
+  totalPrice: string;
+  rejectreason: string;
 
 } 
+export interface Orders {
+ 
+  ordereddate: string;
+  orderItems?: OrderItem[];
+  street: string;
+  city: string;
+  zip: string;
+  country: string;
+  phone: string;
+
+} 
+
+export interface OrderItem {
+  product?: string;
+  quantity?: number;
+}
+
+
+
+
+

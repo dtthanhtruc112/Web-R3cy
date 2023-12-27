@@ -25,6 +25,7 @@
         <!--== Start Product Area Wrapper ==-->
         <section class="section-space">
             <div class="container">
+                <h2>GIỎ HÀNG</h2>
                 <div class="shopping-cart-form table-responsive">
                     <form action="#" method="post">
                         <table class="table text-center">
@@ -39,20 +40,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="tbody-item" *ngFor="let item of cartItems">
+                                <!-- <tr class="tbody-item" *ngFor="let item of cartItems">
                                     <td class="product-remove">
                                         <a class="remove" (click)="removeItem(item)">×</a>
+                                        <a class="remove" (click)="deleteCartItem(item)">×</a>
                                     </td>
                                     <td class="product-thumbnail">
                                         <div class="thumb">
-                                            <img src="{{item.img1}}" alt="" width="100" height="100" alt="Image-Loading">
-
-
+                                            <img src="{{item.img1}}" alt="" width="100" height="100"
+                                                alt="Image-Loading">
                                         </div>
                                     </td>
                                     <td class="product-name">
                                         <a class="title" href="">{{item.name}}</a><br>
-                                        <a class="type minitext">Phân loại: {{item.opt1}}</a>
+                                        <a class="type minitext">Phân loại: {{selectedOption}}</a>
                                     </td>
                                     <td class="product-price">
                                         <span class="price">{{item.price}}.000 đ</span>
@@ -60,15 +61,63 @@
                                     <td class="product-quantity">
                                         <div class="pro-qty">
                                             <input type="text" class="quantity" title="Quantity" id="show" min="1"
-                                                max="1000" name="show" [(ngModel)]="quantity" type="number" change="loadJson()">
+                                                max="1000" name="show" value="1" type="number" onchange="loadJson()">
                                         </div>
 
                                     </td>
                                     <td class="product-subtotal">
                                         <span class="price">{{ calculateSubtotal(item) }}.000 đ</span>
                                     </td>
+                                </tr> -->
+
+                                <tr class="tbody-item" *ngFor="let cartItem of cartItemsDetailed">
+                                    <td class="product-remove">
+                                        <a class="remove" (click)="deleteCartItem(cartItem)">×</a>
+                                    </td>
+                                    <td class="product-thumbnail">
+                                        <div class="thumb">
+                                            <img src="{{cartItem.product.img1}}" alt="" width="100" height="100"
+                                                alt="Image-Loading">
+
+
+                                        </div>
+                                    </td>
+                                    <td class="product-name">
+                                        <a class="title" href="">{{cartItem.product.name}}</a><br>
+                                        <a class="type minitext">Phân loại: {{selectedOption}}</a>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="price">{{cartItem.product.price}}.000 đ</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <div class="pro-qty">
+                                            <!-- <input type="text" 
+                                            class="quantity"
+                                             title="Quantity" 
+                                             id="show" 
+                                             min="1"
+                                            max="1000" 
+                                            name="show" 
+                                            value="1" 
+                                            type="number" > -->
+
+                                            <p-inputNumber mode="decimal" [showButtons]="true"
+                                                [inputId]="cartItem.product.id" [min]="1" [max]="1000" ,
+                                                [(ngModel)]="cartItem.quantity"
+                                                (onInput)="updateCartItemQuantity($event, cartItem )">
+                                            </p-inputNumber>
+                                        </div>
+
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span class="">{{ calculateSubtotal(cartItem) }}.000 đ</span>
+                                    </td>
+
+                                    <!-- <td class="product-subtotal">
+                                        <span class="subtotal">{{ cartItem.product.price * cartItem.quantity}}.000 đ</span>
+                                    </td> -->
                                 </tr>
-                                
+
                             </tbody>
                         </table>
                     </form>
@@ -102,14 +151,8 @@
                                     <tr class="shipping-totals">
                                         <th>Phí vận chuyển</th>
                                         <td>
-                                            <ul class="shipping-fee">
+                                            <span class="shipping-fee">25.000 đ</span>
 
-                                                <span class="amount">25.000 đ</span>
-                                                
-
-
-
-                                            </ul>
                                             <p class="destination">Gửi đến <strong>Địa chỉ lưu sẵn: TP. Thủ
                                                     Đức</strong>.</p>
                                             <a href="" routerLink="/trangtaikhoan" routerLinkActive="active"
@@ -118,16 +161,15 @@
                                         </td>
                                     </tr>
                                     <tr class="order-total">
-                                        <th>Total</th>
+                                        <th>Tổng cộng</th>
                                         <td>
-                                            <span class="amount">$504.00</span>
+                                            <span class="amount">{{totalPrice }}.000 đ</span>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div class="text-end">
-                                <a routerLink="/checkout" routerLinkActive="active" class="checkout-button">Tiếp tục thanh
-                                    toán</a>
+                                <a routerLink="/checkout" routerLinkActive="active" class="checkout-button">Tiếp tục thanh toán</a>
                             </div>
                         </div>
                     </div>
