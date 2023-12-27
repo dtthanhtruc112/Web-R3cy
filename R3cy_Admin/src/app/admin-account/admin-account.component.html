@@ -65,20 +65,20 @@
             <tbody>
               <tr *ngFor="let user of userData; let i = index">
                 <td>{{ i + 1 }}</td>
-                <ng-container *ngIf="!isEditing || editedUserId !== user.id; else editMode">
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.phone }}</td>
+                <ng-container *ngIf="!isEditing || editedUserId !== user._id; else editMode">
+                  <td>{{ user.Name }}</td>
+                  <td>{{ user.Mail }}</td>
+                  <td>{{ user.phonenumber }}</td>
                 </ng-container>
                 <ng-template #editMode>
-                  <td><input type="text" [(ngModel)]="editedUser.name"></td>
-                  <td><input type="text" [(ngModel)]="editedUser.email"></td>
-                  <td><input type="text" [(ngModel)]="editedUser.phone"></td>
+                  <td><input type="text" [(ngModel)]="editedUser.Name"></td>
+                  <td><input type="text" [(ngModel)]="editedUser.Mail"></td>
+                  <td><input type="text" [(ngModel)]="editedUser.phonenumber"></td>
                 </ng-template>
                 <td>
-                  <span *ngIf="!isEditing || editedUserId !== user.id" class="ti-pencil" (click)="handleEditClick(user.id)"></span>
-                  <span *ngIf="isEditing && editedUserId === user.id" class="ti-save" (click)="handleSaveClick()"></span>
-                  <span class="ti-trash" (click)="handleDeleteClick(user.id)"></span>
+                  <span *ngIf="!isEditing || editedUserId !== user._id" class="ti-pencil" (click)="handleEditClick(user._id)"></span>
+                  <span *ngIf="isEditing && editedUserId === user._id" class="ti-save" (click)="handleSaveClick()"></span>
+                  <span class="ti-trash" (click)="handleDeleteClick(user._id)"></span>
                 </td>
               </tr>
             </tbody>

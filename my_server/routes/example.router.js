@@ -514,5 +514,87 @@ router.get('/customProducts', async (req, res) => {
   }
 });
 
+// MANGE ACCOUNT
+// GET tất cả admin có role là 'admin'
+router.get('/adminaccs', async (req, res) => {
+  try {
+    const adminAccs = await AccountCustomer.find({ role: 'admin' });
+    res.json(adminAccs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// POST 1 admin mới vào database
+router.post('/addadmin', async (req, res) => {
+  try {
+    // Nhận dữ liệu từ request body
+    const { Name, phonenumber, Mail, password } = req.body;
+
+    // Tạo một instance mới của AccountCustomer từ dữ liệu nhận được
+    const newAccount = new AccountCustomer({
+      Name,
+      phonenumber,
+      Mail,
+      password,
+      role:'admin'
+    });
+
+    // Lưu account mới vào database
+    const savedAccount = await newAccount.save();
+
+    res.status(201).json(savedAccount); // Trả về thông tin của account vừa tạo
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT update thông tin account
+router.put('/updateadmin/:id', async (req, res) => {
+  try {
+    const accountId = req.params.id;
+
+    // Kiểm tra xem account có tồn tại không
+    const existingAccount = await AccountCustomer.findById(accountId);
+    if (!existingAccount) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Nhận dữ liệu cần cập nhật từ request body
+    const { Name, phonenumber, Mail } = req.body;
+
+    // Cập nhật thông tin account
+    existingAccount.Name = Name || existingAccount.Name;
+    existingAccount.phonenumber = phonenumber || existingAccount.phonenumber;
+    existingAccount.Mail = Mail || existingAccount.Mail;
+
+    // Lưu thông tin account đã cập nhật vào database
+    const updatedAccount = await existingAccount.save();
+
+    res.json(updatedAccount);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE xoá một admin theo id
+router.delete('/deleteadmin/:id', async (req, res) => {
+  try {
+    const accountId = req.params.id;
+
+    // Kiểm tra xem account có tồn tại không
+    const existingAccount = await AccountCustomer.findById(accountId);
+    if (!existingAccount) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Xoá tài khoản admin từ database
+    await existingAccount.remove();
+
+    res.json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = router
