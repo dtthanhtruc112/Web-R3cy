@@ -29,9 +29,10 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div>
-                            <p-button label="backtocart" icon="pi pi-angle-left" (onClick)="backtoCart()"></p-button>
+                            <p-button style="color: black" label="backtocart" icon="pi pi-angle-left" (click)="backtoCart()">Trở về giỏ hàng</p-button>
 
                         </div>
+                        <br>
                         <!--== Start Billing Accordion ==-->
                         <div class="checkout-billing-details-wrap">
                             <h2 class="title">Thông tin giao hàng</h2>
@@ -39,19 +40,7 @@
                                 <form action="#" method="post" [formGroup]="checkoutFormGroup">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <!-- <div class="form-group">
-                                                <label for="name">Họ và tên <abbr class="required"
-                                                        title="required">*</abbr></label>
-                                                <input id="name" type="text" class="form-control">
-                                            </div> -->
-
-                                            <!-- <div class="form-group">
-                                                <label for="name">Họ và tên <abbr class="required" title="required">*</abbr></label>
-                                                <input id="name" type="text" [(ngModel)]="customer.name" class="form-control" (blur)="checkNameValidity()" [class.is-invalid]="nameInvalid && nameTouched" />
-                                                <small class="text-danger" [class.d-none]="!nameInvalid || !nameTouched">
-                                                  Bạn chưa điền vào trường này
-                                                </small>
-                                              </div> -->
+                                
 
                                             <div class="form-group">
                                                 <label for="name">Họ và tên <abbr class="required"
@@ -142,10 +131,9 @@
 
                             </div>
                         </div>
-                        <!--== End Billing Accordion ==-->
+
                     </div>
                     <div class="col-lg-6">
-                        <!--== Start Order Details Accordion ==-->
                         <div class="checkout-order-details-wrap">
                             <div class="order-details-table-wrap table-responsive">
                                 <h2 class="title mb-25">Đơn hàng của bạn</h2>
@@ -175,7 +163,7 @@
                                         </tr>
                                         <tr class="shipping">
                                             <th>Phí vận chuyển</th>
-                                            <td>Áp dụng giao nhanh/ tiết kiệm</td>
+                                            <td>25.000 đ</td>
                                         </tr>
                                         <tr class="order-total">
                                             <th>Tổng đơn hàng </th>
@@ -250,7 +238,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!--== End Order Details Accordion ==-->
+
+
                         <div class="overlay" *ngIf="showOverlay"></div>
                         <div class="popup" *ngIf="showSuccessPopup">
                             <p class="p">Đặt hàng thành công</p>
@@ -260,8 +249,8 @@
                 </div>
             </div>
         </section>
-        <!--== End Shopping Checkout Area Wrapper ==-->
 
+        
     </main>
 
 </body>

@@ -37,7 +37,6 @@ export class ProductCartComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private orderService: OrderService
   ) {
-    // this.router.url.includes('product-cart') ? this.isCheckout =true : this.isCheckout=false;
 
   }
 
@@ -57,7 +56,7 @@ export class ProductCartComponent implements OnInit, OnDestroy {
 
 
 
-//  hiện sp trong cart
+//  hiện sản phẩm trong cart
   private _getCartDetails() {
     this.cartService.cart$.pipe().subscribe((respCart) => {
       respCart.items?.forEach((cartItem) => {
@@ -75,21 +74,10 @@ export class ProductCartComponent implements OnInit, OnDestroy {
   } 
    
 
-    // this.cartService.cart$.pipe(takeUntil(this.endSubs$)).subscribe(respCart => {
-    //   this.cartItemsDetailed = respCart?.items ?? [];  // Gán sản phẩm vào cartItemsDetailed
-    //   this.cartCount = this.cartItemsDetailed.length;
-    // });
-
-    // this.cartService.cart$.pipe().subscribe((respCart) => {
-    //   respCart.items?.forEach((cartItem) => {
-    //     this.productService.getProduct(cartItem.id).subscribe(product => {})
-    //   })
-    // })
-  
 
 
 
-  // tính tổng sản phẩm
+  // tính tổng sản phẩm theo số lượng
   calculateSubtotal(cartItem: any): number {
     const price = cartItem.product.price;
     const quantity = cartItem.quantity;
@@ -112,7 +100,8 @@ export class ProductCartComponent implements OnInit, OnDestroy {
     }, true)
   }
 
-  getOrderSummary() {}
+  // phần tổng đơn hàng: giá sp + phí vận chuyển + voucher, chưa làm
+  getOrderSummary() {} 
 
 }
 
