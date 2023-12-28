@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './manage-blog.component.css'
 })
 export class ManageBlogComponent implements OnInit  {
-  isEdit: boolean = false;
+  
   blogs: any[] = [];
   errorMessage: string = '';
 

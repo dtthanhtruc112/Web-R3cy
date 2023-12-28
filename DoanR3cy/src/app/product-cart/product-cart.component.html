@@ -6,17 +6,11 @@
 <link rel="stylesheet" href="./product-cart.component.css">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- 
-</head> -->
 
-<!-- <body> -->
-
-<!--== Wrapper Start ==-->
 <div class="wrapper">
 
     <main class="main-content">
 
-        <!--== Start Product Area Wrapper ==-->
         <section class="section-space">
             <div class="container">
                 <h3>GIỎ HÀNG</h3>
@@ -72,11 +66,7 @@
                                     <td class="product-subtotal">
                                         <span class="">{{ calculateSubtotal(cartItem) }}.000 đ</span>
                                     </td>
-                                  
-
-                                    <!-- <td class="product-subtotal">
-                                        <span class="subtotal">{{ cartItem.product.price * cartItem.quantity}}.000 đ</span>
-                                    </td> -->
+                           
                                 </tr>
 
                             </tbody>
@@ -88,7 +78,7 @@
                         <div class="coupon-wrap">
                             <h4 class="title">Mã giảm giá</h4>
                             <p class="desc">Nhập mã giảm giá (nếu có)</p>
-                            <input type="text" class="form-control" placeholder="Coupon code">
+                            <input type="text" class="form-control" placeholder="Nhập mã giảm giá">
                             <button type="button" class="btn-coupon">Áp dụng</button>
                         </div>
                     </div>
@@ -114,8 +104,9 @@
                                         <td>
                                             <span class="shipping-fee">25.000 đ</span>
 
-                                            <p class="destination">Gửi đến <strong>Địa chỉ lưu sẵn: TP. Thủ
+                                            <p class="address">Gửi đến <strong>Địa chỉ lưu sẵn: VD TP. Thủ
                                                     Đức</strong>.</p>
+                                            <!-- Cần thêm địa chỉ của client: quốc gia, thành phố, quận huyện... vì nó sẽ lấy địa chỉ có sẵn áp vào form địa chỉ,  -->
                                             <a href="" routerLink="/trangtaikhoan" routerLinkActive="active"
                                                 class="btn-shipping-address">Thay đổi địa
                                                 chỉ</a>
@@ -137,7 +128,6 @@
                 </div>
             </div>
         </section>
-        <!--== End Product Area Wrapper ==-->
 
     </main>
 </div>
