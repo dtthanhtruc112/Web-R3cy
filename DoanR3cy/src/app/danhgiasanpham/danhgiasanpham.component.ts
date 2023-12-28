@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order, Product } from '../Interface/Order';
 import { OrderService } from '../Service/order.service';
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-danhgiasanpham',
@@ -11,7 +12,7 @@ import { OrderService } from '../Service/order.service';
 export class DanhgiasanphamComponent  {
   order: Order | undefined;
 
-  constructor(private route: ActivatedRoute, private orderService: OrderService) {}
+  constructor(private route: ActivatedRoute, private orderService: OrderService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -20,9 +21,14 @@ export class DanhgiasanphamComponent  {
 
       if (orderId) {
         const orderIdNumber = +orderId;
+        const userid = this.authService.getUserId();
 
-        // Assuming user id is 1
-        const userId = 1;
+        console.log('Original userid:', userid);
+
+        if (userid !== null){
+          // Assuming user id is 1
+        
+          const userId = parseInt(userid, 10);
 
         // Pass the user ID to getOrder method
         this.orderService.getOrder(userId).subscribe(
@@ -40,6 +46,9 @@ export class DanhgiasanphamComponent  {
             console.error(`Error fetching orders for user with ID ${userId}: ${error}`);
           }
         );
+        }
+
+        
       }
 
       
