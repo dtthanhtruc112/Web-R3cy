@@ -53,7 +53,7 @@ router.get('/product', cors(), (req, res) =>
       const productId = req.params.id;
     
       // Chuyển đổi giá trị productId thành ObjectId
-      const objectId = mongoose.Types.ObjectId(productId);
+      const objectId = Number(productId);
     
       Product.findById(objectId)
         .then(product => {
@@ -111,6 +111,18 @@ router.get('/product/tren-300', cors(), (req, res) =>
     .then(data => { res.json(data) })
     .catch(error => { res.status(500).json({ err: error.mesage }) }
     ));
+
+//Router sửa thông tin sản phẩm
+router.patch("/sanpham/:id", cors(), async(req, res) =>{
+  try{
+      await Product.updateOne({id: req.params.id}, {
+          $set: {price: req.body.price}
+      })
+      res.send("Success!");
+  }catch(error){
+      res.json({error: error.mesage})
+  }
+})
 
 
 router.get('/orders', async (req, res) => {

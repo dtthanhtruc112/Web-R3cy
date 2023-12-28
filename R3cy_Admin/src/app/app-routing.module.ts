@@ -7,6 +7,7 @@ import { AdminDonhangComponent } from './admin-donhang/admin-donhang.component';
 import { AdminCustomersComponent } from './admin-customers/admin-customers.component';
 import { ManageBlogComponent } from './manage-blog/manage-blog.component';
 import { AdminSanphamComponent } from './admin-sanpham/admin-sanpham.component';
+import { AdminSanphamchitietComponent } from './admin-sanphamchitiet/admin-sanphamchitiet.component';
 import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.component';
 import { AdminCustomProductComponent } from './admin-custom-product/admin-custom-product.component';
 import { AdminLoginComponent } from './login/login.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
 { path: 'customer', component: AdminCustomersComponent, canActivate: [AuthGuard]},
 { path: 'blog', component: ManageBlogComponent, canActivate: [AuthGuard]},
 { path: 'sanpham', component: AdminSanphamComponent, canActivate: [AuthGuard]},
+{ path: 'sanpham/:id', component: AdminSanphamchitietComponent, canActivate: [AuthGuard]},
 { path: 'magiamgia', component: AdminMagiamgiaComponent, canActivate: [AuthGuard]},
 { path: 'customproduct', component: AdminCustomProductComponent, canActivate: [AuthGuard]},
 { path: 'adminaccount', component: AdminAccountComponent, canActivate: [AuthGuard]}
@@ -43,6 +45,7 @@ export const RoutingComponent= [
   AdminCustomersComponent,
   ManageBlogComponent,
   AdminSanphamComponent,
+  AdminSanphamchitietComponent,
   AdminCustomProductComponent,
   AdminMagiamgiaComponent,
   AdminLoginComponent,

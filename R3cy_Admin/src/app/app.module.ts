@@ -22,6 +22,7 @@ import { AdminAccountComponent } from './admin-account/admin-account.component';
 
 import { AuthGuard } from './Service/auth.guard';
 import { AuthService } from './Service/auth.service';
+import { AdminSanphamchitietComponent } from './admin-sanphamchitiet/admin-sanphamchitiet.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { AuthService } from './Service/auth.service';
     AdminCustomProductComponent,
     AdminLoginComponent,
     AdminAccountComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    AdminSanphamchitietComponent
   ],
   imports: [
     BrowserModule,

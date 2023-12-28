@@ -1,12 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../Service/product.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { product } from '../Interface/product';
 
 @Component({
   selector: 'app-admin-sanpham',
   templateUrl: './admin-sanpham.component.html',
   styleUrl: './admin-sanpham.component.css'
 })
-export class AdminSanphamComponent {
-  selectedbar: string = 'trang-thai-don-hang';
+export class AdminSanphamComponent implements OnInit{
+  selectedbar: string = 'tat-ca-san-pham';
+  product: any;
+
+  constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute) {}
+
+  // ngOnInit(): void {
+  //   this.productService.getData().subscribe(
+  //     {next: (dat) => this.product = dat, 
+  //       error: (err) => this.errMsg = err.message
+      
+  //     } );
+  // }
+
+  ngOnInit() {
+    this.productService.getData().subscribe((data: product[]) => {
+      this.product = data;
+    });
+
+    
+  }
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
