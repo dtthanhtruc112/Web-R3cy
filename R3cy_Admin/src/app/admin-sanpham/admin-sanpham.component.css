@@ -68,8 +68,9 @@ table{
     width: 90%;
 }
 
-td{
+td, th{
     text-align: center;
+    border-bottom: 1px solid black;
 }
 
 tr, tbody{

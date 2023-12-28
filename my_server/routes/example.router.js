@@ -35,8 +35,159 @@ router.get('/', (req, res) => {
 })
 
 
-router.use(bodyParser.json({ limit: '10mb' })); // Hoặc giá trị lớn hơn tùy vào nhu cầu của bạn
+router.use(bodyParser.json({ limit: '10mb' })); 
 router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
+//  CART
+// Middleware để kiểm tra xem người dùng đã đăng nhập hay chưa
+
+
+const checkAuth = (req, res, next) => {
+  if (req.session && req.session.userid) {
+    console.log("Session Data:", req.session);
+    // Nếu đã đăng nhập, tiếp tục xử lý
+    next();
+  } else {
+    res.status(401).json({ message: 'Unauthorized' });
+  }
+};
+
+// Middleware để kiểm tra giỏ hàng của người dùng
+const checkCart = async (req, res, next) => {
+  if (req.session.userid) {
+    try {
+      const user = await User.findById(req.session.userid);
+      if (user && user.cart) {
+        req.cart = user.cart;
+      } else {
+        req.cart = [];
+      }
+    } catch (error) {
+      console.error('Error checking user cart:', error);
+      req.cart = [];
+    }
+  } else {
+    req.cart = req.session.cart || [];
+  }
+  next();
+};
+// Router lấy sản phẩm theo id 
+router.get('/product/:id', cors(), (req, res) => {
+    const productId = req.params.id;
+  
+    console.log('Nhận yêu cầu cho ID sản phẩm:', productId);
+  
+    // Tìm sản phẩm theo id (số nguyên)
+    Product.findOne({ id: parseInt(productId) })
+      .then(product => {
+        console.log('Tìm thấy sản phẩm:', product);
+  
+        if (!product) {
+          return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+        }
+  
+        res.json(product);
+      })
+      .catch(error => {
+        console.error('Lỗi khi tìm sản phẩm:', error);
+        res.status(500).json({ error: error.message });
+      });
+  });
+
+// Route để thêm sản phẩm vào giỏ hàng
+router.post('/cart/add', checkAuth, checkCart, async (req, res) => {
+    try {
+      const { productId, quantity } = req.body;
+      const product = await Product.findById(productId);
+  
+      if (product) {
+        // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+        const existingItem = req.cart.find(item => item.productId.toString() === productId.toString());
+  
+        if (existingItem) {
+          // Nếu sản phẩm đã có trong giỏ hàng, cập nhật số lượng
+          existingItem.quantity += quantity;
+        } else {
+          // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới vào giỏ hàng
+          req.cart.push({ productId, quantity });
+        }
+  
+        // Lưu giỏ hàng mới vào session hoặc cơ sở dữ liệu tùy thuộc vào việc người dùng đã đăng nhập hay chưa
+        if (req.session.userid) {
+          const user = await User.findByIdAndUpdate(req.session.userid, { cart: req.cart }, { new: true });
+          req.cart = user.cart;
+        } else {
+          req.session.cart = req.cart;
+          req.session.save();
+        }
+  
+        res.status(200).json({ message: 'Product added to cart successfully', cart: req.cart });
+      } else {
+        res.status(404).json({ message: 'Product not found' });
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  
+// Route để cập nhật số lượng sản phẩm trong giỏ hàng
+router.post('/cart/update', checkAuth, checkCart, async (req, res) => {
+  try {
+    const { productId, quantity } = req.body;
+
+    // Tìm sản phẩm trong giỏ hàng
+    const cartItem = req.cart.find(item => item.productId.toString() === productId.toString());
+
+    if (cartItem) {
+      // Cập nhật số lượng sản phẩm
+      cartItem.quantity = quantity;
+
+      // Lưu giỏ hàng mới vào session
+      req.session.cart = req.cart;
+      req.session.save();
+
+      res.status(200).json({ message: 'Cart updated successfully', cart: req.cart });
+    } else {
+      res.status(404).json({ message: 'Product not found in cart' });
+    }
+  } catch (error) {
+    console.error('Error updating cart:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route để xử lý thanh toán và tạo đơn hàng
+router.post('/checkout', checkAuth, checkCart, async (req, res) => {
+  try {
+    // Lấy thông tin giỏ hàng từ session
+    const cartItems = req.cart || [];
+
+    // Tạo đơn hàng và lưu vào cơ sở dữ liệu
+    const order = new Order({
+      userid: req.session.userid,
+      items: cartItems
+    });
+
+    await order.save();
+
+    // Xóa thông tin giỏ hàng tạm thời từ session
+    req.session.cart = [];
+    req.session.save();
+
+    res.status(200).json({ message: 'Order created successfully' });
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+
+
+
 
 // Router lấy thông tin sản phẩm
 router.get('/product', cors(), (req, res) =>
@@ -45,6 +196,9 @@ router.get('/product', cors(), (req, res) =>
     .catch(error => { res.status(500).json({ err: error.mesage }) }
     ));
 
+    const mongoose = require('mongoose');
+
+    
 //Router lấy thông tin sản phẩm theo từng phân loại
 router.get('/product/gia-dung', cors(), (req, res) =>
   Product.find({ category1: "Gia dụng" })
@@ -89,6 +243,18 @@ router.get('/product/tren-300', cors(), (req, res) =>
     .catch(error => { res.status(500).json({ err: error.mesage }) }
     ));
 
+//Router sửa thông tin sản phẩm
+router.patch("/sanpham/:id", cors(), async(req, res) =>{
+  try{
+      await Product.updateOne({id: req.params.id}, {
+          $set: {price: req.body.price}
+      })
+      res.send("Success!");
+  }catch(error){
+      res.json({error: error.mesage})
+  }
+})
+
 
 router.get('/orders', async (req, res) => {
   try {
@@ -127,6 +293,26 @@ router.get("/orders/user/:userid/:ordernumber", async (req, res) => {
     res.status(500).json({ err: error.message });
   }
 });
+
+// Router để lấy đơn hàng theo ordernumber
+router.get("/orders/:ordernumber", async (req, res) => {
+  try {
+    const ordernumber = req.params.ordernumber;
+
+    // Truy vấn để lấy đơn hàng cụ thể theo ordernumber
+    const order = await Order.findOne({ ordernumber }).populate({ path: 'products', model: 'Product' });
+
+    if (!order) {
+      console.log(`Order not found for ordernumber ${ordernumber}`);
+      return res.status(404).json({ err: "Order not found" });
+    }
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ err: error.message });
+  }
+});
+
 
 // Lấy danh sách sản phẩm trong order
 router.get("/orders/user/:userid/:ordernumber/products", async (req, res) => {

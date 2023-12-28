@@ -12,7 +12,7 @@ export class CartIconComponent {
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cartCount = this.cartService.getCart().items?.length ?? 0;
+    // this.cartCount = this.cartService.getCart().items?.length ?? 0;
 
 
   }

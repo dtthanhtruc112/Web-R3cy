@@ -7,37 +7,35 @@
     <div class="container">
         <div class="container_item">
             <div class="tieude">
-                <h4 class="h4" (click)="showContent('trang-thai-don-hang')" [ngClass]="{ 'selected': selectedbar === 'trang-thai-don-hang' }">Tất cả sản phẩm</h4>
-                <h4 class="h4" (click)="showContent('don-hang-moi')" [ngClass]="{ 'selected': selectedbar === 'don-hang-moi' }">Tồn kho</h4>
+                <h4 class="h4" (click)="showContent('tat-ca-san-pham')" [ngClass]="{ 'selected': selectedbar === 'tat-ca-san-pham' }">Tất cả sản phẩm</h4>
+                <h4 class="h4" (click)="showContent('ton-kho')" [ngClass]="{ 'selected': selectedbar === 'ton-kho' }">Tồn kho</h4>
             </div>
         </div>
-        <div class="container_item">
+        <!-- <div class="container_item">
             <label for="show">Hiển thị: 
                 <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1" type="number" onchange="loadJson()">
             </label>
-        </div>
+        </div> -->
         <div class="container_item">
             <button>Thêm điều kiện lọc</button>
             <input type="text" placeholder="Tìm kiếm">
         </div>
         <div class="container_item">
-            <div *ngIf="selectedbar === 'trang-thai-don-hang'">
+            <div *ngIf="selectedbar === 'tat-ca-san-pham'">
                 <table>
                     <tr>
-                        <th></th>
                         <th>Tên</th>
                         <th>Phân loại</th>
                         <th>Chi tiết</th>
                     </tr>
-                    <tbody>
-                        <td></td>
-                        <td>Cốc thủy tinh 300ml</td>
-                        <td>Đồ trang trí</td>
-                        <td>Bank</td>
+                    <tbody *ngFor="let p of product">
+                        <td>{{p.name}}</td>
+                        <td>{{p.category1}}</td>
+                        <td [routerLink]="['/sanpham',p.id]">></td>
                     </tbody>
                 </table>
             </div>
-            <div *ngIf="selectedbar === 'don-hang-moi'">
+            <div *ngIf="selectedbar === 'ton-kho'">
                 <table>
                     <tr>
                         <th>Mã</th>
@@ -69,6 +67,10 @@
                 <button class="p" (click)="addReason()">Cập nhật</button>
                 <button class="p" (click)="closePopup()">Đóng</button>
             </div>
+        </div>
+
+        <div class="hidden">
+
         </div>
     </div>
 </div>
