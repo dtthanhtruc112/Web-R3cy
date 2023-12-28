@@ -5,17 +5,24 @@
     <div class="container">
         <div class="container_item">
             <div class="tieude">
-                <h4 class="h4" (click)="showContent('trang-thai-don-hang')" [ngClass]="{ 'selected': selectedbar === 'trang-thai-don-hang' }">Trạng thái đơn hàng</h4>
-                <h4 class="h4" (click)="showContent('don-hang-moi')" [ngClass]="{ 'selected': selectedbar === 'don-hang-moi' }">Đơn hàng mới</h4>
-                <h4 class="h4" (click)="showContent('chua-nhan-hang')" [ngClass]="{ 'selected': selectedbar === 'chua-nhan-hang' }">Chưa nhận hàng</h4>
-                <h4 class="h4" (click)="showContent('da-giao')" [ngClass]="{ 'selected': selectedbar === 'da-giao' }">Hoàn thành</h4>
-                <h4 class="h4" (click)="showContent('da-huy')" [ngClass]="{ 'selected': selectedbar === 'da-huy' }">Đã hủy</h4>
-                <h4 class="h4" (click)="showContent('hoan-tra')" [ngClass]="{ 'selected': selectedbar === 'hoan-tra' }">Hoàn/trả hàng</h4>
+                <h4 class="h4" (click)="showContent('trang-thai-don-hang')"
+                    [ngClass]="{ 'selected': selectedbar === 'trang-thai-don-hang' }">Trạng thái đơn hàng</h4>
+                <h4 class="h4" (click)="showContent('don-hang-moi')"
+                    [ngClass]="{ 'selected': selectedbar === 'don-hang-moi' }">Đơn hàng mới</h4>
+                <h4 class="h4" (click)="showContent('chua-nhan-hang')"
+                    [ngClass]="{ 'selected': selectedbar === 'chua-nhan-hang' }">Chưa nhận hàng</h4>
+                <h4 class="h4" (click)="showContent('da-giao')" [ngClass]="{ 'selected': selectedbar === 'da-giao' }">
+                    Hoàn thành</h4>
+                <h4 class="h4" (click)="showContent('da-huy')" [ngClass]="{ 'selected': selectedbar === 'da-huy' }">Đã
+                    hủy</h4>
+                <h4 class="h4" (click)="showContent('hoan-tra')" [ngClass]="{ 'selected': selectedbar === 'hoan-tra' }">
+                    Hoàn/trả hàng</h4>
             </div>
         </div>
         <div class="container_item">
-            <label for="show">Hiển thị: 
-                <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1" type="number">
+            <label for="show">Hiển thị:
+                <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1"
+                    type="number">
             </label>
         </div>
         <div class="container_item">
@@ -24,7 +31,7 @@
         </div>
         <div class="container_item">
             <div *ngIf="selectedbar === 'trang-thai-don-hang'">
-                <table >
+                <table>
                     <tr>
                         <th>Mã</th>
                         <th (click)="sortTable('ordereddate')">Ngày tạo</th>
@@ -33,14 +40,30 @@
                         <th>Trạng thái</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
-                    <!-- <tbody *ngFor="let order of Orders"> -->
-                    <tbody *ngFor="let order of filteredOrders">
-                        <td>{{order.ordernumber}}</td>
+                    <tbody *ngFor="let order of Orders">
+                        <!-- <tbody *ngFor="let order of filteredOrders"> -->
+                        <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
                         <td>{{order.totalOrderValue}}</td>
+                        <div class="overlay" *ngIf="showOverlay"></div>
+                        <div class="popup" *ngIf="orderdetailPopup">
+                            <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
+                            <div *ngIf="selectedOrder">
+                                <p>Mã đơn hàng: {{ selectedOrder.ordernumber }}</p>
+                                <p>Các sản phẩm chi tiết của đơn hàng:</p>
+                                <!-- Hiển thị thông tin chi tiết sản phẩm -->
+                                <ul *ngFor="let product of selectedOrder.products">
+                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}đ</li>
+                                </ul>
+                            </div>
+                            <div class="button">
+                                <button class="p" (click)="closePopup()">Đóng</button>
+                            </div>
+                            
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -56,7 +79,7 @@
                         <th>Xử lý </th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Chờ xử lí'])">
-                        <td>{{order.ordernumber}}</td>
+                        <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
@@ -72,17 +95,35 @@
                                     {{order.paymentstatus}}
                                 </ng-container>
                                 <ng-template #showCheckIcon>
-                                    <i class="bi bi-check-circle-fill" (click)="updatePaymentStatus(order)" ></i>
+                                    <i class="bi bi-check-circle-fill" (click)="updatePaymentStatus(order)"></i>
                                 </ng-template>
                             </ng-template>
                         </td>
-                        <td><i class="bi bi-check-circle-fill" (click)="updateOrderStatus(order)"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
+                        <td><i class="bi bi-check-circle-fill" (click)="updateOrderStatus(order)"></i><i
+                                class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
                         <div class="popup" *ngIf="reasonPopup">
                             <h2 class="h2">Thêm lý do từ chối</h2>
-                            <textarea class="p" id="reason" placeholder="Nhập lý do từ chối..." [(ngModel)]="reason"></textarea>
+                            <textarea class="p" id="reason" placeholder="Nhập lý do từ chối..."
+                                [(ngModel)]="reason"></textarea>
                             <br>
                             <button class="p" (click)="addReason(order)">Cập nhật</button>
                             <button class="p" (click)="closePopup()">Đóng</button>
+                        </div>
+                        <div class="overlay" *ngIf="showOverlay"></div>
+                        <div class="popup" *ngIf="orderdetailPopup">
+                            <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
+                            <div *ngIf="selectedOrder">
+                                <p>Mã đơn hàng: {{ selectedOrder.ordernumber }}</p>
+                                <p>Các sản phẩm chi tiết của đơn hàng:</p>
+                                <!-- Hiển thị thông tin chi tiết sản phẩm -->
+                                <ul *ngFor="let product of selectedOrder.products">
+                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}đ</li>
+                                </ul>
+                            </div>
+                            <div class="button">
+                                <button class="p" (click)="closePopup()">Đóng</button>
+                            </div>
+                            
                         </div>
                     </tbody>
                 </table>
@@ -98,12 +139,28 @@
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Đang giao', 'Chờ lấy hàng'])">
-                        <td>{{order.ordernumber}}</td>
+                        <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
                         <td>{{order.totalOrderValue}}</td>
+                        <div class="overlay" *ngIf="showOverlay"></div>
+                        <div class="popup" *ngIf="orderdetailPopup">
+                            <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
+                            <div *ngIf="selectedOrder">
+                                <p>Mã đơn hàng: {{ selectedOrder.ordernumber }}</p>
+                                <p>Các sản phẩm chi tiết của đơn hàng:</p>
+                                <!-- Hiển thị thông tin chi tiết sản phẩm -->
+                                <ul *ngFor="let product of selectedOrder.products">
+                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}đ</li>
+                                </ul>
+                            </div>
+                            <div class="button">
+                                <button class="p" (click)="closePopup()">Đóng</button>
+                            </div>
+                            
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -118,12 +175,28 @@
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Đã giao'])">
-                        <td>{{order.ordernumber}}</td>
+                        <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
                         <td>{{order.totalOrderValue}}</td>
+                        <div class="overlay" *ngIf="showOverlay"></div>
+                        <div class="popup" *ngIf="orderdetailPopup">
+                            <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
+                            <div *ngIf="selectedOrder">
+                                <p>Mã đơn hàng: {{ selectedOrder.ordernumber }}</p>
+                                <p>Các sản phẩm chi tiết của đơn hàng:</p>
+                                <!-- Hiển thị thông tin chi tiết sản phẩm -->
+                                <ul *ngFor="let product of selectedOrder.products">
+                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}đ</li>
+                                </ul>
+                            </div>
+                            <div class="button">
+                                <button class="p" (click)="closePopup()">Đóng</button>
+                            </div>
+                            
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -138,12 +211,28 @@
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Đã hủy'])">
-                        <td>{{order.ordernumber}}</td>
+                        <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
                         <td>{{order.totalOrderValue}}</td>
+                        <div class="overlay" *ngIf="showOverlay"></div>
+                        <div class="popup" *ngIf="orderdetailPopup">
+                            <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
+                            <div *ngIf="selectedOrder">
+                                <p>Mã đơn hàng: {{ selectedOrder.ordernumber }}</p>
+                                <p>Các sản phẩm chi tiết của đơn hàng:</p>
+                                <!-- Hiển thị thông tin chi tiết sản phẩm -->
+                                <ul *ngFor="let product of selectedOrder.products">
+                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}đ</li>
+                                </ul>
+                            </div>
+                            <div class="button">
+                                <button class="p" (click)="closePopup()">Đóng</button>
+                            </div>
+                            
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -158,12 +247,28 @@
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Trả hàng'])">
-                        <td>{{order.ordernumber}}</td>
+                        <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
                         <td>{{order.totalOrderValue}}</td>
+                        <div class="overlay" *ngIf="showOverlay"></div>
+                        <div class="popup" *ngIf="orderdetailPopup">
+                            <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
+                            <div *ngIf="selectedOrder">
+                                <p>Mã đơn hàng: {{ selectedOrder.ordernumber }}</p>
+                                <p>Các sản phẩm chi tiết của đơn hàng:</p>
+                                <!-- Hiển thị thông tin chi tiết sản phẩm -->
+                                <ul *ngFor="let product of selectedOrder.products">
+                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}đ</li>
+                                </ul>
+                            </div>
+                            <div class="button">
+                                <button class="p" (click)="closePopup()">Đóng</button>
+                            </div>
+                            
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -172,7 +277,7 @@
                 <p class="p">Đã lưu thông tin thành công!</p>
                 <button class="p" (click)="closePopup()">Đóng</button>
             </div>
-            
+
         </div>
     </div>
 </div>

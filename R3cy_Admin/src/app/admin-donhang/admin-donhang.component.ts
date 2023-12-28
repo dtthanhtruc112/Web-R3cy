@@ -28,6 +28,9 @@ export class AdminDonhangComponent implements OnInit {
     this.showOverlay = false;
     this.showSuccessPopup = false;
     this.reasonPopup = false;
+    this.selectedOrder = null;
+    this.orderdetailPopup = false;
+
   }
 
   saveData(): void {
@@ -51,6 +54,8 @@ export class AdminDonhangComponent implements OnInit {
     this.reasonPopup = true;
   }
 
+  
+
   reason: string = '';
   addReason(order: any): void {
     const userId = order ? order.userid : null; // Replace with the actual user ID
@@ -71,6 +76,27 @@ export class AdminDonhangComponent implements OnInit {
       );
   }
 
+  orderdetailPopup: boolean = false;
+
+  // Hiển thị detail order
+  selectedOrder: any;
+  showOrderDetails(order: any): void {
+    this.selectedOrder = order;
+    this.showOverlay = true;
+    this.orderdetailPopup = true;
+  }
+
+  showProductDetails(productId: number): void {
+    // Gọi hàm hiển thị chi tiết sản phẩm từ service
+    this._orderService.getOrderById(productId.toString()).subscribe((order: any) => {
+      this.selectedOrder = order;
+      this.showOverlay = true;
+      this.orderdetailPopup = true;
+    });
+  }
+
+
+
   constructor(
     private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private zone: NgZone, private location: Location
   ) { }
@@ -90,27 +116,6 @@ export class AdminDonhangComponent implements OnInit {
       return orderTotal + (product.quantity * product.price);
     }, 0);
   }
-
-  // loadOrderInfo(): void {
-  //   const userId = 1;
-
-  //   this._orderService.getOrder(userId).subscribe((orders: any[]) => {
-  //     this.Orders = orders.map(order => ({
-  //       ...order,
-  //       products: (order.products as any[]).map((product: any) => ({
-  //         ...product,
-  //         productValue: product.quantity * product.price
-  //       })),
-  //       totalOrderValue: this.calculateTotalOrderValue(order) // Calculate total value for each order
-  //     }));
-
-  //     this.initialOrders = [...this.Orders]; // Lưu trữ danh sách ban đầu
-  //     this.filterOrders();
-
-  //     // Now each order has a "totalOrderValue" property representing the total value for that order
-  //     console.log('Orders with Total Order Value:', this.Orders);
-  //   });
-  // }
 
   loadOrderInfo(): void {
     this._orderService.getAllOrders().subscribe((orders: any[]) => {
@@ -139,38 +144,38 @@ export class AdminDonhangComponent implements OnInit {
     this.Orders = [...this.initialOrders]; // Khôi phục danh sách về trạng thái ban đầu
   }
 
-  // filterOrders(): void {
-  //   // Lọc danh sách đơn hàng dựa trên trạng thái đã chọn
-  //   if (this.selectedStatus !== 'Tất cả đơn hàng') {
-  //     this.Orders = this.Orders.filter(order => order.order_status === this.selectedStatus);
-  //   }
-  //   if (this.searchOrderNumber) {
-  //     this.filteredOrders = this.Orders.filter(order =>
-  //       order.ordernumber.includes(this.searchOrderNumber)
-  //     );
-  //   } else {
-  //     this.filteredOrders = this.Orders;
-  //   }
-  // }
-
   filterOrders(): void {
     // Lọc danh sách đơn hàng dựa trên trạng thái đã chọn
     if (this.selectedStatus !== 'Tất cả đơn hàng') {
-      this.Orders = this.initialOrders.filter(order => order.order_status === this.selectedStatus);
-    } else {
-      this.Orders = [...this.initialOrders]; // Display all orders when no status filter is applied
+      this.Orders = this.Orders.filter(order => order.order_status === this.selectedStatus);
     }
-  
-    // Lọc danh sách đơn hàng dựa trên mã đơn hàng
-     // Apply search filter
-     if (this.searchOrderNumber) {
+    if (this.searchOrderNumber) {
       this.filteredOrders = this.Orders.filter(order =>
         order.ordernumber.includes(this.searchOrderNumber)
       );
     } else {
-      this.filteredOrders = [...this.Orders];
+      this.filteredOrders = this.Orders;
     }
   }
+
+  // filterOrders(): void {
+  //   // Lọc danh sách đơn hàng dựa trên trạng thái đã chọn
+  //   if (this.selectedStatus !== 'Tất cả đơn hàng') {
+  //     this.Orders = this.initialOrders.filter(order => order.order_status === this.selectedStatus);
+  //   } else {
+  //     this.Orders = [...this.initialOrders]; // Display all orders when no status filter is applied
+  //   }
+  
+  //   // Lọc danh sách đơn hàng dựa trên mã đơn hàng
+  //    // Apply search filter
+  //    if (this.searchOrderNumber) {
+  //     this.filteredOrders = this.Orders.filter(order =>
+  //       order.ordernumber.includes(this.searchOrderNumber)
+  //     );
+  //   } else {
+  //     this.filteredOrders = [...this.Orders];
+  //   }
+  // }
 
   filteredOrders: Order[] = [];
   searchOrderNumber: string = '';
@@ -339,6 +344,10 @@ export class AdminDonhangComponent implements OnInit {
       }
     });
   }
+
+
+
+  
 
 
 }
