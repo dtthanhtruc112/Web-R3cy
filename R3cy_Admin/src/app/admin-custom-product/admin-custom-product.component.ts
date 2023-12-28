@@ -1,4 +1,4 @@
-// admin-custom-product.component.ts
+ // admin-custom-product.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CustomProductService } from '../Service/customproduct.service';
 import { CustomProduct } from '../Interface/CustomProduct';

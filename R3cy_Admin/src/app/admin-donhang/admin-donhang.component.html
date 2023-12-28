@@ -20,7 +20,7 @@
         </div>
         <div class="container_item">
             <button>Thêm điều kiện lọc</button>
-            <input type="text" placeholder="Tìm kiếm">
+            <input type="text" placeholder="Tìm kiếm" [(ngModel)]="orderNumberInput" (keyup.enter)="getOrderDetails()">
         </div>
         <div class="container_item">
             <div *ngIf="selectedbar === 'trang-thai-don-hang'">
@@ -33,7 +33,8 @@
                         <th>Trạng thái</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
-                    <tbody *ngFor="let order of Orders">
+                    <!-- <tbody *ngFor="let order of Orders"> -->
+                    <tbody *ngFor="let order of filteredOrders">
                         <td>{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>

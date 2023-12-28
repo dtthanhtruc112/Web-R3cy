@@ -34,6 +34,13 @@ export class OrderService {
     );
   }
 
+  getOrderById(ordernumber: string): Observable<Order> {
+    return this._http.get<Order>(`${this._url}/orders/${ordernumber}`).pipe(
+      retry(3),
+      catchError(this.handleErr)
+    );
+  }
+
   updateOrderStatus(userId: number, orderNumber: string, status: string, paymentStatus: boolean): Observable<Order> {
     const updateData = {
       order_status: status,

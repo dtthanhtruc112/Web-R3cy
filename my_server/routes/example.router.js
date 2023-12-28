@@ -128,6 +128,26 @@ router.get("/orders/user/:userid/:ordernumber", async (req, res) => {
   }
 });
 
+// Router để lấy đơn hàng theo ordernumber
+router.get("/orders/:ordernumber", async (req, res) => {
+  try {
+    const ordernumber = req.params.ordernumber;
+
+    // Truy vấn để lấy đơn hàng cụ thể theo ordernumber
+    const order = await Order.findOne({ ordernumber }).populate({ path: 'products', model: 'Product' });
+
+    if (!order) {
+      console.log(`Order not found for ordernumber ${ordernumber}`);
+      return res.status(404).json({ err: "Order not found" });
+    }
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ err: error.message });
+  }
+});
+
+
 // Lấy danh sách sản phẩm trong order
 router.get("/orders/user/:userid/:ordernumber/products", async (req, res) => {
   try {
