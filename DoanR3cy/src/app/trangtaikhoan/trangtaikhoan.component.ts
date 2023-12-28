@@ -31,6 +31,12 @@ export class TrangtaikhoanComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.selectedbar = params['id'] || 'hoso_content'; // Set a default value if 'id' is not present
     });
+
+    // Lưu trữ discount
+    const storedDiscounts = sessionStorage.getItem('discounts');
+    if (storedDiscounts) {
+      this.discounts = JSON.parse(storedDiscounts);
+    }
   }
 
   // Chỉnh sửa hồ sơ
@@ -111,18 +117,21 @@ export class TrangtaikhoanComponent implements OnInit {
       this.cdr.detectChanges(); // Manually trigger change detection
     }, 3000);
 
-    this.discountService.getDiscountByCode(this.discountCode)
-      .subscribe(
-        (data) => {
-          // Add the new discount to the array
-          this.discounts.push(data);
-          // Handle data or update your component as needed
-        },
-        (error) => {
-          console.error('Error fetching discount:', error);
-          // Handle error as needed
-        }
-      );
+    this.discountService.getDiscountByCode(this.discountCode).subscribe(
+      (data) => {
+        // Add the new discount to the array
+        this.discounts.push(data);
+
+        // Save the updated discounts array to session storage
+        sessionStorage.setItem('discounts', JSON.stringify(this.discounts));
+
+        // Handle data or update your component as needed
+      },
+      (error) => {
+        console.error('Error fetching discount:', error);
+        // Handle error as needed
+      }
+    );
   }
 
   // Tính số ngày còn lại:
