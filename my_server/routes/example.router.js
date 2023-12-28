@@ -251,14 +251,6 @@ router.put("/orders/user/:userid/:ordernumber", async (req, res) => {
 
 
 
-router.get('/users', async (req, res) => {
-  try {
-    const users = await User.find()
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ err: error.message });
-  }
-});
 
 // Cập nhật sản phẩm trong order 
 router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req, res) => {
@@ -606,6 +598,17 @@ router.get('/customProducts', async (req, res) => {
     res.json(customProducts);
   } catch (error) {
     console.error('Error retrieving custom products:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Get customers information
+router.get('/customers', async (req, res) => {
+  try {
+    const customers = await User.find();
+    res.json(customers);
+  } catch (error) {
+    console.error('Error retrieving customers:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

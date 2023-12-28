@@ -49,7 +49,10 @@ accountCustomerSchema.pre('save', async function (next) {
   next();
 });
 
-accountCustomerSchema.methods.remove = function () {
+// accountCustomerSchema.methods.remove = function () {
+//   return this.deleteOne();
+// };
+accountCustomerSchema.methods.delete = function () {
   return this.deleteOne();
 };
 

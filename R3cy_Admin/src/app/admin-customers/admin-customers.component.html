@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -52,4 +52,49 @@
     </div>
 
 
-</body>
+</body> -->
+
+
+<div class="max-box">
+
+    <div class="header">
+        <div class="h4 font-bold">Quản lý khách hàng</div>
+    </div>
+
+    <div class="container">
+        <div class="sub-header">
+
+            <div class="sort font-bold">
+                <label for="sortInput">
+                    <p>Hiển thị |</p><input type="text" id="sortInput" [(ngModel)]="sortColumn"
+                        (keyup.enter)="sortTable()" class="font-bold">
+                </label>
+            </div>
+
+            <div class="search">
+                <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchKeyword" (keyup.enter)="handleSearch()">
+            </div>
+        </div>
+
+        <div class="content">
+            <table *ngIf="displayedData.length > 0" >
+                <thead>
+                    <tr>
+                        <th *ngFor="let columnName of customColumnNames">{{ columnName }}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let customer of customerData">
+                        <td>{{ customer.hovaten }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.sdt }}</td>
+                        <td>{{ customer.diachi}}</td>
+                        <td>{{ customer.ngaysinh}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

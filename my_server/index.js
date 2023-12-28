@@ -7,18 +7,9 @@ const cors=require('cors')
 app.use(cors())
 const mongoose = require('mongoose')
 app.use('/image', express.static('uploads'));
+require('dotenv').config();
 
 
-// Mongoose connect mongodb cloud
-// mongoose.connect(process.env.CONNECTION_STRING)
-// .then(()=>{
-//     useNewUrlParser: true,
-//     useUnifi
-    
-// })
-// .catch((err)=>{
-//     console.log(err);
-// })
 
 
 //Http Request Logger

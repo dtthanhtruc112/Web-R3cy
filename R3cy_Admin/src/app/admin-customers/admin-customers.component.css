@@ -1,4 +1,4 @@
-div{
+/* div{
   font-family: Inter-Regular;
 }
 
@@ -57,4 +57,134 @@ tr, tbody{
 }
 .title{
   color: var(--color-blue)
+} */
+
+
+div{
+  font-family: Inter-Regular;
+}
+
+.max-box{
+  margin-left: 280px;
+}
+
+.font-bold{
+  font-weight: bold;
+}
+
+.header > .h4{
+  color: var(--color-blue)
+}
+
+.container{
+  border: 1px solid var(--color-grey);
+  margin-top: 50px;
+}
+
+.content{
+  margin: 0px 15px 50px 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 70px;
+}
+
+th, td {
+  border-bottom: 1px solid var(--color-grey);
+  text-align: left;
+  padding: 8px;
+}
+
+.header{
+  margin-top: 50px;
+}
+
+.sub-header{
+  display: flex;
+  flex-direction: row;
+  /* position: sticky; */
+  /* top: 0; */
+  width: 100vw;
+  margin: 15px;
+}
+
+.search{
+  top: 0;
+  display: flex;
+  flex: 1;
+  /* align-items: left; */
+}
+
+input[type="text"] {
+  width: 50%;
+  box-sizing: border-box;
+  /* color: var(--color-grey); */
+  border: 1px solid var(--color-grey);
+  border-radius: 10px;
+  padding: 0px 10px;
+  font-size: 16px;
+}
+
+.sort {
+  display: flex;
+  flex: 0.3;
+  align-items: center;
+  color: var(--color-white);
+  border-radius: 10px;
+}
+
+.sort > label {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex; /* Added this line */
+  align-items: center; /* Added this line */
+  background-color: var(--color-blue);
+  border-radius: 10px;
+}
+
+.sort > label > p{
+  padding: 0px 10px;
+}
+
+.sort > label > input {
+  border: none;
+  width: 50px;
+  font-size: 16px;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+/* Media queries for tablet */
+@media screen and (max-width: 768px) {
+  .container {
+    overflow-x: auto; /* Enable horizontal scroll on tablets */
+  }
+}
+
+/* Media queries for mobile */
+@media screen and (max-width: 480px) {
+  .container {
+    overflow-x: auto; /* Enable horizontal scroll on mobile devices */
+  }
+
+  .search{
+      margin-left: 30px;
+  }
+
+  .search > input[type="text"] {
+      width: 75%;
+      box-sizing: border-box;
+  }
+
+  .sort >label >input{
+      font-size: 14px;
+  }
+
+  .sort >label > p {
+      font-size: 14px;
+      margin: 0px;
+  }
+
 }
