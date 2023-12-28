@@ -133,11 +133,23 @@ div{
 
 .icon_item {
     position: relative;
-
-    margin: 5px 25px;
+    margin: 5px 20px;
     color: var(--color-blue);
     font-size: 25px;
 }
+
+.cart-icon{
+    position: relative;
+    color: var(--color-blue);
+    font-size: 25px;
+}
+.cart-icon .cart-count{
+    position: absolute; 
+    margin-left: 0px  ;
+    margin-top: 10px;
+}
+
+
 
 .button {
     background-color: var(--color-blue);

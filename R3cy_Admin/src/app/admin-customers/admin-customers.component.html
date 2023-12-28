@@ -55,28 +55,25 @@
 </body> -->
 
 
-<div class="max-box">
+<div class="fullpage">
 
     <div class="header">
-        <div class="h4 font-bold">Quản lý khách hàng</div>
+        <h4 class="h4 font-bold">Quản lý khách hàng</h4>
     </div>
 
     <div class="container">
-        <div class="sub-header">
+        <div class="container_item sub-header">
 
             <div class="sort font-bold">
-                <label for="sortInput">
-                    <p>Hiển thị |</p><input type="text" id="sortInput" [(ngModel)]="sortColumn"
-                        (keyup.enter)="sortTable()" class="font-bold">
-                </label>
-            </div>
-
-            <div class="search">
+                <label for="sortInput"><p>Hiển thị |</p><input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable()" class="font-bold"></label>
+              </div>
+          
+              <div class="search">
                 <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchKeyword" (keyup.enter)="handleSearch()">
-            </div>
+              </div>
         </div>
 
-        <div class="content">
+        <div class="container_item">
             <table *ngIf="displayedData.length > 0" >
                 <thead>
                     <tr>
@@ -85,12 +82,17 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let customer of customerData">
-                        <td>{{ customer.hovaten }}</td>
-                        <td>{{ customer.email }}</td>
-                        <td>{{ customer.sdt }}</td>
-                        <td>{{ customer.diachi}}</td>
-                        <td>{{ customer.ngaysinh}}</td>
+                    <tr *ngFor="let item of displayedData">
+                        <td>{{ item.hovaten }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.sdt }}</td>
+                        <!-- <td>{{ item.diachi[0].tendiachi}}</td> -->
+                        <td>
+                            <div *ngFor="let diaChi of item.diachi">
+                                <p>{{ diaChi.tendiachi }}</p>
+                            </div>
+                        </td>
+                        <td>{{ item.ngaysinh}}</td>
                     </tr>
                 </tbody>
             </table>

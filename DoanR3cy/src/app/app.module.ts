@@ -28,7 +28,6 @@ import { DanhgiasanphamComponent } from './danhgiasanpham/danhgiasanpham.compone
 import { ProductCheckoutComponent } from './product-checkout/product-checkout.component';
 import { RouterModule, Routes, Router, NavigationEnd } from '@angular/router';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
-import { UsersFormComponent } from './users-form/users-form.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { BadgeModule } from 'primeng/badge';
 import { CartService } from './Service/cart.service';

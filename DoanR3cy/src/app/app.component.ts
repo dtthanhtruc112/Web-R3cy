@@ -11,10 +11,12 @@ import { AuthService } from './Service/auth.service';
 export class AppComponent implements OnInit  {
   title = 'DoanR3cy';
 
+
   mobileMenu: HTMLElement | null = null;
   navMenu: HTMLElement | null = null;
 
   ngOnInit() {
+
     document.addEventListener('DOMContentLoaded', () => {
       const h4Elements = document.querySelectorAll('footer h4');
 

@@ -1,5 +1,9 @@
 .cart-icon {
-    border-radius: 50%;    
-    background-color: orange;
+    border-radius: 50%;
     color: white;
+    font-size: 11px;
+    font-style: normal;
+    text-align: center;
+    padding: 3px 3px 3px 3px;
+    background-color: #f6c32c;
 }
