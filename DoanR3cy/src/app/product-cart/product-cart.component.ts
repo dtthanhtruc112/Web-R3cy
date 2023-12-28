@@ -27,7 +27,6 @@ export class ProductCartComponent implements OnInit, OnDestroy {
   cartCount = 0;
   endSubs$: Subject<any> = new Subject();
   totalPrice: number = 0;
-  // product: product[] = [];
 
 
 
@@ -41,7 +40,7 @@ export class ProductCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._getCartDetails();
+    this.getCartDetails();
     // this._getOrderSummary();
 
 
@@ -56,56 +55,54 @@ export class ProductCartComponent implements OnInit, OnDestroy {
 
 
 
-//  hiện sản phẩm trong cart
-  private _getCartDetails() {
-    this.cartService.cart$.pipe().subscribe((respCart) => {
-      respCart.items?.forEach((cartItem) => {
-        if (cartItem?.id) {
-        this.productService.getProduct(cartItem.id).subscribe((respproductt: product) => { 
-          this.cartItemsDetailed.push({
-            productt: respproductt,
-            quantity: cartItem.quantity
+  getCartDetails() {
+    this.cartService.getCart().subscribe((cartData) => {
+      const cartItems = cartData.cart || [];
+      this.cartItemsDetailed = [];
+  
+      cartItems.forEach((cartItem: CartItem) => {
+        if (cartItem.id) {  // Đổi từ cartItem.productId thành cartItem.id
+          this.productService.getProduct(cartItem.id).subscribe((respproductt: product) => {
+            this.cartItemsDetailed.push({
+              productt: respproductt,
+              quantity: cartItem.quantity
+            });
+            this.calculateTotalPrice();
+          });
+        }
+      });
+    });
+  }
+  
 
 
-          })
-        })
-      }})
-    })
-  } 
-   
 
-
-
-
-  // tính tổng sản phẩm theo số lượng
   calculateSubtotal(cartItem: any): number {
-    const price = cartItem.product.price;
-    const quantity = cartItem.quantity;
+    const price = cartItem.productt?.price || 0;
+    const quantity = cartItem.quantity || 0;
     const subtotal = price * quantity;
-
     return subtotal;
-  }
-
-  // xóa item
-  deleteCartItem(cartItem: CartItemDetailed) {
-    this.cartService.deleteCartItem(cartItem.productt.id)
-  }
-
-// cập nhật số lượng
-  updateCartItemQuantity(event: { value: any; }, cartItem: CartItemDetailed) {
-
-    this.cartService.setCartItem({
-      id: cartItem.productt.id,
-      quantity: event.value
-    }, true)
-  }
-
-  // phần tổng đơn hàng: giá sp + phí vận chuyển + voucher, chưa làm
-  getOrderSummary() {} 
-
 }
 
+  calculateTotalPrice() {
+    this.totalPrice = this.cartItemsDetailed.reduce((total, cartItem) => {
+      return total + this.calculateSubtotal(cartItem);
+    }, 0);
+  }
 
+  deleteCartItem(cartItem: CartItemDetailed) {
+    this.cartService.removeFromCart(cartItem.productt.id).subscribe(() => {
+      this.getCartDetails();
+    });
+  }
 
+  updateCartItemQuantity(event: { value: any; }, cartItem: CartItemDetailed) {
+    this.cartService.updateCart(cartItem.productt.id, event.value).subscribe(() => {
+      this.getCartDetails();
+    });
+  }
 
-
+  getOrderSummary() {
+    // Gọi các phương thức hoặc service cần thiết để lấy thông tin tổng đơn hàng
+  }
+}

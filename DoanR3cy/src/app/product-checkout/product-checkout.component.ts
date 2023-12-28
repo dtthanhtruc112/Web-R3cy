@@ -86,13 +86,14 @@ export class ProductCheckoutComponent {
 
 
   private _getCartItems() {
-    const cart: Cart = this.cartService.getCart();
-    this.orderItems = cart.items?.map(item => {
-      return {
-        product: item.id,
-        quantity: item.quantity
-      }
-    }) ?? []
+    this.cartService.getCart().subscribe((cart: Cart) => {
+      this.orderItems = cart.items?.map(item => {
+        return {
+          product: item.id,
+          quantity: item.quantity
+        };
+      }) ?? [];
+    });
   }
 
   // đặt hàng

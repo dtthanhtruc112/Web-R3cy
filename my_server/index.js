@@ -44,6 +44,10 @@ app.use('/', blogRouter)
 
 const accountRouter = require('./routes/account.router')
 app.use('/', accountRouter )
+
+const cartRouter = require('./routes/cart.router')
+app.use('/', cartRouter )
+
 // app.use('/send-email', routes);
 
 app.listen(port, () => {

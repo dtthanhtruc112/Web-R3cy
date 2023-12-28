@@ -80,7 +80,6 @@ export class AppModule {
         window.scrollTo(0, 0); // Cuộn lên đầu trang sau mỗi navigation
       }
     });
-    cartService.initCartLocalStorage();
 
   };
 }

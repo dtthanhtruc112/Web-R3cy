@@ -46,12 +46,14 @@
                                         <a class="type minitext">Phân loại: {{selectedOption}}</a>
                                     </td>
                                     <td class="product-price">
-                                        <span class="price">{{cartItem.productt.price}}.000 đ</span>
+                                        <span class="price">{{cartItem.productt?.price}}.000 đ</span>
                                     </td>
                                     <td class="product-quantity">
                                         <div class="pro-qty">
 
-                                            <p-inputNumber mode="decimal" 
+                                            <p-inputNumber 
+                                            name="{{'quantity_' + cartItem.productt.id}}"
+                                            mode="decimal" 
                                             [showButtons]="true"
                                                 [inputId]="cartItem.productt.id" 
                                                 [min]="1" [max]="1000" 

@@ -8,6 +8,7 @@ import { CartService } from '../Service/cart.service';
 import { NavigationExtras } from '@angular/router'
 import { CartItem } from '../models/cart';
 import { Subject, Observable } from 'rxjs';
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +26,7 @@ export class ProductComponent implements OnInit {
   endSubs$: Subject<any> = new Subject();
   quantity = 1 ;
 
-  constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService) { }
+  constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService,  private authService: AuthService,) { }
 
   ngOnInit(): void {
     this._router.paramMap.pipe(
@@ -62,19 +63,45 @@ export class ProductComponent implements OnInit {
   //   this.cartService.setSelectedOption(option);
   // }
   
-  // addToCart(item: product) {
-  //   // Gọi phương thức addToCart của CartService để thêm sản phẩm vào giỏ hàng
-  //   if (this.selectOption){
-  //     const NavigationExtras: NavigationExtras = {
-  //       queryParams: {
-  //         option: this.selectOption
-  //       }
-  //     };
-  //     this.router.navigate(['/cart'], NavigationExtras);
-      
-  //   }else {
-
-  //   }
+  addProductToCart(): void {
+    if (this.productt) {
+      const productId = this.productt.id;
+      const quantity = this.quantity;
+  
+      // Lấy thông tin người dùng hiện tại từ AuthService
+      const userId = this.authService.getUserId();
+  
+      // Kiểm tra xem người dùng đã đăng nhập hay chưa
+      if (userId) {
+        // Nếu đã đăng nhập, thực hiện hàm thêm vào giỏ hàng với userId
+        this.cartService.addToCart(productId, quantity).subscribe(
+          response => {
+            console.log(response);
+            // Handle the response if needed
+            alert('Sản phẩm đã được thêm vào giỏ hàng');
+          },
+          error => {
+            console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
+            // Handle the error if needed
+            console.log('Alert should be displayed here.'); // Add this line
+            alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+          }
+        );
+      } else {
+        // Nếu chưa đăng nhập, chuyển hướng người dùng sang trang đăng nhập
+        this.router.navigate(['/login']);
+        // Trả về một Observable để không gây lỗi khi subscribe
+        // (Bạn cũng có thể không trả về Observable nếu không muốn)
+        return;
+      }
+    } else {
+      // Handle the case where the product is not loaded
+      console.error('Sản phẩm chưa được tải');
+      // Display an error message
+      console.log('Alert should be displayed here.'); // Add this line
+      alert('Sản phẩm chưa được tải');
+    }
+  }
     
   //   try{
   //     this.cartService.addToCart(item);
@@ -122,23 +149,6 @@ export class ProductComponent implements OnInit {
   //     console.error('Sản phẩm hoặc số lượng chưa được tải');
   //   }
   // }
-
-  addProductToCart() {
-    console.log('productt:', this.productt);
-    console.log('quantity:', this.quantity);
-    if (this.productt) {
-      const cartItem: CartItem = {
-        id: this.productt.id,
-        quantity: this.quantity
-      };
-      this.cartService.setCartItem(cartItem);
-    } else {
-      // Xử lý trường hợp sản phẩm chưa được tải
-      console.error('Sản phẩm chưa được tải');
-      // Hiển thị thông báo lỗi
-      alert('Sản phẩm chưa được tải');
-    }
-  }
 
   
 
