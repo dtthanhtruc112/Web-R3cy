@@ -478,6 +478,52 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
   }
 });
 
+//  Tạo order
+router.post("/orders/user/:userid", async (req, res) => {
+  try {
+      const { userid } = req.params;
+
+      // Tạo một đối tượng Order mới từ dữ liệu yêu cầu
+      const newOrder = new Order({
+          userid,
+          channel: req.body.channel || 'Website',
+          order_status: req.body.order_status || 'Chờ xử lí',
+          ordereddate: req.body.ordereddate,
+          paymentmethod: req.body.paymentmethod,
+          paymentstatus: req.body.paymentstatus,
+          shipfee: req.body.shipfee,
+          products: [], // Khởi tạo danh sách sản phẩm trống
+          rejectreason: req.body.rejectreason,
+      });
+
+      // Duyệt qua danh sách sản phẩm từ yêu cầu và thêm vào danh sách sản phẩm của đơn hàng
+      if (req.body.products && req.body.products.length > 0) {
+          req.body.products.forEach(productData => {
+              const product = {
+                  id: productData.id || 0, // Thay đổi logic tạo ID tùy thuộc vào yêu cầu của bạn
+                  category1: productData.category1,
+                  category2: productData.category2,
+                  name: productData.name,
+                  price: productData.price,
+                  quantity: productData.quantity,
+                  feedback: productData.feedback,
+              };
+              newOrder.products.push(product);
+          });
+      }
+
+      // Lưu đối tượng Order vào cơ sở dữ liệu
+      const createdOrder = await Order.create(newOrder);
+
+      // Trả về đơn hàng đã được tạo mới
+      res.json(createdOrder);
+  } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ err: error.message });
+  }
+});
+
+
 
 
 // BLOG 
