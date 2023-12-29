@@ -24,7 +24,7 @@
                     <h2 class="h2">THÔNG TIN TÀI KHOẢN</h2>
                     <p class="p">Quản lý thông tin hồ sơ để bảo mật tài khoản </p>
                     <hr>
-                    <div >
+                    <div>
                         <div class="hoso_item">
                             <div class="hoso_item_content">
                                 <div class="hoso_item_row">
@@ -48,10 +48,12 @@
                                 <div class="hoso_item_row" *ngIf="selectedGender">
                                     <label class="hoso_item_label p" for="sdt">Giới tính:</label>
                                     <label>
-                                        <input type="radio" [value]="'Nam'" [(ngModel)]="selectedGender" name="gioitinh">Nam
+                                        <input type="radio" [value]="'Nam'" [(ngModel)]="selectedGender"
+                                            name="gioitinh">Nam
                                     </label>
                                     <label>
-                                        <input type="radio" [value]="'Nữ'" [(ngModel)]="selectedGender" name="gioitinh">Nữ
+                                        <input type="radio" [value]="'Nữ'" [(ngModel)]="selectedGender"
+                                            name="gioitinh">Nữ
                                     </label>
                                     <label>
                                         <input type="radio" [value]="'Khác'" [(ngModel)]="selectedGender"
@@ -76,19 +78,20 @@
                             <div class="hoso_img">
                                 <img class="circle_img" #selectedImage [src]="imageSrc" alt=""> <br>
                                 <button type="button" class="button p" (click)="selectImage()">Chọn ảnh</button>
-                                <input type="file" #myfile name="myfile" accept="image/*" (change)="displayImage($event)">
+                                <input type="file" #myfile name="myfile" accept="image/*"
+                                    (change)="displayImage($event)">
                             </div>
-                        </div>      
-                        
+                        </div>
+
                         <div class="hoso_item_row">
                             <button type="button" class="button p" (click)="saveData()">Lưu</button>
-                        </div>                  
+                        </div>
                     </div>
 
                 </div>
             </div>
 
-            
+
 
 
 
@@ -124,18 +127,26 @@
 
                     </div>
                     <div class="voucher_container">
-                        <div class="voucher_item"  *ngFor="let discount of discounts">
+                        <div class="voucher_item" *ngFor="let discount of discounts">
                             <img src="../../assets/img/voucher.png" alt="">
-                            <span class="minitext" id="hoso_change" routerLink="/cart" routerLinkActive="active">Dùng ngay</span>
-                            <p class="minitext" >{{discount.code}} <br>
+
+
+                            <span class="minitext" id="hoso_change" routerLink="/cart" routerLinkActive="active">Dùng
+                                ngay</span>
+                            <p class="minitext">{{discount.code}} <br>
                                 {{discount.description}}</p>
-                            <p class="minitext" >Sắp hết hạn: Còn {{ calculateDaysDifference(discount.expired_date) }} ngày <span class="minitext" >Điều kiện</span></p>
+                            <ng-container *ngIf="isUsed">
+                                <p class="p">Đã hết lượt sử dụng rồi!</p>
+                            </ng-container>
+                            <p class="minitext expired_date">Sắp hết hạn: Còn {{
+                                calculateDaysDifference(discount.expired_date) }} ngày <span class="minitext">Điều
+                                    kiện</span></p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            
+
 
             <div *ngIf="selectedbar === 'donhang_content'">
                 <div class="hoso_container">
@@ -164,7 +175,7 @@
                             </div>
                             <div class="donhang_itemdetal_row" *ngIf="order.rejectreason !== ''">
                                 <p>Lý do hủy: {{ order.rejectreason }}</p>
-                            </div>                            
+                            </div>
                             <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
                                 <img src="" alt="">
                                 <p class="don_item_label">{{ product.name }} <br>
@@ -172,41 +183,44 @@
                                 <p id="total">{{product.productValue }}</p>
                                 <img src="" alt="">
                             </div>
-                          <hr>
-                          <div class="donhang_itemdetal_row">
-                            <!-- <button class="button p" type="button">
+                            <hr>
+                            <div class="donhang_itemdetal_row">
+                                <!-- <button class="button p" type="button">
                                 {{ order.order_status === 'Chờ xử lí' ? 'Hủy đơn' : 'Mua lại' }}
                               </button> -->
-                              <button *ngIf="order.order_status === 'Chờ xử lí'" class="button p" type="button" (click)="openCancelPopup()">
-                                Hủy đơn
-                              </button>
-                              <div class="popup" *ngIf="showCancelPopup">
-                                <p class="p">Bạn có chắc chắn hủy đơn hàng?</p>
-                                <button class="p" (click)="closePopup()">Đóng</button>
-                                <button class="p" (click)="confirmCancel(order)">Xác nhận</button>
+                                <button *ngIf="order.order_status === 'Chờ xử lí'" class="button p" type="button"
+                                    (click)="openCancelPopup()">
+                                    Hủy đơn
+                                </button>
+                                <div class="popup" *ngIf="showCancelPopup">
+                                    <p class="p">Bạn có chắc chắn hủy đơn hàng?</p>
+                                    <button class="p" (click)="closePopup()">Đóng</button>
+                                    <button class="p" (click)="confirmCancel(order)">Xác nhận</button>
+                                </div>
+
+                                <button *ngIf="order.order_status !== 'Chờ xử lí'" class="button p" type="button"
+                                    routerLink="/cart" routerLinkActive="active">
+                                    Mua lại
+                                </button>
+                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
                             </div>
-                              
-                              <button *ngIf="order.order_status !== 'Chờ xử lí'" class="button p" type="button" routerLink="/cart" routerLinkActive="active">
-                                Mua lại
-                              </button>
-                            <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
-                          </div>
                         </div>
-                      </div>
-                      
+                    </div>
+
                 </div>
             </div>
-            
+
 
             <div class="overlay" *ngIf="showOverlay"></div>
             <div class="popup" *ngIf="showSuccessPopup">
                 <p class="p">Đã lưu thông tin thành công!</p>
                 <button class="p" (click)="closePopup()">Đóng</button>
             </div>
-            
+
             <div class="popup" *ngIf="addressPopup">
                 <h2 class="h2">Thêm Địa Chỉ Mới</h2>
-                <textarea class="p" id="newAddress" placeholder="Nhập địa chỉ mới..." [(ngModel)]="newAddress"></textarea>
+                <textarea class="p" id="newAddress" placeholder="Nhập địa chỉ mới..."
+                    [(ngModel)]="newAddress"></textarea>
                 <br>
                 <button class="p" (click)="addNewAddress()">Thêm Địa Chỉ</button>
                 <button class="p" (click)="closePopup()">Đóng</button>
@@ -231,14 +245,15 @@
                                 <p id="total">{{product.productValue }}</p>
                                 <img src="" alt="">
                             </div>
-                          <hr>
-                          <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
-                            <button class="button p" type="button" [routerLink]="['/danhgia', order.ordernumber]" routerLinkActive="active" >Đánh giá</button>
-                            <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
-                          </div>
+                            <hr>
+                            <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
+                                <button class="button p" type="button" [routerLink]="['/danhgia', order.ordernumber]"
+                                    routerLinkActive="active">Đánh giá</button>
+                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
+                            </div>
                         </div>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>

@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../Service/auth.service';
 import { DiscountService } from '../Service/discount.service';
+import { Discount } from '../Interface/Discount';
 
 
 
@@ -103,6 +104,9 @@ export class TrangtaikhoanComponent implements OnInit {
   discountCode: string = ''; // Property to bind to the input field
   discounts: any[] = []; // Property to store the fetched discount information
 
+  isUsed: boolean = false;
+
+
   saveData(): void {
     // alert('Đã lưu thông tin');
     // Hiển thị overlay
@@ -118,14 +122,43 @@ export class TrangtaikhoanComponent implements OnInit {
     }, 3000);
 
     this.discountService.getDiscountByCode(this.discountCode).subscribe(
-      (data) => {
-        // Add the new discount to the array
-        this.discounts.push(data);
+      (data: Discount | Discount[]) => {
+        const discountsArray = Array.isArray(data) ? data : [data];
+    
+        discountsArray.forEach((discount) => {
+          const userids = discount.userids;
 
-        // Save the updated discounts array to session storage
-        sessionStorage.setItem('discounts', JSON.stringify(this.discounts));
+          // Log userid for debugging
+          console.log('userid:', userids);
+    
+          // Add the new discount to the array
+          this.discounts.push(discount);
+    
+          // Save the updated discounts array to sessionStorage
+          sessionStorage.setItem('discounts', JSON.stringify(this.discounts));
+    
+          if (this.isUserEligible(userids)) {
+            // Người dùng đủ điều kiện, đánh dấu là đã sử dụng
+            this.isUsed = true;
+            console.log('Người dùng đủ điều kiện, đã sử dụng:', this.isUsed);
+          } else {
+            console.log('Người dùng không đủ điều kiện, chưa sử dụng:', this.isUsed);
+          }
+        });
 
-        // Handle data or update your component as needed
+        // const userids = data.userids;
+        // // Add the new discount to the array
+        // this.discounts.push(data);
+
+        // // Save the updated discounts array to session storage
+        // sessionStorage.setItem('discounts', JSON.stringify(this.discounts));
+
+        // // Handle data or update your component as needed
+
+        // if (this.isUserEligible(userids)) {
+        //   // Người dùng đủ điều kiện, đánh dấu là đã sử dụng
+        //   this.isUsed = true;
+        // }
       },
       (error) => {
         console.error('Error fetching discount:', error);
@@ -133,6 +166,28 @@ export class TrangtaikhoanComponent implements OnInit {
       }
     );
   }
+
+  // Xem voucher đã được sử dụng hay chưa
+  isUserEligible(userids: any[]): boolean {
+    // Lấy userId của người dùng hiện tại từ AuthService
+    const userid = this.authService.getUserId();
+  
+    if (userid !== null) {
+      const userId = parseInt(userid, 10);
+  
+      console.log('userId:', userId);
+      console.log('userids:', userids);
+  
+      // Sử dụng phương thức some để kiểm tra xem userId có trong danh sách userids hay không
+      // some sẽ trả về true nếu ít nhất một phần tử trong mảng thỏa mãn điều kiện
+      return userids.some(id => id.userid === userId);
+    }
+  
+    // Nếu userid là null hoặc không thể chuyển đổi thành số, trả về giá trị mặc định (ví dụ: false)
+    return false;
+  }
+  
+
 
   // Tính số ngày còn lại:
   calculateDaysDifference(expiredDate: string): number {
@@ -150,7 +205,7 @@ export class TrangtaikhoanComponent implements OnInit {
     return dayDiff;
   }
 
-
+  
 
   // Xóa địa chỉ
   deleteDiv(element: HTMLElement): void {

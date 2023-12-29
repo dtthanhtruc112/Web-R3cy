@@ -5,4 +5,5 @@ export interface Discount {
     status: String,
     activate_date: String,
     expired_date: String,
+    userids: {userid: number }[]
 }

@@ -255,7 +255,11 @@ span {
     margin-bottom: 10px;
     width: 250px;
 }
-.voucher_item p:nth-child(even) {
+
+.voucher_item > .p{
+    font-weight: bold;
+}
+.expired_date {
     color: var(--color-red);
 }
 .voucher_item span {
