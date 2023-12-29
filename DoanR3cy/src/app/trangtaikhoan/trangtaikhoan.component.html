@@ -128,21 +128,22 @@
                     </div>
                     <div class="voucher_container">
                         <div class="voucher_item" *ngFor="let discount of discounts">
-                            <img src="../../assets/img/voucher.png" alt="">
-
-
-                            <span class="minitext" id="hoso_change" routerLink="/cart" routerLinkActive="active">Dùng
-                                ngay</span>
-                            <p class="minitext">{{discount.code}} <br>
-                                {{discount.description}}</p>
-                            <ng-container *ngIf="isUsed">
-                                <p class="p">Đã hết lượt sử dụng rồi!</p>
-                            </ng-container>
-                            <p class="minitext expired_date">Sắp hết hạn: Còn {{
-                                calculateDaysDifference(discount.expired_date) }} ngày <span class="minitext">Điều
-                                    kiện</span></p>
+                          <img src="../../assets/img/voucher.png" alt="">
+                      
+                          <span class="minitext" id="hoso_change" routerLink="/cart" routerLinkActive="active">Dùng ngay</span>
+                          
+                          <p class="minitext">{{discount.code}} <br> {{discount.description}}</p>
+                      
+                          <ng-container *ngIf="isUsed(discount.code)">
+                            <p class="p">Đã hết lượt sử dụng rồi!</p>
+                          </ng-container>
+                      
+                          <p class="minitext expired_date">
+                            Sắp hết hạn: Còn {{ calculateDaysDifference(discount.expired_date) }} ngày 
+                            <span class="minitext">Điều kiện</span>
+                          </p>
                         </div>
-                    </div>
+                      </div>
                 </div>
             </div>
 

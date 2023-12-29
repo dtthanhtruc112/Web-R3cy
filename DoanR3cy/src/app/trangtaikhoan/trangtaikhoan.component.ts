@@ -38,6 +38,21 @@ export class TrangtaikhoanComponent implements OnInit {
     if (storedDiscounts) {
       this.discounts = JSON.parse(storedDiscounts);
     }
+
+    // Retrieve displayed vouchers from sessionStorage
+    const displayedVouchers = sessionStorage.getItem('displayedVouchers');
+    if (displayedVouchers) {
+      const displayedVouchersArray = displayedVouchers.split(',');
+      this.displayedVouchers = new Set(displayedVouchersArray);
+      console.log('Displayed vouchers from sessionStorage:', this.displayedVouchers);
+    }
+
+    // Retrieve usedStatus from sessionStorage
+    const usedStatus = sessionStorage.getItem('usedStatus');
+    if (usedStatus) {
+      this.usedStatus = JSON.parse(usedStatus);
+      console.log('Used status from sessionStorage:', this.usedStatus);
+    }
   }
 
   // Chỉnh sửa hồ sơ
@@ -101,14 +116,14 @@ export class TrangtaikhoanComponent implements OnInit {
     this.showCancelPopup = false
   }
 
-  discountCode: string = ''; // Property to bind to the input field
-  discounts: any[] = []; // Property to store the fetched discount information
+  discountCode: string = '';
+  discounts: any[] = [];
+  displayedVouchers: Set<string> = new Set<string>();
 
-  isUsed: boolean = false;
-
+  // Track used status for each discount code
+  usedStatus: { [key: string]: boolean } = {};
 
   saveData(): void {
-    // alert('Đã lưu thông tin');
     // Hiển thị overlay
     this.showOverlay = true;
 
@@ -124,41 +139,38 @@ export class TrangtaikhoanComponent implements OnInit {
     this.discountService.getDiscountByCode(this.discountCode).subscribe(
       (data: Discount | Discount[]) => {
         const discountsArray = Array.isArray(data) ? data : [data];
-    
-        discountsArray.forEach((discount) => {
-          const userids = discount.userids;
 
-          // Log userid for debugging
-          console.log('userid:', userids);
-    
-          // Add the new discount to the array
-          this.discounts.push(discount);
-    
-          // Save the updated discounts array to sessionStorage
-          sessionStorage.setItem('discounts', JSON.stringify(this.discounts));
-    
-          if (this.isUserEligible(userids)) {
-            // Người dùng đủ điều kiện, đánh dấu là đã sử dụng
-            this.isUsed = true;
-            console.log('Người dùng đủ điều kiện, đã sử dụng:', this.isUsed);
-          } else {
-            console.log('Người dùng không đủ điều kiện, chưa sử dụng:', this.isUsed);
+        discountsArray.forEach((discount) => {
+          const discountCode: string = (discount.code as string);
+
+          if (!this.displayedVouchers.has(discountCode)) {
+            this.displayedVouchers.add(discountCode);
+
+            // Mark the voucher as displayed in sessionStorage
+            const displayedVouchers = sessionStorage.getItem('displayedVouchers') || '';
+            sessionStorage.setItem('displayedVouchers', `${displayedVouchers},${discountCode}`);
+
+            // Load used status from sessionStorage
+            const usedStatus = sessionStorage.getItem('usedStatus') || '{}';
+            this.usedStatus = JSON.parse(usedStatus);
+
+            this.discounts.push(discount);
+            sessionStorage.setItem('discounts', JSON.stringify(this.discounts));
+
+            if (this.isUserEligible(discount.userids)) {
+              if (!this.usedStatus[discountCode]) {
+                this.usedStatus[discountCode] = true;
+
+                // Save used status in sessionStorage
+                sessionStorage.setItem('usedStatus', JSON.stringify(this.usedStatus));
+
+                console.log('Người dùng đủ điều kiện, đã sử dụng:', this.usedStatus);
+              }
+            } else {
+              console.log('Người dùng không đủ điều kiện, chưa sử dụng:', this.usedStatus);
+            }
           }
         });
-
-        // const userids = data.userids;
-        // // Add the new discount to the array
-        // this.discounts.push(data);
-
-        // // Save the updated discounts array to session storage
-        // sessionStorage.setItem('discounts', JSON.stringify(this.discounts));
-
-        // // Handle data or update your component as needed
-
-        // if (this.isUserEligible(userids)) {
-        //   // Người dùng đủ điều kiện, đánh dấu là đã sử dụng
-        //   this.isUsed = true;
-        // }
       },
       (error) => {
         console.error('Error fetching discount:', error);
@@ -167,27 +179,21 @@ export class TrangtaikhoanComponent implements OnInit {
     );
   }
 
-  // Xem voucher đã được sử dụng hay chưa
   isUserEligible(userids: any[]): boolean {
-    // Lấy userId của người dùng hiện tại từ AuthService
     const userid = this.authService.getUserId();
-  
+
     if (userid !== null) {
       const userId = parseInt(userid, 10);
-  
-      console.log('userId:', userId);
-      console.log('userids:', userids);
-  
-      // Sử dụng phương thức some để kiểm tra xem userId có trong danh sách userids hay không
-      // some sẽ trả về true nếu ít nhất một phần tử trong mảng thỏa mãn điều kiện
       return userids.some(id => id.userid === userId);
     }
-  
-    // Nếu userid là null hoặc không thể chuyển đổi thành số, trả về giá trị mặc định (ví dụ: false)
+
     return false;
   }
-  
 
+  // Function to check if a discount is used
+  isUsed(discountCode: string): boolean {
+    return this.usedStatus[discountCode] || false;
+  }
 
   // Tính số ngày còn lại:
   calculateDaysDifference(expiredDate: string): number {
@@ -205,7 +211,7 @@ export class TrangtaikhoanComponent implements OnInit {
     return dayDiff;
   }
 
-  
+
 
   // Xóa địa chỉ
   deleteDiv(element: HTMLElement): void {
@@ -322,65 +328,6 @@ export class TrangtaikhoanComponent implements OnInit {
     });
   }
 
-  // Orders: Order[] = [];
-  // totalOrderValue: number = 0;
-  // selectedStatus: string = 'Tất cả đơn hàng';
-  // initialOrders: Order[] = [];
-
-  // loadOrderInfo(): void {
-  //   this._orderService.getOrderByUserId(1).subscribe((userOrders: Order[] | undefined) => {
-  //     if (userOrders) {
-  //       this.Orders = userOrders.map(order => {
-  //         const mappedOrder: Order = {
-  //           ...order,
-  //           products: order.products.map(product => {
-  //             const productValue = product.quantity * product.price;
-  //             return {
-  //               ...product,
-  //               productValue: productValue
-  //             };
-  //           }),
-  //           totalOrderValue: 0 // Initialize totalOrderValue to 0
-  //         };
-  //         mappedOrder.totalOrderValue = this.calculateTotalOrderValue(mappedOrder); // Calculate totalOrderValue
-  //         console.log(`Order ${order.ordernumber}: Total Order Value=${mappedOrder.totalOrderValue}`);
-  //         return mappedOrder;
-  //       });
-
-  //       this.initialOrders = [...this.Orders];
-  //       this.filterOrders();
-
-  //       // Log total order value for each order
-  //       this.Orders.forEach(order => {
-  //         console.log(`Order Number ${order.ordernumber}: Total Order Value = ${order.totalOrderValue}`);
-  //       });
-  //     }
-  //   });
-  // }
-
-  // calculateTotalOrderValue(order: Order): number {
-  //   return order.products.reduce((orderTotal: number, product: Product) => {
-  //     return orderTotal + (product.productValue || 0);
-  //   }, 0);
-  // }
-
-
-
-  // resetOrders(): void {
-  //   this.Orders = [...this.initialOrders];
-  // }
-
-  // filterOrders(): void {
-  //   if (this.selectedStatus !== 'Tất cả đơn hàng') {
-  //     this.Orders = this.Orders.filter(order => order.status === this.selectedStatus);
-  //   }
-  // }
-
-  // changeStatusFilter(status: string): void {
-  //   this.selectedStatus = status;
-  //   this.resetOrders();
-  //   this.filterOrders();
-  // }
 
   Orders: any[] = [];
   totalOrderValue: number = 0;
@@ -475,6 +422,6 @@ export class TrangtaikhoanComponent implements OnInit {
 
   }
 
- 
+
 
 }
