@@ -58,7 +58,6 @@ export class ProductCheckoutComponent {
 
   ngOnInit(): void{
     this._initCheckoutForm();
-    this._getCartItems();
   }
 
 
@@ -85,16 +84,16 @@ export class ProductCheckoutComponent {
 
 
 
-  private _getCartItems() {
-    this.cartService.getCart().subscribe((cart: Cart) => {
-      this.orderItems = cart.items?.map(item => {
-        return {
-          product: item.id,
-          quantity: item.quantity
-        };
-      }) ?? [];
-    });
-  }
+  // private _getCartItems() {
+  //   this.cartService.getCart().subscribe((cart: Cart) => {
+  //     this.orderItems = cart.items?.map(item => {
+  //       return {
+  //         product: item.id,
+  //         quantity: item.quantity
+  //       };
+  //     }) ?? [];
+  //   });
+  // }
 
   // đặt hàng
   placeOrder() {

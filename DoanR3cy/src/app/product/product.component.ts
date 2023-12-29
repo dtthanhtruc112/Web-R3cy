@@ -24,7 +24,8 @@ export class ProductComponent implements OnInit {
   productt: any;
   item: any;
   endSubs$: Subject<any> = new Subject();
-  quantity = 1 ;
+
+  quantity: number = 1;
 
   constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService,  private authService: AuthService,) { }
 
@@ -33,7 +34,6 @@ export class ProductComponent implements OnInit {
       map(params => this.selectedCode = Number(params.get('id'))),
       switchMap(id => this.productService.getProductById(id).pipe(
         switchMap(pro => this.productService.getData().pipe(
-          //   map(products => ({ product, relatedBlogs: product.filter(p => p.id !== id).slice(0, 3) }))
         ))
         // ))
       )))
@@ -42,115 +42,110 @@ export class ProductComponent implements OnInit {
         this.pro = data;
         console.log(this.pro);
         this.productt = this.pro[(this.selectedCode as number - 1)];
-        console.log(this.productt);
+        console.log('this.productt', this.productt);
       })
-    console.log(this.selectedCode);}
+    console.log('this.selectedCode', this.selectedCode);}
 
-    // this._router.paramMap.pipe(
-    //   map(params => this.selectedCode = Number(params.get('id'))),
-    //   switchMap(id => this.productService.getProductById(id))
-    // ).subscribe(data => {
-    //   if (Array.isArray(data)) {
-    //     this.pro = data;
-    //     console.log(this.pro);
-    //     this.productt = this.pro[(this.selectedCode as number - 1)];
-    //     console.log(this.productt);
-    //   }
-    // })}
 
-  // selectOption(option: string) {
-  //   this.selectedOption = option;
-  //   this.cartService.setSelectedOption(option);
-  // }
+  addToCart() {
+    // Kiểm tra đăng nhập
+    if (!this.authService.isLoggedIn()) {
+      // Chưa đăng nhập, chuyển hướng đến trang đăng nhập
+      this.router.navigate(['/login']);
+      return;
+    }
   
-  addProductToCart(): void {
-    if (this.productt) {
-      const productId = this.productt.id;
-      const quantity = this.quantity;
+    // Đã đăng nhập, lấy userID
+    const userId: string | null = this.authService.getUserId();
+    const productId = this.productt.id
+    if (userId !== null) {
+      // Gọi hàm addToCart chỉ khi userId không phải là null
+      console.log('productId:', productId);
+      console.log('quantity:', this.quantity);
   
-      // Lấy thông tin người dùng hiện tại từ AuthService
-      const userId = this.authService.getUserId();
-  
-      // Kiểm tra xem người dùng đã đăng nhập hay chưa
-      if (userId) {
-        // Nếu đã đăng nhập, thực hiện hàm thêm vào giỏ hàng với userId
-        this.cartService.addToCart(productId, quantity).subscribe(
-          response => {
-            console.log(response);
-            // Handle the response if needed
-            alert('Sản phẩm đã được thêm vào giỏ hàng');
-          },
-          error => {
-            console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
-            // Handle the error if needed
-            console.log('Alert should be displayed here.'); // Add this line
-            alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
-          }
-        );
-      } else {
-        // Nếu chưa đăng nhập, chuyển hướng người dùng sang trang đăng nhập
-        this.router.navigate(['/login']);
-        // Trả về một Observable để không gây lỗi khi subscribe
-        // (Bạn cũng có thể không trả về Observable nếu không muốn)
+      if (!productId || !Number.isInteger(productId) || productId <= 0 || !Number.isInteger(this.quantity) || this.quantity <= 0) {
+        console.error('Invalid productId or quantity');
+        console.log('productId:', productId);
+        console.log('quantity:', this.quantity);
+        // Xử lý trường hợp productId hoặc quantity không hợp lệ
         return;
       }
+  
+      this.cartService.addToCart(Number(userId), productId!, this.quantity).subscribe(
+        (response) => {
+          console.log('Response', response);
+          alert('Đã thêm thành công vào giỏ hàng')
+        },
+        (error) => {
+          console.error('Error adding to cart:', error);
+          alert("Đã xảy ra lỗi")
+          // Xử lý lỗi nếu có
+        }
+      );
     } else {
-      // Handle the case where the product is not loaded
-      console.error('Sản phẩm chưa được tải');
-      // Display an error message
-      console.log('Alert should be displayed here.'); // Add this line
-      alert('Sản phẩm chưa được tải');
+      console.error('User is not logged in.');
+      // Xử lý trường hợp người dùng chưa đăng nhập
     }
   }
+  
     
-  //   try{
-  //     this.cartService.addToCart(item);
-  //     this.router.navigate(['/cart'], { queryParams: { quantity: this.quantity } });
-      
-  //   }catch(err){
-  //     console.log(ErrorEvent)
-  //   }
-  // }
-
-  // addProductToCart() {
-  //   const cartItem: CartItem = {
-  //     id: this.productt.id,
-  //     quantity: this.quantity
-  //   }
-  
-  //   this.cartService.setCartItem(cartItem);
-  // }
-
-  // addProductToCart() {
-  //   console.log('productt:', this.productt);
-  // console.log('quantity:', this.quantity);
-  //   if (this.productt) {
-  //     const cartItem: CartItem = {
-  //       id: this.productt.id,
-  //       quantity: this.quantity
-  //     };
-  //     this.cartService.setCartItem(cartItem);
-  //   } else {
-  //     // Xử lý trường hợp sản phẩm chưa được tải
-  //     console.error('Sản phẩm chưa được tải');
-  //   }
-  // }
-
-  // addProductToCart() {
-  //   console.log('productt:', this.productt);
-  //   console.log('quantity:', this.quantity);
-  //   if (this.productt && this.quantity) {
-  //     const cartItem: CartItem = {
-  //       id: this.productt.id,
-  //       quantity: this.quantity
-  //     };
-  //     this.cartService.setCartItem(cartItem);
-  //   } else {
-  //     console.error('Sản phẩm hoặc số lượng chưa được tải');
-  //   }
-  // }
-
-  
+    // addProductToCart(productId: number, quantity: number): void {
+    //   const userId = this.authService.getUserId(); // Lấy userId từ AuthService của bạn
+    //   console.log('userid', userId);
+    
+    //   if (userId) {
+    //     // Đã đăng nhập
+    //     this.cartService.getCartByUserId(userId).subscribe(
+    //       (cart) => {
+    //         if (cart && cart.cartItems) {
+    //           if (cart.cartItems.length > 0) {
+    //             // Nếu đã có giỏ hàng, thêm sản phẩm vào giỏ hàng hiện có
+    //             this.cartService.addToCart(userId, productId, quantity).subscribe(
+    //               (response) => {
+    //                 console.log('Product added to existing cart:', response);
+    //                 // Xử lý khi sản phẩm được thêm vào giỏ hàng hiện có thành công
+    //               },
+    //               (error) => {
+    //                 console.error('Error adding product to existing cart:', error);
+    //                 // Xử lý khi có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng hiện có
+    //               }
+    //             );
+    //           } else {
+    //             // Nếu chưa có giỏ hàng, tạo giỏ hàng mới và thêm sản phẩm vào
+    //             const newCart = {
+    //               userid: userId,
+    //               cartItems: [{
+    //                 id: productId,
+    //                 quantity: quantity,
+    //                 // Thêm thông tin sản phẩm vào đây nếu cần
+    //               }]
+    //             };
+    
+    //             this.cartService.createCart(newCart).subscribe(
+    //               (response) => {
+    //                 console.log('New cart created and product added:', response);
+    //                 // Xử lý khi giỏ hàng mới được tạo và sản phẩm được thêm vào thành công
+    //               },
+    //               (error) => {
+    //                 console.error('Error creating cart and adding product:', error);
+    //                 // Xử lý khi có lỗi xảy ra khi tạo giỏ hàng mới hoặc thêm sản phẩm vào giỏ hàng mới
+    //               }
+    //             );
+    //           }
+    //         }
+    //       },
+    //       (error) => {
+    //         console.error('Error fetching cart:', error);
+    //         // Xử lý khi có lỗi xảy ra khi lấy thông tin giỏ hàng
+    //         // Ví dụ: Hiển thị thông báo lỗi cho người dùng
+    //       }
+    //     );
+    //   } else {
+    //     // Chưa đăng nhập, chuyển hướng người dùng đến trang đăng nhập
+    //     this.router.navigate(['/login']);
+    //   }
+    // }
+    
 
 }
 
