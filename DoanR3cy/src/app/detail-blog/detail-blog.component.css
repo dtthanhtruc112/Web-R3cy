@@ -1,10 +1,11 @@
 .imageThumBig {
     width: 60vw;
     height: auto;
+    text-align: center;
   }
   
   .imageThumBig img {
-    width: 100%;
+    width: 60%;
     height: auto;
     object-fit: cover;
     margin-bottom: 20px;
@@ -25,7 +26,7 @@
   
   .TitleTextAllPost {
     color: var(--color-blue);
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
     margin: 24px 0px;
   }
@@ -47,9 +48,10 @@
   }
   
   .Right {
-    width: 400px;
+    width: 300px;
     margin-left: 20px;
     align-self: flex-start;
+    margin-right: 40px;
   }
   
   .containerList {
@@ -61,7 +63,8 @@
   .listRelated {
     display: flex;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-blue);
+    border-radius: 10px;
     padding: 10px;
     flex: 1;
   }
@@ -99,8 +102,8 @@
         flex:1
     }
     .Right {
-        width: 300px;
-      margin-left: 0;
+        width: 70%;
+      margin: auto;
     }
     .blog-card{
       flex-direction: column;
@@ -112,18 +115,22 @@
       margin-right: 0;
     }
     .TitleTextAllPost{
-        font-size: 20px;
+        font-size: 16px;
     }
     .imageThumBig{
         margin: 0 auto;
+    }
+
+    h3{
+      text-align: center;
     }
   }
   @media (max-width: 480px) {
     .Left,
     .Right {
-      width: 100%;
-      margin-left: 0;
-    }
+      width: 70%;
+    margin: auto;
+  }
 
   
     .listRelated img {
@@ -133,7 +140,7 @@
     }
 
     .TitleTextAllPost{
-        font-size: 20px;
+        font-size: 16px;
     }
     .imageThumBig{
         width: 100%;
@@ -141,6 +148,10 @@
     .blog-card{
       flex-direction: column;
     } 
+
+    h3{
+      text-align: center;
+    }
   }
   /* Thêm media query cho màn hình tablet */
 @media (max-width: 1023px) {
@@ -150,7 +161,7 @@
       margin-right: 0;
     }
     .TitleTextAllPost{
-        font-size: 26px;
+        font-size: 20px;
     }
 }
 .listRelated:hover{

@@ -48,6 +48,7 @@ h2 {
 .bar_container {
     top: 25px;
     width: 15vw;
+    margin-right: 20px;
 }
 .circle_img {
     width: 110px;
@@ -310,7 +311,7 @@ span {
 .donhang_itemdetal_row #status{
     color: var(--color-blue);
     font-weight: bold;
-    margin-left: 22vw;
+    margin-left: 21vw;
     text-transform: uppercase;
 }
 .donhang_itemdetal_row #totalpayment{
@@ -320,6 +321,7 @@ span {
 }
 .donhang_itemdetal_row #total{
     margin-left: 21vw;
+    
 }
 .don_item_label{
     min-width: 160px;
@@ -332,8 +334,10 @@ span {
     margin-bottom: 10px;
 }
 /* PC - Desktop */
-@media screen and (max-width: 1200px) {
-    
+@media screen and (max-width: 850px) {
+    .donhang_itemdetal_row #total, .donhang_itemdetal_row #status{
+        margin-left: 14vw;
+    }
 }
 /* Tablet */
 @media screen and (max-width: 768px) {
@@ -350,18 +354,31 @@ span {
     .fullpage{
         margin-top: 100px;
     }
+
+    /* .donhang_itemdetal_row #status{
+        margin-left: 21px;
+    } */
+
     .donhang_itemdetal_row #totalpayment{
         margin-left: 18vw;
     }
-    .donhang_itemdetal_row #total{
-        margin-left: 12vw;
+    .donhang_itemdetal_row #total, .donhang_itemdetal_row #status{
+        margin-left: 10vw;
+    }
+}
+
+@media screen and (max-width: 700px){
+    .donhang_itemdetal_row #total, .donhang_itemdetal_row #status{
+        margin-left: 6vw;
     }
 }
 /* Mobile */
 @media screen and (max-width: 480px) {
     .bar_item{
         flex-direction: row;
-        width: 100%;
+        width: 100vw;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
     }
     .taikhoan_container{
         flex-direction: column;
@@ -371,8 +388,9 @@ span {
     }
 
     .hoso_container{
-        width: 100vw;
+        width: 90vw;
         min-width: 350px;
+        margin: auto;
     }
     .fullpage {
         /* position: fixed; */
@@ -386,9 +404,24 @@ span {
     }
     .taikhoan_container{
         width: 100vw;
+        margin: auto;
     }
     .hoso_item_row button{
         margin-left: 40.5%;
     }
+
+    #taikhoan_content {
+        margin: auto;
+    }
+
+    .circle_img{
+        display: none;
+    }
+
+    .taikhoan_item{
+        display: none;
+    }
+
+    
     
 }
