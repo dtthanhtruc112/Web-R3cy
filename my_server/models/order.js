@@ -8,7 +8,7 @@ const Order = new Schema({
     channel: { type: String, default: 'Website' },
     ordernumber: { type: Number, unique: true },
     order_status: { type: String, default: 'Chờ xử lí' },
-    ordereddate: String,
+    ordereddate: { type: Date, default: Date.now },
     paymentmethod: String,
     paymentstatus: { type: Boolean, default: false },
     shippingfee: Number,
