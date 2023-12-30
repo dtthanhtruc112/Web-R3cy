@@ -308,6 +308,14 @@ span {
 .donhang_itemdetal_row {
     display: flex;
 }
+
+.donhang_itemdetal_row img{
+    min-width: 100px;
+    height: 80px;
+    border-radius: 10px;
+    margin: 5px 5px;
+}
+
 .donhang_itemdetal_row #status{
     color: var(--color-blue);
     font-weight: bold;
@@ -320,7 +328,7 @@ span {
     font-weight: bold;
 }
 .donhang_itemdetal_row #total{
-    margin-left: 21vw;
+    margin-left: 12vw;
     
 }
 .don_item_label{
@@ -335,8 +343,12 @@ span {
 }
 /* PC - Desktop */
 @media screen and (max-width: 850px) {
-    .donhang_itemdetal_row #total, .donhang_itemdetal_row #status{
-        margin-left: 14vw;
+     .donhang_itemdetal_row #status{
+        margin-left: 13vw;
+    }
+
+    .donhang_itemdetal_row #total{
+        margin-left: 0vw;
     }
 }
 /* Tablet */
@@ -362,14 +374,26 @@ span {
     .donhang_itemdetal_row #totalpayment{
         margin-left: 18vw;
     }
-    .donhang_itemdetal_row #total, .donhang_itemdetal_row #status{
+    .donhang_itemdetal_row #status{
         margin-left: 10vw;
+    }
+
+    .donhang_itemdetal_row #total{
+        margin-left: 0vw;
     }
 }
 
 @media screen and (max-width: 700px){
-    .donhang_itemdetal_row #total, .donhang_itemdetal_row #status{
+     .donhang_itemdetal_row #status{
         margin-left: 6vw;
+    }
+
+    .donhang_itemdetal_row #total{
+        margin-left: 0vw;
+    }
+
+    .don_item_label{
+        max-width: 100px;
     }
 }
 /* Mobile */
@@ -419,6 +443,13 @@ span {
     }
 
     .taikhoan_item{
+        display: none;
+    }
+
+    .don_item_label{
+        max-width: 100px;
+    }
+    .donhang_itemdetal_row img{
         display: none;
     }
 

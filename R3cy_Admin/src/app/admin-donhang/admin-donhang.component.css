@@ -76,7 +76,7 @@ h3{
 }
 
 table{
-    width: 90%;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -262,6 +262,18 @@ td >i:hover{
     font-size: 16px;
     background-color: var(--color-blue);
     color: var(--color-white);
+  }
+
+  img{
+    min-width: 100px;
+    height: 80px;
+    margin: 0 5px;
+    border-radius: 10px;
+  }
+
+ 
+  ul, li span{
+    line-height: 80px;
   }
 
 @media screen and (max-width: 480px){
