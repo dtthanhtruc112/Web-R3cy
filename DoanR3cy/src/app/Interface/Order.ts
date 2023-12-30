@@ -19,7 +19,9 @@ export interface Order {
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
-  shipfee: number;
+  shippingfee?: number;
+  discount?: Number;
+  totalAmount?: Number;
 
   id: string;
   orderItems?: OrderItem[];
