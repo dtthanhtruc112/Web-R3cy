@@ -13,6 +13,9 @@ div {
 .containerContent {
     display: flex;
 }
+.custom-angular-editor {
+    text-align: justify;
+  }
 
 .Left {
     flex: 1; /* Left takes up all available space */

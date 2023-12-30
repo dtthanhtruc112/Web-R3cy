@@ -1,6 +1,6 @@
 <div class="containerAll">
-    <h4>Quay lại trang Blog</h4>
-    <!-- <h2>{{ isEdit ? 'Chỉnh sửa bài đăng' : 'Tạo bài đăng mới' }}</h2> -->
+    <!-- <h4>Quay lại trang Blog</h4> -->
+    <h4>{{ isEdit ? 'Chỉnh sửa bài đăng' : 'Tạo bài đăng mới' }}</h4>
  
      <div class="containerContent">
          <div class="Leftt">
@@ -10,7 +10,7 @@
              <br>
  
              <!-- Thay thế textarea bằng AngularEditor -->
-             <angular-editor [(ngModel)]="blogContent" [config]="editorConfig"></angular-editor>
+             <angular-editor [(ngModel)]="blogContent" [config]="editorConfig"  class="custom-angular-editor"></angular-editor>
  
              <div class="Button">
                 <button (click)="createBlog()" class="btn">Đăng bài</button>

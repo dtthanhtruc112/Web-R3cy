@@ -296,6 +296,8 @@ router.post('/cart/add', async (req, res) => {
   }
 });
 
+
+
 // Tạo order và xóa giỏ hàng
 router.post("/orders/user/:userid", async (req, res) => {
   try {
