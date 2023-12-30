@@ -95,16 +95,45 @@ router.get('/product/tren-300', cors(), (req, res) =>
     ));
 
 //Router sửa thông tin sản phẩm
-router.patch("/sanpham/:id", cors(), async(req, res) =>{
+router.patch("/:id", async(req, res) =>{
   try{
-      await Product.updateOne({id: req.params.id}, {
-          $set: {price: req.body.price}
+      await Product.updateOne({ _id: req.params.id}, {
+          $set: {
+            name: req.body.name, 
+            price: req.body.price,
+            oldprice: req.body.oldprice,
+            category1: req.body.category1,
+            category2: req.body.category2,
+            opt1: req.body.opt1,
+            opt2: req.body.opt2,
+            description: req.body.description,
+            quantity: req.body.quantity,
+            sold_quantity: req.body.sold_quantity
+          }
       })
       res.send("Success!");
   }catch(error){
       res.json({error: error.mesage})
   }
 })
+
+//Router thêm sản phẩm
+router.post("/product",cors(),async (req,res)=>{
+  // Log dữ liệu nhận được từ req.body
+  console.log('Received data:', req.body);
+
+  // Tạo một đối tượng Product từ dữ liệu nhận được
+  const newProduct = new Product(req.body);
+
+  // Lưu đối tượng vào cơ sở dữ liệu
+  try {
+    const savedProduct = await newProduct.save();
+    console.log('Product saved to database:', savedProduct);
+    res.status(200).send('Product saved successfully');
+  } catch (err) {
+    console.error('Error saving product to database:', err);
+    res.status(500).send('Internal Server Error');
+  }})
 
 
 router.get('/orders', async (req, res) => {
@@ -329,50 +358,52 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
   }
 });
 
-//  Tạo order
-router.post("/orders/user/:userid", async (req, res) => {
-  try {
-      const { userid } = req.params;
+// //  Tạo order
+// router.post("/orders/user/:userid", async (req, res) => {
+//   try {
+//       const { userid } = req.params;
 
-      // Tạo một đối tượng Order mới từ dữ liệu yêu cầu
-      const newOrder = new Order({
-          userid,
-          channel: req.body.channel || 'Website',
-          order_status: req.body.order_status || 'Chờ xử lí',
-          ordereddate: req.body.ordereddate,
-          paymentmethod: req.body.paymentmethod,
-          paymentstatus: req.body.paymentstatus,
-          shipfee: req.body.shipfee,
-          products: [], // Khởi tạo danh sách sản phẩm trống
-          rejectreason: req.body.rejectreason,
-      });
+//       // Tạo một đối tượng Order mới từ dữ liệu yêu cầu
+//       const newOrder = new Order({
+//           userid,
+//           channel: req.body.channel || 'Website',
+//           order_status: req.body.order_status || 'Chờ xử lí',
+//           ordereddate: req.body.ordereddate,
+//           paymentmethod: req.body.paymentmethod,
+//           paymentstatus: req.body.paymentstatus,
+//           shipfee: req.body.shipfee,
+//           ordernote: req.body.ordernote,
+//           orderadress: req.body. orderadress,
+//           products: [], // Khởi tạo danh sách sản phẩm trống
+//           rejectreason: req.body.rejectreason,
+//       });
 
-      // Duyệt qua danh sách sản phẩm từ yêu cầu và thêm vào danh sách sản phẩm của đơn hàng
-      if (req.body.products && req.body.products.length > 0) {
-          req.body.products.forEach(productData => {
-              const product = {
-                  id: productData.id || 0, // Thay đổi logic tạo ID tùy thuộc vào yêu cầu của bạn
-                  category1: productData.category1,
-                  category2: productData.category2,
-                  name: productData.name,
-                  price: productData.price,
-                  quantity: productData.quantity,
-                  feedback: productData.feedback,
-              };
-              newOrder.products.push(product);
-          });
-      }
+//       // Duyệt qua danh sách sản phẩm từ yêu cầu và thêm vào danh sách sản phẩm của đơn hàng
+//       if (req.body.products && req.body.products.length > 0) {
+//           req.body.products.forEach(productData => {
+//               const product = {
+//                   id: productData.id || 0, // Thay đổi logic tạo ID tùy thuộc vào yêu cầu của bạn
+//                   category1: productData.category1,
+//                   category2: productData.category2,
+//                   name: productData.name,
+//                   price: productData.price,
+//                   quantity: productData.quantity,
+//                   feedback: productData.feedback,
+//               };
+//               newOrder.products.push(product);
+//           });
+//       }
 
-      // Lưu đối tượng Order vào cơ sở dữ liệu
-      const createdOrder = await Order.create(newOrder);
+//       // Lưu đối tượng Order vào cơ sở dữ liệu
+//       const createdOrder = await Order.create(newOrder);
 
-      // Trả về đơn hàng đã được tạo mới
-      res.json(createdOrder);
-  } catch (error) {
-      console.error("Error:", error);
-      res.status(500).json({ err: error.message });
-  }
-});
+//       // Trả về đơn hàng đã được tạo mới
+//       res.json(createdOrder);
+//   } catch (error) {
+//       console.error("Error:", error);
+//       res.status(500).json({ err: error.message });
+//   }
+// });
 
 
 
@@ -803,6 +834,34 @@ router.get('/discount/:code', async (req, res) => {
     }
 
     res.json(discount);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Đường dẫn PATCH để cập nhật userids cho một mã giảm giá dựa trên code
+router.patch('/discount/:code', async (req, res) => {
+  try {
+    // Tìm mã giảm giá theo code
+    const discount = await Discount.findOne({ code: req.params.code });
+
+    // Kiểm tra xem có tìm thấy mã giảm giá hay không
+    if (!discount) {
+      return res.status(404).json({ error: 'Không tìm thấy mã giảm giá' });
+    }
+
+    // Cập nhật userids dựa trên req.body.userid
+    if (req.body.userid) {
+      // Kiểm tra xem userid có trong mảng userids chưa
+      if (!discount.userids.find(user => user.userid === req.body.userid)) {
+        discount.userids.push({ userid: req.body.userid });
+      }
+    }
+
+    // Lưu lại mã giảm giá đã cập nhật
+    const updatedDiscount = await discount.save();
+
+    res.json(updatedDiscount);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

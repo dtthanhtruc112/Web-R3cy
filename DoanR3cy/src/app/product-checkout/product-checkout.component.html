@@ -14,7 +14,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-
 </head>
 
 <body>
@@ -64,8 +63,8 @@
                                                 <label for="name">Số điện thoại <abbr class="required"
                                                         title="required">*</abbr></label>
 
-                                                <p-inputMask formControlName="phone" id="phone"
-                                                    class="form-control"></p-inputMask>
+                                                <input formControlName="phone" id="phone"
+                                                    class="form-control">
 
                                             </div>
 
@@ -116,8 +115,8 @@
 
                                             <div class="col-md-12">
                                                 <div class="form-group mb-0">
-                                                    <label for="order-notes"> Ghi chú (Tuỳ chọn)</label>
-                                                    <textarea formControlName="order-notes" id="order-notes"
+                                                    <label for="orderNotes"> Ghi chú (Tuỳ chọn)</label>
+                                                    <textarea formControlName="orderNotes" id="orderNotes"
                                                         class="form-control" 
                                                         placeholder="Chú thích cho đơn hàng của bạn"></textarea>
                                                 </div>
@@ -148,21 +147,26 @@
                                         <tr class="cart-item"  *ngFor="let item of cartItems">
                                             <td class="product-name">{{ item.name }} <span class="product-quantity">×
                                                 {{ item.quantity }}</span></td>
-                                            <td class="product-total">{{item.price * item.quantity}}</td>
+                                            <td class="product-total">{{item.price * item.quantity}}.000 đ</td>
                                         </tr>
                                     </tbody>
                                     <tfoot class="table-foot">
                                         <tr class="cart-subtotal">
                                             <th>Tổng cộng</th>
-                                            <td>90.00</td>
+                                            <td>{{orderTotal}}.000 đ</td>
                                         </tr>
                                         <tr class="shipping">
                                             <th>Phí vận chuyển</th>
-                                            <td>{{ shippingFee }}000 đ</td>
+                                            <td>{{ shippingFee }}.000 đ</td>
+                                            
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th>Khuyến mãi </th>
+                                            <td>{{discount}}.000 đ</td>
                                         </tr>
                                         <tr class="order-total">
                                             <th>Tổng đơn hàng </th>
-                                            <td>$91.99</td>
+                                            <td>{{totalAmount}}.000 đ</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -232,13 +236,6 @@
                                     <a class="btn-place-order" (onclick)="placeOrder()">Đặt hàng</a>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="overlay" *ngIf="showOverlay"></div>
-                        <div class="popup" *ngIf="showSuccessPopup">
-                            <p class="p">Đặt hàng thành công</p>
-                            <button class="p" (click)="closePopup()">Đóng</button>
                         </div>
                     </div>
                 </div>

@@ -54,25 +54,25 @@
         </div>
         <table>
             <tr>
-                <td>Đơn hàng chưa thanh toán</td>
-                <td>5</td>
-                <td class="viewDetail">Xem chi tiết</td>
-            </tr>
-            <tr>
-                <td>Đơn hàng chưa giao</td>
-                <td>5</td>
-                <td class="viewDetail">Xem chi tiết</td>
-            </tr>
-            <tr>
+                <td>Đơn hàng chờ xử lí</td>
+                <td>{{ newOrdersCount }}</td>
+                <td class="viewDetail"><a href="" routerLink="/donhang/don-hang-moi" routerLinkActive="active">Xem chi tiết</a></td>
+              </tr>
+              <tr>
                 <td>Đơn hàng đang giao</td>
-                <td>5</td>
-                <td class="viewDetail">Xem chi tiết</td>
-            </tr>
-            <tr>
+                <td>{{ pendingOrdersCount }}</td>
+                <td class="viewDetail"><a href="" routerLink="/donhang/chua-nhan-hang" routerLinkActive="active">Xem chi tiết</a></td>
+              </tr>
+              <tr>
+                <td>Đơn hàng đã giao</td>
+                <td>{{ completedOrdersCount }}</td>
+                <td class="viewDetail"><a href="" routerLink="/donhang/da-giao" routerLinkActive="active">Xem chi tiết</a></td>
+              </tr>
+              <tr>
                 <td>Đơn hàng đã hủy</td>
-                <td>5</td>
-                <td class="viewDetail">Xem chi tiết</td>
-            </tr>
+                <td>{{ cancelledOrdersCount }}</td>
+                <td class="viewDetail"><a href="" routerLink="/donhang/da-huy" routerLinkActive="active">Xem chi tiết</a></td>
+              </tr>
         </table>
     </div>
 </div>

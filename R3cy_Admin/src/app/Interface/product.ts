@@ -19,5 +19,7 @@ export interface product {
     ask1: string,
     answer1: string,
     ask2: string,
-    answer2: string
+    answer2: string,
+    quantity: Number,
+    sold_quantity: Number
 }

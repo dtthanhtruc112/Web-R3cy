@@ -12,6 +12,8 @@ const Order = new Schema({
     paymentmethod: String,
     paymentstatus: { type: Boolean, default: false },
     shipfee: Number,
+    ordernote: String,
+    orderadress:String,
     products: [{
         id: Number,
         category1: String,

@@ -10,6 +10,7 @@ import { Cart } from '../models/cart';
 import { CartItem } from '../models/cart';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-product-checkout',
   templateUrl: './product-checkout.component.html',
@@ -24,7 +25,7 @@ export class ProductCheckoutComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private cartService: CartService,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.checkoutFormGroup = this.formBuilder.group({});
   }
@@ -51,18 +52,18 @@ export class ProductCheckoutComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params['cartItems']) {
         // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
-        const cartItems = JSON.parse(params['cartItems']);
-        const orderTotal = parseFloat(params['orderTotal']);
-        const shippingFee = parseFloat(params['shippingFee']);
-        const discount = parseFloat(params['discount']);
-        const totalAmount = parseFloat(params['totalAmount']);
+        this.cartItems = JSON.parse(params['cartItems']);
+        this.orderTotal = parseFloat(params['orderTotal']);
+        this.shippingFee = parseFloat(params['shippingFee']);
+        this.discount = parseFloat(params['discount']);
+        this.totalAmount = parseFloat(params['totalAmount']);
     
         // Bây giờ bạn có thể sử dụng các giá trị này trong component của bạn
-        console.log('Cart Items:', cartItems);
-        console.log('Order Total:', orderTotal);
-        console.log('Shipping Fee:', shippingFee);
-        console.log('Discount:', discount);
-        console.log('Total Amount:', totalAmount);
+        console.log('Cart Items:', this.cartItems);
+        console.log('Order Total:', this.orderTotal);
+        console.log('Shipping Fee:', this.shippingFee);
+        console.log('Discount:', this.discount);
+        console.log('Total Amount:', this.totalAmount);
       }
     });
   }
@@ -80,7 +81,8 @@ export class ProductCheckoutComponent implements OnInit {
       country: ['', Validators.required],
       zip: ['', Validators.required],
       district: ['', Validators.required],
-      street: ['', Validators.required]
+      street: ['', Validators.required],
+      orderNotes: ['']
     });
   }
 

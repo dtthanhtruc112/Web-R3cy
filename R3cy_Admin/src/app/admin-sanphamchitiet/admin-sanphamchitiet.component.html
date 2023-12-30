@@ -8,28 +8,28 @@
         </div>
     
         <div class="rightcolumn">
-            <input class="name" value="{{productt.name}}"> <br>
+            <input class="name" [(ngModel)]="productt.name"> <br>
             <p style="display: inline-block;">Giá hiện tại:&nbsp;</p>
-            <input type="text" style="display: inline-block;" value="{{productt.price}}.000đ">
+            <input type="text" style="display: inline-block;" [(ngModel)]="productt.price">.000đ
             <br>
             <p style="display: inline-block;">Giá gốc:&nbsp;</p>
-            <input type="text" style="display: inline-block;" value="{{productt.oldprice}}.000đ">
+            <input type="text" style="display: inline-block;" [(ngModel)]="productt.oldprice">.000đ
             <br>
             <p style="display: inline-block;">Phân loại 1:&nbsp;</p>
-            <input type="text" style="display: inline-block;" value="{{productt.category1}}">
+            <input type="text" style="display: inline-block;" [(ngModel)]="productt.category1">
             <br>
             <p style="display: inline-block;">Phân loại 2:&nbsp;</p>
-            <input type="text" style="display: inline-block;" value="{{productt.category2}}">
+            <input type="text" style="display: inline-block;" [(ngModel)]="productt.category2">
             <br>
             <p style="display: inline-block;">Lựa chọn 1:&nbsp;</p>
-            <input type="text" style="display: inline-block;" value="{{productt.opt1}}">
+            <input type="text" style="display: inline-block;" [(ngModel)]="productt.opt1">
             <br>
             <p style="display: inline-block;">Lựa chọn 2:&nbsp;</p>
-            <input type="text" style="display: inline-block;" value="{{productt.opt2}}">
+            <input type="text" style="display: inline-block;" [(ngModel)]="productt.opt2">
         </div>
     </div>
     <p>Chi tiết sản phẩm:</p>
-    <textarea [value]="productt.description"></textarea>
-    <button type="button">Sửa thông tin sản phẩm</button>
+    <textarea [(ngModel)]="productt.description"></textarea>
+    <button type="button" (click)="updateProduct()">Sửa thông tin sản phẩm</button>
     
 </div>
