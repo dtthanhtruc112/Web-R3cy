@@ -155,5 +155,9 @@ h2 {
     .container{
         flex-direction: row;
     }
+
+    #content{
+        padding: 5px;
+    }
 }
 

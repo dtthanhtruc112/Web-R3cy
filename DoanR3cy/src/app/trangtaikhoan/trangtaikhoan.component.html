@@ -171,7 +171,7 @@
                     <div class="donhang_item">
                         <div class="donhang_itemdetail" *ngFor="let order of Orders">
                             <div class="donhang_itemdetal_row">
-                                <h5>Đơn hàng {{order.ordernumber}}</h5>
+                                <h5 class="don_item_label">Đơn hàng {{order.ordernumber}}</h5>
                                 <p id="status">{{order.order_status }}</p>
                             </div>
                             <div class="donhang_itemdetal_row" *ngIf="order.rejectreason !== ''">
@@ -236,21 +236,21 @@
                     <div class="donhang_item">
                         <div class="donhang_itemdetail" *ngFor="let order of filteredOrders()">
                             <div class="donhang_itemdetal_row">
-                                <h5>Đơn hàng {{order.ordernumber}}</h5>
+                                <h5 class="don_item_label">Đơn hàng {{order.ordernumber}}</h5>
                                 <p id="status">{{order.order_status }}</p>
                             </div>
                             <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
                                 <img src="" alt="">
                                 <p class="don_item_label">{{ product.name }} <br>
                                     x{{product.quantity}}</p>
-                                <p id="total">{{product.productValue }}</p>
+                                <p id="total">{{product.productValue }}.000đ</p>
                                 <img src="" alt="">
                             </div>
                             <hr>
                             <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
                                 <button class="button p" type="button" [routerLink]="['/danhgia', order.ordernumber]"
                                     routerLinkActive="active">Đánh giá</button>
-                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}</p>
+                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}.000đ</p>
                             </div>
                         </div>
                     </div>
