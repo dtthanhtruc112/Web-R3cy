@@ -178,11 +178,10 @@
                                 <p>Lý do hủy: {{ order.rejectreason }}</p>
                             </div>
                             <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
-                                <img src="" alt="">
+                                <img [src]="product.img1">
                                 <p class="don_item_label">{{ product.name }} <br>
                                     x{{product.quantity}}</p>
                                 <p id="total">{{product.productValue }}.000</p>
-                                <img src="" alt="">
                             </div>
                             <hr>
                             <div class="donhang_itemdetal_row">
@@ -203,7 +202,7 @@
                                     routerLink="/cart" routerLinkActive="active">
                                     Mua lại
                                 </button>
-                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}.000</p>
+                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalAmount}}.000</p>
                             </div>
                         </div>
                     </div>
@@ -240,7 +239,7 @@
                                 <p id="status">{{order.order_status }}</p>
                             </div>
                             <div *ngFor="let product of order.products" class="donhang_itemdetal_row">
-                                <img src="" alt="">
+                                <img [src]="product.img1">
                                 <p class="don_item_label">{{ product.name }} <br>
                                     x{{product.quantity}}</p>
                                 <p id="total">{{product.productValue }}.000đ</p>
@@ -250,7 +249,7 @@
                             <div class="donhang_itemdetal_row" *ngIf="isEligibleForReview(order)">
                                 <button class="button p" type="button" [routerLink]="['/danhgia', order.ordernumber]"
                                     routerLinkActive="active">Đánh giá</button>
-                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalOrderValue}}.000đ</p>
+                                <p class="p" id="totalpayment">Tổng thanh toán: {{order.totalAmount}}.000đ</p>
                             </div>
                         </div>
                     </div>

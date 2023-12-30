@@ -25,8 +25,10 @@ const Order = new Schema({
         price: Number,
         quantity: Number,
         feedback: { type: String, default: '' },
+        img1:String,
     }],
-    rejectreason: { type: String, default: '' }
+    rejectreason: { type: String, default: '' },
+    address: String
 });
 
 

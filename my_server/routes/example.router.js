@@ -379,6 +379,7 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 //           orderadress: req.body. orderadress,
 //           products: [], // Khởi tạo danh sách sản phẩm trống
 //           rejectreason: req.body.rejectreason,
+//           address: req.body.address,
 //       });
 
 //       // Duyệt qua danh sách sản phẩm từ yêu cầu và thêm vào danh sách sản phẩm của đơn hàng
@@ -392,6 +393,7 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 //                   price: productData.price,
 //                   quantity: productData.quantity,
 //                   feedback: productData.feedback,
+//                   img1: productData.img1,
 //               };
 //               newOrder.products.push(product);
 //           });
@@ -407,9 +409,6 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 //       res.status(500).json({ err: error.message });
 //   }
 // });
-
-
-
 
 
 // Xử lý route đăng ký
