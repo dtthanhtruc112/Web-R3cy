@@ -133,7 +133,7 @@ div{
 
 .icon_item {
     position: relative;
-    margin: 5px 20px;
+    margin: 5px 30px;
     color: var(--color-blue);
     font-size: 25px;
 }
@@ -145,7 +145,7 @@ div{
 }
 .cart-icon .cart-count{
     position: absolute; 
-    margin-left: 0px  ;
+    margin-left: 5px  ;
     margin-top: 10px;
 }
 
