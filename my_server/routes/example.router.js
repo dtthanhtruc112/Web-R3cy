@@ -95,16 +95,45 @@ router.get('/product/tren-300', cors(), (req, res) =>
     ));
 
 //Router sửa thông tin sản phẩm
-router.patch("/sanpham/:id", cors(), async(req, res) =>{
+router.patch("/:id", async(req, res) =>{
   try{
-      await Product.updateOne({id: req.params.id}, {
-          $set: {price: req.body.price}
+      await Product.updateOne({ _id: req.params.id}, {
+          $set: {
+            name: req.body.name, 
+            price: req.body.price,
+            oldprice: req.body.oldprice,
+            category1: req.body.category1,
+            category2: req.body.category2,
+            opt1: req.body.opt1,
+            opt2: req.body.opt2,
+            description: req.body.description,
+            quantity: req.body.quantity,
+            sold_quantity: req.body.sold_quantity
+          }
       })
       res.send("Success!");
   }catch(error){
       res.json({error: error.mesage})
   }
 })
+
+//Router thêm sản phẩm
+router.post("/product",cors(),async (req,res)=>{
+  // Log dữ liệu nhận được từ req.body
+  console.log('Received data:', req.body);
+
+  // Tạo một đối tượng Product từ dữ liệu nhận được
+  const newProduct = new Product(req.body);
+
+  // Lưu đối tượng vào cơ sở dữ liệu
+  try {
+    const savedProduct = await newProduct.save();
+    console.log('Product saved to database:', savedProduct);
+    res.status(200).send('Product saved successfully');
+  } catch (err) {
+    console.error('Error saving product to database:', err);
+    res.status(500).send('Internal Server Error');
+  }})
 
 
 router.get('/orders', async (req, res) => {

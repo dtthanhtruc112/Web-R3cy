@@ -11,6 +11,9 @@ import { product } from '../Interface/product';
 export class AdminSanphamComponent implements OnInit{
   selectedbar: string = 'tat-ca-san-pham';
   product: any;
+  quantityInitial!: number ;
+  quantitySold!: number;
+  quantityRemaining!: number;
 
   constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute) {}
 
@@ -22,10 +25,32 @@ export class AdminSanphamComponent implements OnInit{
   //     } );
   // }
 
+  calculateQuantityRemaining(data: any): number {
+    // Tính toán và trả về giá trị quantityRemaining
+    return data.quantity - data.sold_quantity;
+  }
+
+  updateQuantity(p: any){
+    const updatedProduct = {
+      id: p._id, // Đảm bảo rằng bạn có trường id để xác định sản phẩm cần cập nhật
+      quantity: p.quantity,
+      sold_quantity: p.sold_quantity
+    };
+
+    // Gửi dữ liệu cập nhật lên server
+    this.productService.updateProduct(updatedProduct)
+      .subscribe(response => {
+        console.log(response); // In kết quả từ server sau khi cập nhật
+      });
+      alert("Đã sửa thông tin về số lượng sản phẩm thành công!")
+  }
+
   ngOnInit() {
     this.productService.getData().subscribe((data: product[]) => {
       this.product = data;
     });
+
+    
 
     
   }

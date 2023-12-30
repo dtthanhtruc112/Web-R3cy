@@ -9,7 +9,7 @@ const Product = new Schema({
     opt1: String,
     opt2: String,
     price: Number,
-    oldprice: String,
+    oldprice: Number,
     img1:String,
     img2: String,
     img3: String,
@@ -20,7 +20,9 @@ const Product = new Schema({
     ask1: String,
     answer1: String,
     ask2: String,
-    answer2: String
+    answer2: String,
+    quantity: Number,
+    sold_quantity: Number
 });
 
 module.exports = mongoose.model('Product', Product);

@@ -42,4 +42,25 @@ export class AdminSanphamchitietComponent {
         console.log(this.productt);
       })
     console.log(this.selectedCode);}
+
+    updateProduct() {
+      const updatedProduct = {
+        id: this.productt._id, // Đảm bảo rằng bạn có trường id để xác định sản phẩm cần cập nhật
+        name: this.productt.name,
+        price: this.productt.price,
+        oldprice: this.productt.oldprice,
+        category1: this.productt.category1,
+        category2: this.productt.category2,
+        opt1: this.productt.opt1,
+        opt2: this.productt.opt2,
+        description: this.productt.description,
+      };
+  
+      // Gửi dữ liệu cập nhật lên server
+      this.productService.updateProduct(updatedProduct)
+        .subscribe(response => {
+          console.log(response); // In kết quả từ server sau khi cập nhật
+        });
+        alert("Đã sửa thông tin sản phẩm thành công!")
+    }
 }

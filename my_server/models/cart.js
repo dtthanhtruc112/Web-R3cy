@@ -16,6 +16,7 @@ const cartSchema = new mongoose.Schema({
       category2: String,
       // img1: String,
       name: String,
+      subtotal: { type: Number },
       price: Number,
       quantity: {
         type: Number,

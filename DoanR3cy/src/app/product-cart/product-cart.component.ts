@@ -47,7 +47,7 @@ export class ProductCartComponent implements OnInit {
           // Sử dụng data.cart thay vì data.cartItems
           this.cartItems = data.cart || [];
           // Tính tổng giá trị của từng sản phẩm
-          this.calculateSubtotal();
+          // this.calculateSubtotal();
         },
         (error) => {
           console.error('Error getting cart:', error);
@@ -75,6 +75,8 @@ export class ProductCartComponent implements OnInit {
     this.cartItems.forEach(item => {
       item.subtotal = item.price * item.quantity;
     });
+    // Sau khi cập nhật, cập nhật lại danh sách sản phẩm trong giỏ hàng và chuyển hướng lại
+    this.refreshCartItems();
   }
   calculateOrderTotal(): number {
     let orderTotal = 0;
@@ -88,6 +90,7 @@ export class ProductCartComponent implements OnInit {
     });
   
     return orderTotal;
+    
   }
   
   // Phương thức để xóa sản phẩm khỏi giỏ hàng
@@ -129,6 +132,8 @@ private refreshCartItems(): void {
       (data: any) => {
         console.log('Cart item quantity updated successfully:', data);
         // Nếu bạn cần thực hiện các hành động khác sau khi cập nhật, thì thêm vào đây
+        // Sau khi cập nhật, cập nhật lại danh sách sản phẩm trong giỏ hàng và chuyển hướng lại
+      this.refreshCartItems();
       },
       (error) => {
         console.error('Error updating cart item quantity:', error);
