@@ -9,6 +9,7 @@ import { product } from '../Interface/product';
 export class ProductService {
 
   _url: string = "http://localhost:3000/product";
+  apiUrl:  string = "http://localhost:3000";
 
   constructor(private _http: HttpClient) { }
 
@@ -20,5 +21,11 @@ export class ProductService {
     return this._http.get<product[]>(this._url).pipe(
       map((products: any[]) => products.find((product: { id: number; }) => product.id === id) ?? undefined)
     );
+  }
+
+
+  updateProduct(updatedProduct: any): Observable<any> {
+    const url = `${this.apiUrl}/${updatedProduct.id}`;
+    return this._http.patch(url, updatedProduct);
   }
 }
