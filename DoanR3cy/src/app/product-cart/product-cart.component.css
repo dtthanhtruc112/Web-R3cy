@@ -100,9 +100,11 @@ img {
 hr {
     border-top-width: 2px
 }
-h3{
+
+h3 {
     color: var(--color-blue)
 }
+
 .bg-img {
     background: no-repeat 50%;
     background-size: cover
@@ -263,12 +265,38 @@ only screen and (min-width:768px) and (max-width:991px) {
 
 
 
-.shopping-cart-form table .product-quantity .pro-qty  input {
-    border: 1px solid var(--color-blue);
-    border-radius: 20px;
-    text-align: center;
-
+ .pro-qty {
+    width: 100%;
+    border-radius: 10px;
+    font-size: 16px;
 }
+
+.product-quantity {
+    width: 150px;
+    text-align: center;
+}
+
+::ng-deep .p-inputnumber .p-inputnumber-input {
+    border-radius: 10px;
+    color: black;
+    border-color: var(--color-blue);
+    padding-right: 30px;
+    position: relative;
+    height: 40px;
+}
+::ng-deep .p-inputnumber .p-inputnumber-button {
+    border-radius: 10px;
+    font-size: 1px;
+    height:10px;
+    color: var(--color-blue);
+    font-weight: bold;
+    position: relative;
+    background-color: transparent;
+    border-color: transparent;
+    left:-30px
+}
+
+
 
 .shopping-cart-form table .product-subtotal {
     font-weight: 500;
@@ -294,10 +322,7 @@ only screen and (min-width:768px) and (max-width:991px) {
     text-transform: capitalize
 }
 
-.shopping-cart-form .btn-update-cart:hover {
-    background-color: #ebe9eb;
-    border-color: #e5e5e5
-}
+
 
 .row {
     display: flex;

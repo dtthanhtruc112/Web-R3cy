@@ -3,6 +3,7 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="./product-cart.component.css">
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <div class="wrapper">
@@ -51,14 +52,20 @@
                                         <span class="price">{{ item.price }}.000 đ</span>
                                     </td>
                                     <td class="product-quantity">
-                                        <div class="pro-qty">
-                                            <p-inputNumber name="{{'quantity_' + item.id}}" mode="decimal"
-                                                [showButtons]="true" [inputId]="" [min]="1" [max]="1000"
-                                                [type]="'number'" [(ngModel)]="item.quantity"
+
+                                        <div class="pro-qty p-fluid">
+                                            <p-inputNumber 
+                                                name="{{'quantity_' + item.id}}"
+                                                mode="decimal"
+                                                [showButtons]="true"
+                                                [inputId]=""
+                                                [min]="1" [max]="1000" 
+                                                [type]="'number'"
+                                                [(ngModel)]="item.quantity"
                                                 (onInput)="updateCartItemQuantity($event, item )">
                                             </p-inputNumber>
-
                                         </div>
+                                     
                                     </td>
 
                                     <td class="product-subtotal">

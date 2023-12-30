@@ -1,9 +1,36 @@
+.bi-cart3 {
+    position: relative
+}
+
+
 .cart-icon {
+    position: absolute;
     border-radius: 50%;
     color: white;
     font-size: 11px;
     font-style: normal;
     text-align: center;
-    padding: 3px 3px 3px 3px;
+    padding: 3px;
     background-color: #f6c32c;
+    text-decoration: none;
+    top: 25px;
+    right: 140px;
 }
+
+/* mobile */
+@media screen and (max-width: 480px) {
+    .cart-icon {
+        position: absolute;
+        top: 13px;
+        right: 103px;
+    }
+}
+
+/* tablet */
+/* @media screen and (max-width: 768px) {
+    .cart-icon {
+        position: absolute;
+        top: 20px;
+        right: 190px;
+    }
+} */
