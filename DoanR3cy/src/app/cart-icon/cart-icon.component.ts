@@ -8,7 +8,7 @@ import { AuthService } from '../Service/auth.service';
   styleUrl: './cart-icon.component.css'
 })
 export class CartIconComponent {
-  cartCount: any;
+  cartCount : any;
   userId: any;
   cartItems: CartItem[] = [];
 
@@ -23,7 +23,8 @@ export class CartIconComponent {
        this.cartService.getCart(this.userId).subscribe(
          (data: any) => {
            this.cartItems = data.cart || [];
-           const  cartCount = data.cart.length;
+          //  const  cartCount = data.cart.length;
+          this.cartCount = this.cartItems.length;
      
          },
          (error) => {
@@ -32,7 +33,6 @@ export class CartIconComponent {
        );
    }
  
-   // Các phươn
 
 
   }
