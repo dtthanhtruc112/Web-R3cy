@@ -239,6 +239,8 @@ export class AdminDonhangComponent implements OnInit {
       .subscribe(
         (updatedOrder) => {
           // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+          // Display a success alert
+        window.alert('Cập nhật trạng thái thanh toán thành công');
           console.log('Order updated successfully:', updatedOrder);
           // Giả sử server trả về là một giá trị boolean
           // this.zone.run(() => {
@@ -266,6 +268,8 @@ export class AdminDonhangComponent implements OnInit {
     this._orderService.updateOrderStatus(userId, orderNumber, "Đang giao", order.paymentstatus)
       .subscribe(
         (updatedOrder) => {
+          // Display a success alert
+        window.alert('Cập nhật trạng thái đơn hàng thành công');
           // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
           console.log('Order updated successfully:', updatedOrder);
           // Giả sử server trả về là một giá trị boolean
@@ -291,6 +295,9 @@ export class AdminDonhangComponent implements OnInit {
       .subscribe(
         (updatedOrder) => {
           // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
+           // Display a success alert
+          window.alert('Cập nhật trạng thái đơn hàng thành công');
+
           console.log('Order updated successfully:', updatedOrder);
           // Giả sử server trả về là một giá trị boolean
 
@@ -345,6 +352,26 @@ export class AdminDonhangComponent implements OnInit {
     });
   }
 
+  // Đếm số đơn hàng
+  getNewOrdersCount(): number {
+    return this.getFilteredOrdersCount('Đơn hàng mới');
+  }
+  
+  getPendingOrdersCount(): number {
+    return this.getFilteredOrdersCount('Chưa nhận hàng');
+  }
+  
+  getCompletedOrdersCount(): number {
+    return this.getFilteredOrdersCount('Hoàn thành');
+  }
+  
+  getCancelledOrdersCount(): number {
+    return this.getFilteredOrdersCount('Đã hủy');
+  }
+  
+  private getFilteredOrdersCount(status: string): number {
+    return this.Orders.filter(order => order.order_status === status).length;
+  }
 
 
   

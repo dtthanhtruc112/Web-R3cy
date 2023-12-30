@@ -9,6 +9,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ProductService } from '../Service/product.service';
 import { Order } from '../Interface/Order';
 import { AuthService } from '../Service/auth.service';
+import { DiscountService } from '../Service/discount.service';
+import { Discount } from '../Interface/Discount';
 
 @Component({
   selector: 'app-product-cart',
@@ -26,7 +28,8 @@ export class ProductCartComponent implements OnInit {
     private _route: ActivatedRoute,
     private productService: ProductService,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private discountService: DiscountService
   ) {}
 
   ngOnInit(): void {
@@ -148,5 +151,48 @@ private refreshCartItems(): void {
     }
   }
   
+
+  // Apply voucher
+  voucherCode: string = '';
+  discountInfo: Discount | null = null; // Allow null
+
+  applyVoucher() {
+    this.discountService.getDiscountByCode(this.voucherCode).subscribe(
+      (discountOrArray: Discount | Discount[]) => {
+        // Check if it's an array of discounts
+        const discount = Array.isArray(discountOrArray) ? discountOrArray[0] : discountOrArray;
   
+        if (!this.isUserEligible(discount.userids)) {
+          // User is eligible, apply the discount
+          this.discountInfo = discount;
+          // Show success alert
+          alert('Áp dụng mã thành công!');
+        } else {
+          // User is not eligible, show alert about usage limit
+          alert('Bạn đã hết lượt sử dụng!');
+        }
+      },
+      (error) => {
+        console.error('Error applying voucher:', error);
+        // Handle API error
+        this.discountInfo = null; // Reset discountInfo on error
+      }
+    );
+  }
+
+  // Kiểm tra userid đã sử dụng voucher
+  isUserEligible(userids: any[]): boolean {
+    const userid = this.authService.getUserId();
+
+    if (userid !== null) {
+      const userId = parseInt(userid, 10);
+      return userids.some(id => id.userid === userId);
+    }
+
+    return false;
+  }
+
+
+
+
 }
