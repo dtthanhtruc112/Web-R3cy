@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { product } from '../Interface/product';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router,  Params } from '@angular/router';
 import { Subject, catchError, map, of, switchMap, take, takeUntil } from 'rxjs';
 import { CartService } from '../Service/cart.service';
 import { OrderService } from '../Service/order.service';
@@ -9,7 +9,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ProductService } from '../Service/product.service';
 import { Order } from '../Interface/Order';
 import { AuthService } from '../Service/auth.service';
-
 @Component({
   selector: 'app-product-cart',
   templateUrl: './product-cart.component.html',
@@ -26,7 +25,8 @@ export class ProductCartComponent implements OnInit {
     private _route: ActivatedRoute,
     private productService: ProductService,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,8 +43,6 @@ export class ProductCartComponent implements OnInit {
       
           // Sử dụng data.cart thay vì data.cartItems
           this.cartItems = data.cart || [];
-          // Tính tổng giá trị của từng sản phẩm
-          // this.calculateSubtotal();
         },
         (error) => {
           console.error('Error getting cart:', error);
@@ -55,7 +53,7 @@ export class ProductCartComponent implements OnInit {
         (productData: product[]) => {
           this.products = productData;
           // Tiếp tục xử lý và tính toán sau khi có dữ liệu sản phẩm
-          this.calculateSubtotal();
+          // this.calculateSubtotal();
         },
         (error) => {
           console.error('Error getting product data:', error);
@@ -63,18 +61,8 @@ export class ProductCartComponent implements OnInit {
       );
       
   }
-  
-
-  
 }
-  calculateSubtotal(): void {
-    // Đặt giá trị cho thuộc tính subtotal trong từng sản phẩm
-    this.cartItems.forEach(item => {
-      item.subtotal = item.price * item.quantity;
-    });
-    // Sau khi cập nhật, cập nhật lại danh sách sản phẩm trong giỏ hàng và chuyển hướng lại
-    this.refreshCartItems();
-  }
+
   calculateOrderTotal(): number {
     let orderTotal = 0;
   
@@ -110,7 +98,7 @@ private refreshCartItems(): void {
   if (this.userId !== null) {
     this.cartService.getCart(this.userId).subscribe(
       (data: any) => {
-        this.cartItems = data.cart || []; // Sửa lại dòng này
+        this.cartItems = data.cart || []; 
       },
       (error) => {
         console.error('Error getting cart:', error);
@@ -147,6 +135,26 @@ private refreshCartItems(): void {
       return 'default-image-url.jpg'; // Thay thế "default-image-url.jpg" bằng URL hình ảnh mặc định của bạn
     }
   }
+  
+
+  goToCheckout(): void {
+    // Lấy giá trị tổng giỏ hàng
+    const orderTotal = this.calculateOrderTotal();
+    const shippingFee = 25;
+    const   discount = 0;
+    // Chuyển hướng và truyền dữ liệu qua queryParams
+    const queryParams: Params = {
+      userId: this.userId.toString(),
+      cartItems: JSON.stringify(this.cartItems),
+      orderTotal: orderTotal.toString(),
+      shippingFee: shippingFee.toString(),  // Phí vận chuyển mặc định, chuyển đổi sang chuỗi
+      discount:  discount.toString(),         // Giảm giá từ voucher (nếu có), chuyển đổi sang chuỗi
+      totalAmount: (orderTotal + shippingFee -  discount).toString(),  // Tổng toàn bộ đơn hàng, chuyển đổi sang chuỗi
+    };
+  
+    this.router.navigate(['/checkout'], { queryParams });
+  }
+  
   
   
 }

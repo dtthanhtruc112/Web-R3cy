@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,Params } from '@angular/router';
 import { OrderItem, Orders } from '../Interface/Order';
 import { CartService } from '../Service/cart.service';
 import { OrderService } from '../Service/order.service';
@@ -8,7 +8,7 @@ import { product } from '../Interface/product';
 import { AuthService } from '../Service/auth.service';
 import { Cart } from '../models/cart';
 import { CartItem } from '../models/cart';
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-checkout',
@@ -16,9 +16,12 @@ import { CartItem } from '../models/cart';
   styleUrls: ['./product-checkout.component.css']
 })
 export class ProductCheckoutComponent implements OnInit {
+
+  queryParamsData: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private cartService: CartService,
     private orderService: OrderService,
     private authService: AuthService
@@ -28,8 +31,15 @@ export class ProductCheckoutComponent implements OnInit {
 
   checkoutFormGroup: FormGroup;
   isSubmitted = false;
-  // cartItems: OrderItem[] = []; // Sửa từ orderItems thành cartItems
-  cartItems: CartItem[] = [];
+
+  // cartItems: CartItem[] = [];
+  cartItems: any[] = [];
+  orderTotal: number = 0;
+  shippingFee: number = 0;
+  discount: number = 0;
+  totalAmount: number = 0;
+
+
   userId: any;
   products: product[] = [];
 
@@ -38,9 +48,25 @@ export class ProductCheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this._initCheckoutForm();
-    this._getCartItems();
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      if (params['cartItems']) {
+        // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
+        const cartItems = JSON.parse(params['cartItems']);
+        const orderTotal = parseFloat(params['orderTotal']);
+        const shippingFee = parseFloat(params['shippingFee']);
+        const discount = parseFloat(params['discount']);
+        const totalAmount = parseFloat(params['totalAmount']);
+    
+        // Bây giờ bạn có thể sử dụng các giá trị này trong component của bạn
+        console.log('Cart Items:', cartItems);
+        console.log('Order Total:', orderTotal);
+        console.log('Shipping Fee:', shippingFee);
+        console.log('Discount:', discount);
+        console.log('Total Amount:', totalAmount);
+      }
+    });
   }
-
+  
   backtoCart() {
     this.router.navigate(['/cart']);
   }
@@ -58,24 +84,6 @@ export class ProductCheckoutComponent implements OnInit {
     });
   }
 
-  private _getCartItems() {
-    this.userId = Number(this.authService.getUserId());
-  
-    // Gọi API để lấy giỏ hàng dựa trên userID
-    if (this.userId !== null) {
-      this.cartService.getCart(this.userId).subscribe(
-        (cart: Cart) => {
-          this.cartItems = cart.cartItems || []; // Sử dụng cart.cartItems thay vì cart.items
-          this.calculateSubtotal();
-        },
-        (error) => {
-          console.error('Error getting cart:', error);
-        }
-      );
-    }
-  }
-  
-  
   placeOrder() {
     this.isSubmitted = true;
     if (this.checkoutFormGroup.invalid) {
@@ -111,13 +119,5 @@ export class ProductCheckoutComponent implements OnInit {
     return this.checkoutFormGroup.controls;
   }
 
-  calculateSubtotal(): void {
-    this.cartItems.forEach(item => {
-      item.subtotal = item.price * item.quantity;
-    });
-  }
-
-  calculateTotal(): number {
-    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-}
+ 
 }
