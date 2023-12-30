@@ -85,6 +85,9 @@ export class AdminCreateBlogComponent {
       return;
     }
 
+     // Điều chỉnh nội dung trước khi lưu
+     this.adjustContentBeforeSave();
+
     const formData = new FormData();
     formData.append('title', this.titleInputValue);
     formData.append('author', this.authorInputValue);
@@ -129,4 +132,21 @@ export class AdminCreateBlogComponent {
       alert('Đã xảy ra lỗi khi tạo blog. Vui lòng thử lại!');
     }
   }
+  private adjustContentBeforeSave(): void {
+    // Điều chỉnh nội dung trước khi lưu, ví dụ: xóa width và height của thẻ img
+    const doc = new DOMParser().parseFromString(this.blogContent, 'text/html');
+    const images = doc.querySelectorAll('img');
+
+    images.forEach((img: HTMLImageElement) => {
+      img.removeAttribute('width');
+      img.removeAttribute('height');
+      img.removeAttribute('title');
+    });
+
+    // In ra nội dung sau khi điều chỉnh để kiểm tra
+    console.log('Adjusted Content:', doc.body.innerHTML);
+
+    this.blogContent = doc.body.innerHTML;
+}
+
 }
