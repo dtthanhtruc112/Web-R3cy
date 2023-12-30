@@ -160,12 +160,16 @@ private refreshCartItems(): void {
     this.discountService.getDiscountByCode(this.voucherCode).subscribe(
       (discountOrArray: Discount | Discount[]) => {
         // Check if it's an array of discounts
-        if (Array.isArray(discountOrArray)) {
-          // Handle multiple discounts as needed, for now, take the first one
-          this.discountInfo = discountOrArray[0];
+        const discount = Array.isArray(discountOrArray) ? discountOrArray[0] : discountOrArray;
+  
+        if (!this.isUserEligible(discount.userids)) {
+          // User is eligible, apply the discount
+          this.discountInfo = discount;
+          // Show success alert
+          alert('Áp dụng mã thành công!');
         } else {
-          // It's a single discount
-          this.discountInfo = discountOrArray;
+          // User is not eligible, show alert about usage limit
+          alert('Bạn đã hết lượt sử dụng!');
         }
       },
       (error) => {
@@ -174,6 +178,18 @@ private refreshCartItems(): void {
         this.discountInfo = null; // Reset discountInfo on error
       }
     );
+  }
+
+  // Kiểm tra userid đã sử dụng voucher
+  isUserEligible(userids: any[]): boolean {
+    const userid = this.authService.getUserId();
+
+    if (userid !== null) {
+      const userId = parseInt(userid, 10);
+      return userids.some(id => id.userid === userId);
+    }
+
+    return false;
   }
 
 

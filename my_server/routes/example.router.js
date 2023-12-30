@@ -837,4 +837,32 @@ router.get('/discount/:code', async (req, res) => {
   }
 });
 
+// Đường dẫn PATCH để cập nhật userids cho một mã giảm giá dựa trên code
+router.patch('/discount/:code', async (req, res) => {
+  try {
+    // Tìm mã giảm giá theo code
+    const discount = await Discount.findOne({ code: req.params.code });
+
+    // Kiểm tra xem có tìm thấy mã giảm giá hay không
+    if (!discount) {
+      return res.status(404).json({ error: 'Không tìm thấy mã giảm giá' });
+    }
+
+    // Cập nhật userids dựa trên req.body.userid
+    if (req.body.userid) {
+      // Kiểm tra xem userid có trong mảng userids chưa
+      if (!discount.userids.find(user => user.userid === req.body.userid)) {
+        discount.userids.push({ userid: req.body.userid });
+      }
+    }
+
+    // Lưu lại mã giảm giá đã cập nhật
+    const updatedDiscount = await discount.save();
+
+    res.json(updatedDiscount);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router
