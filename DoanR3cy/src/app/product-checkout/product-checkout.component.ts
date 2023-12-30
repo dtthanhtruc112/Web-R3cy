@@ -28,7 +28,8 @@ export class ProductCheckoutComponent implements OnInit {
 
   checkoutFormGroup: FormGroup;
   isSubmitted = false;
-  cartItems: OrderItem[] = []; // Sửa từ orderItems thành cartItems
+  // cartItems: OrderItem[] = []; // Sửa từ orderItems thành cartItems
+  cartItems: CartItem[] = [];
   userId: any;
   products: product[] = [];
 
@@ -111,8 +112,12 @@ export class ProductCheckoutComponent implements OnInit {
   }
 
   calculateSubtotal(): void {
-    // this.cartItems.forEach(item => {
-    //   item.subtotal = item.price * item.quantity;
-    // });
+    this.cartItems.forEach(item => {
+      item.subtotal = item.price * item.quantity;
+    });
   }
+
+  calculateTotal(): number {
+    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+}
 }

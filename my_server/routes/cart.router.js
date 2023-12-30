@@ -202,8 +202,15 @@ router.put('/cart/update-quantity/:userId/:itemId', async (req, res) => {
           return res.status(404).json({ message: 'Cart item not found' });
       }
 
-      // Cập nhật số lượng của sản phẩm trong giỏ hàng
-      cartItem.quantity = newQuantity;
+       // Cập nhật số lượng của sản phẩm trong giỏ hàng
+        cartItem.quantity = newQuantity;
+        cartItem.subtotal = cartItem.price * newQuantity; // Cập nhật subtotal
+
+        // Cập nhật giá trị subtotal cho tất cả các sản phẩm trong giỏ hàng
+        cart.cartItems.forEach(item => {
+          item.subtotal = item.price * item.quantity;
+        });
+      
 
       // Lưu giỏ hàng đã cập nhật vào cơ sở dữ liệu
       await cart.save();
@@ -251,6 +258,12 @@ router.post('/cart/add', async (req, res) => {
     if (existingItem) {
       // Nếu sản phẩm đã tồn tại, cập nhật số lượng
       existingItem.quantity += quantity;
+      cartItem.subtotal = cartItem.price * existingItem.quantity; // Cập nhật subtotal
+
+    // Cập nhật giá trị subtotal cho tất cả các sản phẩm trong giỏ hàng
+    cart.cartItems.forEach(item => {
+      item.subtotal = item.price * item.quantity;
+    });
     } else {
       // Nếu sản phẩm chưa tồn tại, thêm mới vào giỏ hàng
       cart.cartItems.push({
@@ -260,8 +273,14 @@ router.post('/cart/add', async (req, res) => {
         name: product.name,
         price: product.price,
         quantity: quantity,
+        subtotal: product.price * quantity,
       });
     }
+     // Cập nhật giá trị subtotal cho tất cả các sản phẩm trong giỏ hàng
+     cart.cartItems.forEach(item => {
+      item.subtotal = item.price * item.quantity;
+    });
+
 
     // Lưu giỏ hàng đã cập nhật vào cơ sở dữ liệu
     await cart.save();
