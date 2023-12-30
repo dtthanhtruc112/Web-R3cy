@@ -19,16 +19,31 @@
                     Hoàn/trả hàng</h4>
             </div>
         </div>
-        <div class="container_item">
-            <label for="show">Hiển thị:
+        <div class="container_item sub-header">
+            <!-- <label for="show">Hiển thị:
                 <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1"
                     type="number">
-            </label>
+            </label> -->
+
+            <div class="sort font-bold">
+                <label for="sortInput"><p>Hiển thị |</p>
+                    <input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable1()" class="font-bold"></label>
+              </div>
+          
+              <div class="search">
+                <input
+                  type="text"
+                  [(ngModel)]="searchOrderNumber"
+                  #orderNumberInputField
+                  (keyup.enter)="handleSearch($event)"
+                  placeholder="Tìm kiếm theo mã đơn"
+                />
+              </div>
         </div>
-        <div class="container_item">
+        <!-- <div class="container_item">
             <button>Thêm điều kiện lọc</button>
             <input type="text" placeholder="Tìm kiếm" [(ngModel)]="orderNumberInput" (keyup.enter)="getOrderDetails()">
-        </div>
+        </div> -->
         <div class="container_item">
             <div *ngIf="selectedbar === 'trang-thai-don-hang'">
                 <table>
@@ -40,7 +55,7 @@
                         <th>Trạng thái</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
-                    <tbody *ngFor="let order of Orders">
+                    <tbody *ngFor="let order of filteredOrders">
                         <!-- <tbody *ngFor="let order of filteredOrders"> -->
                         <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>

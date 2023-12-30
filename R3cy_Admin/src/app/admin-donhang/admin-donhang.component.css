@@ -211,6 +211,59 @@ td >i:hover{
     text-align: center;
 }
 
+.sub-header{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    margin: 15px;
+  }
+  
+  .search{
+    top: 0;
+    display: flex;
+    flex: 1;
+  }
+  
+  input[type="text"] {
+    width: 50%;
+    box-sizing: border-box;
+    border: 1px solid var(--color-grey);
+    border-radius: 10px;
+    padding: 0px 10px;
+    font-size: 16px;
+  }
+  
+  .sort {
+    display: flex;
+    flex: 0.3;
+    align-items: center;
+    color: var(--color-white);
+    border-radius: 10px;
+  }
+  
+  .sort > label {
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    height: 20px;
+    align-items: center; 
+    background-color: var(--color-blue);
+    border-radius: 10px;
+  }
+  
+  .sort > label > p{
+    padding: 0px 10px;
+  }
+  
+  .sort > label > input {
+    border: none;
+    width: 50px;
+    height: 20px;
+    font-size: 16px;
+    background-color: var(--color-blue);
+    color: var(--color-white);
+  }
+
 @media screen and (max-width: 480px){
     .fullpage{
     
