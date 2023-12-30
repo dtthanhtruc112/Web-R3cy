@@ -1,108 +1,152 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { product } from '../Interface/product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, catchError, map, of, switchMap, take, takeUntil } from 'rxjs';
 import { CartService } from '../Service/cart.service';
 import { OrderService } from '../Service/order.service';
-import { CartItemDetailed, CartItem, Cart } from '../models/cart';
+import { Cart, CartItem } from '../models/cart';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ProductService } from '../Service/product.service';
 import { Order } from '../Interface/Order';
-
-
+import { AuthService } from '../Service/auth.service';
 
 @Component({
   selector: 'app-product-cart',
   templateUrl: './product-cart.component.html',
-  styleUrl: './product-cart.component.css'
+  styleUrls: ['./product-cart.component.css']
 })
-export class ProductCartComponent implements OnInit, OnDestroy {
-
-
-
-  cartItems: product[] = [];
-  quantity: number = 1;
-  selectedOption: string = '';
-  cartItemsDetailed: CartItemDetailed[] = [];
-  cartCount = 0;
-  endSubs$: Subject<any> = new Subject();
-  totalPrice: number = 0;
-
-
+export class ProductCartComponent implements OnInit {
+  userId: any;
+  cartItems: CartItem[] = [];
+  cartLength: any;
+  products: product[] = [];
 
   constructor(
     private cartService: CartService,
     private _route: ActivatedRoute,
     private productService: ProductService,
-    private orderService: OrderService
-  ) {
+    private orderService: OrderService,
+    private authService: AuthService
+  ) {}
 
-  }
+  ngOnInit(): void {
+    // Lấy userID từ AuthService
+    this.userId = Number(this.authService.getUserId());
+    console.log('userId', this.userId);
 
-  ngOnInit() {
-    this.getCartDetails();
-    // this._getOrderSummary();
-
-
-  }
-
-  ngOnDestroy() {
-    this.endSubs$.next(null);
-    this.endSubs$.complete();
-
-  }
-
-
-
-
-  getCartDetails() {
-    this.cartService.getCart().subscribe((cartData) => {
-      const cartItems = cartData.cart || [];
-      this.cartItemsDetailed = [];
-  
-      cartItems.forEach((cartItem: CartItem) => {
-        if (cartItem.id) {  // Đổi từ cartItem.productId thành cartItem.id
-          this.productService.getProduct(cartItem.id).subscribe((respproductt: product) => {
-            this.cartItemsDetailed.push({
-              productt: respproductt,
-              quantity: cartItem.quantity
-            });
-            this.calculateTotalPrice();
-          });
+    // Gọi API để lấy giỏ hàng dựa trên userID
+    if (this.userId !== null) {
+      // Chuyển đổi userId thành chuỗi khi gọi API
+      this.cartService.getCart(this.userId).subscribe(
+        (data: any) => {
+          console.log('API Response:', data);
+      
+          // Sử dụng data.cart thay vì data.cartItems
+          this.cartItems = data.cart || [];
+          // Tính tổng giá trị của từng sản phẩm
+          // this.calculateSubtotal();
+        },
+        (error) => {
+          console.error('Error getting cart:', error);
         }
-      });
-    });
+      );
+
+      this.productService.getData().subscribe(
+        (productData: product[]) => {
+          this.products = productData;
+          // Tiếp tục xử lý và tính toán sau khi có dữ liệu sản phẩm
+          this.calculateSubtotal();
+        },
+        (error) => {
+          console.error('Error getting product data:', error);
+        }
+      );
+      
   }
   
 
+  
+}
+  calculateSubtotal(): void {
+    // Đặt giá trị cho thuộc tính subtotal trong từng sản phẩm
+    this.cartItems.forEach(item => {
+      item.subtotal = item.price * item.quantity;
+    });
+    // Sau khi cập nhật, cập nhật lại danh sách sản phẩm trong giỏ hàng và chuyển hướng lại
+    this.refreshCartItems();
+  }
+  calculateOrderTotal(): number {
+    let orderTotal = 0;
+  
+    // Tính tổng các subtotal của từng sản phẩm trong giỏ hàng
+    this.cartItems.forEach(item => {
+      // Kiểm tra xem subtotal có được đặt giá trị hay không
+      if (item.subtotal !== undefined) {
+        orderTotal += item.subtotal;
+      }
+    });
+  
+    return orderTotal;
+    
+  }
+  
+  // Phương thức để xóa sản phẩm khỏi giỏ hàng
+  removeItemFromCart(userId: number, itemId: number): void {
+    this.cartService.removeCartItem(userId, itemId).subscribe(
+      (data: any) => {
+        console.log('Item removed successfully:', data);
+        // Sau khi xóa thành công, cập nhật lại danh sách sản phẩm trong giỏ hàng
+        this.refreshCartItems();
+      },
+      (error) => {
+        console.error('Error removing item:', error);
+      }
+    );
+  }
 
-
-  calculateSubtotal(cartItem: any): number {
-    const price = cartItem.productt?.price || 0;
-    const quantity = cartItem.quantity || 0;
-    const subtotal = price * quantity;
-    return subtotal;
+ // Cập nhật danh sách sản phẩm trong giỏ hàng sau khi xóa
+private refreshCartItems(): void {
+  // Gọi API để lấy giỏ hàng dựa trên userID
+  if (this.userId !== null) {
+    this.cartService.getCart(this.userId).subscribe(
+      (data: any) => {
+        this.cartItems = data.cart || []; // Sửa lại dòng này
+      },
+      (error) => {
+        console.error('Error getting cart:', error);
+      }
+    );
+  }
 }
 
-  calculateTotalPrice() {
-    this.totalPrice = this.cartItemsDetailed.reduce((total, cartItem) => {
-      return total + this.calculateSubtotal(cartItem);
-    }, 0);
-  }
 
-  deleteCartItem(cartItem: CartItemDetailed) {
-    this.cartService.removeFromCart(cartItem.productt.id).subscribe(() => {
-      this.getCartDetails();
-    });
+  updateCartItemQuantity(event: any, item: CartItem): void {
+    // Cập nhật số lượng trong giỏ hàng
+    item.quantity = event.value;
+    console.log('item.quantity', item.quantity); // Xác nhận giá trị khi thay đổi
+    // Gửi request API để cập nhật số lượng trong cơ sở dữ liệu
+    this.cartService.updateCartItemQuantity(this.userId, item.id, item.quantity).subscribe(
+      (data: any) => {
+        console.log('Cart item quantity updated successfully:', data);
+        // Nếu bạn cần thực hiện các hành động khác sau khi cập nhật, thì thêm vào đây
+        // Sau khi cập nhật, cập nhật lại danh sách sản phẩm trong giỏ hàng và chuyển hướng lại
+      this.refreshCartItems();
+      },
+      (error) => {
+        console.error('Error updating cart item quantity:', error);
+      }
+    );
   }
-
-  updateCartItemQuantity(event: { value: any; }, cartItem: CartItemDetailed) {
-    this.cartService.updateCart(cartItem.productt.id, event.value).subscribe(() => {
-      this.getCartDetails();
-    });
+  
+  getProductImage(productId: number): string {
+    const product = this.products.find(p => p.id === productId);
+  
+    if (product) {
+      return product.img1; // Thay thế "imageUrl" bằng thuộc tính hình ảnh thực tế của bạn trong đối tượng sản phẩm
+    } else {
+      return 'default-image-url.jpg'; // Thay thế "default-image-url.jpg" bằng URL hình ảnh mặc định của bạn
+    }
   }
-
-  getOrderSummary() {
-    // Gọi các phương thức hoặc service cần thiết để lấy thông tin tổng đơn hàng
-  }
+  
+  
 }

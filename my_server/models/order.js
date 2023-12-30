@@ -5,12 +5,12 @@ const Schema = mongoose.Schema;
 
 const Order = new Schema({
     userid: Number,
-    channel: String,
-    ordernumber: Number,
-    order_status: String,
+    channel: { type: String, default: 'Website' },
+    ordernumber: { type: Number, unique: true },
+    order_status: { type: String, default: 'Chờ xử lí' },
     ordereddate: String,
     paymentmethod: String,
-    paymentstatus: Boolean,
+    paymentstatus: { type: Boolean, default: false },
     shipfee: Number,
     products: [{
         id: Number,
@@ -19,12 +19,12 @@ const Order = new Schema({
         name: String,
         price: Number,
         quantity: Number,
-        feedback: String,
+        feedback: { type: String, default: '' },
     }],
-    rejectreason: String
+    rejectreason: { type: String, default: '' }
 });
 
-// Order.plugin(AutoIncrement, {inc_field: 'ordernumber', start_seq: 1007})
+
 Order.pre('save', async function (next) {
     if (!this.ordernumber) {
         // Nếu ordernumber không tồn tại, thực hiện logic tăng giảm chỉ số
@@ -38,3 +38,4 @@ Order.pre('save', async function (next) {
 
 
 module.exports = mongoose.model('Order', Order);
+// Order.plugin(AutoIncrement, {inc_field: 'ordernumber', start_seq: 1007})

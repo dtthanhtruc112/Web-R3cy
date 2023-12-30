@@ -144,22 +144,17 @@
                                             <th class="product-total">Tổng</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-body">
-                                        <tr class="cart-item">
-                                            <td class="product-name">Móc khóa rùa biển <span class="product-quantity">×
-                                                    1</span></td>
-                                            <td class="product-total">$69.99</td>
-                                        </tr>
-                                        <tr class="cart-item">
-                                            <td class="product-name">Đế lót ly <span class="product-quantity">× 1</span>
-                                            </td>
-                                            <td class="product-total">$20.00</td>
+                                    <tbody class="table-body" >
+                                        <tr class="cart-item"  *ngFor="let item of cartItems">
+                                            <td class="product-name">{{ item.name }} <span class="product-quantity">×
+                                                {{ item.quantity }}</span></td>
+                                            <td class="product-total">{{item.price * item.quantity}}</td>
                                         </tr>
                                     </tbody>
                                     <tfoot class="table-foot">
                                         <tr class="cart-subtotal">
                                             <th>Tổng cộng</th>
-                                            <td>$89.99</td>
+                                            <td>90.00</td>
                                         </tr>
                                         <tr class="shipping">
                                             <th>Phí vận chuyển</th>

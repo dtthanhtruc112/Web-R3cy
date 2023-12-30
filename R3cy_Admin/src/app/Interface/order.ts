@@ -19,4 +19,5 @@ export interface Product {
     paymentmethod: string;
     paymentstatus: boolean;
     totalOrderValue?: number;
+    shipfee: Number,
   } 

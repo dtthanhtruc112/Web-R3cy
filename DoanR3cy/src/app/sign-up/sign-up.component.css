@@ -26,6 +26,7 @@ div{
     justify-content: center;
     display: flex;
     height: 100vh;
+    margin-top: 40px;
 }
 
 .content{

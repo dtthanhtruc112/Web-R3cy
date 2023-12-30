@@ -47,6 +47,16 @@ export class AuthService {
   getUserId(): string | null {
     return sessionStorage.getItem('userid');
   }
+
+  getUserIdNumber(): number | null {
+    const userIdString = sessionStorage.getItem('userid');
+    if (userIdString) {
+      const userIdNumber = parseInt(userIdString, 10);
+      return userIdNumber;
+    } else {
+      return null;
+    }
+  }
   
 
   logout() {
