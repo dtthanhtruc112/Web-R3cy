@@ -371,7 +371,10 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 //           ordereddate: req.body.ordereddate,
 //           paymentmethod: req.body.paymentmethod,
 //           paymentstatus: req.body.paymentstatus,
-//           shipfee: req.body.shipfee,
+//           shippingfee: req.body.shippingfee,
+//           totalOrderValue: req.body.totalOrderValue,
+//           discount: req.body.discount,
+//           totalAmount: req.body.totalAmount,
 //           ordernote: req.body.ordernote,
 //           orderadress: req.body. orderadress,
 //           products: [], // Khởi tạo danh sách sản phẩm trống
