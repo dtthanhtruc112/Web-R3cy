@@ -8,6 +8,7 @@ const DiscountSchema = new mongoose.Schema({
   status: String,
   activate_date: String,
   expired_date: String,
+  valuecode: Number,
   userids: [{
     userid: Number
   }

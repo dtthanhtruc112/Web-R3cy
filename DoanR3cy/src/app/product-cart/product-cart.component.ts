@@ -9,6 +9,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ProductService } from '../Service/product.service';
 import { Order } from '../Interface/Order';
 import { AuthService } from '../Service/auth.service';
+import { DiscountService } from '../Service/discount.service';
+import { Discount } from '../Interface/Discount';
 
 @Component({
   selector: 'app-product-cart',
@@ -26,7 +28,8 @@ export class ProductCartComponent implements OnInit {
     private _route: ActivatedRoute,
     private productService: ProductService,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private discountService: DiscountService
   ) {}
 
   ngOnInit(): void {
@@ -143,5 +146,32 @@ private refreshCartItems(): void {
     }
   }
   
-  
+
+  // Apply voucher
+  voucherCode: string = '';
+  discountInfo: Discount | null = null; // Allow null
+
+  applyVoucher() {
+    this.discountService.getDiscountByCode(this.voucherCode).subscribe(
+      (discountOrArray: Discount | Discount[]) => {
+        // Check if it's an array of discounts
+        if (Array.isArray(discountOrArray)) {
+          // Handle multiple discounts as needed, for now, take the first one
+          this.discountInfo = discountOrArray[0];
+        } else {
+          // It's a single discount
+          this.discountInfo = discountOrArray;
+        }
+      },
+      (error) => {
+        console.error('Error applying voucher:', error);
+        // Handle API error
+        this.discountInfo = null; // Reset discountInfo on error
+      }
+    );
+  }
+
+
+
+
 }
