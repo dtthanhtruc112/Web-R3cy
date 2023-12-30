@@ -6,47 +6,53 @@
             <!-- Doanh thu sản phẩm -->
             <div class="Title">
                 <!-- <label for="dateRange">Chọn khoảng thời gian:</label> -->
-                <select id="dateRange" class="btn">
+                <select id="dateRange" class="btn" [(ngModel)]="dateRange" (change)="onDateRangeChange()">
+                    <option value="all">Toàn bộ</option>
                     <option value="today">Hôm nay</option>
                     <option value="thisMonth">Tháng này</option>
-                    <option value="all">Toàn bộ</option>
+                    
                 </select>
-                <select id="channel" class="btn">
-                    <option value="website">Website</option>
-                    <option value="Shoppe"></option>
+                <select id="channel" class="btn" [(ngModel)]="channel" (change)="onChannelChange()">
+                    <option value="Website">Website</option>
+                    <option value="Shopee">Shopee</option>
                 </select>
             </div>
             <hr  class="line--grey">
             <table>
                 <tr>
                     <td>Doanh thu thuần</td>
-                    <td>35.000.000</td>
+                    <td>{{ data.totalAmount }}</td>
                 </tr>
                 <tr>
                     <td>Tổng số đơn hàng</td>
-                    <td>50</td>
+                    <td>{{ data.totalOrders }}</td>
                 </tr>
                 <tr>
                     <td>Số lượng sản phẩm đã bán</td>
-                    <td>35</td>
+                    <td>{{ data.products?.totalQuantitySold }}</td>
                 </tr>
                 <tr>
                     <td>
                         <p>Sản phẩm bán chạy nhất</p>
                         <table>
-                            <tr>
-                                <td rowspan="2"><img src="../../assets/Image/ImageForBlog/thumbnail/1.png" alt="" width="77px" height="77px"></td>
-                                <td>Tên sản phẩm</td>
+                            <tr *ngIf="data.products?.bestSellingProduct">
+                                <td rowspan="2"><img src="{{ data.products?.bestSellingProduct?.img1 }}" alt="" width="77px" height="77px"></td>
+                                <td> {{ data.products?.bestSellingProduct?.name | json }}</td>
+                               
                             </tr>
-                            <tr><td>Giá sản phẩm</td></tr>
+                            <tr><td> {{ data.products?.bestSellingProduct?.price | json }}.000 đ</td></tr>
+                        
                         </table>
                     </td>
-                    <td> <p> 20</p>
+                    <td class="bestSellingProductquantity"> 
+                        <p> {{ data.products?.bestSellingProduct?.quantity | json }}</p> 
                     </td>
+                   
                 </tr>
+
                 <tr class="viewDetailLine" >
                     <td></td>
-                    <td><a href="" class="viewDetail">Xem chi tiết</a></td>
+                    <td><a href="" routerLink='/sanpham' routerLinkActive="active"  class="viewDetail">Xem chi tiết</a></td>
                 </tr>
             </table>
         </div>

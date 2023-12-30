@@ -13,8 +13,13 @@ export class OrderService {
   // }
 
   private _url: string = "http://localhost:3000";
+  private apiUrl: string = 'http://localhost:3000/api/orders-summary';
 
   constructor(private _http: HttpClient) { }
+
+  fetchData(dateRange: string, channel: string): Observable<any> {
+    return this._http.get(`${this.apiUrl}?range=${dateRange}&channel=${channel}`);
+  }
 
   getOrder(userId: number): Observable<Order[]> {
     return this._http.get<Order[]>(`${this._url}/orders/user/${userId}`).pipe(
