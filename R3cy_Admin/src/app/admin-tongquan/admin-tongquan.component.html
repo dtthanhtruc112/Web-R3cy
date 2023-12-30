@@ -5,8 +5,16 @@
         <div class="containerLeft">
             <!-- Doanh thu sản phẩm -->
             <div class="Title">
-                <button class="btn">Hôm nay</button>
-                <button class="btn">Website</button>
+                <!-- <label for="dateRange">Chọn khoảng thời gian:</label> -->
+                <select id="dateRange" class="btn">
+                    <option value="today">Hôm nay</option>
+                    <option value="thisMonth">Tháng này</option>
+                    <option value="all">Toàn bộ</option>
+                </select>
+                <select id="channel" class="btn">
+                    <option value="website">Website</option>
+                    <option value="Shoppe"></option>
+                </select>
             </div>
             <hr  class="line--grey">
             <table>
@@ -42,15 +50,13 @@
                 </tr>
             </table>
         </div>
-        <!-- <div class="containerRight">
-            <p>Gì gì đó</p>
-        </div> -->
+
     </div>
     <div class="containerBottom">
         <!-- Trạng thái đơn hàng -->
         <div class="dongtittle">
             <h3>Trạng thái đơn hàng</h3>
-            <button  class="btn">Tất cả</button>
+            
         </div>
         <table>
             <tr>
