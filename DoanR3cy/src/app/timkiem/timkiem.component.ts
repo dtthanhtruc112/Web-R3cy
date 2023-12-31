@@ -33,14 +33,28 @@ export class TimkiemComponent implements OnInit {
     const rawKeywords = this.searchForm.value.searchKeyword.toLowerCase();
     const keywords: string[] = rawKeywords.split(' ').filter((keyword: string) => keyword.trim() !== '');
 
-  
     if (keywords.length > 0) {
-      // Lọc danh sách kết quả tìm kiếm
-      this.searchResults = this.allProducts
-        .filter(item => this.containsAllKeywords(item, keywords))
-        .map(item => ({ ...item, highlight: true })); // Thêm thuộc tính highlight cho sản phẩm tìm thấy
-      console.log(' this.searchResults', this.searchResults);
-  
+      // Tạo mảng chứa tất cả kết quả từng từ
+      const allResults: product[][] = [];
+
+      // Lặp qua từng từ và thực hiện tìm kiếm
+      keywords.forEach(keyword => {
+        const resultsForKeyword = this.allProducts
+          .filter(item => this.containsKeyword(item, keyword))
+          .map(item => ({ ...item, highlight: true }));
+        
+        allResults.push(resultsForKeyword);
+      });
+
+      // Gộp tất cả các kết quả vào mảng searchResults và loại bỏ sản phẩm trùng lặp theo id
+      this.searchResults = ([] as product[]).concat(...allResults).reduce<product[]>((uniqueResults, item) => {
+        const existingItem = uniqueResults.find(u => u.id === item.id);
+        if (!existingItem) {
+          uniqueResults.push(item);
+        }
+        return uniqueResults;
+      }, []);
+
       // Hiển thị kết quả tìm kiếm
       this.showSearchResults = true;
     } else {
@@ -49,19 +63,22 @@ export class TimkiemComponent implements OnInit {
       this.showSearchResults = false;
     }
   }
+
+  containsKeyword(item: product, keyword: string): boolean {
+    const searchableFields = ['category1', 'category2', 'name', 'description'];
   
-  containsAllKeywords(item: product, keywords: string[]): boolean {
-    // Kiểm tra xem tất cả các từ khóa xuất hiện trong bất kỳ trường nào của sản phẩm
-    return keywords.every(keyword =>
-      Object.values(item).some(
-        value =>
-          value &&
-          typeof value === 'string' &&
-          value.toLowerCase().includes(keyword)
-      )
-    );
+    return searchableFields.some(field => {
+      const fieldValue = (item as any)[field];
+  
+      if (typeof fieldValue === 'string') {
+        return fieldValue.toLowerCase().includes(keyword);
+      }
+  
+      return false;
+    });
   }
   
+
   // handleSearch(): void {
   //   const keyword = this.searchForm.value.searchKeyword.toLowerCase();
   //   console.log('keywword', keyword);
