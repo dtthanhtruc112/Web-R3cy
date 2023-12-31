@@ -134,3 +134,35 @@ img{
     border: 2px solid #31B9F4;
     border-radius: 10px;
 }
+
+@media screen and (max-width: 780px){
+    
+}
+
+@media screen and (max-width: 480px){
+    .flexboxcontainer{
+        display: block;
+    }
+
+    .firstinfo{
+        width: 90%;
+    }
+
+    .main{
+        margin-top: 100px;
+    }
+    
+    .product-show{
+        width: 40%;
+        padding: 0;
+    }
+
+    .pricecontainer{
+        padding: 0 10px;
+        margin: 0 auto;
+    }
+
+    .product-show>.pricecontainer>.price{
+        display: block;
+    }
+}
