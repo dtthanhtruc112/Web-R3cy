@@ -11,7 +11,7 @@ div{
     font-weight: bold;
 }
 
-.header > .h4{
+.header > .h3{
     color: var(--color-blue)
 }
 
