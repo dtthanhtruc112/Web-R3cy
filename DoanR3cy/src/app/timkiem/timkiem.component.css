@@ -24,3 +24,64 @@ input{
     font-weight: bold;
     margin-left: 10px;
 }
+
+/* Thêm style mới cho highlight tên sản phẩm */
+.product-show .name.highlighted-text {
+    background-color:yellow; /* Màu chữ hoặc các thuộc tính khác tùy thuộc vào thiết kế của bạn */
+    font-weight: bold; /* Độ đậm của chữ hoặc các thuộc tính khác tùy thuộc vào thiết kế của bạn */
+  }
+.product-show{
+    border: 1px solid #31B9F4;
+    background-color: #DDF5FF;
+    border-radius: 10px;
+    width: 28%;
+    max-width: 250px;
+    display: inline-block;
+    margin: 10px;
+}
+.product-show img{
+    width: 100%;
+    height: 250px;
+    border: 2px solid #31B9F4;
+    border-radius: 10px;
+}
+
+.product-show>p{
+    width: 100%;
+    margin: 10px 0;
+}
+
+.product-show>.name{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #31B9F4;
+    margin-bottom: 0;
+    
+}
+
+.pricecontainer{
+    padding: 0 20px;
+}
+.oldprice{
+    color: gray;
+    font-size: 13px;
+    text-decoration: line-through;
+    display: inline;
+    font-style: italic;
+    text-align: right;
+}
+
+.product-show>.pricecontainer>.price{
+    display: inline-block;
+    width: 50%;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.product-show>.pricecontainer>.oldprice{
+    display: inline-block;
+    width: 50%;
+}
+

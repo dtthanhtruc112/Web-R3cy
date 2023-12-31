@@ -7,6 +7,7 @@ export interface Product {
   quantity: number;
   productValue?: number;
   feedback: string;
+  img1:String,
 }
 
 export interface Order {
@@ -19,7 +20,10 @@ export interface Order {
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
-  shipfee: number;
+  shippingfee?: number;
+  discount?: Number;
+  totalAmount?: Number;
+  address: String
 
   id: string;
   orderItems?: OrderItem[];

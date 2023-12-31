@@ -1,28 +1,31 @@
 <div class="containerAll">
-    <h4>Quay lại trang Blog</h4>
-    <!-- <h2>{{ isEdit ? 'Chỉnh sửa bài đăng' : 'Tạo bài đăng mới' }}</h2> -->
- 
-     <div class="containerContent">
-         <div class="Leftt">
-             <input type="text" placeholder="Nhập tiêu đề" class="titleBlog" [(ngModel)]="titleInputValue">
-             <br>
-             <input type="text" placeholder="Nhập tác giả" class="titleBlog" [(ngModel)]="authorInputValue">
-             <br>
- 
-             <!-- Thay thế textarea bằng AngularEditor -->
-             <angular-editor [(ngModel)]="blogContent" [config]="editorConfig"></angular-editor>
- 
-             <div class="Button">
-                <button (click)="createBlog()" class="btn">Đăng bài</button>
-             </div>
+    <!-- <h4>Quay lại trang Blog</h4> -->
+    <h4>{{ isEdit ? 'Chỉnh sửa bài đăng' : 'Tạo bài đăng mới' }}</h4>
+    <div>
+        <div class="containerContent">
+            <div class="Left">
+                <input type="text" placeholder="Nhập tiêu đề" class="titleBlog" [(ngModel)]="titleInputValue">
+                <br>
+                <input type="text" placeholder="Nhập tác giả" class="titleBlog" [(ngModel)]="authorInputValue">
+                <br>
+    
+                <!-- Thay thế textarea bằng AngularEditor -->
+                <angular-editor [(ngModel)]="blogContent" [config]="editorConfig"></angular-editor>
+    
+                
+            </div>
+            <div class="Right">
+                <img class="circle_img" #selectedImage [src]="imageSrc" alt="">
+                <br>
+                <input type="file" #myfile name="myfile" accept="image/*" (change)="displayImage($event)">
+   
+            </div>
+        </div>
+        <div class="Button">
+            <button (click)="createBlog()" class="btn">Đăng bài</button>
          </div>
-         <div class="Right">
-             <img class="circle_img" #selectedImage [src]="imageSrc" alt="">
-             <br>
-             <input type="file" #myfile name="myfile" accept="image/*" (change)="displayImage($event)">
-
-         </div>
-     </div>
+    </div>
+     
      <div>
          {{blogContent}}
      </div>

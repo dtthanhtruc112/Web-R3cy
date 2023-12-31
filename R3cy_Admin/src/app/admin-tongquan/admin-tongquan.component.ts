@@ -12,10 +12,15 @@ export class AdminTongquanComponent {
   completedOrdersCount: number = 0;
   cancelledOrdersCount: number = 0;
 
+  dateRange: string = 'all';
+  channel: string = 'Website';
+  data: any = {};
+
   constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.loadOrderCounts();
+    this.fetchDataAndUpdateUI();
   }
 
   loadOrderCounts(): void {
@@ -27,4 +32,27 @@ export class AdminTongquanComponent {
       this.cancelledOrdersCount = orders.filter(order => order.order_status === 'Đã hủy').length;
     });
   }
+  onDateRangeChange(): void {
+    this.fetchDataAndUpdateUI();
+  }
+
+  onChannelChange(): void {
+    this.fetchDataAndUpdateUI();
+  }
+
+  fetchDataAndUpdateUI(): void {
+    this.orderService
+        .fetchData(this.dateRange, this.channel)
+        .subscribe(
+            (data) => {
+                console.log('Dữ liệu từ API:', data);
+                this.data = data;
+            },
+            (error) => {
+                console.error('Lỗi khi gửi yêu cầu đến API:', error);
+                // Hiển thị thông báo lỗi
+            }
+        );
+}
+
 }

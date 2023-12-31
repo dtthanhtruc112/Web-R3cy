@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2  } from '@angular/core';
 import { BlogPost } from '../Interface/blogPost';
 import { BlogService } from '../Service/blog.service';
 import { ActivatedRoute } from '@angular/router';
@@ -20,11 +20,16 @@ export class DetailBlogComponent implements OnInit {
   constructor(
     private blogService: BlogService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {}
 
   
   ngOnInit() {
+    // Gọi hàm để xử lý CSS cho hình ảnh trong blog.content
+    this.handleImageStyling();
+
     this.route.paramMap.subscribe((params) => {
       const blogId = params.get('id');
       if (blogId) {
@@ -41,7 +46,46 @@ export class DetailBlogComponent implements OnInit {
         this.router.navigate(['/blog']);
       }
     });
+    
   }
+
+   // Hàm để xử lý CSS cho hình ảnh trong blog.content
+  //  handleImageStyling(): void {
+  //   if (this.blog) {
+  //     // Lấy tất cả các hình ảnh trong blog.content
+  //     const contentImages = this.el.nativeElement.querySelectorAll('.contnentBlog img');
+  //     console.log('contentImages', contentImages);
+
+     
+  //     // Xóa thuộc tính width và height
+  //   contentImages.forEach((img: any) => {
+  //     img.style.width = null;
+  //     img.style.height = null;
+  //   });
+
+  //     // Áp dụng CSS cho từng hình ảnh (nếu cần)
+  //     contentImages.forEach((img: any) => {
+  //       this.renderer.addClass(img, 'content-image');
+  //     });
+  //   }
+  // }
+  handleImageStyling(): void {
+    if (this.blog) {
+      const contentImages = this.el.nativeElement.querySelectorAll('.contnentBlog img');
+      
+      contentImages.forEach((img: any) => {
+        img.style.width = '';
+        img.style.height = '';
+      });
+  
+      // Áp dụng CSS cho từng hình ảnh (nếu cần)
+      contentImages.forEach((img: any) => {
+        this.renderer.addClass(img, 'content-image');
+      });
+    }
+  }
+  
+
   viewRelatedBlogDetails(blogId: string): void {
     this.router.navigate(['/blog', blogId]);
   }

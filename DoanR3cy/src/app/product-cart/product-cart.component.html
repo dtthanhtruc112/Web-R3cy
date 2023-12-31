@@ -79,7 +79,7 @@
                     </form>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-lg-6">
+                    
                         <div class="coupon-wrap">
                             <h4 class="title">Mã giảm giá</h4>
                             <p class="desc">Nhập mã giảm giá (nếu có)</p>
@@ -87,8 +87,7 @@
                                 [(ngModel)]="voucherCode" />
                             <button type="button" class="btn-coupon" (click)="applyVoucher()">Áp dụng</button>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-6">
+                    
                         <div class="cart-totals-wrap">
                             <h2 class="title">Tổng giỏ hàng</h2>
                             <table>
@@ -119,12 +118,7 @@
                                             </span>
 
 
-                                            <!-- <p class="address">Gửi đến <strong>Địa chỉ lưu sẵn: VD TP. Thủ
-                                                    Đức</strong>.</p> -->
-                                            <!-- Cần thêm địa chỉ của client: quốc gia, thành phố, quận huyện... vì nó sẽ lấy địa chỉ có sẵn áp vào form địa chỉ,  -->
-                                            <!-- <a href="" routerLink="/trangtaikhoan" routerLinkActive="active"
-                                                class="btn-shipping-address">Thay đổi địa
-                                                chỉ</a> -->
+                                           
                                         </td>
                                     </tr>
                                     <!-- Display order total after applying discount and adding 25 -->
@@ -147,11 +141,9 @@
                                 </tbody>
                             </table>
                             <div class="text-end">
-                                <a routerLink="/checkout" routerLinkActive="active" class="checkout-button">Tiếp tục
-                                    thanh toán</a>
+                                <a class="checkout-button" (click)="goToCheckout()">Tiếp tục thanh toán</a>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </section>

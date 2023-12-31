@@ -13,6 +13,14 @@ div {
 .containerContent {
     display: flex;
 }
+.custom-angular-editor {
+    text-align: justify;
+  }
+
+  angular-editor {
+    position: relative;
+    z-index: 999; /* Đặt z-index thấp hơn z-index của phần tử có position: fixed */
+  }
 
 .Left {
     flex: 1; /* Left takes up all available space */
@@ -37,6 +45,10 @@ div {
     margin-left: 20px; /* Margin left 20px */
 }
 
+#file-upload-button{
+    cursor: pointer;
+}
+
 .circle_img img {
     max-width: 100%;
     height: 100%;
@@ -54,6 +66,7 @@ div {
     padding: 8px;
     border-radius: 5px;
     border: none;
+    cursor: pointer;
 }
 .Button{
     text-align: center;
@@ -62,7 +75,11 @@ div {
 @media screen and (max-width: 480px){
     .containerAll{
     
-        margin-left: 0px;
+        margin-left: 14.5vw;
         margin-top: 130px;
+    }
+
+    .containerContent{
+        flex-direction: column;
     }
 }

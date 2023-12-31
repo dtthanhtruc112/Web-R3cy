@@ -8,10 +8,15 @@ const Order = new Schema({
     channel: { type: String, default: 'Website' },
     ordernumber: { type: Number, unique: true },
     order_status: { type: String, default: 'Chờ xử lí' },
-    ordereddate: String,
+    ordereddate: { type: Date, default: Date.now },
     paymentmethod: String,
     paymentstatus: { type: Boolean, default: false },
-    shipfee: Number,
+    shippingfee: Number,
+    totalOrderValue: Number,
+    discount: Number,
+    totalAmount: Number,
+    ordernote: String,
+    orderadress:String,
     products: [{
         id: Number,
         category1: String,
@@ -20,8 +25,10 @@ const Order = new Schema({
         price: Number,
         quantity: Number,
         feedback: { type: String, default: '' },
+        img1:String,
     }],
-    rejectreason: { type: String, default: '' }
+    rejectreason: { type: String, default: '' },
+    address: String
 });
 
 

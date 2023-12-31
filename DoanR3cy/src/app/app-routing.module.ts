@@ -42,7 +42,14 @@ const routes: Routes = [
   { path: 'blog', component: BlogComponent },
   // { path: 'detail/:id', component: DetailBlogComponent },
   { path: 'blog/:id', component: DetailBlogComponent },
-  { path: 'timkiem', component: TimkiemComponent},
+  // { path: 'timkiem', component: TimkiemComponent},
+  {
+    path: 'timkiem',
+    component: TimkiemComponent,
+    children: [
+      { path: '', component: ProductListComponent } // Route con để hiển thị app-product
+    ]
+  },
   { path: 'manageblog', component: ManageBlogComponent},
   { path: 'product-list', component: ProductListComponent},
   { path: 'product/:id', component: ProductComponent},

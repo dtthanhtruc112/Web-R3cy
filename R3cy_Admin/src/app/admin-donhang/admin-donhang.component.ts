@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from '../Service/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgZone } from '@angular/core';
@@ -14,6 +14,7 @@ import { Order } from '../Interface/order';
 })
 export class AdminDonhangComponent implements OnInit {
   selectedbar: string = 'trang-thai-don-hang';
+  data: Order[] = [];
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
@@ -103,6 +104,7 @@ export class AdminDonhangComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadOrderInfo();
+    
     this.route.params.subscribe(params => {
       this.selectedbar = params['id'] || 'trang-thai-don-hang'; // Set a default value if 'id' is not present
     });
@@ -157,25 +159,6 @@ export class AdminDonhangComponent implements OnInit {
       this.filteredOrders = this.Orders;
     }
   }
-
-  // filterOrders(): void {
-  //   // Lọc danh sách đơn hàng dựa trên trạng thái đã chọn
-  //   if (this.selectedStatus !== 'Tất cả đơn hàng') {
-  //     this.Orders = this.initialOrders.filter(order => order.order_status === this.selectedStatus);
-  //   } else {
-  //     this.Orders = [...this.initialOrders]; // Display all orders when no status filter is applied
-  //   }
-  
-  //   // Lọc danh sách đơn hàng dựa trên mã đơn hàng
-  //    // Apply search filter
-  //    if (this.searchOrderNumber) {
-  //     this.filteredOrders = this.Orders.filter(order =>
-  //       order.ordernumber.includes(this.searchOrderNumber)
-  //     );
-  //   } else {
-  //     this.filteredOrders = [...this.Orders];
-  //   }
-  // }
 
   filteredOrders: Order[] = [];
   searchOrderNumber: string = '';
@@ -339,8 +322,8 @@ export class AdminDonhangComponent implements OnInit {
 
     // Sort the Orders array based on the selected column and order
     this.Orders.sort((a, b) => {
-      const aValue = column === 'ordereddate' ? this.parseDate(a[column]) : a[column];
-      const bValue = column === 'ordereddate' ? this.parseDate(b[column]) : b[column];
+      const aValue = column === 'ordereddate' ? a.ordereddate : a[column];
+      const bValue = column === 'ordereddate' ? b.ordereddate : b[column];
 
       if (aValue > bValue) {
         return this.sortOrder === 'asc' ? 1 : -1;
@@ -350,31 +333,61 @@ export class AdminDonhangComponent implements OnInit {
         return 0;
       }
     });
-  }
-
-  // Đếm số đơn hàng
-  getNewOrdersCount(): number {
-    return this.getFilteredOrdersCount('Đơn hàng mới');
-  }
-  
-  getPendingOrdersCount(): number {
-    return this.getFilteredOrdersCount('Chưa nhận hàng');
-  }
-  
-  getCompletedOrdersCount(): number {
-    return this.getFilteredOrdersCount('Hoàn thành');
-  }
-  
-  getCancelledOrdersCount(): number {
-    return this.getFilteredOrdersCount('Đã hủy');
-  }
-  
-  private getFilteredOrdersCount(status: string): number {
-    return this.Orders.filter(order => order.order_status === status).length;
-  }
+}
 
 
   
 
+  // Lọc
+  @ViewChild('orderNumberInputField') orderNumberInputField: ElementRef | undefined;
 
+  sortColumn: number | 'all' = 'all';
+  searchKeyword: string = '';
+  displayedData: Order[] = [];
+
+ 
+
+  sortTable1(): void {
+    this.updateDisplayedData();
+  }
+
+  updateDisplayedData(): void {
+    this.displayedData = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
+  }
+
+  getObjectKeys(obj: Order): string[] {
+    return obj ? Object.keys(obj) as string[] : [];
+  }
+
+  getItemValue(item: Order, key: string): string | File | undefined {
+    return item && item.hasOwnProperty(key) ? (item as any)[key] : undefined;
+  }
+   
+  handleSearch(event: any): void {
+    event.preventDefault();
+  
+    if (this.searchOrderNumber) {
+      this._orderService.getOrderById(this.searchOrderNumber).subscribe(
+        (order) => {
+          console.log('Order:', order);
+          // Handle the retrieved order details as needed
+          this.showOrderDetails(order);
+
+           // Tính toán lại tổng giá trị của đơn hàng
+      order.totalOrderValue = this.calculateTotalOrderValue(order);
+  
+          // Update filteredOrders to display only the searched order
+          this.filteredOrders = [order];
+        },
+        (error) => {
+          window.alert('Không tìm thấy đơn hàng. Vui lòng nhập lại!')
+          console.error('Error fetching order:', error);
+          // Handle the error, e.g., show an error message to the user
+        }
+      );
+    } else {
+      // If searchOrderNumber is empty, reset to display all orders
+      this.filteredOrders = [...this.Orders];
+    }
+  }
 }

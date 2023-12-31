@@ -48,6 +48,14 @@ export class AppComponent implements OnInit  {
     return userId ? ['/trangtaikhoan'] : ['/login'];
   }
 
+  cartLink(): string[] {
+    // Lấy giá trị userid từ AuthService
+    const userId = this.authService.getUserId();
+
+    // Nếu userid tồn tại, chuyển hướng tới trang tài khoản, ngược lại chuyển hướng tới trang đăng nhập
+    return userId ? ['/cart'] : ['/login'];
+  }
+
   constructor(private router: Router, private authService: AuthService,) {}
 
   // navigateToOtherPage(destination: string): void {

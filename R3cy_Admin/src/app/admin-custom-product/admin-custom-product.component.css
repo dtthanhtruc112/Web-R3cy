@@ -4,19 +4,21 @@ div{
 
 .max-box{
     margin-left: 280px;
+    padding: 5px;
 }
 
 .font-bold{
     font-weight: bold;
 }
 
-.header > .h4{
+.header > .h3{
     color: var(--color-blue)
 }
 
 .container{
     border: 1px solid var(--color-grey);
     margin-top: 50px;
+    border-radius: 10px;
 }
 
 .content{
@@ -123,6 +125,12 @@ input[type="text"] {
     .sort >label > p {
         font-size: 14px;
         margin: 0px;
+    }
+
+    .max-box{
+        margin: auto;
+        margin-top: 128px;
+        padding: 5px;
     }
 
   }

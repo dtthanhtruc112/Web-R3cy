@@ -5,9 +5,11 @@ const User = require('../models/user');
 const Product = require('../models/product');
 const Cart = require('../models/cart');
 const AccountCustomer = require('../models/accountcustomer.js');
+const Order = require('../models/order')
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
+
 
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -26,6 +28,144 @@ router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 router.get('/', (req, res) => {
   res.send('Welcome to NodeJS');
 });
+
+
+// Router để lấy dữ liệu theo khoảng thời gian
+router.get('/api/orders-summary', async (req, res) => {
+  try {
+      const range = req.query.range;
+      const channel = req.query.channel;
+
+      let data;
+      if (range === 'today') {
+          data = await fetchDataForToday(channel);
+      } else if (range === 'thisMonth') {
+          data = await fetchDataForThisMonth(channel);
+      } else if (range === 'all') {
+          data = await fetchDataForAll(channel);
+      } else {
+          return res.status(400).json({ error: 'Invalid range value' });
+      }
+
+      res.json(data);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
+// Hàm truy vấn dữ liệu đơn hàng cho hôm nay
+async function fetchDataForToday(channel) {
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+
+  // Thêm giờ, phút, giây và mili giây cuối cùng của ngày vào endDay
+  const endDay = new Date(today);
+  endDay.setUTCHours(23, 59, 59, 999);
+
+  return await fetchData(channel, today, endDay);
+}
+
+// Hàm truy vấn dữ liệu đơn hàng cho tháng
+async function fetchDataForThisMonth(channel) {
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+
+  // Set startDay là 00:00 của ngày đầu tiên của tháng
+  const startDay = new Date(today.getFullYear(), today.getMonth(), 1, 0, 0, 0, 0);
+
+  // Enđay là cuối ngày hôm nay
+  const endDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999);
+
+  return await fetchData(channel, startDay, endDay);
+}
+
+
+
+
+// Hàm truy vấn dữ liệu đơn hàng toàn bộ
+async function fetchDataForAll(channel) {
+  return await fetchData(channel);
+}
+
+// Hàm chung để thực hiện truy vấn dữ liệu
+async function fetchData(channel, startDate, endDate) {
+  const dateQuery = startDate && endDate ? { ordereddate: { $gte: startDate, $lt: endDate } } : {};
+  console.log('startDate:', startDate);
+  console.log('endDate:', endDate);
+  console.log('dateQuery:', dateQuery);
+  
+
+  const orders = await Order.find({ channel, ...dateQuery }).populate({ path: 'products', model: 'Product' });
+  // console.log('Orders with populated products:', orders);
+
+ 
+
+  // Trả về dữ liệu đơn hàng dưới dạng JSON
+  return {
+      totalAmount: calculateTotalAmount(orders),
+      totalOrders: orders.length,
+      products: await getProductDetailsForBestSellingProduct(orders),
+      // Thêm các thông tin khác cần thiết
+  };
+}
+
+// Hàm lấy thông tin chi tiết của sản phẩm bán chạy nhất
+async function getProductDetailsForBestSellingProduct(orders) {
+  const bestSellingProduct = findBestSellingProduct(orders.flatMap(order => order.products));
+
+  if (bestSellingProduct) {
+      const productDetails = await getProductDetailsFromDatabase(bestSellingProduct.id);
+      return { totalQuantitySold: bestSellingProduct.quantity, bestSellingProduct: productDetails };
+  } else {
+      return { totalQuantitySold: 0, bestSellingProduct: null };
+  }
+}
+
+// Hàm truy vấn thông tin chi tiết của sản phẩm từ DB Product
+async function getProductDetailsFromDatabase(productId) {
+  try {
+      const productDetails = await Product.findOne({ id: productId });
+      return productDetails;
+  } catch (error) {
+      throw error;
+  }
+}
+
+// Hàm tính tổng giá trị đơn hàng
+function calculateTotalAmount(orders) {
+  return orders.reduce((total, order) => total + order.totalAmount, 0);
+}
+
+// Hàm tính tổng số lượng sản phẩm đã bán và sản phẩm bán chạy nhất
+function calculateTotalQuantitySoldAndBestSellingProduct(orders) {
+  const allProducts = orders.flatMap(order => order.products);
+  const totalQuantitySold = allProducts.reduce((total, product) => total + product.quantity, 0);
+
+  const bestSellingProduct = findBestSellingProduct(allProducts);
+
+  console.log('bestSellingProduct:', bestSellingProduct); // Thêm console log ở đây
+
+  return {
+      totalQuantitySold,
+      bestSellingProduct,
+  };
+}
+
+// Hàm tìm sản phẩm bán chạy nhất
+function findBestSellingProduct(products) {
+  if (products.length === 0) {
+      return null;
+  }
+
+  // Sắp xếp mảng sản phẩm theo quantity giảm dần
+  const sortedProducts = [...products].sort((a, b) => b.quantity - a.quantity);
+
+  // console.log('sortedProducts:', sortedProducts); // Thêm console log ở đây
+
+  return sortedProducts[0]; // Sản phẩm ở đầu mảng là sản phẩm có quantity lớn nhất
+}
+
+
 
 router.get('/product/:id', cors(), (req, res) => {
   const productId = req.params.id;
@@ -47,6 +187,8 @@ router.get('/product/:id', cors(), (req, res) => {
       res.status(500).json({ error: error.message });
     });
 });
+
+
 
 // router.post('/cart/add', async (req, res) => {
 //   try {
@@ -297,6 +439,73 @@ router.post('/cart/add', async (req, res) => {
 });
 
 
+// Tạo order và xóa giỏ hàng
+router.post("/orders/user/:userid", async (req, res) => {
+  try {
+    const { userid } = req.params;
+
+    // Lấy thông tin giỏ hàng của người dùng
+    const cart = await Cart.findOne({ userid: userid });
+
+    // Kiểm tra xem giỏ hàng có tồn tại không
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+
+    // Tạo đối tượng Order mới từ dữ liệu yêu cầu
+    const newOrder = new Order({
+      userid,
+      channel: req.body.channel || 'Website',
+      order_status: req.body.order_status || 'Chờ xử lí',
+      ordereddate: req.body.ordereddate,
+      paymentmethod: req.body.paymentmethod,
+      paymentstatus: req.body.paymentstatus,
+      shipfee: req.body.shipfee,
+      ordernote: req.body.ordernote,
+      orderadress: req.body.orderadress,
+      products: [], // Khởi tạo danh sách sản phẩm trống
+      rejectreason: '',
+    });
+
+    // Lấy thông tin chi tiết sản phẩm từ DB Product
+    const productIds = cart.cartItems.map(item => item.id);
+    const products = await Product.find({ id: { $in: productIds } });
+
+    // Kiểm tra xem sản phẩm có tồn tại không
+    if (!products || products.length !== productIds.length) {
+      return res.status(404).json({ message: 'Some products not found' });
+    }
+
+    // Duyệt qua danh sách sản phẩm từ DB và thêm vào đơn hàng
+    products.forEach(product => {
+      const cartItem = cart.cartItems.find(item => item.id === product.id);
+
+      const orderProduct = {
+        id: product.id,
+        category1: product.category1,
+        category2: product.category2,
+        name: product.name,
+        price: product.price,
+        img1: product.img1,
+        quantity: cartItem.quantity,
+      };
+
+      newOrder.products.push(orderProduct);
+    });
+
+    // Lưu đối tượng Order vào cơ sở dữ liệu
+    const createdOrder = await Order.create(newOrder);
+
+    // Xóa giỏ hàng của người dùng
+    await Cart.deleteOne({ userid: userid });
+
+    // Trả về đơn hàng đã được tạo mới
+    res.json(createdOrder);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ err: error.message });
+  }
+});
 // Các phần còn lại không thay đổi
 
 module.exports = router;

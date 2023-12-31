@@ -1,27 +1,29 @@
-div{
+div {
     font-family: Inter-Regular;
 }
 
-.fullpage{
-    
+.fullpage {
+
     margin-left: 280px;
 }
 
-ul, li{
+ul,
+li {
     text-decoration: none;
     list-style: disc;
 }
 
 .bullet-list {
-    list-style-type: disc; /* Chọn kiểu chấm tròn */
+    list-style-type: disc;
+    /* Chọn kiểu chấm tròn */
     /* Các thuộc tính CSS khác nếu cần */
-  }
+}
 
-h3{
+h3 {
     color: var(--color-blue);
 }
 
-.container{
+.container {
     border: 1px solid black;
     border-radius: 10px;
     padding: 10px;
@@ -31,18 +33,18 @@ h3{
     min-width: 250px;
 }
 
-.container_item{
+.container_item {
     margin: 10px;
 }
 
-.container_item label{
+.container_item label {
     background-color: var(--color-blue);
     border-radius: 10px;
     padding: 10px;
     color: white;
 }
 
-.container_item button{
+.container_item button {
     background-color: #E6F6FD;
     padding: 10px 30px;
     color: var(--color-blue);
@@ -52,57 +54,60 @@ h3{
     cursor: pointer;
 }
 
-.container_item input{
+.container_item input {
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
     border: 1px solid black;
     margin: 10px;
+    width: 40%;
 }
 
-.tieude{
+.tieude {
     display: flex;
     flex-wrap: wrap;
 }
 
-.tieude h4{
+.tieude h4 {
     margin-right: 40px;
     color: var(--color-grey);
     cursor: pointer;
 
 }
 
-.tieude h4.selected{
+.tieude h4.selected {
     color: var(--color-blue);
 }
 
-table{
-    width: 90%;
+table {
+    width: 100%;
     border-collapse: collapse;
 }
 
-th{
+th {
     cursor: pointer;
 }
 
-td, th{
+td,
+th {
     text-align: center;
     padding: 10px;
     border-bottom: 1px solid black;
 }
 
-tr, tbody{
+tr,
+tbody {
     border-bottom: 1px solid black;
 }
 
-td >i {
+td>i {
     color: var(--color-blue);
     cursor: pointer;
     margin: 5px;
     font-size: 20px;
 }
 
-td >i:hover{
-    color:#85cfef
+td>i:hover {
+    color: #85cfef
 }
 
 .overlay {
@@ -111,10 +116,11 @@ td >i:hover{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1); /* Màu đen với độ trong suốt 50% */
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Màu đen với độ trong suốt 50% */
     /* display: none; */
-    z-index: 1;
-  }
+    z-index: 9999;
+}
 
 .popup {
     /* display: none; */
@@ -129,7 +135,7 @@ td >i:hover{
     /* Điều chỉnh kích thước border-radius */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     /* Điều chỉnh kích thước shadow */
-    z-index: 2;
+    z-index: 10000;
 }
 
 .popup p {
@@ -157,11 +163,11 @@ td >i:hover{
     margin-bottom: 10px;
 }
 
-#ordernumber{
+#ordernumber {
     cursor: pointer;
 }
 
-#ordernumber:hover{
+#ordernumber:hover {
     font-weight: bold;
 }
 
@@ -171,10 +177,11 @@ td >i:hover{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2); /* Màu đen với độ trong suốt 50% */
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Màu đen với độ trong suốt 50% */
     /* display: none; */
     z-index: 1;
-  }
+}
 
 .popup {
     /* display: none; */
@@ -191,12 +198,14 @@ td >i:hover{
     /* Điều chỉnh kích thước shadow */
     z-index: 2;
 }
+
 .popup p {
     font-size: 20px;
     /* Điều chỉnh kích thước font */
     margin-bottom: 20px;
     /* Điều chỉnh khoảng cách giữa các đoạn văn bản */
 }
+
 .popup button {
     padding: 10px 20px;
     background-color: var(--color-blue);
@@ -207,14 +216,97 @@ td >i:hover{
     margin-right: 1vw;
 }
 
-.button{
+.button {
     text-align: center;
 }
 
-@media screen and (max-width: 480px){
-    .fullpage{
-    
+.sub-header {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    margin: 15px;
+}
+
+.search {
+    top: 0;
+    display: flex;
+    flex: 1;
+}
+
+input[type="text"] {
+    width: 50%;
+    box-sizing: border-box;
+    border: 1px solid var(--color-grey);
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.sort {
+    display: flex;
+    flex: 0.3;
+    align-items: center;
+    color: var(--color-white);
+    border-radius: 10px;
+}
+
+.sort>label {
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    height: 20px;
+    align-items: center;
+    background-color: var(--color-blue);
+    border-radius: 10px;
+}
+
+.sort>label>p {
+    padding: 0px 10px;
+}
+
+.sort>label>input {
+    border: none;
+    width: 50px;
+    height: 20px;
+    font-size: 16px;
+    background-color: var(--color-blue);
+    color: var(--color-white);
+}
+
+img {
+    min-width: 100px;
+    height: 80px;
+    margin: 0 5px;
+    border-radius: 10px;
+}
+
+
+ul,
+li span {
+    line-height: 80px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        overflow-x: auto;
+        /* Enable horizontal scroll on tablets */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .fullpage {
+
         margin-left: 0px;
         margin-top: 130px;
+        padding: 5px;
+    }
+
+    .container {
+        overflow-x: auto;
+        /* Enable horizontal scroll on tablets */
+    }
+
+    .tieude{
+        justify-content: space-evenly;
     }
 }

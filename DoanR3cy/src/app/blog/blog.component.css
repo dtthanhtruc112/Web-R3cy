@@ -9,23 +9,32 @@
   .blog-card {
     width: 90%;
     max-width: 1223px;
-    /* border: var(--color-blue) solid 1px; */
+    border: var(--color-blue) solid 1px;
     display: flex;
     flex-direction: row;
     margin: 10px;
     padding: 10px;
   }
+
+  /* .bannerBlog{
+    text-align: center;
+  } */
   
   .bannerBlog img {
     width: 100%;
     height: auto;
     margin-bottom: 20px;
     margin-top: 50px;
+
   }
   
   .TitleTextAllPost {
     color: var(--color-blue);
     font-size: 28px;
+    text-align: center;
+  }
+
+  .imageThumnailOnBlogList{
     text-align: center;
   }
   
@@ -38,7 +47,6 @@
     max-width: 300px;
     height: 188px;
     margin-right: 20px;
-    border-radius: 10px;
     /* width: 100%; Thiết lập chiều rộng là 100% */
   }
   

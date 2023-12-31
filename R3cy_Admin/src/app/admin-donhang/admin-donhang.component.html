@@ -19,16 +19,31 @@
                     Hoàn/trả hàng</h4>
             </div>
         </div>
-        <div class="container_item">
-            <label for="show">Hiển thị:
+        <div class="container_item sub-header">
+            <!-- <label for="show">Hiển thị:
                 <input style="text-align: center" class="show" id="show" min="1" max="200" name="show" value="1"
                     type="number">
-            </label>
+            </label> -->
+
+            <div class="sort font-bold">
+                <label for="sortInput"><p>Hiển thị |</p>
+                    <input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable1()" class="font-bold"></label>
+              </div>
+          
+              <div class="search">
+                <input
+                  type="text"
+                  [(ngModel)]="searchOrderNumber"
+                  #orderNumberInputField
+                  (keyup.enter)="handleSearch($event)"
+                  placeholder="Tìm kiếm theo mã đơn"
+                />
+              </div>
         </div>
-        <div class="container_item">
+        <!-- <div class="container_item">
             <button>Thêm điều kiện lọc</button>
             <input type="text" placeholder="Tìm kiếm" [(ngModel)]="orderNumberInput" (keyup.enter)="getOrderDetails()">
-        </div>
+        </div> -->
         <div class="container_item">
             <div *ngIf="selectedbar === 'trang-thai-don-hang'">
                 <table>
@@ -40,14 +55,14 @@
                         <th>Trạng thái</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
-                    <tbody *ngFor="let order of Orders">
+                    <tbody *ngFor="let order of filteredOrders">
                         <!-- <tbody *ngFor="let order of filteredOrders"> -->
                         <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
-                        <td>{{order.totalOrderValue}}.000đ</td>
+                        <td>{{order.totalAmount}}.000đ</td>
                         <div class="overlay" *ngIf="showOverlay"></div>
                         <div class="popup" *ngIf="orderdetailPopup">
                             <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
@@ -56,7 +71,7 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
@@ -76,6 +91,7 @@
                         <th>Phương thức</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                         <th>Trạng thái thanh toán</th>
+                        <th>Ghi chú khách hàng</th>
                         <th>Xử lý </th>
                     </tr>
                     <tbody *ngFor="let order of getFilteredOrders(['Chờ xử lí'])">
@@ -83,7 +99,7 @@
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
-                        <td>{{order.totalOrderValue}}.000đ</td>
+                        <td>{{order.totalAmount}}.000đ</td>
                         <td>
                             <!-- Sử dụng ngIf để kiểm tra giá trị của paymentmethod -->
                             <ng-container *ngIf="order.paymentmethod === 'COD'; else otherPaymentMethod">
@@ -99,6 +115,7 @@
                                 </ng-template>
                             </ng-template>
                         </td>
+                        <td>{{order.orderNotes}}</td>
                         <td><i class="bi bi-check-circle-fill" (click)="updateOrderStatus(order)"></i><i
                                 class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
                         <div class="popup" *ngIf="reasonPopup">
@@ -135,6 +152,7 @@
                         <th (click)="sortTable('ordereddate')">Ngày tạo</th>
                         <th>Khách hàng</th>
                         <th>Phương thức</th>
+                        <th>Địa chỉ</th>
                         <th>Trạng thái</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
@@ -143,8 +161,9 @@
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
+                        <td>{{order.address}}</td>
                         <td>{{order.order_status}}</td>
-                        <td>{{order.totalOrderValue}}.000đ</td>
+                        <td>{{order.totalAmount}}.000đ</td>
                         <div class="overlay" *ngIf="showOverlay"></div>
                         <div class="popup" *ngIf="orderdetailPopup">
                             <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
@@ -180,7 +199,7 @@
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
-                        <td>{{order.totalOrderValue}}.000đ</td>
+                        <td>{{order.totalAmount}}.000đ</td>
                         <div class="overlay" *ngIf="showOverlay"></div>
                         <div class="popup" *ngIf="orderdetailPopup">
                             <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
@@ -216,7 +235,7 @@
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
-                        <td>{{order.totalOrderValue}}.000đ</td>
+                        <td>{{order.totalAmount}}.000đ</td>
                         <div class="overlay" *ngIf="showOverlay"></div>
                         <div class="popup" *ngIf="orderdetailPopup">
                             <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
@@ -252,7 +271,7 @@
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
                         <td>{{order.order_status}}</td>
-                        <td>{{order.totalOrderValue}}.000đ</td>
+                        <td>{{order.totalAmount}}.000đ</td>
                         <div class="overlay" *ngIf="showOverlay"></div>
                         <div class="popup" *ngIf="orderdetailPopup">
                             <h3 class="h3">Thông tin chi tiết đơn hàng!</h3>
