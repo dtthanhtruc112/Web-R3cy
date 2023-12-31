@@ -63,8 +63,6 @@ export class AccountcustomerService {
     );
   }
 
-
-  
   updateAdminAccount(id: string, updatedData: any): Observable<AccountCustomer> {
     const headers = new HttpHeaders().set(
       'Content-Type',
@@ -75,7 +73,6 @@ export class AccountcustomerService {
       responseType: 'json',
     };
     return this._http.put<AccountCustomer>(`${this.apiUrl}/updateadmin/${id}`, updatedData, requestOptions).pipe(
-      retry(3),
       catchError(this.handleError)
     );
   }

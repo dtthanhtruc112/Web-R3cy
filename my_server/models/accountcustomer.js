@@ -59,13 +59,23 @@ accountCustomerSchema.pre('save', async function (next) {
     this.userid = maxUserId ? maxUserId.userid + 1 : 1;
   }
 
+  // if (!this?.addresses?.some(address => address?.isDefault) && this?.addresses?.length > 0) {
+  //   this.addresses[0].isDefault = true;
+  // }
   // Kiểm tra xem có địa chỉ mặc định không, nếu không thì đặt là địa chỉ đầu tiên làm mặc định
-  if (!this.addresses.some(address => address.isDefault) && this.addresses.length > 0) {
-    this.addresses[0].isDefault = true;
-  }
+  if (this.addresses && Array.isArray(this.addresses) && this.addresses.length > 0) {
+    const defaultAddress = this.addresses.find(address => address && address.isDefault);
+
+    if (!defaultAddress) {
+      // Ensure that the first address exists before setting isDefault
+      if (this.addresses[0]) {
+        this.addresses[0].isDefault = true;
+      }
+    }
+  } 
 
   // Chỉ giữ lại địa chỉ đầu tiên nếu có nhiều địa chỉ được đặt làm mặc định
-  this.addresses = [this.addresses[0]];
+  this.addresses = this.addresses ? [this.addresses[0]] : [];
 
   next();
 });
