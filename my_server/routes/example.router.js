@@ -38,6 +38,30 @@ router.get('/', (req, res) => {
 router.use(bodyParser.json({ limit: '10mb' })); 
 router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
+// Router lấy thông tin mã giảm giá
+router.get('/discount', cors(), (req, res) =>
+  Discount.find()
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
+
+router.get('/discount/dang-ap-dung', cors(), (req, res) =>
+  Discount.find({status: "Đang áp dụng"})
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
+
+router.get('/discount/da-len-lich', cors(), (req, res) =>
+  Discount.find({status: "Đã lên lịch"})
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
+
+router.get('/discount/da-het-han', cors(), (req, res) =>
+  Discount.find({status: "Đã hết hạn"})
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
 
 
 // Router lấy thông tin sản phẩm

@@ -1,12 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DiscountService } from '../Service/discount.service';
+import { Discount } from '../Interface/discount';
 
 @Component({
   selector: 'app-admin-magiamgia',
   templateUrl: './admin-magiamgia.component.html',
   styleUrl: './admin-magiamgia.component.css'
 })
-export class AdminMagiamgiaComponent {
-  selectedbar: string = 'trang-thai-don-hang';
+export class AdminMagiamgiaComponent implements OnInit{
+
+  Discount: any;
+  DiscountDangapdung: any;
+  DiscountDalenlich: any;
+  DiscountDahethan: any;
+
+  constructor(private discountService: DiscountService) {}
+
+  ngOnInit() {
+    this.discountService.getData().subscribe((data: Discount[]) => {
+      this.Discount = data;
+    });
+
+    this.discountService.getDataDangapdung().subscribe((data: Discount[]) => {
+      this.DiscountDangapdung = data;
+    });
+
+    this.discountService.getDataDalenlich().subscribe((data: Discount[]) => {
+      this.DiscountDalenlich = data;
+    });
+
+    this.discountService.getDataDahethan().subscribe((data: Discount[]) => {
+      this.DiscountDahethan = data;
+    });
+    
+
+    
+  }
+
+  selectedbar: String = 'trang-thai-don-hang';
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
@@ -52,5 +83,5 @@ export class AdminMagiamgiaComponent {
     // Sau khi xử lý, bạn có thể đóng popup nếu cần
     this.closePopup();
   }
- 
 }
+ 
