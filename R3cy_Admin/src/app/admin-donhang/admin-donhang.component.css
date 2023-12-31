@@ -1,11 +1,11 @@
 div {
     font-family: Inter-Regular;
 }
-
+/* 
 .fullpage {
 
     margin-left: 280px;
-}
+} */
 
 ul,
 li {
@@ -297,7 +297,7 @@ li span {
     .fullpage {
 
         margin-left: 0px;
-        margin-top: 130px;
+        /* margin-top: 130px; */
         padding: 5px;
     }
 
