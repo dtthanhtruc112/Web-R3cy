@@ -57,54 +57,112 @@ router.get('/image/:id', cors(), (req, res) => {
     }
   });
   
+  // // Middleware để xóa ảnh
+  // const deleteImageMiddleware = async (req, res, next) => {
+  //   try {
+  //     const blogId = req.params.id;
+  
+  //     // Tìm blog trong cơ sở dữ liệu
+  //     const blog = await Blog.findById(blogId);
+  
+  //     if (blog && blog.thumbnail) {
+  //       const imagePath = path.join(__dirname, '../uploads/', blog.thumbnail);
+  
+  //       // Kiểm tra xem hình ảnh có được sử dụng cho nhiều blog hay không
+  //       const isImageUsed = await Blog.findOne({ thumbnail: blog.thumbnail, _id: { $ne: blogId } });
+  
+  //       // Nếu hình ảnh không được sử dụng cho bất kỳ blog nào khác, thì mới xóa
+  //       if (!isImageUsed) {
+  //         // Sử dụng Promise để bao bọc fs.unlink
+  //         const unlinkPromise = () => {
+  //           return new Promise((resolve, reject) => {
+  //             fs.unlink(imagePath, (err) => {
+  //               if (err) {
+  //                 console.error('Error deleting image:', err);
+  //                 reject(err);
+  //               } else {
+  //                 console.log(`Deleted image: ${imagePath}`);
+  //                 resolve();
+  //               }
+  //             });
+  //           });
+  //         };
+  
+  //         // Sử dụng await để đợi promise hoàn thành
+  //         await unlinkPromise();
+  //       } else {
+  //         console.log('Image is used by other blogs. Do not delete.');
+  //       }
+  //     } else {
+  //       console.log('No image to delete.');
+  //     }
+  
+  //     // Gọi next mà không truyền tham số để báo hiệu kết thúc middleware
+  //     next();
+  //   } catch (err) {
+  //     console.error('Error during deleteImageMiddleware:', err);
+  //     // Gọi next với tham số để báo hiệu có lỗi và kết thúc middleware
+  //     next(err);
+  //   }
+  // };
   // Middleware để xóa ảnh
-  const deleteImageMiddleware = async (req, res, next) => {
-    try {
-      const blogId = req.params.id;
-  
-      // Tìm blog trong cơ sở dữ liệu
-      const blog = await Blog.findById(blogId);
-  
-      if (blog && blog.thumbnail) {
-        const imagePath = path.join(__dirname, '../uploads/', blog.thumbnail);
-  
-        // Kiểm tra xem hình ảnh có được sử dụng cho nhiều blog hay không
-        const isImageUsed = await Blog.findOne({ thumbnail: blog.thumbnail, _id: { $ne: blogId } });
-  
-        // Nếu hình ảnh không được sử dụng cho bất kỳ blog nào khác, thì mới xóa
-        if (!isImageUsed) {
-          // Sử dụng Promise để bao bọc fs.unlink
-          const unlinkPromise = () => {
-            return new Promise((resolve, reject) => {
-              fs.unlink(imagePath, (err) => {
-                if (err) {
-                  console.error('Error deleting image:', err);
-                  reject(err);
-                } else {
-                  console.log(`Deleted image: ${imagePath}`);
-                  resolve();
-                }
-              });
-            });
-          };
-  
-          // Sử dụng await để đợi promise hoàn thành
-          await unlinkPromise();
-        } else {
-          console.log('Image is used by other blogs. Do not delete.');
-        }
-      } else {
-        console.log('No image to delete.');
+const deleteImageMiddleware = async (req, res, next) => {
+  try {
+    const blogId = req.params.id;
+
+    // Tìm blog trong cơ sở dữ liệu
+    const blog = await Blog.findById(blogId);
+
+    if (blog && blog.thumbnail) {
+      // Kiểm tra xem có hình ảnh mới được tải lên không
+      const isImageUpdated = req.file && req.file.path;
+
+      // Nếu không có hình ảnh mới, chỉ cập nhật thông tin blog
+      if (!isImageUpdated) {
+        console.log('No image update. Skipping image deletion.');
+        return next();
       }
-  
-      // Gọi next mà không truyền tham số để báo hiệu kết thúc middleware
-      next();
-    } catch (err) {
-      console.error('Error during deleteImageMiddleware:', err);
-      // Gọi next với tham số để báo hiệu có lỗi và kết thúc middleware
-      next(err);
+
+      const imagePath = path.join(__dirname, '../uploads/', blog.thumbnail);
+
+      // Kiểm tra xem hình ảnh có được sử dụng cho nhiều blog hay không
+      const isImageUsed = await Blog.findOne({ thumbnail: blog.thumbnail, _id: { $ne: blogId } });
+
+      // Nếu hình ảnh không được sử dụng cho bất kỳ blog nào khác, thì mới xóa
+      if (!isImageUsed) {
+        // Sử dụng Promise để bao bọc fs.unlink
+        const unlinkPromise = () => {
+          return new Promise((resolve, reject) => {
+            fs.unlink(imagePath, (err) => {
+              if (err) {
+                console.error('Error deleting image:', err);
+                reject(err);
+              } else {
+                console.log(`Deleted image: ${imagePath}`);
+                resolve();
+              }
+            });
+          });
+        };
+
+        // Sử dụng await để đợi promise hoàn thành
+        await unlinkPromise();
+      } else {
+        console.log('Image is used by other blogs. Do not delete.');
+      }
+    } else {
+      console.log('No image to delete.');
     }
-  };
+
+    // Gọi next mà không truyền tham số để báo hiệu kết thúc middleware
+    next();
+  } catch (err) {
+    console.error('Error during deleteImageMiddleware:', err);
+    // Gọi next với tham số để báo hiệu có lỗi và kết thúc middleware
+    next(err);
+  }
+};
+
   
   
   
