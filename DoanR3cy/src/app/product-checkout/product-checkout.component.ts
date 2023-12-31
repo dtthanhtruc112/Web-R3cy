@@ -84,11 +84,9 @@ export class ProductCheckoutComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
-
-
-  
-
   placeOrder(): void {
+    console.log('Request body:', this.checkoutFormGroup.getRawValue());
+
     this.isSubmitted = true;
     if (this.checkoutFormGroup.invalid) {
       return;
@@ -126,9 +124,9 @@ export class ProductCheckoutComponent implements OnInit {
       shippingfee: this.shippingFee,
       discount: this.discount,
       totalAmount: this.totalAmount,
-      address: address,
+      adress: address,
       clientInfo: clientInfo,
-      orderNotes: new Date(), // Ghi chú với kiểu dữ liệu Date
+      orderNote: 'Không có ghi chú', // 
       id: String(), // Trường này cần phải điền dữ liệu đơn hàng tương ứng
       rejectreason: '' // Lí do từ chối đơn hàng
     };

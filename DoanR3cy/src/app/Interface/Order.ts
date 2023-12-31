@@ -38,11 +38,11 @@ export interface Order {
   // khuyến mãi
   totalAmount?: number;
   // tổng đơn hàng
-  address: Address,
+  adress: Address,
   // địa chỉ đơn hàng
   clientInfo: ClientInfo,
   // thông tin người nhận
- orderNotes: Date, 
+ orderNote: string, 
   id: string;
   // totalPrice: string;
   rejectreason: string;

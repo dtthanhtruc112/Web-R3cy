@@ -497,7 +497,19 @@ router.post('/orders/user/:userid', async (req, res) => {
       discount: req.body.discount || 0,
       totalAmount: req.body.totalAmount || 0,
       ordernote: req.body.ordernote || '',
-      address: req.body.address || {}, // Đảm bảo rằng address được gửi trong request body
+      adress: req.body.adress ? {
+        country: req.body.adress.country || 'Việt Nam',
+        postcodeZip: req.body.adress.postcodeZip || '',
+        province: req.body.adress.province || '',
+        district: req.body.adress.district || '',
+        addressDetail: req.body.adress.addressDetail || '',
+      } : {
+        country: 'Việt Nam',
+        postcodeZip: '',
+        province: '',
+        district: '',
+        addressDetail: '',
+      },
       rejectreason: '',
       clientInfo: req.body.clientInfo || {}, // Đảm bảo rằng clientInfo được gửi trong request body
 
