@@ -1,5 +1,9 @@
-.fullpage{
+.container{
     display: flex;
-    flex-direction: row;
 }
 
+.leftcolumn{
+    width: 30vw;
+    height: 100vh;
+    margin-right: 5%;
+}

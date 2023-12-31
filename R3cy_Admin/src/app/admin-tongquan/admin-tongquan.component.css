@@ -3,13 +3,14 @@ div {
 }
 
 .containerAll {
-    width: 70%;
+    width: 80vw;
     height: 100vh;
     background-color: var(--color-white);
     color: var(--color-blue);
     box-sizing: border-box;
-    margin-left: 300px;
+    /* margin-left: 300px; */
     margin-top: 20px;
+
 }
 .bestSellingProductquantity td{
     vertical-align: middle;

@@ -1,7 +1,7 @@
 export interface product {
     highlight?: boolean;
-    _id: string,
     option: (option: string) => void;
+    _id: string;
     id: number;
     category1: string,
     category2: string,
