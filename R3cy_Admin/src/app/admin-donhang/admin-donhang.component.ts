@@ -342,26 +342,26 @@ export class AdminDonhangComponent implements OnInit {
   @ViewChild('orderNumberInputField') orderNumberInputField: ElementRef | undefined;
 
   sortColumn: number | 'all' = 'all';
-  searchKeyword: string = '';
-  displayedData: Order[] = [];
+  // searchKeyword: string = '';
+  // displayedData: Order[] = [];
 
  
 
-  sortTable1(): void {
-    this.updateDisplayedData();
-  }
+  // sortTable1(): void {
+  //   this.updateDisplayedData();
+  // }
 
-  updateDisplayedData(): void {
-    this.displayedData = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
-  }
+  // updateDisplayedData(): void {
+  //   this.displayedData = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
+  // }
 
-  getObjectKeys(obj: Order): string[] {
-    return obj ? Object.keys(obj) as string[] : [];
-  }
+  // getObjectKeys(obj: Order): string[] {
+  //   return obj ? Object.keys(obj) as string[] : [];
+  // }
 
-  getItemValue(item: Order, key: string): string | File | undefined {
-    return item && item.hasOwnProperty(key) ? (item as any)[key] : undefined;
-  }
+  // getItemValue(item: Order, key: string): string | File | undefined {
+  //   return item && item.hasOwnProperty(key) ? (item as any)[key] : undefined;
+  // }
    
   handleSearch(event: any): void {
     event.preventDefault();
