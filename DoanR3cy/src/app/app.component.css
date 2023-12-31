@@ -182,6 +182,10 @@ div{
     margin-right: 10px;
   }
 
+  .h3{
+    margin-bottom: 0;
+  }
+
 /* PC  */
 @media (max-width: 1000px) {
     .icon_item{
