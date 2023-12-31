@@ -12,7 +12,7 @@ const Order = new Schema({
     paymentmethod: String,
     paymentstatus: { type: Boolean, default: false },
     shippingfee: Number,
-    totalOrderValue: number,
+    totalOrderValue: Number,
     discount: Number,
     totalAmount: Number,
     ordernote: String,

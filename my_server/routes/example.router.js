@@ -108,7 +108,9 @@ router.patch("/:id", async(req, res) =>{
             opt2: req.body.opt2,
             description: req.body.description,
             quantity: req.body.quantity,
-            sold_quantity: req.body.sold_quantity
+            sold_quantity: req.body.sold_quantity,
+            input_ask: req.body.input_ask,
+            input_name: req.body.input_name
           }
       })
       res.send("Success!");

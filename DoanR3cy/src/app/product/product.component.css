@@ -75,6 +75,8 @@ input{
 
 .imgfb{
     width: 5%;
+    height: fit-content;
+    margin-right: 10px;
 }
 
 .fbcontent{
@@ -104,4 +106,91 @@ img{
     background-color: #31B9F4;
     color: white;
     font-weight: bold;
+    width: 20vw;
 }
+
+.ti-star {
+    /* color: #ffc107; */
+    /* fill: yellow; */
+    /* background-color: yellow; */
+    display: inline-block;
+    font-size: 30px;
+}
+
+.inline-qna{
+    display: inline-block;
+}
+
+.ask{
+    border: 1px solid #ffc107;
+    border-radius: 10px;
+    background-color: #ffc107;
+    color: white;
+    padding: 5px;
+}
+
+.answer{
+    border: 1px solid #31B9F4;
+    border-radius: 10px;
+    background-color: #31B9F4;
+    color: white;
+    padding: 5px;
+}
+
+.fbrate{
+    font-style: italic;
+    font-size: 13px;
+}
+
+.divide_answer{
+    display: flex;
+}
+
+
+
+@media screen and (max-width:768px){
+    .productcontainer{
+        display: block;
+        width: 80vw;
+    }
+
+    .leftcolumn{
+        width: 80vw;
+    }
+
+    .rightcolumn{
+        width: 80vw;
+    }
+
+    .divide_answer{
+        display: flex;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width:480px){
+    .cta{
+        width: 30vw;
+    }
+    
+    .rate{
+        display: block;
+    }
+
+    .leftcontent{
+        width: 80vw;
+    }
+
+    .rightcontent{
+        width: 80vw;
+    }
+
+    .divide_answer{
+        display: flex;
+    }
+
+    .answer-icon{
+        margin-right: 10px;
+    }
+}
+

@@ -22,7 +22,9 @@ const Product = new Schema({
     ask2: String,
     answer2: String,
     quantity: Number,
-    sold_quantity: Number
+    sold_quantity: Number,
+    input_ask: String,
+    input_name: String
 });
 
 module.exports = mongoose.model('Product', Product);

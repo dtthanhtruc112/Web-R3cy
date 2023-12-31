@@ -32,6 +32,9 @@ export class ProductService {
   //   const url = `${this._url}/${id}`;
   //   return this._http.get<product>(url);
   // }
+
+  apiUrl:  string = "http://localhost:3000";
+  
   getProduct(id: number): Observable<product> {
     const url = `${this.apiurl}/product/${id}`;
     return this._http.get<product>(url);
@@ -62,5 +65,9 @@ export class ProductService {
     return this._http.get<product[]>(url);
   }
 
+  updateProduct(updatedProduct: any): Observable<any> {
+    const url = `${this.apiUrl}/${updatedProduct.id}`;
+    return this._http.patch(url, updatedProduct);
+  }
   
 }

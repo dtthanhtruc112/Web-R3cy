@@ -26,10 +26,16 @@ export class ProductComponent implements OnInit {
   endSubs$: Subject<any> = new Subject();
 
   quantity: number = 1;
+  divide_answer: any;
+  currentImage: any;
+  img: any;
 
   constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService,  private authService: AuthService,) { }
 
   ngOnInit(): void {
+
+    
+
     this._router.paramMap.pipe(
       map(params => this.selectedCode = Number(params.get('id'))),
       switchMap(id => this.productService.getProductById(id).pipe(
@@ -43,9 +49,40 @@ export class ProductComponent implements OnInit {
         console.log(this.pro);
         this.productt = this.pro[(this.selectedCode as number - 1)];
         console.log('this.productt', this.productt);
+        this.currentImage = this.productt.img1;
       })
     console.log('this.selectedCode', this.selectedCode);}
+  
+  showDiv: boolean = false; // Bước 1
 
+  updateQna(p: any){
+    const updatedProduct = {
+      id: p._id, // Đảm bảo rằng bạn có trường id để xác định sản phẩm cần cập nhật
+      input_ask: p.input_ask,
+      input_name: p.input_name
+    };
+
+    // Gửi dữ liệu cập nhật lên server
+    this.productService.updateProduct(updatedProduct)
+      .subscribe(response => {
+        console.log(response); // In kết quả từ server sau khi cập nhật
+      });
+      this.showDiv = true;
+      alert("Thêm câu hỏi thành công!")
+  }
+
+    onClick(img: any) {
+        this.currentImage = img;
+    }
+
+    // checkUpdateQna() {
+    //   if (this.updateQna(this.productt)!) {
+    //     this.divide_answer.display = "block";
+    //     console.log("Change success!")
+    //   } else {
+    //     this.divide_answer.display = "none";
+    //   }
+    // }
 
   addToCart() {
     // Kiểm tra đăng nhập
