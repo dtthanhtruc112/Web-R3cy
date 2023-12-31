@@ -1,13 +1,5 @@
-// const AccountCustomer = mongoose.model('AccountCustomer', {
-//     Name: String,
-//     phonenumber: String,
-//     Mail: String,
-//     password: String
-//   });
-
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
-const Schema = mongoose.Schema
 
 const accountCustomerSchema = new mongoose.Schema({
   Name: {
@@ -29,34 +21,65 @@ const accountCustomerSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['user', 'admin'],
-    default: 'user'
+    default: 'user',
   },
   userid: {
     type: Number,
   },
+  gender: {
+    type: String,
+    default: null,
+  },
+  dob: {
+    type: String,
+    default: null,
+  },
+  avatar: {
+    type: String,
+    default: null,
+  },
+  addresses: [
+    {
+      country: { type: String, default: 'Việt Nam' },
+      postcodeZip: { type: String, default: '' },
+      province: { type: String },
+      district: { type: String },
+      addressDetail: { type: String },
+      isDefault: { type: Boolean, default: false },
+    },
+  ],
 });
 
-// accountCustomerSchema.plugin(AutoIncrement, { inc_field: 'userid', start_seq: 1 });
+accountCustomerSchema.plugin(AutoIncrement, { inc_field: 'userid', start_seq: 1 });
 
-// Sử dụng hook 'pre' để thực hiện logic tăng giảm chỉ số trước khi lưu vào cơ sở dữ liệu
+// Sử dụng hook 'pre' để thực hiện logic tăng giảm chỉ số và quản lý địa chỉ mặc định
 accountCustomerSchema.pre('save', async function (next) {
   if (!this.userid) {
-    // Nếu userid không tồn tại, thực hiện logic tăng giảm chỉ số
     const maxUserId = await mongoose.model('AccountCustomer').findOne({}, { userid: 1 }, { sort: { userid: -1 } });
     this.userid = maxUserId ? maxUserId.userid + 1 : 1;
   }
 
+  // if (!this?.addresses?.some(address => address?.isDefault) && this?.addresses?.length > 0) {
+  //   this.addresses[0].isDefault = true;
+  // }
+  // Kiểm tra xem có địa chỉ mặc định không, nếu không thì đặt là địa chỉ đầu tiên làm mặc định
+  if (this.addresses && Array.isArray(this.addresses) && this.addresses.length > 0) {
+    const defaultAddress = this.addresses.find(address => address && address.isDefault);
+
+    if (!defaultAddress) {
+      // Ensure that the first address exists before setting isDefault
+      if (this.addresses[0]) {
+        this.addresses[0].isDefault = true;
+      }
+    }
+  } 
+
+  // Chỉ giữ lại địa chỉ đầu tiên nếu có nhiều địa chỉ được đặt làm mặc định
+  this.addresses = this.addresses ? [this.addresses[0]] : [];
+
   next();
 });
 
-// accountCustomerSchema.methods.remove = function () {
-//   return this.deleteOne();
-// };
-accountCustomerSchema.methods.delete = function () {
-  return this.deleteOne();
-};
-
 const AccountCustomer = mongoose.model('AccountCustomer', accountCustomerSchema);
 
-// Xuất model
 module.exports = AccountCustomer;
