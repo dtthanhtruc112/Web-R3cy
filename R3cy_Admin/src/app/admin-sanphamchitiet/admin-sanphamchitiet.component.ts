@@ -14,10 +14,11 @@ import { Subject, Observable } from 'rxjs';
 })
 export class AdminSanphamchitietComponent {
 
-  selectedCode: number | undefined;
+  selectedCode!: string;
   product: product[] = [];
   // pro: product | product[] = [];
   pro: product[] = []; 
+  proo: product[] = []; 
   productt: any;
   item: any;
   endSubs$: Subject<any> = new Subject();
@@ -27,10 +28,9 @@ export class AdminSanphamchitietComponent {
 
   ngOnInit(): void {
     this._router.paramMap.pipe(
-      map(params => this.selectedCode = Number(params.get('id'))),
+      map(params => this.selectedCode = String(params.get('id'))),
       switchMap(id => this.productService.getProductById(id).pipe(
         switchMap(pro => this.productService.getData().pipe(
-          //   map(products => ({ product, relatedBlogs: product.filter(p => p.id !== id).slice(0, 3) }))
         ))
         // ))
       )))
@@ -38,10 +38,11 @@ export class AdminSanphamchitietComponent {
       .subscribe(data => {
         this.pro = data;
         console.log(this.pro);
-        this.productt = this.pro[(this.selectedCode as number - 1)];
-        console.log(this.productt);
+        this.productt = this.pro.find(product => product._id === this.selectedCode);
+        console.log('this.productt', this.productt);
       })
-    console.log(this.selectedCode);}
+  }
+    
 
     updateProduct() {
       const updatedProduct = {
@@ -62,5 +63,20 @@ export class AdminSanphamchitietComponent {
           console.log(response); // In kết quả từ server sau khi cập nhật
         });
         alert("Đã sửa thông tin sản phẩm thành công!")
+    }
+
+    deleteProduct(productId: string): void {
+      this.productService.deleteProduct(productId)
+        .subscribe(
+          response => {
+            console.log('Product deleted successfully:', response);
+            // Thực hiện các hành động cần thiết sau khi xóa sản phẩm
+          },
+          error => {
+            console.error('Error deleting product:', error);
+            // Xử lý lỗi nếu cần thiết
+          }
+        );
+        alert("Xóa sản phẩm thành công!")
     }
 }

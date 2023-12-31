@@ -50,6 +50,17 @@ export class ProductListComponent implements OnInit {
    
   }
 
+  clearStatus(){
+    this.isCateOpt1Checked = false;
+    this.isCateOpt2Checked = false;
+    this.isCateOpt3Checked = false;
+
+    this.isPriceOpt1Checked = false;
+    this.isPriceOpt2Checked = false;
+    this.isPriceOpt3Checked = false;
+    this.isPriceOpt4Checked = false;
+  }
+
   onCheckboxChange() {
     if (this.isCateOpt1Checked) {
       console.log('Checkbox 1 được chọn');

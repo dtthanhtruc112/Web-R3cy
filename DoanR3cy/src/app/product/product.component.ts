@@ -17,7 +17,7 @@ import { AuthService } from '../Service/auth.service';
 })
 export class ProductComponent implements OnInit {
 
-  selectedCode: number | undefined;
+  selectedCode!: string;
   product: product[] = [];
   // pro: product | product[] = [];
   pro: product[] = []; 
@@ -37,7 +37,7 @@ export class ProductComponent implements OnInit {
     
 
     this._router.paramMap.pipe(
-      map(params => this.selectedCode = Number(params.get('id'))),
+      map(params => this.selectedCode = String(params.get('id'))),
       switchMap(id => this.productService.getProductById(id).pipe(
         switchMap(pro => this.productService.getData().pipe(
         ))
@@ -47,9 +47,8 @@ export class ProductComponent implements OnInit {
       .subscribe(data => {
         this.pro = data;
         console.log(this.pro);
-        this.productt = this.pro[(this.selectedCode as number - 1)];
+        this.productt = this.pro.find(product => product._id === this.selectedCode);
         console.log('this.productt', this.productt);
-        this.currentImage = this.productt.img1;
       })
     console.log('this.selectedCode', this.selectedCode);}
   

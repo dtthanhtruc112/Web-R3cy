@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../Service/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { product } from '../Interface/product';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-admin-sanpham',
@@ -14,8 +16,9 @@ export class AdminSanphamComponent implements OnInit{
   quantityInitial!: number ;
   quantitySold!: number;
   quantityRemaining!: number;
+  _url: string = "http://localhost:3000/product";
 
-  constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute) {}
+  constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute, private _http: HttpClient) {}
 
   // ngOnInit(): void {
   //   this.productService.getData().subscribe(
@@ -43,6 +46,23 @@ export class AdminSanphamComponent implements OnInit{
         console.log(response); // In kết quả từ server sau khi cập nhật
       });
       alert("Đã sửa thông tin về số lượng sản phẩm thành công!")
+  }
+
+  getProductById(id: any): Observable<product | undefined> {
+    return this._http.get<product[]>(this._url).pipe(
+      map((products: any[]) => {
+        const productt = products.find((productt: product) => productt._id === id);
+        console.log('Product:', productt);
+        return productt ?? undefined;
+      }),
+      tap((productt: product | undefined) => {
+        if (productt) {
+          console.log(productt);
+        } else {
+          console.log("Undefined");
+        }
+      })
+    );
   }
 
   ngOnInit() {

@@ -137,6 +137,25 @@ router.post("/product",cors(),async (req,res)=>{
     res.status(500).send('Internal Server Error');
   }})
 
+//Router xóa thông tin sản phẩm
+router.delete('/:productId', async (req, res) => {
+  const productId = req.params.productId;
+
+  try {
+    // Xóa sản phẩm từ cơ sở dữ liệu
+    const result = await Product.deleteOne({ _id: productId });
+
+    if (result.deletedCount === 1) {
+      res.status(200).json({ message: 'Product deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 
 router.get('/orders', async (req, res) => {
   try {
