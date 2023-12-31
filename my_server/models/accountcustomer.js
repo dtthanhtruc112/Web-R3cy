@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const accountCustomerSchema = new mongoose.Schema({
+  nickname: {
+    type: String,
+    default: null,
+  },
   Name: {
     type: String,
     required: true,

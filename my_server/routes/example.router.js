@@ -697,6 +697,7 @@ router.get('/my-account/:id', async (req, res) => {
     // Trả về thông tin cần thiết
     const accountInfo = {
       _id: account._id,
+      nickname: account.nickname,
       Name: account.Name,
       phonenumber: account.phonenumber,
       Mail: account.Mail,
