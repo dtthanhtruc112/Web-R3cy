@@ -472,8 +472,14 @@ const isDifferentAddress = (address1, address2) => {
     address1.country !== address2.country ||
     address1.province !== address2.province ||
     address1.district !== address2.district ||
-    address1.addressDetail !== address2.addressDetail ||
-    address1.isDefault !== address2.isDefault
+    address1.addressDetail !== address2.addressDetail
+  );
+};
+
+// Hàm kiểm tra xem một địa chỉ đã tồn tại trong mảng addresses chưa
+const isDuplicateAddress = (newAddress, existingAddresses) => {
+  return existingAddresses.some(existingAddress =>
+    !isDifferentAddress(existingAddress, newAddress)
   );
 };
 // POST: Tạo đơn hàng từ giỏ hàng và xóa giỏ hàng sau khi đơn hàng thành công
