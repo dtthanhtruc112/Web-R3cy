@@ -20,5 +20,8 @@ export interface product {
     ask1: string,
     answer1: string,
     ask2: string,
-    answer2: string
+    answer2: string,
+    input_ask: string,
+    input_answer: string,
+    input_name: string
 }
