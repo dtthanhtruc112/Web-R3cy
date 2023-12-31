@@ -319,7 +319,7 @@ span {
 .donhang_itemdetal_row #status{
     color: var(--color-blue);
     font-weight: bold;
-    margin-left: 21vw;
+    margin-left: 20vw;
     text-transform: uppercase;
 }
 .donhang_itemdetal_row #totalpayment{
@@ -328,7 +328,7 @@ span {
     font-weight: bold;
 }
 .donhang_itemdetal_row #total{
-    margin-left: 12vw;
+    margin-left: 13vw;
     
 }
 .don_item_label{

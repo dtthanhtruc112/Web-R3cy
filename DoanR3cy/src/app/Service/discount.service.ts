@@ -23,6 +23,15 @@ export class DiscountService {
       catchError(this.handleErr)
     );}
 
+    updateDiscountUserIds(code: string, userId: number): Observable<Discount> {
+      const url = `${this._url}/discount/${code}`;
+      const body = { userid: userId };
+  
+      return this._http.patch<Discount>(url, body).pipe(
+        catchError(this.handleErr)
+      );
+    }
+
     handleErr(err: HttpErrorResponse) {
       return throwError(() => new Error(err.message));
     }
