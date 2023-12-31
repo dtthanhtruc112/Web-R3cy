@@ -55,4 +55,25 @@ export class AccountcustomerService {
     );
   }
 
+  // Lấy thông tin của một accountcustomer dựa trên _id
+  getAccountInfo(accountId: string): Observable<any> {
+    const requestOptions: Object = {
+      responseType: 'json',
+    };
+
+    return this._http.get<any>(`${this.apiUrl}/my-account/${accountId}`, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Cập nhật thông tin của một accountcustomer dựa trên _id
+  updateAccountInfo(accountId: string, updatedInfo: any): Observable<any> {
+    const requestOptions: Object = {
+      responseType: 'json',
+    };
+
+    return this._http.put<any>(`${this.apiUrl}/my-account/${accountId}`, updatedInfo, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

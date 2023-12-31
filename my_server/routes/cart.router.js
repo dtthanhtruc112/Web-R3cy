@@ -464,73 +464,141 @@ router.get('/account/:userid', async (req, res) => {
   }
 });
 
-// Tạo order và xóa giỏ hàng
-router.post("/orders/user/:userid", async (req, res) => {
+
+
+// POST: Tạo đơn hàng và xóa giỏ hàng
+// router.post("/orders/user/:userid", async (req, res) => {
+//   try {
+//     const { userid } = req.params;
+
+//     // Lấy thông tin giỏ hàng của người dùng
+//     const cart = await Cart.findOne({ userid: userid });
+
+//     // Kiểm tra xem giỏ hàng có tồn tại không
+//     if (!cart) {
+//       return res.status(404).json({ message: 'Cart not found' });
+//     }
+
+//     // Tạo đối tượng Order mới từ dữ liệu yêu cầu
+//     const newOrder = new Order({
+//       userid: req.body.userid,
+//       channel: req.body.channel || 'Website',
+//       order_status: req.body.order_status || 'Chờ xử lí',
+//       ordereddate: req.body.ordereddate || new Date(),
+//       paymentmethod: req.body.paymentmethod || '', 
+//       paymentstatus: req.body.paymentstatus || false,
+//       shipfee: req.body.shipfee || 0,
+//       ordernote: req.body.ordernote || '',
+//       address: req.body.address || {}, // Đảm bảo rằng address được gửi trong request body
+     
+//       rejectreason: '',
+//       clientInfo: req.body.clientInfo || {}, // Đảm bảo rằng clientInfo được gửi trong request body
+//     });
+
+//     // Lấy thông tin chi tiết sản phẩm từ DB Product
+//     const productIds = req.body.cartItems ? req.body.cartItems.map(item => item.id) : [];
+//     console.log(productIds); 
+//     const products = await Product.find({ id: { $in: productIds.map(id => parseInt(id)) } });
+
+//     // Duyệt qua danh sách sản phẩm từ DB và thêm vào đơn hàng
+//     products.forEach(product => {
+//       const cartItem = req.body.cartItems.find(item => item.id === product.id);
+
+//       if (cartItem) {
+//         const orderProduct = {
+//           id: product.id,
+//           category1: product.category1,
+//           category2: product.category2,
+//           name: product.name,
+//           price: product.price,
+//           img1: product.img1,
+//           quantity: cartItem.quantity,
+//         };
+
+//         newOrder.products.push(orderProduct);
+//       }
+//     });
+
+//     // Lưu đối tượng Order vào cơ sở dữ liệu
+//     const createdOrder = await Order.create(newOrder);
+
+//     // Xóa giỏ hàng của người dùng
+//     await Cart.deleteOne({ userid: userid });
+
+//     // Trả về đơn hàng đã được tạo mới
+//     res.json(createdOrder);
+//   } catch (error) {
+//     console.error("Error tạo đơn hàng:", error);
+//     res.status(500).json({ err: error.message });
+//   }
+// });
+
+// Các phần còn lại không thay đổi
+
+
+
+// POST: Tạo đơn hàng từ giỏ hàng và xóa giỏ hàng sau khi đơn hàng thành công
+router.post('/orders/user/:userid', async (req, res) => {
   try {
     const { userid } = req.params;
 
-    // Lấy thông tin giỏ hàng của người dùng
-    const cart = await Cart.findOne({ userid: userid });
-
-    // Kiểm tra xem giỏ hàng có tồn tại không
-    if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
+    // Kiểm tra userid có giá trị hợp lệ không
+    if (!Number.isInteger(parseInt(userid)) || parseInt(userid) <= 0) {
+      return res.status(400).json({ message: 'Invalid userid' });
     }
 
-    // Tạo đối tượng Order mới từ dữ liệu yêu cầu
-    const newOrder = new Order({
-      userid,
+    // Tìm giỏ hàng của người dùng dựa trên userid
+    const cart = await Cart.findOne({ userid: parseInt(userid) });
+
+    if (!cart || cart.cartItems.length === 0) {
+      return res.status(404).json({ message: 'Cart is empty or not found' });
+    }
+
+    // Tạo đơn hàng từ thông tin trong giỏ hàng và thông tin người dùng
+    const orderData = {
+      userid: req.body.userid,
       channel: req.body.channel || 'Website',
       order_status: req.body.order_status || 'Chờ xử lí',
-      ordereddate: req.body.ordereddate,
-      paymentmethod: req.body.paymentmethod,
-      paymentstatus: req.body.paymentstatus,
-      shipfee: req.body.shipfee,
-      ordernote: req.body.ordernote,
-      orderadress: req.body.orderadress,
-      products: [], // Khởi tạo danh sách sản phẩm trống
+      ordereddate: req.body.ordereddate || new Date(),
+      paymentmethod: req.body.paymentmethod || '', 
+      paymentstatus: req.body.paymentstatus || false,
+      shipfee: req.body.shipfee || 0,
+      ordernote: req.body.ordernote || '',
+      address: req.body.address || {}, // Đảm bảo rằng address được gửi trong request body
       rejectreason: '',
+      clientInfo: req.body.clientInfo || {}, // Đảm bảo rằng clientInfo được gửi trong request body
+
+      // Thêm sản phẩm từ giỏ hàng vào đơn hàng
+      products: cart.cartItems.map(item => ({
+        id: item.id,
+        category1: item.category1,
+        category2: item.category2,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        img1: item.img1,
+      })),
+    };
+
+    // Tạo đối tượng Order từ dữ liệu đã tạo
+    const newOrder = new Order(orderData);
+
+    // Lưu đơn hàng vào cơ sở dữ liệu
+    await newOrder.save();
+
+    // Xóa giỏ hàng sau khi tạo đơn hàng thành công
+    await Cart.deleteOne({ userid: parseInt(userid) });
+
+    res.status(200).json({
+      message: 'Order created successfully',
+      order: newOrder,
+      userid: parseInt(userid)
     });
-
-    // Lấy thông tin chi tiết sản phẩm từ DB Product
-    const productIds = cart.cartItems.map(item => item.id);
-    const products = await Product.find({ id: { $in: productIds } });
-
-    // Kiểm tra xem sản phẩm có tồn tại không
-    if (!products || products.length !== productIds.length) {
-      return res.status(404).json({ message: 'Some products not found' });
-    }
-
-    // Duyệt qua danh sách sản phẩm từ DB và thêm vào đơn hàng
-    products.forEach(product => {
-      const cartItem = cart.cartItems.find(item => item.id === product.id);
-
-      const orderProduct = {
-        id: product.id,
-        category1: product.category1,
-        category2: product.category2,
-        name: product.name,
-        price: product.price,
-        img1: product.img1,
-        quantity: cartItem.quantity,
-      };
-
-      newOrder.products.push(orderProduct);
-    });
-
-    // Lưu đối tượng Order vào cơ sở dữ liệu
-    const createdOrder = await Order.create(newOrder);
-
-    // Xóa giỏ hàng của người dùng
-    await Cart.deleteOne({ userid: userid });
-
-    // Trả về đơn hàng đã được tạo mới
-    res.json(createdOrder);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ err: error.message });
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: error.message });
   }
 });
-// Các phần còn lại không thay đổi
+
 
 module.exports = router;

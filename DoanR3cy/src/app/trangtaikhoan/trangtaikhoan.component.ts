@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../Service/auth.service';
 import { DiscountService } from '../Service/discount.service';
 import { Discount } from '../Interface/Discount';
-
+import { AccountCustomer } from '../Interface/AccountCustomer';
+import { AccountcustomerService } from '../Service/accountcustomer.service';
 
 
 
@@ -25,6 +26,16 @@ export class TrangtaikhoanComponent implements OnInit {
   showContent(contentId: string): void {
     this.selectedbar = contentId;
   }
+
+  constructor(private _userService: UsersService,
+    private _orderService: OrderService, 
+    private cdr: ChangeDetectorRef, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private authService: AuthService, 
+    private discountService: DiscountService,
+    private accountService: AccountcustomerService,
+  ) { }
 
   ngOnInit(): void {
     this.loadUserInfo(this.userIdToDisplay);
@@ -53,7 +64,67 @@ export class TrangtaikhoanComponent implements OnInit {
       this.usedStatus = JSON.parse(usedStatus);
       console.log('Used status from sessionStorage:', this.usedStatus);
     }
+
+    // Chỉnh sửa thông tin tài khoản (NEW)
+    // Lấy _id từ Session Storage
+    const currentUserString = sessionStorage.getItem('CurrentUser') || '';
+    const currentUserObject = JSON.parse(currentUserString);
+    const accountId = currentUserObject._id;
+    // Gọi hàm getAccountInfo từ service để lấy thông tin tài khoản
+    this.accountService.getAccountInfo(accountId).subscribe(
+      (result) => {
+        // Nếu có thông tin, cập nhật account
+        if (result) {
+          this.account = result;
+        }
+      },
+      (error) => {
+        console.error(error);
+        // Xử lý lỗi nếu cần thiết
+      }
+    );
   }
+
+  // Chỉnh sửa thông tin tài khoản (NEW)
+  account: AccountCustomer = new AccountCustomer();
+  editedAccount: AccountCustomer = new AccountCustomer();
+  isEditing: boolean = false;
+
+  editProfile(): void {
+    this.isEditing = true;
+    // Copy current values to editedAccount for editing
+    this.editedAccount = { ...this.account };
+  }
+
+  saveProfile(): void {
+    // Save editedAccount to the database (you need to implement this)
+    this.accountService.updateAccountInfo(this.account._id, this.editedAccount).subscribe(
+      (result) => {
+        // Update account with the edited values
+        this.account = result;
+        // Reset editing state
+        this.isEditing = false;
+      },
+      (error) => {
+        console.error(error);
+        // Xử lý lỗi nếu cần thiết
+      }
+    );
+
+    // Update account with the edited values
+    this.account = { ...this.editedAccount };
+
+    // Reset editing state
+    this.isEditing = false;
+  }
+
+  cancelEdit(): void {
+    // Reset editing state without saving
+    this.isEditing = false;
+  }
+
+
+
 
   // Chỉnh sửa hồ sơ
   chinhsua(inputId: string): void {
@@ -289,12 +360,6 @@ export class TrangtaikhoanComponent implements OnInit {
   month: string[] = [];
   year: string[] = [];
   userAddresses: any[] = [];
-
-  constructor(private _userService: UsersService,
-    private _orderService: OrderService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, private router: Router, private authService: AuthService, private discountService: DiscountService
-  ) { }
-
-
 
 
   loadUserInfo(userId: number): void {

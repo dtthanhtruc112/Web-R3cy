@@ -139,9 +139,10 @@ input {
 
 
 .hoso_item_row>input[type="text"]{
-    font-weight: bold;
     padding-right: 10px;
     width: 45%;
+    border-width: 1px;
+    border-style: solid;
 }
 .hoso_item_label {
     min-width: 12vw;
@@ -160,7 +161,7 @@ input {
     /* width: 100px; */
     cursor: pointer;
     font-weight: bold;
-    margin: 5px auto;
+    margin: 5px 5px;
 }
 .overlay {
     position: fixed;
