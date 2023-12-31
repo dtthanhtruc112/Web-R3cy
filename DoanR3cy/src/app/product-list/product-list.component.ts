@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProductService } from '../Service/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -26,7 +26,7 @@ export class ProductListComponent implements OnInit {
 
   
 
-  constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute) {}
+  constructor(private productService: ProductService, private _router: Router, private _activatedRoute: ActivatedRoute,  private cdr: ChangeDetectorRef) {}
 
   // ngOnInit(): void {
   //   this.productService.getData().subscribe(
@@ -40,6 +40,14 @@ export class ProductListComponent implements OnInit {
     this.productService.getData().subscribe((data: product[]) => {
       this.product = data;
     });
+    this.cdr.detectChanges();
+
+    // Subscribe vào DataService để nhận kết quả tìm kiếm mới
+    // this.productService.searchResults$.subscribe((results) => {
+    //   this.product = results;
+    //   console.log('this.product', this.product)
+    // });
+   
   }
 
   onCheckboxChange() {

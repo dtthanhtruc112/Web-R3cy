@@ -48,6 +48,7 @@ h2 {
 .bar_container {
     top: 25px;
     width: 15vw;
+    margin-right: 20px;
 }
 .circle_img {
     width: 110px;
@@ -308,10 +309,18 @@ span {
 .donhang_itemdetal_row {
     display: flex;
 }
+
+.donhang_itemdetal_row img{
+    min-width: 100px;
+    height: 80px;
+    border-radius: 10px;
+    margin: 5px 5px;
+}
+
 .donhang_itemdetal_row #status{
     color: var(--color-blue);
     font-weight: bold;
-    margin-left: 22vw;
+    margin-left: 20vw;
     text-transform: uppercase;
 }
 .donhang_itemdetal_row #totalpayment{
@@ -320,7 +329,8 @@ span {
     font-weight: bold;
 }
 .donhang_itemdetal_row #total{
-    margin-left: 21vw;
+    margin-left: 13vw;
+    
 }
 .don_item_label{
     min-width: 160px;
@@ -333,8 +343,14 @@ span {
     margin-bottom: 10px;
 }
 /* PC - Desktop */
-@media screen and (max-width: 1200px) {
-    
+@media screen and (max-width: 850px) {
+     .donhang_itemdetal_row #status{
+        margin-left: 13vw;
+    }
+
+    .donhang_itemdetal_row #total{
+        margin-left: 0vw;
+    }
 }
 /* Tablet */
 @media screen and (max-width: 768px) {
@@ -351,18 +367,43 @@ span {
     .fullpage{
         margin-top: 100px;
     }
+
+    /* .donhang_itemdetal_row #status{
+        margin-left: 21px;
+    } */
+
     .donhang_itemdetal_row #totalpayment{
         margin-left: 18vw;
     }
+    .donhang_itemdetal_row #status{
+        margin-left: 10vw;
+    }
+
     .donhang_itemdetal_row #total{
-        margin-left: 12vw;
+        margin-left: 0vw;
+    }
+}
+
+@media screen and (max-width: 700px){
+     .donhang_itemdetal_row #status{
+        margin-left: 6vw;
+    }
+
+    .donhang_itemdetal_row #total{
+        margin-left: 0vw;
+    }
+
+    .don_item_label{
+        max-width: 100px;
     }
 }
 /* Mobile */
 @media screen and (max-width: 480px) {
     .bar_item{
         flex-direction: row;
-        width: 100%;
+        width: 100vw;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
     }
     .taikhoan_container{
         flex-direction: column;
@@ -372,8 +413,9 @@ span {
     }
 
     .hoso_container{
-        width: 100vw;
+        width: 90vw;
         min-width: 350px;
+        margin: auto;
     }
     .fullpage {
         /* position: fixed; */
@@ -387,9 +429,31 @@ span {
     }
     .taikhoan_container{
         width: 100vw;
+        margin: auto;
     }
     .hoso_item_row button{
         margin-left: 40.5%;
     }
+
+    #taikhoan_content {
+        margin: auto;
+    }
+
+    .circle_img{
+        display: none;
+    }
+
+    .taikhoan_item{
+        display: none;
+    }
+
+    .don_item_label{
+        max-width: 100px;
+    }
+    .donhang_itemdetal_row img{
+        display: none;
+    }
+
+    
     
 }

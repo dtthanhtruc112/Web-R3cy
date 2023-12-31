@@ -7,6 +7,7 @@ export interface Product {
     quantity: number;
     productValue?: number;
     feedback: string;
+    img1:String,
   }
   
   export interface Order {
@@ -22,4 +23,5 @@ export interface Product {
     shippingfee?: number;
     discount?: Number;
     totalAmount?: Number;
+    address: String
   } 

@@ -379,6 +379,7 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 //           orderadress: req.body. orderadress,
 //           products: [], // Khởi tạo danh sách sản phẩm trống
 //           rejectreason: req.body.rejectreason,
+//           address: req.body.address,
 //       });
 
 //       // Duyệt qua danh sách sản phẩm từ yêu cầu và thêm vào danh sách sản phẩm của đơn hàng
@@ -392,6 +393,7 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 //                   price: productData.price,
 //                   quantity: productData.quantity,
 //                   feedback: productData.feedback,
+//                   img1: productData.img1,
 //               };
 //               newOrder.products.push(product);
 //           });
@@ -407,188 +409,6 @@ router.patch("/orders/user/:userid/:ordernumber/products/:productid", async (req
 //       res.status(500).json({ err: error.message });
 //   }
 // });
-
-
-
-
-// BLOG 
-
-router.post('/createBlog', upload.single('thumbnail'), async (req, res) => {
-  try {
-    // Kiểm tra xem có tệp nào được tải lên không
-    if (req.file && req.file.path) {
-      const newBlog = new Blog({
-        title: req.body.title,
-        author: req.body.author,
-        content: req.body.content,
-        thumbnail: req.file.filename,
-      });
-
-      const savedBlog = await newBlog.save();
-      res.json(savedBlog);
-    } else {
-      res.status(400).json({ error: 'Không có tệp nào được tải lên.' });
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-// Router để cập nhật blog
-router.patch('/blog/:id', upload.single('thumbnail'), async (req, res) => {
-  try {
-    const blogId = req.params.id;
-
-    // Kiểm tra xem có tệp ảnh mới được tải lên không
-    if (req.file && req.file.path) {
-      // Nếu có, cập nhật thông tin blog và thumbnail
-      const updatedBlog = await Blog.findByIdAndUpdate(blogId, {
-        title: req.body.title,
-        author: req.body.author,
-        content: req.body.content,
-        thumbnail: req.file.filename,
-      }, { new: true });
-
-      res.json(updatedBlog);
-    } else {
-      // Nếu không có ảnh mới, chỉ cập nhật thông tin blog
-      const updatedBlog = await Blog.findByIdAndUpdate(blogId, {
-        title: req.body.title,
-        author: req.body.author,
-        content: req.body.content,
-      }, { new: true });
-
-      res.json(updatedBlog);
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-//xử lý hình ảnh
-router.get('/image/:id', cors(), (req, res) => {
-  try {
-    const id = req.params.id;
-    const imagePath = path.join(__dirname, 'uploads', id);
-
-    // Kiểm tra xem tệp tồn tại không trước khi gửi nó
-    if (fs.existsSync(imagePath)) {
-      res.sendFile(imagePath);
-    } else {
-      res.status(404).json({ error: 'Không tìm thấy hình ảnh' });
-    }
-  } catch (error) {
-    console.error('Error in /image/:id endpoint:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-// API để lấy tất cả bài viết
-router.get('/blog', async (req, res) => {
-  try {
-    const blogs = await Blog.find();
-    res.json(blogs);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// API để lấy các bài viết mới nhất
-router.get('/blog/latestBlogs', async (req, res) => {
-  try {
-    const latestBlogs = await Blog.find().sort({ date: -1 }).limit(4);
-    res.json(latestBlogs);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// API để lấy chi tiết blog theo id
-router.get('/blog/:id', async (req, res) => {
-  try {
-    const blog = await Blog.findById(req.params.id);
-    res.json(blog);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-  
-
-
-// Middleware để xóa ảnh
-const deleteImageMiddleware = async (req, res, next) => {
-  try {
-    const blogId = req.params.id;
-
-    // Tìm blog trong cơ sở dữ liệu
-    const blog = await Blog.findById(blogId);
-
-    if (blog && blog.thumbnail) {
-      const imagePath = path.join(__dirname, '../uploads/', blog.thumbnail);
-
-      // Kiểm tra xem hình ảnh có được sử dụng cho nhiều blog hay không
-      const isImageUsed = await Blog.findOne({ thumbnail: blog.thumbnail, _id: { $ne: blogId } });
-
-      // Nếu hình ảnh không được sử dụng cho bất kỳ blog nào khác, thì mới xóa
-      if (!isImageUsed) {
-        // Sử dụng Promise để bao bọc fs.unlink
-        const unlinkPromise = () => {
-          return new Promise((resolve, reject) => {
-            fs.unlink(imagePath, (err) => {
-              if (err) {
-                console.error('Error deleting image:', err);
-                reject(err);
-              } else {
-                console.log(`Deleted image: ${imagePath}`);
-                resolve();
-              }
-            });
-          });
-        };
-
-        // Sử dụng await để đợi promise hoàn thành
-        await unlinkPromise();
-      } else {
-        console.log('Image is used by other blogs. Do not delete.');
-      }
-    } else {
-      console.log('No image to delete.');
-    }
-
-    // Gọi next mà không truyền tham số để báo hiệu kết thúc middleware
-    next();
-  } catch (err) {
-    console.error('Error during deleteImageMiddleware:', err);
-    // Gọi next với tham số để báo hiệu có lỗi và kết thúc middleware
-    next(err);
-  }
-};
-
-
-
-router.use(deleteImageMiddleware);
-router.delete('/blog/:id', deleteImageMiddleware, async (req, res) => {
-  try {
-    const blogId = req.params.id;
-
-    // Xóa blog khỏi cơ sở dữ liệu
-    const deletedBlog = await Blog.findByIdAndDelete(blogId);
-
-    if (!deletedBlog) {
-      return res.status(404).json({ message: 'Blog not found' });
-    }
-
-    res.json(deletedBlog);
-  } catch (error) {
-    console.error('Error deleting blog:', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
 
 
 // Xử lý route đăng ký

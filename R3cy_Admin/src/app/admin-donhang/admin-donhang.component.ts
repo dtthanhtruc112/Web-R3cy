@@ -322,8 +322,8 @@ export class AdminDonhangComponent implements OnInit {
 
     // Sort the Orders array based on the selected column and order
     this.Orders.sort((a, b) => {
-      const aValue = column === 'ordereddate' ? this.parseDate(a[column]) : a[column];
-      const bValue = column === 'ordereddate' ? this.parseDate(b[column]) : b[column];
+      const aValue = column === 'ordereddate' ? a.ordereddate : a[column];
+      const bValue = column === 'ordereddate' ? b.ordereddate : b[column];
 
       if (aValue > bValue) {
         return this.sortOrder === 'asc' ? 1 : -1;
@@ -333,7 +333,8 @@ export class AdminDonhangComponent implements OnInit {
         return 0;
       }
     });
-  }
+}
+
 
   
 
@@ -344,7 +345,7 @@ export class AdminDonhangComponent implements OnInit {
   searchKeyword: string = '';
   displayedData: Order[] = [];
 
-  customColumnNames: string[] = ['Mã', 'Ngày tạo', 'Khách hàng', 'Phương thức', 'Trạng thái', 'Tổng tiền'];
+ 
 
   sortTable1(): void {
     this.updateDisplayedData();

@@ -1,6 +1,17 @@
 /* ------------stylemin------------- */
 @import "primeicons/primeicons.css";
 
+p-button{
+    color: var(--color-blue);
+    text-decoration:underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+p-button:hover{
+    color: black;
+}
+
 *,
 :after,
 :before {
@@ -155,27 +166,30 @@ hr {
 
 .section-space {
     padding-bottom: 115px;
-    padding-top: 115px
+    padding-top: 115px;
 }
 
 @media only screen and (min-width:992px) and (max-width:1199px) {
     .section-space {
         padding-top: 90px;
-        padding-bottom: 90px
+        padding-bottom: 90px;
+        margin-top: 20px;
     }
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {
     .section-space {
         padding-top: 80px;
-        padding-bottom: 80px
+        padding-bottom: 80px;
+        margin-top: 20px;
     }
 }
 
 @media only screen and (max-width:767px) {
     .section-space {
         padding-top: 70px;
-        padding-bottom: 70px
+        padding-bottom: 70px;
+        margin-top: 20px;
     }
 }
 
@@ -197,6 +211,7 @@ hr {
 .row {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
 }
 
 .col-12 {
@@ -350,17 +365,34 @@ hr {
     top: 5px
 }
 .checkout-order-details-wrap {
-    margin-left: 40px
+    margin-left: 40px;
+    width: 50%;
+    padding: 15px;
 }
 
- 
+.checkout-billing-details-wrap{
+    width: 50%;
+    padding: 15px;
+}
+
+/* @media (max-width: 1500px){
+    .row{
+        flex-direction: row;
+    }
+} */
 
 @media only screen and (max-width:767px),
 only screen and (min-width:768px) and (max-width:991px),
-only screen and (min-width:992px) and (max-width:1199px) {
+only screen and (min-width:992px) and (max-width:2000px) {
     .checkout-order-details-wrap {
         margin-left: 0
     }
+
+    .row{
+        flex-direction: row;
+    }
+
+    
 }
 
 .checkout-order-details-wrap .order-details-table-wrap {
@@ -376,6 +408,30 @@ only screen and (min-width:768px) and (max-width:991px) {
         padding: 20px;
         margin-top: 40px;
         margin-bottom: 0
+    }
+
+    .row{
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 480px){
+    .row{
+        flex-direction: column;
+    }
+
+    .checkout-order-details-wrap{
+        width: 80%;
+        margin: auto;
+    }
+
+    .checkout-billing-details-wrap{
+        width: 80%;
+        margin: auto;
+    }
+
+    p-button{
+        margin-left: 30px;
     }
 }
 
