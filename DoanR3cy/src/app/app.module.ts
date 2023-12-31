@@ -57,7 +57,7 @@ import { CartService } from './Service/cart.service';
     ManageBlogComponent, ProductComponent, ProductListComponent, DanhgiasanphamComponent,
     PageNotFoundComponent,
     ProductCheckoutComponent,
-    CartIconComponent,
+    CartIconComponent
   ],
   imports: [
     BrowserModule,
