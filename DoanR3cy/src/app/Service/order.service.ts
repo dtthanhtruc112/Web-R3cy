@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse,  HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, retry, catchError, throwError } from 'rxjs';
 import { Order, Product } from '../Interface/Order';
@@ -15,6 +15,19 @@ export class OrderService {
   private _url: string = "http://localhost:3000";
 
   constructor(private _http: HttpClient) { }
+
+
+  createOrder(userId: number, orderData: any): Observable<Order> {
+    const url = `${this._url}/orders/user/${userId}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this._http.post<Order>(url, orderData, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error in createOrder:', error);
+        return throwError(error);  // Chuyển lỗi để phía component xử lý
+      })
+    );
+  }
 
   getOrder(userId: number): Observable<Order[]> {
     return this._http.get<Order[]>(`${this._url}/orders/user/${userId}`).pipe(

@@ -42,7 +42,7 @@ export interface Order {
   // địa chỉ đơn hàng
   clientInfo: ClientInfo,
   // thông tin người nhận
- orderNotes: String, 
+ orderNotes: Date, 
   id: string;
   // totalPrice: string;
   rejectreason: string;

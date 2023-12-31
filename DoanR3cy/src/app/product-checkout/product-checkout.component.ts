@@ -1,108 +1,6 @@
-// import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { Router, Params } from '@angular/router';
-// import { OrderService } from '../Service/order.service';
-// import { AuthService } from '../Service/auth.service';
-// import { ActivatedRoute } from '@angular/router';
-// import { CartService } from '../Service/cart.service';
-// import { Order } from '../Interface/Order';
-
-// @Component({
-//   selector: 'app-product-checkout',
-//   templateUrl: './product-checkout.component.html',
-//   styleUrls: ['./product-checkout.component.css']
-// })
-// export class ProductCheckoutComponent implements OnInit {
-
-//   constructor(
-//     private formBuilder: FormBuilder,
-//     private router: Router,
-//     private activatedRoute: ActivatedRoute,
-//     private cartService: CartService,
-//     private orderService: OrderService,
-//     private authService: AuthService,
-//   ) {
-//     this.checkoutFormGroup = this.formBuilder.group({});
-//   }
-
-//   checkoutFormGroup: FormGroup | undefined;
-//   isSubmitted = false;
-
-//   cartItems: any[] = [];
-//   orderTotal: number = 0;
-//   shippingFee: number = 0;
-//   discount: number = 0;
-//   totalAmount: number = 0;
-
-//   userId: any;
-//   showOverlay: boolean = false;
-//   showSuccessPopup: boolean = false;
-
-//   ngOnInit(): void {
-//     this._initCheckoutForm();
-//     this.activatedRoute.queryParams.subscribe((params: Params) => {
-//       if (params['cartItems']) {
-//         this.cartItems = JSON.parse(params['cartItems']);
-//         this.orderTotal = parseFloat(params['orderTotal']);
-//         this.shippingFee = parseFloat(params['shippingFee']);
-//         this.discount = parseFloat(params['discount']);
-//         this.totalAmount = parseFloat(params['totalAmount']);
-
-//         console.log('Cart Items:', this.cartItems);
-//         console.log('Order Total:', this.orderTotal);
-//         console.log('Shipping Fee:', this.shippingFee);
-//         console.log('Discount:', this.discount);
-//         console.log('Total Amount:', this.totalAmount);
-//       }
-//     });
-//   }
-
-//   backtoCart() {
-//     this.router.navigate(['/cart']);
-//   }
-
-//   private _initCheckoutForm() {
-//     this.checkoutFormGroup = this.formBuilder.group({
-//       name: ['', Validators.required],
-//       email: ['', [Validators.email, Validators.required]],
-//       phone: [''],
-//       city: ['', Validators.required],
-//       country: ['', Validators.required],
-//       zip: ['', Validators.required],
-//       district: ['', Validators.required],
-//       street: ['', Validators.required],
-//       orderNotes: ['']
-//     });
-//   }
-
-//   placeOrder() {
-//     this.isSubmitted = true;
-//     if (!this.checkoutFormGroup || this.checkoutFormGroup.invalid) {
-//       return;
-//     }
-  
-  
-
-//   }
-  
-//   closePopup(): void {
-//     this.showOverlay = false;
-//     this.showSuccessPopup = false;
-//   }
-
-//   get checkoutForm() {
-//     return this.checkoutFormGroup?.controls;
-//   }
-// }
-
-  
-
-
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router,Params } from '@angular/router';
-import { Order } from '../Interface/Order';
 import { CartService } from '../Service/cart.service';
 import { OrderService } from '../Service/order.service';
 import { product } from '../Interface/product';
@@ -110,6 +8,7 @@ import { AuthService } from '../Service/auth.service';
 import { Cart } from '../models/cart';
 import { CartItem } from '../models/cart';
 import { ActivatedRoute } from '@angular/router';
+import { Order, ClientInfo, Address } from '../Interface/Order';
 
 
 @Component({
@@ -119,85 +18,130 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductCheckoutComponent implements OnInit {
 
-  checkoutFormGroup!: FormGroup;
-  cartItems: any[] = [];
+  queryParamsData: any;
+  checkoutFormGroup: FormGroup;
   isSubmitted = false;
+  cartItems: any[] = [];
+  orderTotal = 0;
+  shippingFee = 0;
+  discount = 0;
+  totalAmount = 0;
+  userId = 0;
+  selectedPaymentMethod: string = '';
 
-
-  orderTotal: number = 0;
-  shippingFee: number = 0;
-  discount: number = 0;
-  totalAmount: number = 0;
+  selectPayment(method: string) {
+    this.selectedPaymentMethod = method;
+  }
 
   constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
-  ) { }
+    private orderService: OrderService
+  ) {
+    this.checkoutFormGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
+      phone: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['Việt Nam'],
+      zip: [''],
+      district: ['', Validators.required],
+      street: ['', Validators.required],
+      orderNotes: ['']
+    });
+  }
 
   ngOnInit(): void {
-    this.initializeForm();
-
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params['cartItems']) {
         this.cartItems = JSON.parse(params['cartItems']);
+        console.log('cartItems', this.cartItems)
         this.orderTotal = parseFloat(params['orderTotal']);
         this.shippingFee = parseFloat(params['shippingFee']);
         this.discount = parseFloat(params['discount']);
         this.totalAmount = parseFloat(params['totalAmount']);
+        this.userId = parseFloat(params['userId']);
       }
     });
-
-    this.loadCartItems();
-  }
-
-  initializeForm(): void {
-    this.checkoutFormGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
-      country:  [''],
-      city: ['', Validators.required],
-      zip: [''],
-      street: ['', Validators.required],
-      district: ['', Validators.required],
-      orderNotes: [''],
-      clientInfo: this.formBuilder.group({
-        name: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        phone: ['', Validators.required],
-      }),
-      address: this.formBuilder.group({
-        country: [''],
-        city: ['', Validators.required],
-        zip: [''],
-        district: ['', Validators.required],
-        street: ['', Validators.required],
-      }),
-      products: [],
-    });
-  }
-
-  loadCartItems(): void {
-    if (this.checkoutFormGroup) {
-      const productsControl = this.checkoutFormGroup.get('products');
-      if (productsControl) {
-        productsControl.setValue(this.cartItems);
-      }
-    }
+    
   }
 
   backtoCart(): void {
-    // Thêm xử lý khi người dùng quay lại giỏ hàng
+    this.router.navigate(['/cart']);
   }
 
+
+
+  
+
   placeOrder(): void {
-    // Thêm xử lý khi người dùng đặt hàng
+    this.isSubmitted = true;
+    if (this.checkoutFormGroup.invalid) {
+      return;
+    }
+
+    console.log('Place Order button clicked');
+
+    const clientInfo: ClientInfo = {
+      clientname: this.checkoutForm['name'].value,
+      clientphone: this.checkoutForm['phone'].value,
+      clientemail: this.checkoutForm['email'].value,
+    };
+
+    const address: Address = {
+      country: this.checkoutForm['country'].value,
+      postcodeZip: this.checkoutForm['zip'].value,
+      province: this.checkoutForm['city'].value,
+      district: this.checkoutForm['district'].value,
+      addressDetail: this.checkoutForm['street'].value,
+    };
+
+    console.log('Client Info:', clientInfo);
+    console.log('Address:', address);
+
+    const order: Order = {
+      userid: this.userId, // Điền dữ liệu user ID tương ứng
+      channel: 'Website',
+      ordernumber: Number(), // Điền số đơn hàng tương ứng
+      products: this.cartItems,
+      order_status: 'Chờ xử lí', // Trạng thái đơn hàng mặc định
+      ordereddate: new Date(),
+      paymentmethod: this.selectedPaymentMethod,
+      paymentstatus: false, 
+      totalOrderValue: this.orderTotal,
+      shippingfee: this.shippingFee,
+      discount: this.discount,
+      totalAmount: this.totalAmount,
+      address: address,
+      clientInfo: clientInfo,
+      orderNotes: new Date(), // Ghi chú với kiểu dữ liệu Date
+      id: String(), // Trường này cần phải điền dữ liệu đơn hàng tương ứng
+      rejectreason: '' // Lí do từ chối đơn hàng
+    };
+    console.log('Order:', order);
+
+    // Gọi service để lưu đơn hàng
+  //   this.orderService.createOrder(this.userId, order).subscribe((response) => {
+  //     // Xử lý khi đơn hàng được lưu thành công
+  //     console.log('Order placed:', response);
+  //     // Hiển thị thông báo hoặc chuyển hướng tùy thuộc vào kịch bản của bạn
+  //   });
+  // }
+   // Gọi phương thức createOrder từ OrderService
+   this.orderService.createOrder(this.userId, order).subscribe(
+    (createdOrder) => {
+      console.log('Đơn hàng đã được tạo:', createdOrder);
+      // Thêm xử lý khi đơn hàng đã được tạo
+    },
+    (error) => {
+      console.error('Lỗi khi tạo đơn hàng:', error);
+      // Thêm xử lý khi có lỗi
+    }
+  );
   }
 
   get checkoutForm() {
-        return this.checkoutFormGroup?.controls;
-      }
+    return this.checkoutFormGroup.controls;
+  }
 }
- 
-
- 
