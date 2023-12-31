@@ -135,7 +135,7 @@ router.post("/product",cors(),async (req,res)=>{
     res.status(500).send('Internal Server Error');
   }})
 
-
+// Router lấy tất cả đơn hàng
 router.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find().populate({ path: 'products', model: 'Product' });
@@ -539,16 +539,7 @@ router.get('/customProducts', async (req, res) => {
   }
 });
 
-// Get customers information
-router.get('/customers', async (req, res) => {
-  try {
-    const customers = await User.find();
-    res.json(customers);
-  } catch (error) {
-    console.error('Error retrieving customers:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+
 
 // MANGE ACCOUNT
 // GET tất cả admin có role là 'admin'

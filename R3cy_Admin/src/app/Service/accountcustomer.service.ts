@@ -62,9 +62,21 @@ export class AccountcustomerService {
       catchError(this.handleError)
     );
   }
-
-
   
+  getCustomers(): Observable<AccountCustomer[]> {
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/json;charset=utf-8'
+    );
+    const requestOptions: Object = {
+      headers: headers,
+    };
+    return this._http.get<AccountCustomer[]>(`${this.apiUrl}/user`, requestOptions).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   updateAdminAccount(id: string, updatedData: any): Observable<AccountCustomer> {
     const headers = new HttpHeaders().set(
       'Content-Type',
@@ -75,7 +87,6 @@ export class AccountcustomerService {
       responseType: 'json',
     };
     return this._http.put<AccountCustomer>(`${this.apiUrl}/updateadmin/${id}`, updatedData, requestOptions).pipe(
-      retry(3),
       catchError(this.handleError)
     );
   }
