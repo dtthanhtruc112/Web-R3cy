@@ -870,4 +870,51 @@ router.patch('/discount/:code', async (req, res) => {
   }
 });
 
+// Trang tài khoản bên client
+// GET thông tin của một accountcustomer dựa trên id
+router.get('/my-account/:id', async (req, res) => {
+  try {
+    const accountId = req.params.id;
+    const account = await AccountCustomer.findById(accountId);
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Trả về thông tin cần thiết
+    const accountInfo = {
+      _id: account._id,
+      Name: account.Name,
+      phonenumber: account.phonenumber,
+      Mail: account.Mail,
+      gender: account.gender,
+      dob: account.dob,
+      avatar: account.avatar,
+      userid: account.userid,
+    };
+
+    res.json(accountInfo);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT để cập nhật thông tin của một accountcustomer
+router.put('/my-account/:id', async (req, res) => {
+  try {
+    const accountId = req.params.id;
+    const updatedInfo = req.body; // Body của yêu cầu sẽ chứa các thông tin cần cập nhật
+
+    const account = await AccountCustomer.findByIdAndUpdate(accountId, updatedInfo, { new: true });
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    res.json(account);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router
