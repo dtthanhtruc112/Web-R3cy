@@ -37,4 +37,8 @@ export class ProductService {
     const url = `${this.apiUrl}/${productId}`;
     return this._http.delete(url);
   }
+
+  addProduct(product: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/product`, product);
+  }
 }

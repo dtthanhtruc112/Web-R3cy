@@ -7,12 +7,14 @@
 
 .leftcolumn{
     /* width: 40vw; */
-    height: 100vh;
+    height: 100%;
     margin-right: 5%;
+    
 }
 
 .rightcolumn{
-    flex: 1
+    flex: 1;
+    margin-left: 200px;
 }
 
 @media screen and (max-width: 750px){
@@ -28,7 +30,8 @@
         height: 80px;
     }
 
-    /* .rightcolumn{
-        margin-top: 200px;
-    } */
+    .rightcolumn{
+        margin-left: 0;
+        margin-top: 80px;
+    }
 }

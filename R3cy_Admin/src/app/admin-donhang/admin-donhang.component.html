@@ -27,7 +27,7 @@
 
             <div class="sort font-bold">
                 <label for="sortInput"><p>Hiển thị |</p>
-                    <input type="text" id="sortInput" [(ngModel)]="sortColumn" class="font-bold"></label>
+                    <input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable1()"class="font-bold"></label>
               </div>
           
               <div class="search">
@@ -134,7 +134,7 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
@@ -172,7 +172,7 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
@@ -208,7 +208,7 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
@@ -244,7 +244,7 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
@@ -280,7 +280,7 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">

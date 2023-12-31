@@ -15,6 +15,7 @@ import { Order } from '../Interface/order';
 export class AdminDonhangComponent implements OnInit {
   selectedbar: string = 'trang-thai-don-hang';
   data: Order[] = [];
+  ordersToShow: number | undefined;
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
@@ -107,6 +108,11 @@ export class AdminDonhangComponent implements OnInit {
     
     this.route.params.subscribe(params => {
       this.selectedbar = params['id'] || 'trang-thai-don-hang'; // Set a default value if 'id' is not present
+    });
+
+    this._orderService.getAllOrders().subscribe(data => {
+      this.data = data;
+      this.updateDisplayedData();
     });
   }
 
@@ -342,18 +348,15 @@ export class AdminDonhangComponent implements OnInit {
   @ViewChild('orderNumberInputField') orderNumberInputField: ElementRef | undefined;
 
   sortColumn: number | 'all' = 'all';
-  // searchKeyword: string = '';
-  // displayedData: Order[] = [];
+// Other properties...
 
- 
+sortTable1(): void {
+  this.updateDisplayedData();
+}
 
-  // sortTable1(): void {
-  //   this.updateDisplayedData();
-  // }
-
-  // updateDisplayedData(): void {
-  //   this.displayedData = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
-  // }
+updateDisplayedData(): void {
+  this.filteredOrders = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
+}
 
   // getObjectKeys(obj: Order): string[] {
   //   return obj ? Object.keys(obj) as string[] : [];
