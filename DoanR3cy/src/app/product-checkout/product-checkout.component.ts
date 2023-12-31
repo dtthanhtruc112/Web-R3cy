@@ -121,18 +121,13 @@ export class ProductCheckoutComponent implements OnInit {
     };
     console.log('Order:', order);
 
-    // Gọi service để lưu đơn hàng
-  //   this.orderService.createOrder(this.userId, order).subscribe((response) => {
-  //     // Xử lý khi đơn hàng được lưu thành công
-  //     console.log('Order placed:', response);
-  //     // Hiển thị thông báo hoặc chuyển hướng tùy thuộc vào kịch bản của bạn
-  //   });
-  // }
    // Gọi phương thức createOrder từ OrderService
    this.orderService.createOrder(this.userId, order).subscribe(
     (createdOrder) => {
       console.log('Đơn hàng đã được tạo:', createdOrder);
       // Thêm xử lý khi đơn hàng đã được tạo
+      alert()
+      this.router.navigate(['/main-page']);
     },
     (error) => {
       console.error('Lỗi khi tạo đơn hàng:', error);

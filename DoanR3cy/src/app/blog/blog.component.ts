@@ -31,7 +31,7 @@ export class BlogComponent implements OnInit {
     const sentences = content.split('. ');
 
     // Lấy số câu đầu tiên
-    const summary = sentences.slice(0, 2).join('. ');
+    const summary = sentences.slice(0, 1).join('. ');
 
     // Thêm dấu ba chấm nếu có nhiều hơn
     if (sentences.length > sentenceCount) {
