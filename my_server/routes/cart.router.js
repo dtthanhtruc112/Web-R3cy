@@ -464,7 +464,7 @@ router.post("/orders/user/:userid", async (req, res) => {
       ordernote: req.body.ordernote,
       orderadress: req.body.orderadress,
       products: [], // Khởi tạo danh sách sản phẩm trống
-      rejectreason: req.body.rejectreason,
+      rejectreason: '',
     });
 
     // Lấy thông tin chi tiết sản phẩm từ DB Product
@@ -486,8 +486,8 @@ router.post("/orders/user/:userid", async (req, res) => {
         category2: product.category2,
         name: product.name,
         price: product.price,
+        img1: product.img1,
         quantity: cartItem.quantity,
-        feedback: cartItem.feedback,
       };
 
       newOrder.products.push(orderProduct);
