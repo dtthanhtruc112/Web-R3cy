@@ -49,6 +49,7 @@ export class ProductComponent implements OnInit {
         console.log(this.pro);
         this.productt = this.pro.find(product => product._id === this.selectedCode);
         console.log('this.productt', this.productt);
+        this.currentImage = this.productt.img1
       })
     console.log('this.selectedCode', this.selectedCode);}
   

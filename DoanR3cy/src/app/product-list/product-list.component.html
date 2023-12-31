@@ -41,7 +41,7 @@
                 <p style="float: right;">Đang hiển thị 00 sản phẩm</p>
             </div> -->
             <!-- <br><br><br><br><br><br> -->
-            <div class="product-show" *ngFor="let p of product" [routerLink]="['/product', p.id]">
+            <div class="product-show" *ngFor="let p of product" [routerLink]="['/product', p._id]">
                     <!-- <p class="mainimg">{{p.img1}}</p> -->
                     <img [src]="p.img1">
                     <p class="name">{{p.name}}</p>
