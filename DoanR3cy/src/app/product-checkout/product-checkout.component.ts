@@ -28,9 +28,8 @@ export class ProductCheckoutComponent implements OnInit {
   discount = 0;
   totalAmount = 0;
   userId = 0;
-  selectedPaymentMethod: string = '';
   voucherCode: string = '';
-
+  selectedPaymentMethod: string = 'Bank';
   selectPayment(method: string) {
     this.selectedPaymentMethod = method;
   }

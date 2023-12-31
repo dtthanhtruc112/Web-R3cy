@@ -466,7 +466,16 @@ router.get('/account/:userid', async (req, res) => {
 });
 
 
-
+// Hàm kiểm tra sự khác biệt giữa hai địa chỉ
+const isDifferentAddress = (address1, address2) => {
+  return (
+    address1.country !== address2.country ||
+    address1.province !== address2.province ||
+    address1.district !== address2.district ||
+    address1.addressDetail !== address2.addressDetail ||
+    address1.isDefault !== address2.isDefault
+  );
+};
 // POST: Tạo đơn hàng từ giỏ hàng và xóa giỏ hàng sau khi đơn hàng thành công
 router.post('/orders/user/:userid', async (req, res) => {
   try {
@@ -527,9 +536,24 @@ router.post('/orders/user/:userid', async (req, res) => {
 
     // Tạo đối tượng Order từ dữ liệu đã tạo
     const newOrder = new Order(orderData);
-
     // Lưu đơn hàng vào cơ sở dữ liệu
     await newOrder.save();
+    const accountCustomer = await AccountCustomer.findOne({ userid: parseInt(userid) });
+
+    if (accountCustomer) {
+      const isAddressDuplicate = accountCustomer.addresses.some(existingAddress =>
+        !isDifferentAddress(existingAddress, orderData.adress)
+      );
+
+      if (!isAddressDuplicate) {
+        accountCustomer.addresses.push(orderData.adress);
+        await accountCustomer.save();
+      } else {
+        console.log('Duplicate address found. Not saving.');
+      }
+    } else {
+      console.error('User not found while trying to save order address.');
+    }
 
     // Xóa giỏ hàng sau khi tạo đơn hàng thành công
     await Cart.deleteOne({ userid: parseInt(userid) });
