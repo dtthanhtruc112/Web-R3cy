@@ -16,7 +16,13 @@ const Order = new Schema({
     discount: Number,
     totalAmount: Number,
     ordernote: String,
-    orderadress:String,
+    adress: {
+        country: { type: String, default: 'Việt Nam' },
+        postcodeZip: { type: String, default: '' },
+        province: { type: String },
+        district: { type: String },
+        addressDetail: { type: String }
+    },
     products: [{
         id: Number,
         category1: String,
@@ -28,7 +34,11 @@ const Order = new Schema({
         img1:String,
     }],
     rejectreason: { type: String, default: '' },
-    address: String
+    clientInfo: {
+        clientname: String,
+        clientphone: String,
+        clientemail: String,
+    }
 });
 
 

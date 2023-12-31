@@ -9,51 +9,44 @@ export interface Product {
   feedback: string;
   img1:String,
 }
-
+export interface Address {
+  country: string;
+  postcodeZip: string;
+  province: string;
+  district: string;
+  addressDetail: string;
+}
+export interface ClientInfo {
+  clientname: string;
+  clientphone: string;
+  clientemail: string;
+}
 export interface Order {
   userid: number,
   channel: string,
   ordernumber: number;
   products: Product[];
   order_status: string;
-  ordereddate: string;
+  ordereddate: Date; // Sử dụng kiểu Date
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
+  // tổng giá sản phẩm, chưa có cộng trừ phụ phí
   shippingfee?: number;
-  discount?: Number;
-  totalAmount?: Number;
-  address: String
-
+  // phí vận chuyển
+  discount?: number;
+  // khuyến mãi
+  totalAmount?: number;
+  // tổng đơn hàng
+  address: Address,
+  // địa chỉ đơn hàng
+  clientInfo: ClientInfo,
+  // thông tin người nhận
+ orderNotes: String, 
   id: string;
-  orderItems?: OrderItem[];
-  street: string;
-  city: string;
-  zip: string;
-  country: string;
-  phone: string;
-  totalPrice: string;
+  // totalPrice: string;
   rejectreason: string;
+  // lí do từ chối
 
 } 
-export interface Orders {
- 
-  ordereddate: string;
-  orderItems?: OrderItem[];
-  street: string;
-  city: string;
-  zip: string;
-  country: string;
-  phone: string;
-
-} 
-
-export interface OrderItem {
-  product?: string;
-  quantity?: number;
-}
-
-
-
-
 

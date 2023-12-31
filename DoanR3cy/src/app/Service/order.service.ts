@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, retry, catchError, throwError } from 'rxjs';
-import { Order, Orders, Product } from '../Interface/Order';
+import { Order, Product } from '../Interface/Order';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -117,9 +117,6 @@ export class OrderService {
 //   return this._http.get<any>(`${this._url}/${id}`)
 // }
 
-createOrder(orders: Orders) : Observable<Orders> {
-  return this._http.post<Orders>(this._url, orders);
-}
 
 
 // apiURLProducts = environment.apiUrl + 'products'

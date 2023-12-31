@@ -18,8 +18,9 @@
 
 <body>
 
-
+   
     <main class="main-content">
+        <form action="#" method="post" [formGroup]="checkoutFormGroup">
 
         <!--== Start Shopping Checkout Area Wrapper ==-->
         <section class="shopping-checkout-wrap section-space">
@@ -36,7 +37,6 @@
                         <div class="checkout-billing-details-wrap">
                             <h2 class="title">Thông tin giao hàng</h2>
                             <div class="billing-form-wrap checkout-form">
-                                <form action="#" method="post" [formGroup]="checkoutFormGroup">
                                     <div class="row">
                                         <div class="col-md-12">
                                 
@@ -46,7 +46,7 @@
                                                         title="required">*</abbr></label>
                                                 <input formControlName="name" id="name" type="text" class="form-control"
                                                     pInputText />
-                                                <small *ngIf="checkoutForm['name'].invalid && isSubmitted"
+                                                <small *ngIf="checkoutFormGroup['name'].invalid && isSubmitted"
                                                     class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
 
@@ -55,7 +55,7 @@
                                                         title="required">*</abbr></label>
                                                 <input formControlName="email" id="email" type="text"
                                                     class="form-control" pInputText />
-                                                <small *ngIf="checkoutForm['email'].invalid && isSubmitted"
+                                                <small *ngIf="checkoutFormGroup['email'].invalid && isSubmitted"
                                                     class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
 
@@ -72,9 +72,9 @@
                                                 <label for="name">Quốc gia <abbr class="required"
                                                         title="required">*</abbr></label>
 
-                                                <input formControlName="city" id="city" type="text" class="form-control"
+                                                <input formControlName="country" id="country" type="text" class="form-control"
                                                     pInputText />
-                                                <small *ngIf="checkoutForm['country'].invalid && isSubmitted"
+                                                <small *ngIf="checkoutFormGroup['country'].invalid && isSubmitted"
                                                     class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
 
@@ -82,7 +82,7 @@
                                                 <label for="name">Postcode / ZIP </label>
                                                 <input formControlName="zip" id="zip" type="text" class="form-control"
                                                     pInputText />
-                                                    <small *ngIf="checkoutForm['zip'].invalid && isSubmitted"
+                                                    <small *ngIf="checkoutFormGroup['zip'].invalid && isSubmitted"
                                                     class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
 
@@ -91,7 +91,7 @@
                                                         title="required">*</abbr></label>
                                                 <input formControlName="city" id="city" type="text" class="form-control"
                                                     pInputText />
-                                                <small *ngIf="checkoutForm['city'].invalid && isSubmitted"
+                                                <small *ngIf="checkoutFormGroup['city'].invalid && isSubmitted"
                                                     class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
 
@@ -100,7 +100,7 @@
                                                         title="required">*</abbr></label>
                                                 <input formControlName="district" id="district" type="text"
                                                     class="form-control" pInputText />
-                                                <small *ngIf="checkoutForm['district'].invalid && isSubmitted"
+                                                <small *ngIf="checkoutFormGroup['district'].invalid && isSubmitted"
                                                     class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
 
@@ -109,7 +109,7 @@
                                                         title="required">*</abbr></label>
                                                 <input formControlName="street" id="street" type="text"
                                                     class="form-control" pInputText />
-                                                <small *ngIf="checkoutForm['street'].invalid && isSubmitted"
+                                                <small *ngIf="checkoutFormGroup['street'].invalid && isSubmitted"
                                                     class="p-error">Bạn chưa điền vào trường này</small>
                                             </div>
 
@@ -126,7 +126,7 @@
 
                                         </div>
                                     </div>
-                                </form>
+                               
 
                             </div>
                         </div>
@@ -241,7 +241,7 @@
             </div>
         </section>
 
-        
+     </form>
     </main>
 
 </body>

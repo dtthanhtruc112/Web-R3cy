@@ -166,6 +166,17 @@ router.get('/customProducts', async (req, res) => {
   }
 });
 
+// GET tất cả customer có role là 'user'
+
+router.get('/customers', async (req, res) => {
+  try {
+    const customers = await AccountCustomer.find({ role: 'user' });
+    res.json(customers);
+  } catch (error) {
+    res.status(500).json({ error: 'Lỗi server' });
+  }
+});
+
 // MANGE ACCOUNT
 // GET tất cả admin có role là 'admin'
 router.get('/adminaccs', async (req, res) => {
