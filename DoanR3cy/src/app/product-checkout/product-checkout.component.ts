@@ -9,6 +9,7 @@ import { Cart } from '../models/cart';
 import { CartItem } from '../models/cart';
 import { ActivatedRoute } from '@angular/router';
 import { Order, ClientInfo, Address } from '../Interface/Order';
+import { DiscountService } from '../Service/discount.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class ProductCheckoutComponent implements OnInit {
   totalAmount = 0;
   userId = 0;
   selectedPaymentMethod: string = '';
+  voucherCode: string = '';
 
   selectPayment(method: string) {
     this.selectedPaymentMethod = method;
@@ -37,7 +39,8 @@ export class ProductCheckoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private discountService: DiscountService,
   ) {
     this.checkoutFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
@@ -62,6 +65,7 @@ export class ProductCheckoutComponent implements OnInit {
         this.discount = parseFloat(params['discount']);
         this.totalAmount = parseFloat(params['totalAmount']);
         this.userId = parseFloat(params['userId']);
+        this.voucherCode = params['voucherCode']
       }
     });
     
@@ -125,6 +129,17 @@ export class ProductCheckoutComponent implements OnInit {
    this.orderService.createOrder(this.userId, order).subscribe(
     (createdOrder) => {
       console.log('Đơn hàng đã được tạo:', createdOrder);
+      // Update userid in Discount collection
+      this.discountService.updateDiscountUserIds(this.voucherCode, this.userId).subscribe(
+        (updatedDiscount) => {
+          console.log('Discount updated:', updatedDiscount);
+        },
+        (error) => {
+          console.error('Lỗi khi cập nhật Discount:', error);
+          // Handle error when updating Discount
+        }
+      );
+
       // Thêm xử lý khi đơn hàng đã được tạo
       alert()
       this.router.navigate(['/main-page']);
