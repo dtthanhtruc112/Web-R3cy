@@ -21,4 +21,5 @@ export interface product {
     answer1: string,
     ask2: string,
     answer2: string
+   
 }
