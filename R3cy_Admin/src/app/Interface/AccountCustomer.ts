@@ -5,7 +5,8 @@ export class AccountCustomer{
     public phonenumber: string='',
     public Mail: string='',
     public password: string='',
-    public role: string=''
+    public role: string='',
+    public userid: number = 0
   ){}
 }
   

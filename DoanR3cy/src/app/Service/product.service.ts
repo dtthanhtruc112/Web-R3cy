@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { switchMap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { CartService } from './cart.service';
 @Injectable({
@@ -42,6 +43,12 @@ export class ProductService {
 
 
 
+  private searchResultsSubject = new BehaviorSubject<any[]>([]);
+  public searchResults$: Observable<any[]> = this.searchResultsSubject.asObservable();
+
+  updateSearchResults(results: any[]): void {
+    this.searchResultsSubject.next(results);
+  }
 
   handleError(handleError: any): import("rxjs").OperatorFunction<product[], any> {
     throw new Error('Method not implemented.');

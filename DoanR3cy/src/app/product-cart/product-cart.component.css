@@ -22,7 +22,7 @@ body {
     background-color: #fff
 }
 
-@media only screen and (min-width:992px) and (max-width:1199px) {
+/* @media only screen and (min-width:992px) and (max-width:1199px) {
     body {
         font-size: 15px
     }
@@ -38,7 +38,7 @@ body {
     body {
         font-size: 15px
     }
-}
+} */
 
 
 p:last-child {
@@ -122,21 +122,26 @@ h3 {
 @media only screen and (min-width:992px) and (max-width:1199px) {
     .section-space {
         padding-top: 90px;
-        padding-bottom: 90px
+        padding-bottom: 90px;
+        margin-top: 20px;
     }
 }
 
 @media only screen and (min-width:768px) and (max-width:991px) {
     .section-space {
         padding-top: 80px;
-        padding-bottom: 80px
+        padding-bottom: 80px;
+        margin-top: 20px;
     }
+
+    
 }
 
 @media only screen and (max-width:767px) {
     .section-space {
         padding-top: 70px;
-        padding-bottom: 70px
+        padding-bottom: 70px;
+        margin-top: 20px;
     }
 }
 
@@ -159,11 +164,23 @@ h3 {
     .aside-cart-wrapper .offcanvas-body {
         padding: 19px 19px 70px
     }
+    .section-space {
+        padding-top: 70px;
+        padding-bottom: 70px;
+        margin-top: 30px;
+    }
+
+    .checkout-button {
+        min-width: 100px;
+    }
 }
 
 @media screen and (max-width: 480px) {
     .shopping-cart-form table {
         width: 470px
+    }
+    .section-space {
+        margin-top: 30px;
     }
 
 }
@@ -327,6 +344,8 @@ only screen and (min-width:768px) and (max-width:991px) {
 .row {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
+    margin: auto;
 }
 
 .col-12 {
@@ -339,13 +358,20 @@ only screen and (min-width:768px) and (max-width:991px) {
     padding: 15px;
 }
 
+.coupon-wrap{
+    width: 50%;
+    padding: 15px;
+    margin: auto;
+}
+
 .coupon-wrap .title {
     border-bottom: 1px solid var(--color-white);
     font-size: 18px;
     margin: 0 0 22px;
     padding: 0 0 10px;
     text-transform: uppercase;
-    font-weight: 600
+    font-weight: 600;
+   
 }
 
 .coupon-wrap .desc {
@@ -362,7 +388,7 @@ only screen and (min-width:768px) and (max-width:991px) {
     padding: 0 16px;
     vertical-align: middle;
     margin: 0 0 25px;
-    width: 100%
+    width: 60%
 }
 
 .coupon-wrap .btn-coupon,
@@ -398,7 +424,10 @@ only screen and (min-width:768px) and (max-width:991px) {
 .cart-totals-wrap {
     background: #f9f9f9;
     padding: 33px 30px 35px;
-    width: 100%
+    width: 100%;
+    width: 50%;
+    padding: 15px;
+    margin: auto;
 }
 
 @media only screen and (max-width:767px),
@@ -541,7 +570,20 @@ only screen and (min-width:768px) and (max-width:991px) {
 @media only screen and (max-width:575px) {
     .cart-totals-wrap .checkout-button {
         font-size: 14px;
-        padding: 0 15px
+        padding: 0 15px;
+        min-width: 100px;
+    }
+
+    .row{
+        flex-direction: column;
+    }
+
+    .coupon-wrap{
+        width: 80%;
+    }
+
+    .cart-totals-wrap{
+        width: 80%;
     }
 }
 

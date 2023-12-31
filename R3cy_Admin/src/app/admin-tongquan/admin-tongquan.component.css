@@ -11,7 +11,13 @@ div {
     margin-left: 300px;
     margin-top: 20px;
 }
-
+.bestSellingProductquantity td{
+    vertical-align: middle;
+}
+.bestSellingProductquantity p{
+    font-size: larger;
+    font-weight: bold;
+}
 table {
     border-collapse: collapse;
     width: 100%;
