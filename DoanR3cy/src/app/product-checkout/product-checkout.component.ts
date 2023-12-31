@@ -9,6 +9,7 @@ import { Cart } from '../models/cart';
 import { CartItem } from '../models/cart';
 import { ActivatedRoute } from '@angular/router';
 import { Order, ClientInfo, Address } from '../Interface/Order';
+import { DiscountService } from '../Service/discount.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class ProductCheckoutComponent implements OnInit {
   totalAmount = 0;
   userId = 0;
   selectedPaymentMethod: string = '';
+  voucherCode: string = '';
 
   selectPayment(method: string) {
     this.selectedPaymentMethod = method;
@@ -37,7 +39,8 @@ export class ProductCheckoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private discountService: DiscountService,
   ) {
     this.checkoutFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
@@ -56,12 +59,22 @@ export class ProductCheckoutComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params['cartItems']) {
         this.cartItems = JSON.parse(params['cartItems']);
-        console.log('cartItems', this.cartItems)
+        
         this.orderTotal = parseFloat(params['orderTotal']);
         this.shippingFee = parseFloat(params['shippingFee']);
         this.discount = parseFloat(params['discount']);
         this.totalAmount = parseFloat(params['totalAmount']);
         this.userId = parseFloat(params['userId']);
+        this.voucherCode = params['voucherCode']
+
+
+        console.log('cartItems', this.cartItems)
+        console.log('orderTotal', this.orderTotal)
+        console.log('shippingFee', this.shippingFee)
+        console.log('totalAmount', this.totalAmount)
+        console.log('userId', this.userId)
+        console.log('voucherCode', this.voucherCode)
+        
       }
     });
     
@@ -120,19 +133,29 @@ export class ProductCheckoutComponent implements OnInit {
       rejectreason: '' // Lí do từ chối đơn hàng
     };
     console.log('Order:', order);
+    console.log('products: this.cartItems', order.products)
+        console.log('totalOrderValue: this.orderTotal', order.totalOrderValue)
+        console.log('discount: this.discount,', this.discount)
+        console.log('totalAmount: this.totalAmount,',  this.totalAmount)
 
-    // Gọi service để lưu đơn hàng
-  //   this.orderService.createOrder(this.userId, order).subscribe((response) => {
-  //     // Xử lý khi đơn hàng được lưu thành công
-  //     console.log('Order placed:', response);
-  //     // Hiển thị thông báo hoặc chuyển hướng tùy thuộc vào kịch bản của bạn
-  //   });
-  // }
    // Gọi phương thức createOrder từ OrderService
    this.orderService.createOrder(this.userId, order).subscribe(
     (createdOrder) => {
       console.log('Đơn hàng đã được tạo:', createdOrder);
+      // Update userid in Discount collection
+      this.discountService.updateDiscountUserIds(this.voucherCode, this.userId).subscribe(
+        (updatedDiscount) => {
+          console.log('Discount updated:', updatedDiscount);
+        },
+        (error) => {
+          console.error('Lỗi khi cập nhật Discount:', error);
+          // Handle error when updating Discount
+        }
+      );
+
       // Thêm xử lý khi đơn hàng đã được tạo
+      alert()
+      this.router.navigate(['/main-page']);
     },
     (error) => {
       console.error('Lỗi khi tạo đơn hàng:', error);

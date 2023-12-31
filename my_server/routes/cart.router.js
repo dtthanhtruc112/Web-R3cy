@@ -414,6 +414,7 @@ router.post('/cart/add', async (req, res) => {
         category2: product.category2,
         name: product.name,
         price: product.price,
+        img1: product.img1,
         quantity: quantity,
         subtotal: product.price * quantity,
       });
@@ -562,7 +563,10 @@ router.post('/orders/user/:userid', async (req, res) => {
       ordereddate: req.body.ordereddate || new Date(),
       paymentmethod: req.body.paymentmethod || '', 
       paymentstatus: req.body.paymentstatus || false,
-      shipfee: req.body.shipfee || 0,
+      shippingfee: req.body.shippingfee || 0,
+      totalOrderValue: req.body.totalOrderValue || 0,
+      discount: req.body.discount || 0,
+      totalAmount: req.body.totalAmount || 0,
       ordernote: req.body.ordernote || '',
       address: req.body.address || {}, // Đảm bảo rằng address được gửi trong request body
       rejectreason: '',

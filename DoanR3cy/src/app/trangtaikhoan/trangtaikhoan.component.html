@@ -24,92 +24,32 @@
                     <h2 class="h2">THÔNG TIN TÀI KHOẢN</h2>
                     <p class="p">Quản lý thông tin hồ sơ để bảo mật tài khoản </p>
                     <hr>
-                    <!-- <div>
-                        <div class="hoso_item">
-                            <div class="hoso_item_content">
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="tendn">Tên đăng nhập</label>
-                                    <input type="text" name="" id="" value="{{tendangnhap}}" readonly>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="ten">Họ và tên</label>
-                                    <input type="text" name="" id="" value="{{hovaten}}" readonly>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="email">Email</label>
-                                    <input type="text" name="" id="email" value="{{email}}" readonly>
-                                    <span class="p" id="hoso_change" (click)="chinhsua('email')">Thay đổi</span>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="sdt">Số điện thoại</label>
-                                    <input type="text" value="{{sdt}}" id="sdt" readonly>
-                                    <span class="p" id="hoso_change" (click)="chinhsua('sdt')">Thay đổi</span>
-                                </div>
-                                <div class="hoso_item_row" *ngIf="selectedGender">
-                                    <label class="hoso_item_label p" for="sdt">Giới tính:</label>
-                                    <label>
-                                        <input type="radio" [value]="'Nam'" [(ngModel)]="selectedGender"
-                                            name="gioitinh">Nam
-                                    </label>
-                                    <label>
-                                        <input type="radio" [value]="'Nữ'" [(ngModel)]="selectedGender"
-                                            name="gioitinh">Nữ
-                                    </label>
-                                    <label>
-                                        <input type="radio" [value]="'Khác'" [(ngModel)]="selectedGender"
-                                            name="gioitinh">Khác
-                                    </label>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="ngaysinh">Ngày Sinh</label>
-                                    <label>
-                                        Ngày: <select [(ngModel)]="selectedDay">
-                                            <option *ngFor="let day of days" [value]="day">{{ day }}</option>
-                                        </select>
-                                        Tháng: <select [(ngModel)]="selectedMonth">
-                                            <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-                                        </select>
-                                        Năm: <select [(ngModel)]="selectedYear">
-                                            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="hoso_img">
-                                <img class="circle_img" #selectedImage [src]="imageSrc" alt=""> <br>
-                                <button type="button" class="button p" (click)="selectImage()">Chọn ảnh</button>
-                                <input type="file" #myfile name="myfile" accept="image/*"
-                                    (change)="displayImage($event)">
-                            </div>
-                        </div>
-
-                        <div class="hoso_item_row">
-                            <button type="button" class="button p" (click)="saveData()">Lưu</button>
-                        </div>
-                    </div> -->
 
                     <div class="user-profile">
                         <div *ngIf="!isEditing">
                             <div class="hoso_item">
                                 <div class="hoso_item_content">
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Họ và tên:</strong> {{ account.Name }}
+                                        <strong class="hoso_item_label p">Tên đăng nhập: </strong> {{ account.nickname || 'Chưa có thông tin'}}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Số điện thoại:</strong> {{ account.phonenumber }}
+                                        <strong class="hoso_item_label p">Họ và tên: </strong> {{ account.Name }}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Email:</strong> {{ account.Mail }}
+                                        <strong class="hoso_item_label p">Số điện thoại: </strong> {{ account.phonenumber }}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Giới tính:</strong> {{ account.gender || 'Chưa có thông tin'}}
+                                        <strong class="hoso_item_label p">Email: </strong> {{ account.Mail }}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Ngày sinh:</strong> {{ account.dob || 'Chưa có thông tin'}}
+                                        <strong class="hoso_item_label p">Giới tính: </strong> {{ account.gender || 'Chưa có thông tin'}}
                                     </div>
                                     <div class="hoso_item_row">
+                                        <strong class="hoso_item_label p">Ngày sinh: </strong> {{ account.dob || 'Chưa có thông tin'}}
+                                    </div>
+                                    <!-- <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Avatar:</strong> {{ account.avatar || 'Chưa có thông tin'}}
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="hoso_img">
                                     <img class="circle_img" alt=""> <br>
@@ -123,16 +63,19 @@
                             <div class="hoso_item">
                                 <div class="hoso_item_content">
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Họ và tên:</strong> <input type="text" [(ngModel)]="editedAccount.Name" />
+                                        <strong class="hoso_item_label p">Tên đăng nhập: </strong> <input type="text" [(ngModel)]="editedAccount.nickname" />
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Số điện thoại:</strong> <input type="text" [(ngModel)]="editedAccount.phonenumber" />
+                                        <strong class="hoso_item_label p">Họ và tên: </strong> <input type="text" [(ngModel)]="editedAccount.Name" />
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Email:</strong> <input type="text" [(ngModel)]="editedAccount.Mail" />
+                                        <strong class="hoso_item_label p">Số điện thoại: </strong> <input type="text" [(ngModel)]="editedAccount.phonenumber" />
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Giới tính:</strong>
+                                        <strong class="hoso_item_label p">Email: </strong> <input type="text" [(ngModel)]="editedAccount.Mail" />
+                                    </div>
+                                    <div class="hoso_item_row">
+                                        <strong class="hoso_item_label p">Giới tính: </strong>
                                         <label class="hoso_item_label p">
                                             <input type="radio" [(ngModel)]="editedAccount.gender" value="Nam" />
                                             Nam
@@ -143,11 +86,11 @@
                                         </label>
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Ngày sinh:</strong> <input type="text" [(ngModel)]="editedAccount.dob" />
+                                        <strong class="hoso_item_label p">Ngày sinh: </strong> <input type="text" [(ngModel)]="editedAccount.dob" />
                                     </div>
-                                    <div class="hoso_item_row">
+                                    <!-- <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Avatar:</strong> <input type="text" [(ngModel)]="editedAccount.avatar" />
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="hoso_img">
                                     <img class="circle_img" #selectedImage [src]="imageSrc" alt=""> <br>

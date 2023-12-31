@@ -204,7 +204,8 @@ private refreshCartItems(): void {
       orderTotal: orderTotal.toString(),
       shippingFee: shippingFee.toString(),  // Phí vận chuyển mặc định, chuyển đổi sang chuỗi
       discount:  discount.toString(),         // Giảm giá từ voucher (nếu có), chuyển đổi sang chuỗi
-      totalAmount: (orderTotal + shippingFee -  discount).toString(),  // Tổng toàn bộ đơn hàng, chuyển đổi sang chuỗi
+      totalAmount: (orderTotal + shippingFee -  discount).toString(),  // Tổng toàn bộ đơn hàng, chuyển đổi sang chuỗi      
+      voucherCode: this.voucherCode
     };
   
     this.router.navigate(['/checkout'], { queryParams });
