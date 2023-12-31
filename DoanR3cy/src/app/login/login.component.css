@@ -99,6 +99,18 @@ input{
     padding-left: 10px;
 }
 
+.has-account{
+    color: var(--color-grey);
+    margin-top: 16px;
+}
+
+.has-account > a{
+    /* margin-left: auto; */
+    color: var(--color-blue);
+    /* margin-bottom: 32px; */
+}
+
+
 /* ============Responsive============ */
 /* Tablet */
 @media screen and (max-width:768px){
