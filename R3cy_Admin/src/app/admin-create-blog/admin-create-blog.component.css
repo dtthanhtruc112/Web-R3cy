@@ -5,9 +5,9 @@ div {
 }
 
 .containerAll {
-    width: 70%;
+    width: 90%;
     margin: auto; /* Center the container */
-    margin-left: 290px;
+    /* margin-left: 290px; */
 }
 
 .containerContent {
@@ -76,7 +76,7 @@ div {
     .containerAll{
     
         margin-left: 14.5vw;
-        margin-top: 130px;
+        /* margin-top: 130px; */
     }
 
     .containerContent{

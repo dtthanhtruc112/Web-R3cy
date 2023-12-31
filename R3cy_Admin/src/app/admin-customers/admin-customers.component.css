@@ -4,7 +4,7 @@ div{
 
 .fullpage{
   
-  margin-left: 268px;
+  /* margin-left: 268px; */
 }
 
 ul, li{
@@ -148,7 +148,7 @@ input[type="text"] {
   .fullpage{
   
       margin-left: 0px;
-      margin-top: 130px;
+      /* margin-top: 130px; */
       padding: 10px;
   }
 

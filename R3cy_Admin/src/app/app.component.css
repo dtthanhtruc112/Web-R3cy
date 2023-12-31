@@ -6,17 +6,29 @@
 }
 
 .leftcolumn{
-    width: 40vw;
+    /* width: 40vw; */
     height: 100vh;
     margin-right: 5%;
 }
 
-/* @media screen and (max-width: 750px){
+.rightcolumn{
+    flex: 1
+}
+
+@media screen and (max-width: 750px){
     
 }
 
 @media screen and (max-width: 480px){
     .container{
-        display: block;
+        flex-direction: column;
     }
-} */
+
+    .leftcolumn{
+        height: 80px;
+    }
+
+    /* .rightcolumn{
+        margin-top: 200px;
+    } */
+}

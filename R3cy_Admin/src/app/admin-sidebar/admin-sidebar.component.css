@@ -1,11 +1,14 @@
-div{
+
+
+div {
+    font-family: Inter-Regular;
+}div{
   font-family: Inter-Regular;
 }
-
 #sidebar {
   /* position: fixed;
   width: 250px; */
-  height: 100vh; 
+  height: 100%;
   background: var(--color-lightblue);
   padding-top: 20px;
   color: var(--color-blue);
@@ -14,13 +17,13 @@ div{
   align-items: flex-start;
   margin-top: -25px;
   z-index: 1000;
+  width: 200px;
 }
 
 #sidebar .containerFunc,
 .containerSetting {
   width: 100%;
 }
-
 #sidebar a,p {
   width: 100%;
   text-decoration: none;
@@ -33,13 +36,11 @@ div{
 #sidebar p {
   margin: 0;
 }
-
 .containerSetting {
   margin-top: auto;
   display: flex;
   flex-direction: column-reverse;
 }
-
 #sidebar .submenu {
   display: none;
   margin-left: 20px;
@@ -49,7 +50,6 @@ div{
   display: block;
   cursor: pointer;
 }
-
 /* #sidebar .menuActive.active + .submenu {
   display: block;
 } */
@@ -59,19 +59,15 @@ div{
 #sidebar p:hover {
   background: var(--color-white);
 }
-
 #sidebar .menuActive.active + .submenu {
   display: block;
 }
-
-
 #sidebar .toggle-icon{
 display: none;
 }
 .logo {
-margin-bottom: auto; /* Đặt margin-bottom là auto để logo nằm ở đầu */
+margin-bottom: auto; 
 }
-
 @media screen and (max-width: 480px) {
 #sidebar {
   width: 100%;
@@ -80,30 +76,27 @@ margin-bottom: auto; /* Đặt margin-bottom là auto để logo nằm ở đầ
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px; /* Thêm padding cho đỡ sát mép màn hình */
-  margin-top: -130px
+  padding: 10px; 
+  margin-top: -8px
 }
-
 .containerSetting {
   margin-top: auto;
   display: flex;
   flex-direction: column;
 }
-
 #sidebar .containerFunc {
   display: none;
 }
 #sidebar #toggle-icon {
-  order: -1; /* Đặt thứ tự là -1 để nằm bên trái */
+  order: -1;
 }
 #sidebar .setting-icon {
-  order: 2; /* Đặt thứ tự là 2 để nằm bên phải */
+  order: 2; 
 }
 #sidebar #toggle-icon {
   display: inline-block;
   cursor: pointer;
 }
-
 #sidebar.active .containerFunc,
 #sidebar.active .containerSetting {
   display: flex;
@@ -115,6 +108,4 @@ margin-bottom: auto; /* Đặt margin-bottom là auto để logo nằm ở đầ
 #sidebar.active a, #sidebar.active p {
   width: 100%;
 }
-
-
 }
