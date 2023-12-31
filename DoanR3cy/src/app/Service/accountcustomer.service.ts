@@ -11,6 +11,11 @@ export class AccountcustomerService {
 
   constructor(private _http: HttpClient) { }
 
+  getAccount(userId: number): Observable<AccountCustomer> {
+    const url = `${this.apiUrl}/account/${userId}`;
+    return this._http.get<AccountCustomer>(url);
+  }
+
   checkMailExist(Mail: string): Observable<any> {
     const headers = new HttpHeaders().set(
       'Content-Type',

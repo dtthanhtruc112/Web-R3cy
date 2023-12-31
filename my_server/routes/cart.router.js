@@ -437,7 +437,32 @@ router.post('/cart/add', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// GET: Lấy thông tin tài khoản theo userid
+router.get('/account/:userid', async (req, res) => {
+  try {
+    const userid = parseInt(req.params.userid);
 
+    // Kiểm tra xem userid có phải là số nguyên dương không
+    if (!Number.isInteger(userid) || userid <= 0) {
+      return res.status(400).json({ message: 'Invalid userid' });
+    }
+
+    // Tìm tài khoản dựa trên userid
+    const account = await AccountCustomer.findOne({ userid: userid });
+
+    if (!account) {
+      return res.status(404).json({ message: `Account with userid ${userid} not found` });
+    }
+
+    res.status(200).json({
+      message: 'Account information retrieved successfully',
+      account: account,
+    });
+  } catch (error) {
+    console.error('Error retrieving account information:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Tạo order và xóa giỏ hàng
 router.post("/orders/user/:userid", async (req, res) => {

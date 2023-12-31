@@ -9,7 +9,13 @@ export interface Product {
   feedback: string;
   img1:String,
 }
-
+export interface Address {
+  country: string;
+  postcodeZip: string;
+  province: string;
+  district: string;
+  addressDetail: string;
+}
 export interface Order {
   userid: number,
   channel: string,
@@ -20,40 +26,22 @@ export interface Order {
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
+  // tổng giá sản phẩm, chưa có cộng trừ phụ phí
   shippingfee?: number;
+  // phí vận chuyển
   discount?: Number;
+  // khuyến mãi
   totalAmount?: Number;
-  address: String
+  // tổng đơn hàng
+  address: Address
+  // địa chỉ đơn hàng
 
+ orderNotes: String, 
   id: string;
-  orderItems?: OrderItem[];
-  street: string;
-  city: string;
-  zip: string;
-  country: string;
   phone: string;
   totalPrice: string;
   rejectreason: string;
+  // lí do từ chối
 
 } 
-export interface Orders {
- 
-  ordereddate: string;
-  orderItems?: OrderItem[];
-  street: string;
-  city: string;
-  zip: string;
-  country: string;
-  phone: string;
-
-} 
-
-export interface OrderItem {
-  product?: string;
-  quantity?: number;
-}
-
-
-
-
 

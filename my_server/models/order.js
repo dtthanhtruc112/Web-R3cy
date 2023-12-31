@@ -16,7 +16,13 @@ const Order = new Schema({
     discount: Number,
     totalAmount: Number,
     ordernote: String,
-    orderadress:String,
+    adress: {
+        country: { type: String, default: 'Việt Nam' },
+        postcodeZip: { type: String, default: '' },
+        province: { type: String },
+        district: { type: String },
+        addressDetail: { type: String }
+    },
     products: [{
         id: Number,
         category1: String,
