@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Users } from '../Interface/users';
+import { Customer, Address } from '../Interface/users';
 import { UsersService } from '../Service/users.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { UsersService } from '../Service/users.service';
 })
 export class AdminCustomersComponent {
   errMessage: string = '';
-  data: Users[] = [];
-  displayedData: Users[] = [];
+  data: Customer[] = [];
+  displayedData: Customer[] = [];
   sortColumn: number | 'all' = 'all';
   searchKeyword: string = '';
 
@@ -36,11 +36,11 @@ export class AdminCustomersComponent {
   }
 
  
-  getObjectKeys(obj: Users): string[] {
+  getObjectKeys(obj: Customer): string[] {
     return obj ? Object.keys(obj) as string[] : [];
   }
 
-  getItemValue(item: Users, key: string): string | File | undefined {
+  getItemValue(item: Customer, key: string): string | File | undefined {
     console.log(key)
     return item ? (item as any)[key] : undefined;
   }

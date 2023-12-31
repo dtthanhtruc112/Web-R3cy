@@ -1,3 +1,6 @@
+
+
+
 export class AccountCustomer{
   constructor(
     public _id: any = null,
@@ -6,7 +9,8 @@ export class AccountCustomer{
     public Mail: string='',
     public password: string='',
     public role: string='',
-    public userid: number = 0
+    public userid: number = 0,
+  
   ){}
 }
   

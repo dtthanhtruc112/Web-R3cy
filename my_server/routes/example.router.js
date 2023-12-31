@@ -539,16 +539,7 @@ router.get('/customProducts', async (req, res) => {
   }
 });
 
-// Get customers information
-router.get('/customers', async (req, res) => {
-  try {
-    const customers = await User.find();
-    res.json(customers);
-  } catch (error) {
-    console.error('Error retrieving customers:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+
 
 // MANGE ACCOUNT
 // GET tất cả admin có role là 'admin'
