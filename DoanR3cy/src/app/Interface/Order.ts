@@ -16,30 +16,35 @@ export interface Address {
   district: string;
   addressDetail: string;
 }
+export interface ClientInfo {
+  clientname: string;
+  clientphone: string;
+  clientemail: string;
+}
 export interface Order {
   userid: number,
   channel: string,
   ordernumber: number;
   products: Product[];
   order_status: string;
-  ordereddate: string;
+  ordereddate: Date; // Sử dụng kiểu Date
   paymentmethod: string;
   paymentstatus: boolean;
   totalOrderValue?: number;
   // tổng giá sản phẩm, chưa có cộng trừ phụ phí
   shippingfee?: number;
   // phí vận chuyển
-  discount?: Number;
+  discount?: number;
   // khuyến mãi
-  totalAmount?: Number;
+  totalAmount?: number;
   // tổng đơn hàng
-  address: Address
+  address: Address,
   // địa chỉ đơn hàng
-
+  clientInfo: ClientInfo,
+  // thông tin người nhận
  orderNotes: String, 
   id: string;
-  phone: string;
-  totalPrice: string;
+  // totalPrice: string;
   rejectreason: string;
   // lí do từ chối
 

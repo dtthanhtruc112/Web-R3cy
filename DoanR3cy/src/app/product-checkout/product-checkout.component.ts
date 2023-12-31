@@ -119,61 +119,85 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductCheckoutComponent implements OnInit {
 
-  queryParamsData: any;
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private cartService: CartService,
-    private orderService: OrderService,
-    private authService: AuthService,
-  ) {
-    this.checkoutFormGroup = this.formBuilder.group({});
-  }
-
-  checkoutFormGroup: FormGroup;
+  checkoutFormGroup!: FormGroup;
+  cartItems: any[] = [];
   isSubmitted = false;
 
-  // cartItems: CartItem[] = [];
-  cartItems: any[] = [];
+
   orderTotal: number = 0;
   shippingFee: number = 0;
   discount: number = 0;
   totalAmount: number = 0;
 
-
-  userId: any;
-  products: product[] = [];
-
-  showOverlay: boolean = false;
-  showSuccessPopup: boolean = false;
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
-   
+    this.initializeForm();
+
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params['cartItems']) {
-        // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
         this.cartItems = JSON.parse(params['cartItems']);
         this.orderTotal = parseFloat(params['orderTotal']);
         this.shippingFee = parseFloat(params['shippingFee']);
         this.discount = parseFloat(params['discount']);
         this.totalAmount = parseFloat(params['totalAmount']);
-    
-        // Bây giờ bạn có thể sử dụng các giá trị này trong component của bạn
-        console.log('Cart Items:', this.cartItems);
-        console.log('Order Total:', this.orderTotal);
-        console.log('Shipping Fee:', this.shippingFee);
-        console.log('Discount:', this.discount);
-        console.log('Total Amount:', this.totalAmount);
       }
     });
-  }
-  
-  backtoCart() {
-    this.router.navigate(['/cart']);
+
+    this.loadCartItems();
   }
 
- 
+  initializeForm(): void {
+    this.checkoutFormGroup = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      country:  [''],
+      city: ['', Validators.required],
+      zip: [''],
+      street: ['', Validators.required],
+      district: ['', Validators.required],
+      orderNotes: [''],
+      clientInfo: this.formBuilder.group({
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        phone: ['', Validators.required],
+      }),
+      address: this.formBuilder.group({
+        country: [''],
+        city: ['', Validators.required],
+        zip: [''],
+        district: ['', Validators.required],
+        street: ['', Validators.required],
+      }),
+      products: [],
+    });
+  }
 
- 
+  loadCartItems(): void {
+    if (this.checkoutFormGroup) {
+      const productsControl = this.checkoutFormGroup.get('products');
+      if (productsControl) {
+        productsControl.setValue(this.cartItems);
+      }
+    }
+  }
+
+  backtoCart(): void {
+    // Thêm xử lý khi người dùng quay lại giỏ hàng
+  }
+
+  placeOrder(): void {
+    // Thêm xử lý khi người dùng đặt hàng
+  }
+
+  get checkoutForm() {
+        return this.checkoutFormGroup?.controls;
+      }
 }
+ 
+
+ 

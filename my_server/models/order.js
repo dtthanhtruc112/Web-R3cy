@@ -34,7 +34,11 @@ const Order = new Schema({
         img1:String,
     }],
     rejectreason: { type: String, default: '' },
-    address: String
+    clientInfo: {
+        clientname: String,
+        clientphone: String,
+        clientemail: String,
+    }
 });
 
 
