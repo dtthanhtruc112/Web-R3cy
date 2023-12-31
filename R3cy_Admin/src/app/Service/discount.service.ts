@@ -38,4 +38,18 @@ export class DiscountService {
       })
     );
   }
+
+  updateDiscount(updatedDiscount: any): Observable<any> {
+    const url = `${this.apiUrl}/${updatedDiscount._id}`;
+    return this._http.patch(url, updatedDiscount);
+  }
+
+  deleteDiscount(discountId: string): Observable<any> {
+    const url = `${this.apiUrl}/${discountId}`;
+    return this._http.delete(url);
+  }
+
+  addDiscount(discount: any): Observable<any> {
+    return this._http.post(`${this.apiUrl}/discount`, discount);
+  }
 }

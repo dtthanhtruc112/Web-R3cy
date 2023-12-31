@@ -1,11 +1,11 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductService } from '../Service/product.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { product } from '../Interface/product';
-import { NavigationExtras } from '@angular/router'
+// import { NavigationExtras } from '@angular/router'
 import { Subject, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-sanphamchitiet',
@@ -28,14 +28,14 @@ export class AdminSanphamchitietComponent {
 
   ngOnInit(): void {
     this._router.paramMap.pipe(
-      map(params => this.selectedCode = String(params.get('id'))),
-      switchMap(id => this.productService.getProductById(id).pipe(
-        switchMap(pro => this.productService.getData().pipe(
+      map((params: { get: (arg0: string) => any; }) => this.selectedCode = String(params.get('id'))),
+      switchMap((id: any) => this.productService.getProductById(id).pipe(
+        switchMap((pro: any) => this.productService.getData().pipe(
         ))
         // ))
       )))
 
-      .subscribe(data => {
+      .subscribe((data: product[]) => {
         this.pro = data;
         console.log(this.pro);
         this.productt = this.pro.find(product => product._id === this.selectedCode);
@@ -59,7 +59,7 @@ export class AdminSanphamchitietComponent {
   
       // Gửi dữ liệu cập nhật lên server
       this.productService.updateProduct(updatedProduct)
-        .subscribe(response => {
+        .subscribe((response: any) => {
           console.log(response); // In kết quả từ server sau khi cập nhật
         });
         alert("Đã sửa thông tin sản phẩm thành công!")
@@ -68,11 +68,11 @@ export class AdminSanphamchitietComponent {
     deleteProduct(productId: string): void {
       this.productService.deleteProduct(productId)
         .subscribe(
-          response => {
+          (          response: any) => {
             console.log('Product deleted successfully:', response);
             // Thực hiện các hành động cần thiết sau khi xóa sản phẩm
           },
-          error => {
+          (          error: any) => {
             console.error('Error deleting product:', error);
             // Xử lý lỗi nếu cần thiết
           }

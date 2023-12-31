@@ -63,6 +63,31 @@ router.get('/discount/da-het-han', cors(), (req, res) =>
     .catch(error => { res.status(500).json({ err: error.message }) }
     ));
 
+//Router sửa thông tin mã giảm giá
+router.patch("/:id", async(req, res) =>{
+  try{
+      await Discount.updateOne({ _id: req.params.id}, {
+          $set: {
+            code: req.body.code, 
+            title: req.body.title,
+            description: req.body.description,
+            status: req.body.status,
+            activate_date: req.body.activate_date,
+            expired_date: req.body.expired_date,
+            valuecode: req.body.valuecode
+          }
+      })
+      res.send("Success!");
+  }catch(error){
+      res.json({error: error.mesage})
+  }
+})
+
+//Router thêm sản phẩm
+router.post("/product",cors(),async (req,res)=>{
+  // Log dữ liệu nhận được từ req.body
+  console.log('Received data:', req.body)})
+
 
 // Router lấy thông tin sản phẩm
 router.get('/product', cors(), (req, res) =>
@@ -142,6 +167,26 @@ router.patch("/:id", async(req, res) =>{
       res.json({error: error.mesage})
   }
 })
+
+//Router xóa sản phẩm
+router.delete('/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    // Kiểm tra xem account có tồn tại không
+    const existingProduct = await Product.findById(productId);
+    if (!existingProduct) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Xoá tài khoản admin từ database
+    await existingProduct.remove();
+
+    res.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //Router thêm sản phẩm
 router.post("/product",cors(),async (req,res)=>{
