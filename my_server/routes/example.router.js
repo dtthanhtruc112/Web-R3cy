@@ -135,7 +135,7 @@ router.post("/product",cors(),async (req,res)=>{
     res.status(500).send('Internal Server Error');
   }})
 
-
+// Router lấy tất cả đơn hàng
 router.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find().populate({ path: 'products', model: 'Product' });
