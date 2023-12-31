@@ -59,13 +59,22 @@ export class ProductCheckoutComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params['cartItems']) {
         this.cartItems = JSON.parse(params['cartItems']);
-        console.log('cartItems', this.cartItems)
+        
         this.orderTotal = parseFloat(params['orderTotal']);
         this.shippingFee = parseFloat(params['shippingFee']);
         this.discount = parseFloat(params['discount']);
         this.totalAmount = parseFloat(params['totalAmount']);
         this.userId = parseFloat(params['userId']);
         this.voucherCode = params['voucherCode']
+
+
+        console.log('cartItems', this.cartItems)
+        console.log('orderTotal', this.orderTotal)
+        console.log('shippingFee', this.shippingFee)
+        console.log('totalAmount', this.totalAmount)
+        console.log('userId', this.userId)
+        console.log('voucherCode', this.voucherCode)
+        
       }
     });
     
@@ -124,6 +133,10 @@ export class ProductCheckoutComponent implements OnInit {
       rejectreason: '' // Lí do từ chối đơn hàng
     };
     console.log('Order:', order);
+    console.log('products: this.cartItems', order.products)
+        console.log('totalOrderValue: this.orderTotal', order.totalOrderValue)
+        console.log('discount: this.discount,', this.discount)
+        console.log('totalAmount: this.totalAmount,',  this.totalAmount)
 
    // Gọi phương thức createOrder từ OrderService
    this.orderService.createOrder(this.userId, order).subscribe(
