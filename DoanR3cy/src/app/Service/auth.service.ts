@@ -61,6 +61,7 @@ export class AuthService {
 
   logout() {
     sessionStorage.removeItem('CurrentUser');
+    // sessionStorage.removeItem('userid');
   }
 
   // setCurrentUser(user: any) {
