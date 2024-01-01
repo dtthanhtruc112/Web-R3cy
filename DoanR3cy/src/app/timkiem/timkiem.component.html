@@ -17,7 +17,7 @@
         <div
           class="product-show"
           *ngFor="let p of (searchResults.length > 0 ? searchResults : product)"
-          [routerLink]="['/product', p.id]"
+          [routerLink]="['/product', p._id]"
           [ngClass]="{ highlighted: p.highlight }"
         >
           <img [src]="p.img1" />

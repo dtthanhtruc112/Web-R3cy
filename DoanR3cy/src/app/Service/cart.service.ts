@@ -36,26 +36,23 @@ export class CartService {
 
     return this.http.put(url, payload);
   }
-
-
   // Phương thức để xóa sản phẩm khỏi giỏ hàng
   removeCartItem(userId: number, itemId: number): Observable<any> {
     const url = `${this.apiUrl}/cart/remove/${userId}/${itemId}`;
     return this.http.delete(url);
   }
+  // Hàm thêm sản phẩm vào giỏ hàng
+  addToCart(userId: number, productId: number, quantity: number): Observable<any> {
+    const url = `${this.apiUrl}/cart/add`;
 
-// Hàm thêm sản phẩm vào giỏ hàng
-addToCart(userId: number, productId: number, quantity: number): Observable<any> {
-  const url = `${this.apiUrl}/cart/add`;
+    const payload = {
+      userid: userId,
+      productId: productId,
+      quantity: quantity,
+    };
 
-  const payload = {
-    userid: userId,
-    productId: productId,
-    quantity: quantity,
-  };
-
-  return this.http.post(url, payload);
-}
+    return this.http.post(url, payload);
+  }
   
 
 

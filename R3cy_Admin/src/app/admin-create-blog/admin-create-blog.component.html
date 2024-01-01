@@ -1,5 +1,5 @@
 <div class="containerAll">
-    <!-- <h4>Quay lại trang Blog</h4> -->
+  
     <h4>{{ isEdit ? 'Chỉnh sửa bài đăng' : 'Tạo bài đăng mới' }}</h4>
     <div>
         <div class="containerContent">
@@ -8,13 +8,10 @@
                 <br>
                 <input type="text" placeholder="Nhập tác giả" class="titleBlog" [(ngModel)]="authorInputValue" required>
                 <br>
-    
                 <!-- Thay thế textarea bằng AngularEditor -->
                 <angular-editor [(ngModel)]="blogContent" [config]="editorConfig"></angular-editor>
-                 <!-- Hiển thị thông báo nếu blogContent không có giá trị -->
                 <div *ngIf="!blogContent" class="error-message">Nội dung bài viết là bắt buộc.</div>
-    
-                
+  
             </div>
             <div class="Right">
                 <img class="circle_img" #selectedImage [src]="imageSrc" alt="">
@@ -27,9 +24,5 @@
             <button (click)="createBlog()" class="btn">Đăng bài</button>
          </div>
     </div>
-     
-     <div>
-         {{blogContent}}
-     </div>
  </div>
  
