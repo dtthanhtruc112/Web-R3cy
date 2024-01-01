@@ -1,23 +1,22 @@
 <div class="containerAll">
     <!-- <h4>Quay lại trang Blog</h4> -->
-    <h4>{{ isEdit ? 'Chỉnh sửa bài đăng' : 'Tạo bài đăng mới' }}</h4>
+    <h4 class="h4">{{ isEdit ? 'Chỉnh sửa bài đăng' : 'Tạo bài đăng mới' }}</h4>
     <div>
         <div class="containerContent">
             <div class="Left">
-                <input type="text" placeholder="Nhập tiêu đề" class="titleBlog" [(ngModel)]="titleInputValue">
+                <input type="text" placeholder="Nhập tiêu đề" class="titleBlog" [(ngModel)]="titleInputValue" required>
                 <br>
-                <input type="text" placeholder="Nhập tác giả" class="titleBlog" [(ngModel)]="authorInputValue">
+                <input type="text" placeholder="Nhập tác giả" class="titleBlog" [(ngModel)]="authorInputValue" required>
                 <br>
-    
                 <!-- Thay thế textarea bằng AngularEditor -->
                 <angular-editor [(ngModel)]="blogContent" [config]="editorConfig"></angular-editor>
-    
-                
+                <div *ngIf="!blogContent" class="error-message">Nội dung bài viết là bắt buộc.</div>
+  
             </div>
             <div class="Right">
                 <img class="circle_img" #selectedImage [src]="imageSrc" alt="">
                 <br>
-                <input type="file" #myfile name="myfile" accept="image/*" (change)="displayImage($event)">
+                <input type="file" #myfile name="myfile" accept="image/*" (change)="displayImage($event)" >
    
             </div>
         </div>
@@ -25,9 +24,5 @@
             <button (click)="createBlog()" class="btn">Đăng bài</button>
          </div>
     </div>
-     
-     <div>
-         {{blogContent}}
-     </div>
  </div>
  

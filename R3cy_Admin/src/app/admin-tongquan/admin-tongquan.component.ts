@@ -35,11 +35,9 @@ export class AdminTongquanComponent {
   onDateRangeChange(): void {
     this.fetchDataAndUpdateUI();
   }
-
   onChannelChange(): void {
     this.fetchDataAndUpdateUI();
   }
-
   fetchDataAndUpdateUI(): void {
     this.orderService
         .fetchData(this.dateRange, this.channel)

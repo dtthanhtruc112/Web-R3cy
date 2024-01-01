@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router,Params } from '@angular/router';
-import { CartService } from '../Service/cart.service';
+// import { CartService } from '../Service/cart.service';
 import { OrderService } from '../Service/order.service';
-import { product } from '../Interface/product';
-import { AuthService } from '../Service/auth.service';
-import { Cart } from '../models/cart';
-import { CartItem } from '../models/cart';
+// import { product } from '../Interface/product';
+// import { AuthService } from '../Service/auth.service';
+// import { Cart } from '../models/cart';
+// import { CartItem } from '../models/cart';
 import { ActivatedRoute } from '@angular/router';
 import { Order, ClientInfo, Address } from '../Interface/Order';
+import { DiscountService } from '../Service/discount.service';
+import { AccountCustomer } from '../Interface/AccountCustomer';
+import { AccountcustomerService } from '../Service/accountcustomer.service';
 
 
 @Component({
@@ -27,8 +30,8 @@ export class ProductCheckoutComponent implements OnInit {
   discount = 0;
   totalAmount = 0;
   userId = 0;
-  selectedPaymentMethod: string = '';
-
+  voucherCode: string = '';
+  selectedPaymentMethod: string = 'Bank';
   selectPayment(method: string) {
     this.selectedPaymentMethod = method;
   }
@@ -37,7 +40,9 @@ export class ProductCheckoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private discountService: DiscountService,
+    private accountcustomerSerive:  AccountcustomerService , 
   ) {
     this.checkoutFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
@@ -56,26 +61,64 @@ export class ProductCheckoutComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (params['cartItems']) {
         this.cartItems = JSON.parse(params['cartItems']);
-        console.log('cartItems', this.cartItems)
+        
         this.orderTotal = parseFloat(params['orderTotal']);
         this.shippingFee = parseFloat(params['shippingFee']);
         this.discount = parseFloat(params['discount']);
         this.totalAmount = parseFloat(params['totalAmount']);
         this.userId = parseFloat(params['userId']);
+        this.voucherCode = params['voucherCode']
+
+        // Load thông tin tài khoản
+        this.loadAccountData(this.userId);
+
+        console.log('cartItems', this.cartItems)
+        console.log('orderTotal', this.orderTotal)
+        console.log('shippingFee', this.shippingFee)
+        console.log('totalAmount', this.totalAmount)
+        console.log('userId', this.userId)
+        console.log('voucherCode', this.voucherCode)
+
+
+        
       }
     });
     
   }
 
+  // Trong hàm loadAccountData
+loadAccountData(userId: number): void {
+  this.accountcustomerSerive.getAccount(userId).subscribe(
+    (account: any) => {
+      if (account && account.account) {
+        this.checkoutFormGroup.patchValue({
+          name: account.account.Name,
+          email: account.account.Mail,
+          phone: account.account.phonenumber,
+          country: account.account.addresses[0].country,
+          zip: account.account.addresses[0].postcodeZip,
+          city: account.account.addresses[0].province,
+          district: account.account.addresses[0].district,
+          street: account.account.addresses[0].addressDetail,
+        });
+      } else {
+        console.error('Account not found');
+      }
+    },
+    (error) => {
+      console.error('Error retrieving account information:', error);
+    }
+  );
+}
+
+
   backtoCart(): void {
     this.router.navigate(['/cart']);
   }
 
-
-
-  
-
   placeOrder(): void {
+    console.log('Request body:', this.checkoutFormGroup.getRawValue());
+
     this.isSubmitted = true;
     if (this.checkoutFormGroup.invalid) {
       return;
@@ -101,9 +144,9 @@ export class ProductCheckoutComponent implements OnInit {
     console.log('Address:', address);
 
     const order: Order = {
-      userid: this.userId, // Điền dữ liệu user ID tương ứng
+      userid: this.userId, 
       channel: 'Website',
-      ordernumber: Number(), // Điền số đơn hàng tương ứng
+      ordernumber: Number(), 
       products: this.cartItems,
       order_status: 'Chờ xử lí', // Trạng thái đơn hàng mặc định
       ordereddate: new Date(),
@@ -113,30 +156,35 @@ export class ProductCheckoutComponent implements OnInit {
       shippingfee: this.shippingFee,
       discount: this.discount,
       totalAmount: this.totalAmount,
-      address: address,
+      adress: address,
       clientInfo: clientInfo,
-      orderNotes: new Date(), // Ghi chú với kiểu dữ liệu Date
-      id: String(), // Trường này cần phải điền dữ liệu đơn hàng tương ứng
+      orderNote: 'Không có ghi chú', // 
+      id: String(), // 
       rejectreason: '' // Lí do từ chối đơn hàng
     };
     console.log('Order:', order);
+    console.log('products: this.cartItems', order.products)
+        console.log('totalOrderValue: this.orderTotal', order.totalOrderValue)
+        console.log('discount: this.discount,', this.discount)
+        console.log('totalAmount: this.totalAmount,',  this.totalAmount)
 
-    // Gọi service để lưu đơn hàng
-  //   this.orderService.createOrder(this.userId, order).subscribe((response) => {
-  //     // Xử lý khi đơn hàng được lưu thành công
-  //     console.log('Order placed:', response);
-  //     // Hiển thị thông báo hoặc chuyển hướng tùy thuộc vào kịch bản của bạn
-  //   });
-  // }
    // Gọi phương thức createOrder từ OrderService
    this.orderService.createOrder(this.userId, order).subscribe(
     (createdOrder) => {
       console.log('Đơn hàng đã được tạo:', createdOrder);
-      // Thêm xử lý khi đơn hàng đã được tạo
+      this.discountService.updateDiscountUserIds(this.voucherCode, this.userId).subscribe(
+        (updatedDiscount) => {
+          console.log('Discount updated:', updatedDiscount);
+        },
+        (error) => {
+          console.error('Lỗi khi cập nhật Discount:', error);
+        }
+      );
+      alert('Đơn hàng đã được tạo thành công')
+      this.router.navigate(['/main-page']);
     },
     (error) => {
       console.error('Lỗi khi tạo đơn hàng:', error);
-      // Thêm xử lý khi có lỗi
     }
   );
   }

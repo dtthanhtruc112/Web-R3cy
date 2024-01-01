@@ -23,6 +23,9 @@ export class TrangtaikhoanComponent implements OnInit {
   selectedbar: string = 'hoso_content';
   order: any;
   newAddress: any = { province: '', district: '', addressDetail: '' };
+  isLoggedIn = false;
+  currentUser: any;
+  [x: string]: any;
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
@@ -36,8 +39,10 @@ export class TrangtaikhoanComponent implements OnInit {
     private authService: AuthService, 
     private discountService: DiscountService,
     private accountService: AccountcustomerService,
-  ) { }
+  ) { this.isLoggedIn = this.authService.isLoggedIn();
+    this.currentUser = this.authService.getCurrentUser();}
 
+  Name:any
   ngOnInit(): void {
     this.loadUserInfo(this.userIdToDisplay);
     this.loadOrderInfo();
@@ -84,6 +89,21 @@ export class TrangtaikhoanComponent implements OnInit {
         // Xử lý lỗi nếu cần thiết
       }
     );
+    const user = JSON.parse(sessionStorage.getItem('CurrentUser')!);
+      if (user) {
+        this.Name = user.Name;
+      }
+  }
+
+  logOut() {
+    const confirmed = confirm('Bạn có muốn đăng xuất không?');
+    if(confirmed) {
+      sessionStorage.removeItem('CurrentUser');
+      sessionStorage.removeItem('userid');
+      this.router.navigate(['/main-page']);
+      // window.location.reload();
+    }
+
   }
 
   // Chỉnh sửa thông tin tài khoản (NEW)
@@ -105,6 +125,7 @@ export class TrangtaikhoanComponent implements OnInit {
         this.account = result;
         // Reset editing state
         this.isEditing = false;
+        alert('Cập nhật thông tin tài khoản thành công!')
       },
       (error) => {
         console.error(error);

@@ -93,19 +93,15 @@ async function fetchData(channel, startDate, endDate) {
   console.log('startDate:', startDate);
   console.log('endDate:', endDate);
   console.log('dateQuery:', dateQuery);
-  
 
   const orders = await Order.find({ channel, ...dateQuery }).populate({ path: 'products', model: 'Product' });
   // console.log('Orders with populated products:', orders);
-
- 
 
   // Trả về dữ liệu đơn hàng dưới dạng JSON
   return {
       totalAmount: calculateTotalAmount(orders),
       totalOrders: orders.length,
       products: await getProductDetailsForBestSellingProduct(orders),
-      // Thêm các thông tin khác cần thiết
   };
 }
 
@@ -143,7 +139,7 @@ function calculateTotalQuantitySoldAndBestSellingProduct(orders) {
 
   const bestSellingProduct = findBestSellingProduct(allProducts);
 
-  console.log('bestSellingProduct:', bestSellingProduct); // Thêm console log ở đây
+  console.log('bestSellingProduct:', bestSellingProduct); 
 
   return {
       totalQuantitySold,
@@ -414,6 +410,7 @@ router.post('/cart/add', async (req, res) => {
         category2: product.category2,
         name: product.name,
         price: product.price,
+        img1: product.img1,
         quantity: quantity,
         subtotal: product.price * quantity,
       });
@@ -465,78 +462,22 @@ router.get('/account/:userid', async (req, res) => {
 });
 
 
+// Hàm kiểm tra sự khác biệt giữa hai địa chỉ
+const isDifferentAddress = (address1, address2) => {
+  return (
+    address1.country !== address2.country ||
+    address1.province !== address2.province ||
+    address1.district !== address2.district ||
+    address1.addressDetail !== address2.addressDetail
+  );
+};
 
-// POST: Tạo đơn hàng và xóa giỏ hàng
-// router.post("/orders/user/:userid", async (req, res) => {
-//   try {
-//     const { userid } = req.params;
-
-//     // Lấy thông tin giỏ hàng của người dùng
-//     const cart = await Cart.findOne({ userid: userid });
-
-//     // Kiểm tra xem giỏ hàng có tồn tại không
-//     if (!cart) {
-//       return res.status(404).json({ message: 'Cart not found' });
-//     }
-
-//     // Tạo đối tượng Order mới từ dữ liệu yêu cầu
-//     const newOrder = new Order({
-//       userid: req.body.userid,
-//       channel: req.body.channel || 'Website',
-//       order_status: req.body.order_status || 'Chờ xử lí',
-//       ordereddate: req.body.ordereddate || new Date(),
-//       paymentmethod: req.body.paymentmethod || '', 
-//       paymentstatus: req.body.paymentstatus || false,
-//       shipfee: req.body.shipfee || 0,
-//       ordernote: req.body.ordernote || '',
-//       address: req.body.address || {}, // Đảm bảo rằng address được gửi trong request body
-     
-//       rejectreason: '',
-//       clientInfo: req.body.clientInfo || {}, // Đảm bảo rằng clientInfo được gửi trong request body
-//     });
-
-//     // Lấy thông tin chi tiết sản phẩm từ DB Product
-//     const productIds = req.body.cartItems ? req.body.cartItems.map(item => item.id) : [];
-//     console.log(productIds); 
-//     const products = await Product.find({ id: { $in: productIds.map(id => parseInt(id)) } });
-
-//     // Duyệt qua danh sách sản phẩm từ DB và thêm vào đơn hàng
-//     products.forEach(product => {
-//       const cartItem = req.body.cartItems.find(item => item.id === product.id);
-
-//       if (cartItem) {
-//         const orderProduct = {
-//           id: product.id,
-//           category1: product.category1,
-//           category2: product.category2,
-//           name: product.name,
-//           price: product.price,
-//           img1: product.img1,
-//           quantity: cartItem.quantity,
-//         };
-
-//         newOrder.products.push(orderProduct);
-//       }
-//     });
-
-//     // Lưu đối tượng Order vào cơ sở dữ liệu
-//     const createdOrder = await Order.create(newOrder);
-
-//     // Xóa giỏ hàng của người dùng
-//     await Cart.deleteOne({ userid: userid });
-
-//     // Trả về đơn hàng đã được tạo mới
-//     res.json(createdOrder);
-//   } catch (error) {
-//     console.error("Error tạo đơn hàng:", error);
-//     res.status(500).json({ err: error.message });
-//   }
-// });
-
-// Các phần còn lại không thay đổi
-
-
-
+// Hàm kiểm tra xem một địa chỉ đã tồn tại trong mảng addresses chưa
+const isDuplicateAddress = (newAddress, existingAddresses) => {
+  return existingAddresses.some(existingAddress =>
+    !isDifferentAddress(existingAddress, newAddress)
+  );
+};
 // POST: Tạo đơn hàng từ giỏ hàng và xóa giỏ hàng sau khi đơn hàng thành công
 router.post('/orders/user/:userid', async (req, res) => {
   try {
@@ -562,9 +503,24 @@ router.post('/orders/user/:userid', async (req, res) => {
       ordereddate: req.body.ordereddate || new Date(),
       paymentmethod: req.body.paymentmethod || '', 
       paymentstatus: req.body.paymentstatus || false,
-      shipfee: req.body.shipfee || 0,
+      shippingfee: req.body.shippingfee || 0,
+      totalOrderValue: req.body.totalOrderValue || 0,
+      discount: req.body.discount || 0,
+      totalAmount: req.body.totalAmount || 0,
       ordernote: req.body.ordernote || '',
-      address: req.body.address || {}, // Đảm bảo rằng address được gửi trong request body
+      adress: req.body.adress ? {
+        country: req.body.adress.country || 'Việt Nam',
+        postcodeZip: req.body.adress.postcodeZip || '',
+        province: req.body.adress.province || '',
+        district: req.body.adress.district || '',
+        addressDetail: req.body.adress.addressDetail || '',
+      } : {
+        country: 'Việt Nam',
+        postcodeZip: '',
+        province: '',
+        district: '',
+        addressDetail: '',
+      },
       rejectreason: '',
       clientInfo: req.body.clientInfo || {}, // Đảm bảo rằng clientInfo được gửi trong request body
 
@@ -582,13 +538,42 @@ router.post('/orders/user/:userid', async (req, res) => {
 
     // Tạo đối tượng Order từ dữ liệu đã tạo
     const newOrder = new Order(orderData);
-
     // Lưu đơn hàng vào cơ sở dữ liệu
     await newOrder.save();
 
+      // Cập nhật số lượng tồn kho của sản phẩm
+      for (const item of cart.cartItems) {
+        const productId = item.id; // id do admin thêm vào (kiểu số)
+        const product = await Product.findOne({ id: productId }); // Tìm theo trường id
+        if (product) {
+          // Giảm đi số lượng sản phẩm từ số lượng tồn kho hiện tại
+          product.quantity -= item.quantity;
+          product.sold_quantity += item.quantity; // Cập nhật số lượng đã bán
+          await product.save();
+        }
+      }
+
+    // Lưu dữ liệu địa chỉ khách hàng vào AccountCustomer
+    const accountCustomer = await AccountCustomer.findOne({ userid: parseInt(userid) });
+
+    if (accountCustomer) {
+      const isAddressDuplicate = accountCustomer.addresses.some(existingAddress =>
+        !isDifferentAddress(existingAddress, orderData.adress)
+      );
+
+      if (!isAddressDuplicate) {
+        accountCustomer.addresses.push(orderData.adress);
+        await accountCustomer.save();
+      } else {
+        console.log('Duplicate address found. Not saving.');
+      }
+    } else {
+      console.error('User not found while trying to save order address.');
+    }
+
     // Xóa giỏ hàng sau khi tạo đơn hàng thành công
     await Cart.deleteOne({ userid: parseInt(userid) });
-
+    
     res.status(200).json({
       message: 'Order created successfully',
       order: newOrder,

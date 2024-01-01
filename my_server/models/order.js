@@ -3,6 +3,14 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const Schema = mongoose.Schema;
 
+const Adress = new Schema({
+    country: { type: String, default: 'Việt Nam' },
+    postcodeZip: { type: String, default: '' },
+    province: { type: String, default: '' },
+    district: { type: String, default: '' },
+    addressDetail: { type: String, default: '' }
+})
+
 const Order = new Schema({
     userid: Number,
     channel: { type: String, default: 'Website' },
@@ -16,13 +24,7 @@ const Order = new Schema({
     discount: Number,
     totalAmount: Number,
     ordernote: String,
-    adress: {
-        country: { type: String, default: 'Việt Nam' },
-        postcodeZip: { type: String, default: '' },
-        province: { type: String },
-        district: { type: String },
-        addressDetail: { type: String }
-    },
+    adress: Adress,
     products: [{
         id: Number,
         category1: String,

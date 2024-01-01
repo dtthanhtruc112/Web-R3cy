@@ -42,7 +42,7 @@ export class AdminSanphamComponent implements OnInit{
 
     // Gửi dữ liệu cập nhật lên server
     this.productService.updateProduct(updatedProduct)
-      .subscribe(response => {
+      .subscribe((response: any) => {
         console.log(response); // In kết quả từ server sau khi cập nhật
       });
       alert("Đã sửa thông tin về số lượng sản phẩm thành công!")

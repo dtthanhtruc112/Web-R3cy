@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+<div class="fullpage">
+    <h3 class="h3">Thêm mã giảm giá</h3>
+    <div class="flexcontainer">
+        <!-- <div class="leftcolumn">
+            <img [src]="productt.img1">
+        </div> -->
+    
+        <div class="rightcolumn">
+            <label for="name">Code của mã giảm giá:</label>
+            <input class="name" [(ngModel)]="discount.code"> <br>
+            <p style="display: inline-block;">Tiêu đề mã:&nbsp;</p>
+            <input type="text" style="display: inline-block;" [(ngModel)]="discount.title">
+            <br>
+            <p style="display: inline-block;">Mô tả mã:&nbsp;</p>
+            <input type="text" style="display: inline-block;" [(ngModel)]="discount.description">
+            <br>
+            <p style="display: inline-block;">Trạng thái mã:&nbsp;</p>
+            <input type="text" style="display: inline-block;" [(ngModel)]="discount.status">
+            <br>
+            <p style="display: inline-block;">Ngày bắt đầu áp dụng:&nbsp;</p>
+            <input type="text" style="display: inline-block;" [(ngModel)]="discount.activate_date">
+            <br>
+            <p style="display: inline-block;">Ngày hết hạn:&nbsp;</p>
+            <input type="text" style="display: inline-block;" [(ngModel)]="discount.expired_date">
+            <br>
+            <p style="display: inline-block;">Số mã có hiệu lực:&nbsp;</p>
+            <input type="text" style="display: inline-block;" [(ngModel)]="discount.valuecode">
+            <br>
+            <p style="display: inline-block;">Giá trị mã:&nbsp;</p>
+            <input type="text" style="display: inline-block;" [(ngModel)]="discount.__v">
+            <br>
+            
+    <button type="button" (click)="saveDiscount()">Thêm mã giảm giá</button>  
+</div>
+</div>
+</div>

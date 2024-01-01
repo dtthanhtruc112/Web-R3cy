@@ -53,9 +53,11 @@ tr {
 
 .containerLeft,
 .containerRight {
-    flex: 1; /* Sử dụng flex để tự động chiếm phần còn lại */
+    /* flex: 1;  */
+    /* Sử dụng flex để tự động chiếm phần còn lại */
     border: 1px solid #7B7F80;
     border-radius: 5px;
+    width: 70vw;
 }
 
 .containerLeft {
@@ -67,12 +69,12 @@ tr {
 }
 
 .containerBottom {
-    width: 100%;
+    width: 70vw;
     border: 1px solid #7B7F80;
     border-radius: 5px;
     margin-top: 20px;
     padding: 10px;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 .dongtittle {
@@ -109,7 +111,7 @@ tr {
         margin-top: 10px;
       }
       .containerAll{
-        margin-top: 130px;
+        /* margin-top: 130px; */
         margin-left: 20px;
       }
 }

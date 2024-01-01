@@ -1,12 +1,15 @@
 
  div {
     font-family: Inter-Regular;
+    /* width: 80vw; */
+    /* margin: 0 auto; */
 }
 
 .containerAll H2 {
     margin: 20PX 0PX;
     font-weight: bold;
-    color:var(--color-blue)
+    color:var(--color-blue);
+    cursor: pointer;
 }
 
 * {
@@ -163,7 +166,7 @@
 
 .containerimg {
     display: flex;
-    margin: 0 30px;
+    margin: 0 auto;
     width: 100%;
     flex-wrap: wrap; /* Added for responsiveness */
     text-align: center;
@@ -174,7 +177,7 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    margin: 0px 20px;
+    margin: 0px auto;
 }
 
 .imgRecycle {
@@ -187,7 +190,7 @@
 .blogs {
     display: flex;
     flex-wrap: wrap;
-    margin: 0px;
+    margin: 0px auto;
 }
 .b1log{
     margin: 0px 16px;

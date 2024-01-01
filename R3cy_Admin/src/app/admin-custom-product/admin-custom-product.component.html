@@ -2,46 +2,46 @@
   <!-- admin-custom-product.component.html -->
 
 <div class="header">
-  <div class="h3 font-bold">Quản lý sản phẩm custom</div>
+  <h3 class="h3 font-bold">Quản lý sản phẩm custom</h3>
 </div>
 
-<div class="container">
-  <div class="sub-header">
+  <div class="container">
+    <div class="sub-header">
 
-    <div class="sort font-bold">
-      <label for="sortInput"><p>Hiển thị |</p><input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable()" class="font-bold"></label>
+      <div class="sort font-bold">
+        <label for="sortInput"><p>Hiển thị |</p><input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable()" class="font-bold"></label>
+      </div>
+
+      <div class="search">
+        <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchKeyword" (keyup.enter)="handleSearch()">
+      </div>
     </div>
 
-    <div class="search">
-      <input type="text" placeholder="Tìm kiếm" [(ngModel)]="searchKeyword" (keyup.enter)="handleSearch()">
+    <div class="content">
+      <table *ngIf="displayedData.length > 0">
+        <thead>
+          <tr>
+            <th *ngFor="let columnName of customColumnNames">{{ columnName }}</th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <tr *ngFor="let item of displayedData">
+            <!-- <td *ngFor="let key of getObjectKeys(item)">
+              {{ getItemValue(item, key) }}
+            </td> -->
+            <td>{{item.Name}}</td>
+            <td>{{item.Mail}}</td>
+            <td>{{item.phonenumber}}</td>
+            <td>{{item.pname}}</td>
+            <td>{{item.pdes}}</td>
+            <td>
+              <img src="{{item.pfile}}" width="100px">
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <div class="content">
-    <table *ngIf="displayedData.length > 0">
-      <thead>
-        <tr>
-          <th *ngFor="let columnName of customColumnNames">{{ columnName }}</th>
-        </tr>
-      </thead>
-  
-      <tbody>
-        <tr *ngFor="let item of displayedData">
-          <!-- <td *ngFor="let key of getObjectKeys(item)">
-            {{ getItemValue(item, key) }}
-          </td> -->
-          <td>{{item.Name}}</td>
-          <td>{{item.Mail}}</td>
-          <td>{{item.phonenumber}}</td>
-          <td>{{item.pname}}</td>
-          <td>{{item.pdes}}</td>
-          <td>
-            <img src="{{item.pfile}}" width="100px">
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 
 </div>

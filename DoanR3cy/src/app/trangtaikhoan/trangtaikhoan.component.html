@@ -14,7 +14,7 @@
                 <p class="p" (click)="showContent('voucher_content')">Kho voucher</p>
                 <h4 class="h4" (click)="showContent('donhang_content')">Quản lý đơn hàng</h4>
                 <h4 class="h4" (click)="showContent('danhgia_content')">Đánh giá đơn hàng</h4>
-                <h4 class="h4">Đăng xuất</h4>
+                <h4 class="h4" (click)="logOut()">Đăng xuất</h4>
             </div>
         </div>
 
@@ -36,16 +36,16 @@
                                         <strong class="hoso_item_label p">Họ và tên:</strong> {{ account.Name }}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Số điện thoại:</strong> {{ account.phonenumber }}
+                                        <strong class="hoso_item_label p">Số điện thoại: </strong> {{ account.phonenumber }}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Email:</strong> {{ account.Mail }}
+                                        <strong class="hoso_item_label p">Email: </strong> {{ account.Mail }}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Giới tính:</strong> {{ account.gender || 'Chưa có thông tin'}}
+                                        <strong class="hoso_item_label p">Giới tính: </strong> {{ account.gender || 'Chưa có thông tin'}}
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Ngày sinh:</strong> {{ account.dob || 'Chưa có thông tin'}}
+                                        <strong class="hoso_item_label p">Ngày sinh: </strong> {{ account.dob || 'Chưa có thông tin'}}
                                     </div>
                                     <!-- <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Avatar:</strong> {{ account.avatar || 'Chưa có thông tin'}}
@@ -69,13 +69,13 @@
                                         <strong class="hoso_item_label p">Họ và tên:</strong> <input type="text" [(ngModel)]="editedAccount.Name" />
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Số điện thoại:</strong> <input type="text" [(ngModel)]="editedAccount.phonenumber" />
+                                        <strong class="hoso_item_label p">Số điện thoại: </strong> <input type="text" [(ngModel)]="editedAccount.phonenumber" />
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Email:</strong> <input type="text" [(ngModel)]="editedAccount.Mail" />
+                                        <strong class="hoso_item_label p">Email: </strong> <input type="text" [(ngModel)]="editedAccount.Mail" />
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Giới tính:</strong>
+                                        <strong class="hoso_item_label p">Giới tính: </strong>
                                         <label class="hoso_item_label p">
                                             <input type="radio" [(ngModel)]="editedAccount.gender" value="Nam" />
                                             Nam
@@ -86,7 +86,7 @@
                                         </label>
                                     </div>
                                     <div class="hoso_item_row">
-                                        <strong class="hoso_item_label p">Ngày sinh:</strong> <input type="text" [(ngModel)]="editedAccount.dob" />
+                                        <strong class="hoso_item_label p">Ngày sinh: </strong> <input type="text" [(ngModel)]="editedAccount.dob" />
                                     </div>
                                     <!-- <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Avatar:</strong> <input type="text" [(ngModel)]="editedAccount.avatar" />

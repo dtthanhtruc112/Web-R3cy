@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from '../Service/order.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 import { Order } from '../Interface/order';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -15,6 +15,7 @@ import { Order } from '../Interface/order';
 export class AdminDonhangComponent implements OnInit {
   selectedbar: string = 'trang-thai-don-hang';
   data: Order[] = [];
+  ordersToShow: number | undefined;
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
@@ -64,13 +65,13 @@ export class AdminDonhangComponent implements OnInit {
     // Gọi API để cập nhật rejectreason cho đơn hàng
     this._orderService.updateOrderReason(userId, orderNumber, this.reason)
       .subscribe(
-        updatedOrder => {
+        (        updatedOrder: any) => {
           console.log('Đã cập nhật lý do:', this.reason);
           this.updateOrderStatus1(order)
           // Sau khi cập nhật, đóng popup nếu cần
           this.closePopup();
         },
-        error => {
+        (        error: any) => {
           console.error('Error updating reject reason:', error);
           // Xử lý lỗi nếu cần
         }
@@ -105,8 +106,13 @@ export class AdminDonhangComponent implements OnInit {
   ngOnInit(): void {
     this.loadOrderInfo();
     
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params: { [x: string]: string; }) => {
       this.selectedbar = params['id'] || 'trang-thai-don-hang'; // Set a default value if 'id' is not present
+    });
+
+    this._orderService.getAllOrders().subscribe((data: Order[]) => {
+      this.data = data;
+      this.updateDisplayedData();
     });
   }
 
@@ -167,10 +173,10 @@ export class AdminDonhangComponent implements OnInit {
   getOrderDetails() {
     if (this.orderNumberInput) {
       this._orderService.getOrderById(this.orderNumberInput).subscribe(
-        (order) => {
+        (order: any) => {
           console.log('Order:', order);
         },
-        (error) => {
+        (error: any) => {
           console.error('Error fetching order:', error);
         }
       );
@@ -220,21 +226,17 @@ export class AdminDonhangComponent implements OnInit {
 
     this._orderService.updateOrderStatus(userId, orderNumber, order.order_status, true)
       .subscribe(
-        (updatedOrder) => {
+        (updatedOrder: any) => {
           // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
           // Display a success alert
         window.alert('Cập nhật trạng thái thanh toán thành công');
           console.log('Order updated successfully:', updatedOrder);
-          // Giả sử server trả về là một giá trị boolean
-          // this.zone.run(() => {
-          //   this.router.navigate(['/donhang/don-hang-moi']);
-          // });
-          // window.location.reload();
-          this.router.navigate(['/donhang/don-hang-moi']);
+          window.location.reload();
+          // this.router.navigate(['/donhang/don-hang-moi']);
 
 
         },
-        error => {
+        (        error: any) => {
           // Xử lý lỗi khi cập nhật trạng thái thanh toán
           console.error('Error updating payment status:', error);
         }
@@ -250,17 +252,17 @@ export class AdminDonhangComponent implements OnInit {
 
     this._orderService.updateOrderStatus(userId, orderNumber, "Đang giao", order.paymentstatus)
       .subscribe(
-        (updatedOrder) => {
+        (updatedOrder: any) => {
           // Display a success alert
         window.alert('Cập nhật trạng thái đơn hàng thành công');
           // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
           console.log('Order updated successfully:', updatedOrder);
           // Giả sử server trả về là một giá trị boolean
-
-          this.router.navigate(['/donhang/chua-nhan-hang']);
           window.location.reload();
+          this.router.navigate(['/donhang/chua-nhan-hang']);
+          
         },
-        error => {
+        (        error: any) => {
           // Xử lý lỗi khi cập nhật trạng thái thanh toán
           console.error('Error updating payment status:', error);
         }
@@ -276,7 +278,7 @@ export class AdminDonhangComponent implements OnInit {
 
     this._orderService.updateOrderStatus(userId, orderNumber, "Đã hủy", order.paymentstatus)
       .subscribe(
-        (updatedOrder) => {
+        (updatedOrder: any) => {
           // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
            // Display a success alert
           window.alert('Cập nhật trạng thái đơn hàng thành công');
@@ -287,7 +289,7 @@ export class AdminDonhangComponent implements OnInit {
           this.router.navigate(['/donhang/da-huy']);
           window.location.reload();
         },
-        error => {
+        (        error: any) => {
           // Xử lý lỗi khi cập nhật trạng thái thanh toán
           console.error('Error updating payment status:', error);
         }
@@ -310,6 +312,7 @@ export class AdminDonhangComponent implements OnInit {
   }
 
   // Modify your sortTable method to use the parseDate function
+  // Lọc theo thứ tự tăng giảm dần của số tiền và ngày tạo đơn hàng
   sortTable(column: string) {
     if (this.sortBy === column) {
       // If clicking on the same column, reverse the order
@@ -342,33 +345,23 @@ export class AdminDonhangComponent implements OnInit {
   @ViewChild('orderNumberInputField') orderNumberInputField: ElementRef | undefined;
 
   sortColumn: number | 'all' = 'all';
-  // searchKeyword: string = '';
-  // displayedData: Order[] = [];
+// Other properties...
 
- 
+// Lọc theo số đơn hàng hiển thị
+sortTable1(): void {
+  this.updateDisplayedData();
+}
 
-  // sortTable1(): void {
-  //   this.updateDisplayedData();
-  // }
-
-  // updateDisplayedData(): void {
-  //   this.displayedData = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
-  // }
-
-  // getObjectKeys(obj: Order): string[] {
-  //   return obj ? Object.keys(obj) as string[] : [];
-  // }
-
-  // getItemValue(item: Order, key: string): string | File | undefined {
-  //   return item && item.hasOwnProperty(key) ? (item as any)[key] : undefined;
-  // }
+updateDisplayedData(): void {
+  this.filteredOrders = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
+}
    
   handleSearch(event: any): void {
     event.preventDefault();
   
     if (this.searchOrderNumber) {
       this._orderService.getOrderById(this.searchOrderNumber).subscribe(
-        (order) => {
+        (order: Order) => {
           console.log('Order:', order);
           // Handle the retrieved order details as needed
           this.showOrderDetails(order);
@@ -379,7 +372,7 @@ export class AdminDonhangComponent implements OnInit {
           // Update filteredOrders to display only the searched order
           this.filteredOrders = [order];
         },
-        (error) => {
+        (error: any) => {
           window.alert('Không tìm thấy đơn hàng. Vui lòng nhập lại!')
           console.error('Error fetching order:', error);
           // Handle the error, e.g., show an error message to the user

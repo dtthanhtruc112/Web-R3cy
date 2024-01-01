@@ -80,5 +80,7 @@ export class ProductService {
     const url = `${this.apiUrl}/${updatedProduct.id}`;
     return this._http.patch(url, updatedProduct);
   }
+
+  
   
 }

@@ -42,30 +42,22 @@ export class ProductCartComponent implements OnInit {
 
     // Gọi API để lấy giỏ hàng dựa trên userID
     if (this.userId !== null) {
-      // Chuyển đổi userId thành chuỗi khi gọi API
       this.cartService.getCart(this.userId).subscribe(
         (data: any) => {
           console.log('API Response:', data);
-      
-          // Sử dụng data.cart thay vì data.cartItems
           this.cartItems = data.cart || [];
         },
         (error) => {
           console.error('Error getting cart:', error);
-        }
-      );
-
+        });
       this.productService.getData().subscribe(
         (productData: product[]) => {
           this.products = productData;
-          // Tiếp tục xử lý và tính toán sau khi có dữ liệu sản phẩm
-          // this.calculateSubtotal();
         },
         (error) => {
           console.error('Error getting product data:', error);
         }
       );
-      
   }
 }
 
@@ -117,13 +109,10 @@ private refreshCartItems(): void {
   updateCartItemQuantity(event: any, item: CartItem): void {
     // Cập nhật số lượng trong giỏ hàng
     item.quantity = event.value;
-    console.log('item.quantity', item.quantity); // Xác nhận giá trị khi thay đổi
-    // Gửi request API để cập nhật số lượng trong cơ sở dữ liệu
+    console.log('item.quantity', item.quantity);
     this.cartService.updateCartItemQuantity(this.userId, item.id, item.quantity).subscribe(
       (data: any) => {
         console.log('Cart item quantity updated successfully:', data);
-        // Nếu bạn cần thực hiện các hành động khác sau khi cập nhật, thì thêm vào đây
-        // Sau khi cập nhật, cập nhật lại danh sách sản phẩm trong giỏ hàng và chuyển hướng lại
       this.refreshCartItems();
       },
       (error) => {
@@ -136,10 +125,22 @@ private refreshCartItems(): void {
     const product = this.products.find(p => p.id === productId);
   
     if (product) {
-      return product.img1; // Thay thế "imageUrl" bằng thuộc tính hình ảnh thực tế của bạn trong đối tượng sản phẩm
+      return product.img1; 
     } else {
-      return 'default-image-url.jpg'; // Thay thế "default-image-url.jpg" bằng URL hình ảnh mặc định của bạn
+      return 'Không tìm thấy hình ảnh'; // 
     }
+  }
+  getProduct_id(productId: number): string {
+    const product = this.products.find(p => p.id === productId);
+  
+    if (product) {
+      return product._id; 
+    } else {
+      return 'Không tìm thấy'; // 
+    }
+  }
+  getProductRouterLink(productId: number): string[] {
+    return ['/product', this.getProduct_id(productId)];
   }
   
 
@@ -166,7 +167,6 @@ private refreshCartItems(): void {
       },
       (error) => {
         console.error('Error applying voucher:', error);
-        // Handle API error
         this.discountInfo = null; // Reset discountInfo on error
       }
     );
@@ -185,18 +185,11 @@ private refreshCartItems(): void {
   }
 
   goToCheckout(): void {
-    // Lấy giá trị tổng giỏ hàng
     const orderTotal = this.calculateOrderTotal();
-  
-    // Kiểm tra xem có voucher MIENPHIVANCHUYEN không để xác định giá trị phí vận chuyển
     const shippingFee = this.voucherCode === 'MIENPHIVANCHUYEN' ? 0 : 25;
-    
     // Lấy giá trị giảm giá từ discountInfo nếu có
     const discount = this.discountInfo ? (orderTotal * (+this.discountInfo.valuecode / 100)) : 0;
-
-    // Tính giá trị totalAmount
     const totalAmount = orderTotal + shippingFee - discount;
-    // lấy mã giảm giá bỏ vào cho đúng
     // Chuyển hướng và truyền dữ liệu qua queryParams
     const queryParams: Params = {
       userId: this.userId.toString(),
@@ -204,10 +197,9 @@ private refreshCartItems(): void {
       orderTotal: orderTotal.toString(),
       shippingFee: shippingFee.toString(),  // Phí vận chuyển mặc định, chuyển đổi sang chuỗi
       discount:  discount.toString(),         // Giảm giá từ voucher (nếu có), chuyển đổi sang chuỗi
-      totalAmount: (orderTotal + shippingFee -  discount).toString(),  // Tổng toàn bộ đơn hàng, chuyển đổi sang chuỗi
-    };
-  
+      totalAmount: (orderTotal + shippingFee -  discount).toString(),  // Tổng toàn bộ đơn hàng, chuyển đổi sang chuỗi      
+      voucherCode: this.voucherCode
+    }; 
     this.router.navigate(['/checkout'], { queryParams });
   }
-  
 }

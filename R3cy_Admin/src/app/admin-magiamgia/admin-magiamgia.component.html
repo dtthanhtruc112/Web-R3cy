@@ -2,7 +2,7 @@
 
 <div class="fullpage">
     <h3 class="h3">Mã giảm giá</h3>
-    <button>+ Thêm mã giảm giá mới</button>
+    <button type="button" [routerLink]="['/createmgg']">+ Thêm mã giảm giá mới</button>
     <br>
     <div class="container">
         <div class="container_item">
@@ -32,46 +32,70 @@
                         <th>Trạng thái</th>
                         <th>Chi tiết</th>
                     </tr>
-                    <tbody>
-                        <td></td>
-                        <td>Cốc thủy tinh 300ml</td>
-                        <td>Đồ trang trí</td>
-                        <td>Bank</td>
-                        <td></td>
+                    <tbody *ngFor="let d of Discount">
+                        <td>{{d.createAt}}</td>
+                        <td>{{d.code}}</td>
+                        <td>{{d.title}}</td>
+                        <td>{{d.status}}</td>
+                        <td [routerLink]="['/magiamgia',d._id]">></td>
                     </tbody>
                 </table>
             </div>
             <div *ngIf="selectedbar === 'dang-ap-dung'">
                 <table>
                     <tr>
-                        <th>Mã</th>
                         <th>Ngày tạo</th>
-                        <th>Khách hàng</th>
-                        <th>Phương thức</th>
-                        <th>Tổng tiền</th>
-                        <th>Xử lý </th>
+                        <th>Mã giảm giá</th>
+                        <th>Ưu đãi</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
                     </tr>
-                    <tbody>
-                        <td>#11432</td>
-                        <td>10/11/2023</td>
-                        <td>Đặng Thanh Trúc</td>
-                        <td>Bank</td>
-                        <td>200.000đ</td>
-                        <td><i class="bi bi-check-circle-fill"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
+                    <tbody *ngFor="let d of DiscountDangapdung">
+                        <td>{{d.createAt}}</td>
+                        <td>{{d.code}}</td>
+                        <td>{{d.title}}</td>
+                        <td>{{d.status}}</td>
+                        <td [routerLink]="['/magiamgia',d._id]">></td>
                     </tbody>
                 </table>
             </div>
-            <div class="overlay" *ngIf="showOverlay"></div>
-            <div class="popup" *ngIf="showSuccessPopup">
-                <p class="p">Đã lưu thông tin thành công!</p>
-                <button class="p" (click)="closePopup()">Đóng</button>
+
+            <div *ngIf="selectedbar === 'da-len-lich'">
+                <table>
+                    <tr>
+                        <th>Ngày tạo</th>
+                        <th>Mã giảm giá</th>
+                        <th>Ưu đãi</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                    <tbody *ngFor="let d of DiscountDalenlich">
+                        <td>{{d.createAt}}</td>
+                        <td>{{d.code}}</td>
+                        <td>{{d.title}}</td>
+                        <td>{{d.status}}</td>
+                        <td [routerLink]="['/magiamgia',d._id]">></td>
+                    </tbody>
+                </table>
             </div>
-            <div class="popup" *ngIf="reasonPopup">
-                <h2 class="h2">Thêm lý do từ chối</h2>
-                <textarea class="p" id="reason" placeholder="Nhập lý do từ chối..." [(ngModel)]="reason"></textarea>
-                <br>
-                <button class="p" (click)="addReason()">Cập nhật</button>
-                <button class="p" (click)="closePopup()">Đóng</button>
+
+            <div *ngIf="selectedbar === 'da-het-han'">
+                <table>
+                    <tr>
+                        <th>Ngày tạo</th>
+                        <th>Mã giảm giá</th>
+                        <th>Ưu đãi</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                    </tr>
+                    <tbody *ngFor="let d of DiscountDahethan">
+                        <td>{{d.createAt}}</td>
+                        <td>{{d.code}}</td>
+                        <td>{{d.title}}</td>
+                        <td>{{d.status}}</td>
+                        <td [routerLink]="['/magiamgia',d._id]">></td>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
