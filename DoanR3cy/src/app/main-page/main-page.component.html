@@ -48,7 +48,7 @@
             </div>
            
             <div class="containerProduct">
-                <div class="product-show" *ngFor="let p of productsSuggestion" [routerLink]="['/product', p.id]">
+                <div class="product-show" *ngFor="let p of productsSuggestion" [routerLink]="['/product', p._id]">
                     <!-- <p class="mainimg">{{p.img1}}</p> -->
                     <img [src]="p.img1">
                     <p class="name">{{p.name}}</p>
