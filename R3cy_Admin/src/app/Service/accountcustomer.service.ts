@@ -71,7 +71,7 @@ export class AccountcustomerService {
     const requestOptions: Object = {
       headers: headers,
     };
-    return this._http.get<AccountCustomer[]>(`${this.apiUrl}/user`, requestOptions).pipe(
+    return this._http.get<AccountCustomer[]>(`${this.apiUrl}/customers`, requestOptions).pipe(
       retry(3),
       catchError(this.handleError)
     );

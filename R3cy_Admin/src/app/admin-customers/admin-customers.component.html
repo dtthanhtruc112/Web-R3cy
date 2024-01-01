@@ -1,7 +1,7 @@
 <div class="fullpage">
 
     <div class="header">
-        <h4 class="h3 font-bold">Quản lý khách hàng</h4>
+        <h3 class="h3 font-bold">Quản lý khách hàng</h3>
     </div>
 
     <div class="container">
@@ -33,11 +33,11 @@
                         <td>
                             <div *ngFor="let diaChi of item.addresses">
                                 <span>
-                                    <p>{{ diaChi.country }}</p>
-                                    <p>{{ diaChi.postcodeZip }}</p>
-                                    <p>{{ diaChi.province }}</p>
-                                    <p>{{ diaChi.district }}</p>
-                                    <p>{{ diaChi.addressDetail }}</p>
+                                    <p>{{ diaChi?.country }}</p> 
+                                    <p>{{ diaChi?.postcodeZip }}</p>
+                                    <p>{{ diaChi?.province }}</p>
+                                    <p>{{ diaChi?.district }}</p>
+                                    <p>{{ diaChi?.addressDetail }}</p>
                                 </span>
                             </div>
                         </td>

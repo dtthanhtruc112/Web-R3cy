@@ -231,12 +231,8 @@ export class AdminDonhangComponent implements OnInit {
           // Display a success alert
         window.alert('Cập nhật trạng thái thanh toán thành công');
           console.log('Order updated successfully:', updatedOrder);
-          // Giả sử server trả về là một giá trị boolean
-          // this.zone.run(() => {
-          //   this.router.navigate(['/donhang/don-hang-moi']);
-          // });
-          // window.location.reload();
-          this.router.navigate(['/donhang/don-hang-moi']);
+          window.location.reload();
+          // this.router.navigate(['/donhang/don-hang-moi']);
 
 
         },
@@ -262,9 +258,9 @@ export class AdminDonhangComponent implements OnInit {
           // Cập nhật giá trị paymentstatus tùy thuộc vào định dạng trả về từ server
           console.log('Order updated successfully:', updatedOrder);
           // Giả sử server trả về là một giá trị boolean
-
-          this.router.navigate(['/donhang/chua-nhan-hang']);
           window.location.reload();
+          this.router.navigate(['/donhang/chua-nhan-hang']);
+          
         },
         (        error: any) => {
           // Xử lý lỗi khi cập nhật trạng thái thanh toán
@@ -316,6 +312,7 @@ export class AdminDonhangComponent implements OnInit {
   }
 
   // Modify your sortTable method to use the parseDate function
+  // Lọc theo thứ tự tăng giảm dần của số tiền và ngày tạo đơn hàng
   sortTable(column: string) {
     if (this.sortBy === column) {
       // If clicking on the same column, reverse the order
@@ -350,6 +347,7 @@ export class AdminDonhangComponent implements OnInit {
   sortColumn: number | 'all' = 'all';
 // Other properties...
 
+// Lọc theo số đơn hàng hiển thị
 sortTable1(): void {
   this.updateDisplayedData();
 }
@@ -357,14 +355,6 @@ sortTable1(): void {
 updateDisplayedData(): void {
   this.filteredOrders = this.sortColumn === 'all' ? [...this.data] : this.data.slice(0, this.sortColumn);
 }
-
-  // getObjectKeys(obj: Order): string[] {
-  //   return obj ? Object.keys(obj) as string[] : [];
-  // }
-
-  // getItemValue(item: Order, key: string): string | File | undefined {
-  //   return item && item.hasOwnProperty(key) ? (item as any)[key] : undefined;
-  // }
    
   handleSearch(event: any): void {
     event.preventDefault();

@@ -597,30 +597,30 @@ router.get("/accounts/:Mail", cors(), async (req, res) => {
   }
 });
 
-router.put('/update-password', async (req, res) => {
-  try {
-    const Mail = req.body.Mail;
-    const newPassword = req.body.newPassword;
+// router.put('/update-password', async (req, res) => {
+//   try {
+//     const Mail = req.body.Mail;
+//     const newPassword = req.body.newPassword;
 
-    // Update the password in the database
-    const user = await AccountCustomer.find({ Mail });
-    await AccountCustomer.updateOne({ Mail }, { $set: { password: newPassword } });
+//     // Update the password in the database
+//     const user = await AccountCustomer.find({ Mail });
+//     await AccountCustomer.updateOne({ Mail }, { $set: { password: newPassword } });
 
-    if (!user) {
-      // If the user with the specified email is not found
-      return res.status(404).json({ error: 'User not found' });
-    }
-    else {
-      res.send({ message: 'Password updated successfully' });
-    }
+//     if (!user) {
+//       // If the user with the specified email is not found
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+//     else {
+//       res.send({ message: 'Password updated successfully' });
+//     }
 
-    // Send a success response
-    res.json({ message: ' Password updated successfully' });
-  } catch (error) {
-    console.error('Error updating password:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+//     // Send a success response
+//     res.json({ message: ' Password updated successfully' });
+//   } catch (error) {
+//     console.error('Error updating password:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
 // POST route to handle custom product data with file upload
 router.post('/customProducts', upload.single('pfile'), async (req, res) => {

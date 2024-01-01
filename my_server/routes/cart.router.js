@@ -540,6 +540,20 @@ router.post('/orders/user/:userid', async (req, res) => {
     const newOrder = new Order(orderData);
     // Lưu đơn hàng vào cơ sở dữ liệu
     await newOrder.save();
+
+      // Cập nhật số lượng tồn kho của sản phẩm
+      for (const item of cart.cartItems) {
+        const productId = item.id; // id do admin thêm vào (kiểu số)
+        const product = await Product.findOne({ id: productId }); // Tìm theo trường id
+        if (product) {
+          // Giảm đi số lượng sản phẩm từ số lượng tồn kho hiện tại
+          product.quantity -= item.quantity;
+          product.sold_quantity += item.quantity; // Cập nhật số lượng đã bán
+          await product.save();
+        }
+      }
+
+    // Lưu dữ liệu địa chỉ khách hàng vào AccountCustomer
     const accountCustomer = await AccountCustomer.findOne({ userid: parseInt(userid) });
 
     if (accountCustomer) {
@@ -559,7 +573,7 @@ router.post('/orders/user/:userid', async (req, res) => {
 
     // Xóa giỏ hàng sau khi tạo đơn hàng thành công
     await Cart.deleteOne({ userid: parseInt(userid) });
-
+    
     res.status(200).json({
       message: 'Order created successfully',
       order: newOrder,
