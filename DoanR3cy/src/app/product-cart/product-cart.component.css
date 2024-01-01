@@ -294,10 +294,11 @@ only screen and (min-width:768px) and (max-width:991px) {
 }
 
 ::ng-deep .p-inputnumber .p-inputnumber-input {
-    border-radius: 10px;
+    border-radius: 30px;
     color: black;
     border-color: var(--color-blue);
     padding-right: 30px;
+    padding-left: 20px;
     position: relative;
     height: 40px;
 }

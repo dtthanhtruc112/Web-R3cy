@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { Customer, Address } from '../Interface/users';
-import { UsersService } from '../Service/users.service';
+// import { Customer, Address } from '../Interface/users';
+// import { UsersService } from '../Service/users.service';
+import { AccountCustomer } from '../Interface/AccountCustomer';
+import { AccountcustomerService } from '../Service/accountcustomer.service';
 
 @Component({
   selector: 'app-admin-customers',
@@ -9,8 +11,8 @@ import { UsersService } from '../Service/users.service';
 })
 export class AdminCustomersComponent {
   errMessage: string = '';
-  data: Customer[] = [];
-  displayedData: Customer[] = [];
+  data: AccountCustomer[] = [];
+  displayedData: AccountCustomer[] = [];
   sortColumn: number | 'all' = 'all';
   searchKeyword: string = '';
 
@@ -18,10 +20,10 @@ export class AdminCustomersComponent {
   customColumnNames: string[] = ['Họ và tên', 'Email', 'Số điện thoại', 'Địa chỉ', 'Ngày sinh'];
 
 
-  constructor(private uersService: UsersService) {}
+  constructor(private accountCustomerService: AccountcustomerService) {}
 
   ngOnInit(): void {
-    this.uersService.getCustomers().subscribe(data => {
+    this.accountCustomerService.getCustomers().subscribe(data => {
       this.data = data;
       this.updateDisplayedData();
     });
@@ -36,11 +38,11 @@ export class AdminCustomersComponent {
   }
 
  
-  getObjectKeys(obj: Customer): string[] {
+  getObjectKeys(obj: AccountCustomer): string[] {
     return obj ? Object.keys(obj) as string[] : [];
   }
 
-  getItemValue(item: Customer, key: string): string | File | undefined {
+  getItemValue(item: AccountCustomer, key: string): string | File | undefined {
     console.log(key)
     return item ? (item as any)[key] : undefined;
   }

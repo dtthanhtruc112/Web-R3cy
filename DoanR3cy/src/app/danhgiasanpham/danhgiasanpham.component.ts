@@ -9,10 +9,10 @@ import { AuthService } from '../Service/auth.service';
   templateUrl: './danhgiasanpham.component.html',
   styleUrls: ['./danhgiasanpham.component.css']
 })
-export class DanhgiasanphamComponent  {
+export class DanhgiasanphamComponent {
   order: Order | undefined;
 
-  constructor(private route: ActivatedRoute, private orderService: OrderService, private authService: AuthService) {}
+  constructor(private route: ActivatedRoute, private orderService: OrderService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -25,59 +25,60 @@ export class DanhgiasanphamComponent  {
 
         console.log('Original userid:', userid);
 
-        if (userid !== null){
-          // Assuming user id is 1
-        
+        if (userid !== null) {
           const userId = parseInt(userid, 10);
 
-        // Pass the user ID to getOrder method
-        this.orderService.getOrder(userId).subscribe(
-          (orders: Order[]) => {
-            // Find the order with the specified ID
-            const foundOrder = orders.find(order => order.ordernumber === orderIdNumber);
+          // Pass the user ID to getOrder method
+          this.orderService.getOrder(userId).subscribe(
+            (orders: Order[]) => {
+              // Find the order with the specified ID
+              const foundOrder = orders.find(order => order.ordernumber === orderIdNumber);
 
-            if (foundOrder) {
-              this.order = foundOrder;
-            } else {
-              console.error(`Order with ID ${orderIdNumber} not found.`);
+              if (foundOrder) {
+                this.order = foundOrder;
+              } else {
+                console.error(`Order with ID ${orderIdNumber} not found.`);
+              }
+            },
+            (error) => {
+              console.error(`Error fetching orders for user with ID ${userId}: ${error}`);
             }
-          },
-          (error) => {
-            console.error(`Error fetching orders for user with ID ${userId}: ${error}`);
-          }
-        );
+          );
         }
-
-        
       }
-
-      
     });
   }
 
   feedbackText: string = '';
-  saveFeedback() {
-    // Check if there is an order and at least one product
-    if (this.order && this.order.products.length > 0) {
-      const firstProduct = this.order.products[0]; // Assuming you want to update feedback for the first product
+  feedbacks: { [productId: number]: string } = {}; 
 
-      // Assuming user id is 1
-      const userId = 1;
-
-      // Assuming the feedback text is stored in the feedbackText property
-      const feedback = this.feedbackText;
-
-      this.orderService.updateProductFeedback(userId, this.order.ordernumber, firstProduct.id, feedback).subscribe(
-        (updatedProduct: Product) => {
-          console.log('Product feedback updated successfully:', updatedProduct);
-          this.feedbackText = '';
-          window.alert('Thông tin đã được gửi thành công. Cảm ơn quý khách!');
-          // Optionally, you can perform additional actions after successful feedback submission
-        },
-        (error) => {
-          console.error('Error updating product feedback:', error);
+  saveFeedback(productId: number) {
+    if (this.order) {
+      const userid = this.authService.getUserId();
+  
+      if (userid !== null) {
+        const userId = parseInt(userid, 10);
+        const orderNumber = this.order!.ordernumber;
+        const feedback = this.feedbacks[productId] || '';
+  
+        // Check if feedback is defined before updating
+        if (feedback !== undefined) {
+          this.orderService.updateProductFeedback(userId, orderNumber, productId, feedback).subscribe(
+            (updatedProduct: Product) => {
+              console.log(`Product feedback for ${updatedProduct.name} updated successfully:`, updatedProduct);
+              // Optionally, you can perform additional actions after successful feedback submission for each product
+              window.alert('Thông tin đã được gửi thành công. Cảm ơn quý khách!');
+  
+              // Reset feedbackText for the corresponding product ID
+              this.feedbacks[productId] = '';
+            },
+            (error) => {
+              console.error(`Error updating product feedback for product ID ${productId}:`, error);
+            }
+          );
         }
-      );
+      }
     }
   }
+
 }
