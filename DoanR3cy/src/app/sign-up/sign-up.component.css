@@ -8,6 +8,10 @@ div{
     padding: 0;
 }
 
+body{
+    background-color: var(--color-lightblue);
+}
+
 .clear{
     clear: both
 }
@@ -114,6 +118,8 @@ input{
     .box-container{
         margin: 60px 30px 30px 30px
     }
+
+    
 
 }
 

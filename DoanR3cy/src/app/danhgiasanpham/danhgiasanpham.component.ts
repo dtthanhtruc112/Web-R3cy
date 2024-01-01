@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Order, Product } from '../Interface/Order';
 import { OrderService } from '../Service/order.service';
 import { AuthService } from '../Service/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-danhgiasanpham',
@@ -12,8 +13,10 @@ import { AuthService } from '../Service/auth.service';
 export class DanhgiasanphamComponent {
   order: Order | undefined;
 
-  constructor(private route: ActivatedRoute, private orderService: OrderService, private authService: AuthService) { }
 
+  constructor(private route: ActivatedRoute, private orderService: OrderService, private authService: AuthService, private _http:HttpClient) { }
+
+  
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const orderId = params.get('id');
@@ -80,5 +83,7 @@ export class DanhgiasanphamComponent {
       }
     }
   }
+
+  
 
 }
