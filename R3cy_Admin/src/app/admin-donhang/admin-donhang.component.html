@@ -156,7 +156,7 @@
                         <th>Trạng thái</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
-                    <tbody *ngFor="let order of getFilteredOrders(['Đang giao', 'Chờ lấy hàng'])">
+                    <tbody *ngFor="let order of getFilteredOrders(['Đang giao'])">
                         <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
