@@ -18,6 +18,9 @@ export const CART_KEY = "cart";
 
 
 export class CartService {
+    initCartLocalStorage() {
+        throw new Error("Method not implemented.");
+    }
  
   private apiUrl = "http://localhost:3000";
   

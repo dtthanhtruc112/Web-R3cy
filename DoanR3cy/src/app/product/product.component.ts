@@ -29,12 +29,29 @@ export class ProductComponent implements OnInit {
   divide_answer: any;
   currentImage: any;
   img: any;
+  productsHighlight: product[] = [];
+  productsSuggestion: product[] = [];
 
   constructor(private productService: ProductService, private router: Router, private _router: ActivatedRoute, private cartService: CartService,  private authService: AuthService,) { }
 
   ngOnInit(): void {
 
-    
+    this.productService.getData().subscribe((data: product[]) => {
+      // Lấy tất cả sản phẩm từ DB
+      const allProducts = data;
+  
+      // Kiểm tra xem có ít nhất 8 sản phẩm (4 sản phẩm nổi bật và 4 sản phẩm gợi ý) trong DB không
+      if (allProducts.length >= 8) {
+        // Lấy 4 sản phẩm đầu tiên làm sản phẩm nổi bật
+        this.productsHighlight = this.getFirstNProducts(allProducts, 4);
+  
+        // Lấy 4 sản phẩm cuối cùng làm sản phẩm gợi ý
+        this.productsSuggestion = this.getLastNProducts(allProducts, 4);
+        console.log(this.productsSuggestion)
+      } else {
+        console.error('Không đủ sản phẩm trong cơ sở dữ liệu.');
+      }
+    });
 
     this._router.paramMap.pipe(
       map(params => this.selectedCode = String(params.get('id'))),
@@ -53,11 +70,11 @@ export class ProductComponent implements OnInit {
       })
     console.log('this.selectedCode', this.selectedCode);}
   
-  showDiv: boolean = false; // Bước 1
+  showDiv: boolean = false;
 
   updateQna(p: any){
     const updatedProduct = {
-      id: p._id, // Đảm bảo rằng bạn có trường id để xác định sản phẩm cần cập nhật
+      id: p._id, 
       input_ask: p.input_ask,
       input_name: p.input_name
     };
@@ -69,20 +86,23 @@ export class ProductComponent implements OnInit {
       });
       this.showDiv = true;
       alert("Thêm câu hỏi thành công!")
+
+    
+      
+  }
+
+  private getFirstNProducts(products: product[], n: number): product[] {
+    return products.slice(0, n);
+  }
+
+  // Hàm lấy n sản phẩm cuối cùng từ mảng sản phẩm
+  private getLastNProducts(products: product[], n: number): product[] {
+    return products.slice(-n);
   }
 
     onClick(img: any) {
         this.currentImage = img;
     }
-
-    // checkUpdateQna() {
-    //   if (this.updateQna(this.productt)!) {
-    //     this.divide_answer.display = "block";
-    //     console.log("Change success!")
-    //   } else {
-    //     this.divide_answer.display = "none";
-    //   }
-    // }
 
   addToCart() {
     // Kiểm tra đăng nhập
@@ -125,64 +145,7 @@ export class ProductComponent implements OnInit {
     }
   }
   
-    
-    // addProductToCart(productId: number, quantity: number): void {
-    //   const userId = this.authService.getUserId(); // Lấy userId từ AuthService của bạn
-    //   console.log('userid', userId);
-    
-    //   if (userId) {
-    //     // Đã đăng nhập
-    //     this.cartService.getCartByUserId(userId).subscribe(
-    //       (cart) => {
-    //         if (cart && cart.cartItems) {
-    //           if (cart.cartItems.length > 0) {
-    //             // Nếu đã có giỏ hàng, thêm sản phẩm vào giỏ hàng hiện có
-    //             this.cartService.addToCart(userId, productId, quantity).subscribe(
-    //               (response) => {
-    //                 console.log('Product added to existing cart:', response);
-    //                 // Xử lý khi sản phẩm được thêm vào giỏ hàng hiện có thành công
-    //               },
-    //               (error) => {
-    //                 console.error('Error adding product to existing cart:', error);
-    //                 // Xử lý khi có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng hiện có
-    //               }
-    //             );
-    //           } else {
-    //             // Nếu chưa có giỏ hàng, tạo giỏ hàng mới và thêm sản phẩm vào
-    //             const newCart = {
-    //               userid: userId,
-    //               cartItems: [{
-    //                 id: productId,
-    //                 quantity: quantity,
-    //                 // Thêm thông tin sản phẩm vào đây nếu cần
-    //               }]
-    //             };
-    
-    //             this.cartService.createCart(newCart).subscribe(
-    //               (response) => {
-    //                 console.log('New cart created and product added:', response);
-    //                 // Xử lý khi giỏ hàng mới được tạo và sản phẩm được thêm vào thành công
-    //               },
-    //               (error) => {
-    //                 console.error('Error creating cart and adding product:', error);
-    //                 // Xử lý khi có lỗi xảy ra khi tạo giỏ hàng mới hoặc thêm sản phẩm vào giỏ hàng mới
-    //               }
-    //             );
-    //           }
-    //         }
-    //       },
-    //       (error) => {
-    //         console.error('Error fetching cart:', error);
-    //         // Xử lý khi có lỗi xảy ra khi lấy thông tin giỏ hàng
-    //         // Ví dụ: Hiển thị thông báo lỗi cho người dùng
-    //       }
-    //     );
-    //   } else {
-    //     // Chưa đăng nhập, chuyển hướng người dùng đến trang đăng nhập
-    //     this.router.navigate(['/login']);
-    //   }
-    // }
-    
+  
 
 }
 
