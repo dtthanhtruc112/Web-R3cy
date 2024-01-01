@@ -89,7 +89,7 @@ export class ProductCheckoutComponent implements OnInit {
   // Trong hàm loadAccountData
 loadAccountData(userId: number): void {
   this.accountcustomerSerive.getAccount(userId).subscribe(
-    (account: any) => { // Sửa kiểu dữ liệu nếu cần thiết
+    (account: any) => {
       if (account && account.account) {
         this.checkoutFormGroup.patchValue({
           name: account.account.Name,
@@ -144,9 +144,9 @@ loadAccountData(userId: number): void {
     console.log('Address:', address);
 
     const order: Order = {
-      userid: this.userId, // Điền dữ liệu user ID tương ứng
+      userid: this.userId, 
       channel: 'Website',
-      ordernumber: Number(), // Điền số đơn hàng tương ứng
+      ordernumber: Number(), 
       products: this.cartItems,
       order_status: 'Chờ xử lí', // Trạng thái đơn hàng mặc định
       ordereddate: new Date(),
@@ -159,7 +159,7 @@ loadAccountData(userId: number): void {
       adress: address,
       clientInfo: clientInfo,
       orderNote: 'Không có ghi chú', // 
-      id: String(), // Trường này cần phải điền dữ liệu đơn hàng tương ứng
+      id: String(), // 
       rejectreason: '' // Lí do từ chối đơn hàng
     };
     console.log('Order:', order);
@@ -172,24 +172,19 @@ loadAccountData(userId: number): void {
    this.orderService.createOrder(this.userId, order).subscribe(
     (createdOrder) => {
       console.log('Đơn hàng đã được tạo:', createdOrder);
-      // Update userid in Discount collection
       this.discountService.updateDiscountUserIds(this.voucherCode, this.userId).subscribe(
         (updatedDiscount) => {
           console.log('Discount updated:', updatedDiscount);
         },
         (error) => {
           console.error('Lỗi khi cập nhật Discount:', error);
-          // Handle error when updating Discount
         }
       );
-
-      // Thêm xử lý khi đơn hàng đã được tạo
-      alert()
+      alert('Đơn hàng đã được tạo thành công')
       this.router.navigate(['/main-page']);
     },
     (error) => {
       console.error('Lỗi khi tạo đơn hàng:', error);
-      // Thêm xử lý khi có lỗi
     }
   );
   }

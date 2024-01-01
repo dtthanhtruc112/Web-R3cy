@@ -56,6 +56,13 @@ textarea{
     height: 80px;
 }
 
+.ti-star{
+    display: inline;
+}
+
+.ti-star[selected="true"] {
+    color: yellow; /* Màu vàng khi được chọn */
+}
 
 
 

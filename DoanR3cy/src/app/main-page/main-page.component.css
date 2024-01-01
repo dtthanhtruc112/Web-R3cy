@@ -8,7 +8,8 @@
 .containerAll H2 {
     margin: 20PX 0PX;
     font-weight: bold;
-    color:var(--color-blue)
+    color:var(--color-blue);
+    cursor: pointer;
 }
 
 * {

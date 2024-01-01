@@ -93,19 +93,15 @@ async function fetchData(channel, startDate, endDate) {
   console.log('startDate:', startDate);
   console.log('endDate:', endDate);
   console.log('dateQuery:', dateQuery);
-  
 
   const orders = await Order.find({ channel, ...dateQuery }).populate({ path: 'products', model: 'Product' });
   // console.log('Orders with populated products:', orders);
-
- 
 
   // Trả về dữ liệu đơn hàng dưới dạng JSON
   return {
       totalAmount: calculateTotalAmount(orders),
       totalOrders: orders.length,
       products: await getProductDetailsForBestSellingProduct(orders),
-      // Thêm các thông tin khác cần thiết
   };
 }
 
@@ -143,7 +139,7 @@ function calculateTotalQuantitySoldAndBestSellingProduct(orders) {
 
   const bestSellingProduct = findBestSellingProduct(allProducts);
 
-  console.log('bestSellingProduct:', bestSellingProduct); // Thêm console log ở đây
+  console.log('bestSellingProduct:', bestSellingProduct); 
 
   return {
       totalQuantitySold,

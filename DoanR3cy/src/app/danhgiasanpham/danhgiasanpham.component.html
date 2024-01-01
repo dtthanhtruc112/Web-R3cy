@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../../assets/themify-icons/themify-icons.css">
+
 <div class="main">
     <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
     <div class="productcontainer">
@@ -10,16 +12,21 @@
                 <h4>{{ product.name }}</h4>
                 <span><img [src]="product.img1"></span>
                 <p>Giá: {{ product.price | currency:'VND' }}.000
-                <br> Số lượng: {{ product.quantity }}</p>
-                <div class="rate">
+                    <br> Số lượng: {{ product.quantity }}
+                </p>
+                <!-- <div class="rate">
                     <div class="header">
-                        <h4>Chất lượng sản phẩm và dịch vụ người bán:</h4>
+                        <h4>Chất lượng sản phẩm và dịch vụ người bán: &nbsp;</h4>
                     </div>
 
                     <div class="star">
-
+                        <div class="ti-star" id="1" color="black" selected="false"></div>
+                        <div class="ti-star" id="2" color="black" selected="false"></div>
+                        <div class="ti-star" id="3" color="black" selected="false"></div>
+                        <div class="ti-star" id="4" color="black" selected="false"></div>
+                        <div class="ti-star" id="5" color="black" selected="false"></div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="type-review">
                     <h4>Đánh giá sản phẩm</h4>
@@ -30,10 +37,11 @@
                 </div>
 
                 <div class="button">
-                    <button class="huy" routerLink="/trangtaikhoan/danhgia_content" routerLinkActive="active">Hủy</button>
+                    <button class="huy" routerLink="/trangtaikhoan/danhgia_content"
+                        routerLinkActive="active">Hủy</button>
                     <!-- Add a separate "Save Feedback" button for each product -->
                     <button class="gui" (click)="saveFeedback(product.id)">Gửi</button>
-                  </div>
+                </div>
             </div>
 
         </div>
