@@ -6,14 +6,16 @@
     </div>
     <div class=" container1 containerContent">
         <div class=" Welcome">
-            <p class="h3 text-center mt-60 font-bold">Chào mừng đến với R3cy!</p>
+            <p class="h3 text-center mt-60 font-bold"><b>Chào mừng đến với R3cy!</b></p>
     
             <p class="h4 text-center">Được thiết kế và sản xuất thủ công tại một xưởng ở Thành phố Hồ Chí Minh,
             R3cy mang trên mình câu chuyện đầy ý nghĩa với thành phố. R3cy mong muốn tạo ra các vật dụng không chỉ bền chắc, đẹp mắt mà còn cùng bạn góp phần bảo vệ môi trường.</p>
         </div>
     
         <div class="container1  ProductsNoiBat">
-            <h2>SẢN PHẨM NỔI BẬT</h2>
+            <div class="classTieude" [routerLink]="['/product-list']">
+                <h2>SẢN PHẨM NỔI BẬT</h2>
+            </div>
             <div class="containerProduct">
                 <div class="product-show" *ngFor="let p of productsHighlight" [routerLink]="['/product', p.id]">
                     <!-- <p class="mainimg">{{p.img1}}</p> -->
@@ -27,8 +29,8 @@
             
             </div>
         </div>
-        <div class="container1 brandStory">
-           <h2>CÂU CHUYỆN THƯƠNG HIỆU</h2>
+        <div class="container1 brandStory" [routerLink]="['/aboutus']">
+           <h2 >CÂU CHUYỆN THƯƠNG HIỆU</h2>
             <div class="box-slogan">
                 <div class="slogan-img"></div>
     
@@ -41,9 +43,12 @@
         </div>
 
         <div class="container1  ProductsNoiBat">
-            <h2>GỢI Ý CHO BẠN</h2>
+            <div class="classTieude" [routerLink]="['/product-list']">
+                <h2>GỢI Ý CHO BẠN</h2>
+            </div>
+           
             <div class="containerProduct">
-                <div class="product-show" *ngFor="let p of productsSuggestion" [routerLink]="['/product', p.id]">
+                <div class="product-show" *ngFor="let p of productsSuggestion" [routerLink]="['/product', p._id]">
                     <!-- <p class="mainimg">{{p.img1}}</p> -->
                     <img [src]="p.img1">
                     <p class="name">{{p.name}}</p>
@@ -57,7 +62,9 @@
         </div>
     
         <div class="container1  recycleProcess">
-           <h2>QUY TRÌNH TÁI CHẾ</h2>
+            <div class="classTieude" [routerLink]="['/aboutus']">
+                <h2>QUY TRÌNH TÁI CHẾ</h2>
+            </div>
             
             <div class="containerimg">
                 <div class="imgRecycle imgRecycle1">
@@ -76,7 +83,9 @@
         </div>
         
         <div class=" containerBlog">
-           <h2>BLOG</h2>
+            <div class="classTieude" [routerLink]="['/blog']">
+                <h2>BLOG</h2>
+            </div>
             
         <div class="blogs">
             <div *ngFor="let blog of blogs" class="b1log">
@@ -94,7 +103,10 @@
         </div>
     
         <div class="FAQs">
-            <h2>CÂU HỎI THƯỜNG GẶP</h2>
+            <div class="classTieude" [routerLink]="['/QnA']">
+                <h2>CÂU HỎI THƯỜNG GẶP</h2>
+            </div>
+            
             <div id="content">
                 <div *ngIf="selectedCategory === 'cham-soc'">
                     <div class="qa-section">

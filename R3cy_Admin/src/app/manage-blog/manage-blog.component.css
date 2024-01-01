@@ -1,20 +1,31 @@
-div {
+div, .h3 {
     font-family: Inter-Regular;
 }
 
+i{
+    cursor: pointer;
+}
+
+.h3{
+    font-weight: bold;
+}
+
 .containerAll {
-    width: 70%;
+    /* width: 70%; */
     height: 100vh;
     background-color: var(--color-white);
     color: black;
     box-sizing: border-box;
-    margin-left: 300px;
+    margin-top: 20px;
+    
+    /* margin-left: 300px; */
 }
 .containerContent{
     border: 1px solid black;
     border-radius: 10px;
-    padding: 15px;
-    margin: 30px 0px;
+    padding: 10px;
+    /* padding: 15px; */
+    /* margin: 30px 0px; */
 }
 .Title{
     font-size: 20px;
@@ -57,7 +68,8 @@ th {
     margin-right: 8px;
 }
 .TiltleBlog{
-    font-family: Inter-Bold;
+    /* font-family: Inter-Bold; */
+    font-family: Inter-Regular;
     color: black;
 }
 .fa-solid fa-trash{
@@ -72,6 +84,6 @@ th {
     .fullpage{
     
         margin-left: 0px;
-        margin-top: 130px;
+        /* margin-top: 130px; */
     }
 }

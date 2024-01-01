@@ -174,7 +174,7 @@
                                         <div class="card">
                                             <div class="card-header" id="check_payments">
                                                 <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemOne"
-                                                    aria-controls="itemOne" aria-expanded="true">Chuyển khoản ngân hàng
+                                                    aria-controls="itemOne" aria-expanded="true" (click)="selectPayment('Bank')" >Chuyển khoản ngân hàng
                                                 </h5>
                                             </div>
                                             <div id="itemOne" class="collapse show" aria-labelledby="check_payments"
@@ -196,7 +196,7 @@
                                         <div class="card">
                                             <div class="card-header" id="check_payments3">
                                                 <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemThree"
-                                                    aria-controls="itemTwo" aria-expanded="false">Ví Momo</h5>
+                                                    aria-controls="itemTwo" aria-expanded="false" (click)="selectPayment('Momo')">Ví Momo</h5>
                                             </div>
                                             <div id="itemThree" class="collapse" aria-labelledby="check_payments3"
                                                 data-bs-parent="#PaymentMethodAccordion">
@@ -215,7 +215,7 @@
                                         <div class="card">
                                             <div class="card-header" id="check_payments4">
                                                 <h5 class="title" data-bs-toggle="collapse" data-bs-target="#itemFour"
-                                                    aria-controls="itemTwo" aria-expanded="false">Thanh toán khi nhận
+                                                    aria-controls="itemTwo" aria-expanded="false" (click)="selectPayment('COD')">Thanh toán khi nhận
                                                     hàng</h5>
                                             </div>
                                             <div id="itemFour" class="collapse" aria-labelledby="check_payments4"
@@ -226,13 +226,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <p class="p-text">Dữ liệu cá nhân của chúng tôi sẽ được sử dụng để xử lý đơn đặt
                                         hàng của bạn, hỗ trợ trải nghiệm của bạn trên trang web này và cho các mục đích
                                         khác được mô tả trong phần của chúng tôi.
                                         <a href="#" routerLink="/chinhsach/chinh-sach-bao-mat" routerLinkActive="active">Chính sách bảo mật</a>
                                     </p>
 
-                                    <a class="btn-place-order" (onclick)="placeOrder()">Đặt hàng</a>
+                                    <a class="btn-place-order" (click)="placeOrder()">Đặt hàng</a>
                                 </div>
                             </div>
                         </div>

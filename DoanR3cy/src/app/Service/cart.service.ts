@@ -8,8 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable,  throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { catchError, map } from 'rxjs/operators';
-
-
+import { AccountCustomer } from '../Interface/AccountCustomer';
 export const CART_KEY = "cart";
 
 @Injectable({
@@ -58,5 +57,8 @@ addToCart(userId: number, productId: number, quantity: number): Observable<any> 
   return this.http.post(url, payload);
 }
   
+
+
+
 }
   

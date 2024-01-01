@@ -23,6 +23,9 @@ import { AdminAccountComponent } from './admin-account/admin-account.component';
 import { AuthGuard } from './Service/auth.guard';
 import { AuthService } from './Service/auth.service';
 import { AdminSanphamchitietComponent } from './admin-sanphamchitiet/admin-sanphamchitiet.component';
+import { AdminCreateMggComponent } from './admin-create-mgg/admin-create-mgg.component';
+import { AdminCreateSpComponent } from './admin-create-sp/admin-create-sp.component';
+import { AdminChitietmggComponent } from './admin-chitietmgg/admin-chitietmgg.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +41,10 @@ import { AdminSanphamchitietComponent } from './admin-sanphamchitiet/admin-sanph
     AdminLoginComponent,
     AdminAccountComponent,
     SafeHtmlPipe,
-    AdminSanphamchitietComponent
+    AdminSanphamchitietComponent,
+    AdminCreateMggComponent,
+    AdminCreateSpComponent,
+    AdminChitietmggComponent
   ],
   imports: [
     BrowserModule,

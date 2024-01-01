@@ -12,8 +12,11 @@ import { AdminMagiamgiaComponent } from './admin-magiamgia/admin-magiamgia.compo
 import { AdminCustomProductComponent } from './admin-custom-product/admin-custom-product.component';
 import { AdminLoginComponent } from './login/login.component';
 import { AdminAccountComponent } from './admin-account/admin-account.component';
+import { AdminCreateMggComponent } from './admin-create-mgg/admin-create-mgg.component';
+import { AdminCreateSpComponent } from './admin-create-sp/admin-create-sp.component';
 
 import { AuthGuard } from './Service/auth.guard';
+import { AdminChitietmggComponent } from './admin-chitietmgg/admin-chitietmgg.component';
 
 const routes: Routes = [  
 { path: '', redirectTo: '/tongquan', pathMatch: 'full' },
@@ -29,7 +32,10 @@ const routes: Routes = [
 { path: 'sanpham/:id', component: AdminSanphamchitietComponent, canActivate: [AuthGuard]},
 { path: 'magiamgia', component: AdminMagiamgiaComponent, canActivate: [AuthGuard]},
 { path: 'customproduct', component: AdminCustomProductComponent, canActivate: [AuthGuard]},
-{ path: 'adminaccount', component: AdminAccountComponent, canActivate: [AuthGuard]}
+{ path: 'adminaccount', component: AdminAccountComponent, canActivate: [AuthGuard]},
+{ path: 'createmgg', component: AdminCreateMggComponent, canActivate: [AuthGuard]},
+{ path: 'createsp', component: AdminCreateSpComponent, canActivate: [AuthGuard]},
+{ path: 'magiamgia/:id', component: AdminChitietmggComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

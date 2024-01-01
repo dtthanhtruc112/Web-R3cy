@@ -2,10 +2,10 @@ div{
     font-family: Inter-Regular;
 }
 
-.fullpage{
+/* .fullpage{
     
     margin-left: 280px;
-}
+} */
 
 h3{
     color: var(--color-blue);
@@ -154,7 +154,7 @@ button{
     .fullpage{
     
         margin-left: 0px;
-        margin-top: 130px;
+        /* margin-top: 130px; */
     }
 }
 
@@ -162,6 +162,6 @@ button{
     .fullpage{
     
         margin-left: 0px;
-        margin-top: 130px;
+        /* margin-top: 130px; */
     }
 }

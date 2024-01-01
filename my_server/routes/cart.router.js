@@ -414,6 +414,7 @@ router.post('/cart/add', async (req, res) => {
         category2: product.category2,
         name: product.name,
         price: product.price,
+        img1: product.img1,
         quantity: quantity,
         subtotal: product.price * quantity,
       });
@@ -437,75 +438,142 @@ router.post('/cart/add', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// GET: Lấy thông tin tài khoản theo userid
+router.get('/account/:userid', async (req, res) => {
+  try {
+    const userid = parseInt(req.params.userid);
+
+    // Kiểm tra xem userid có phải là số nguyên dương không
+    if (!Number.isInteger(userid) || userid <= 0) {
+      return res.status(400).json({ message: 'Invalid userid' });
+    }
+
+    // Tìm tài khoản dựa trên userid
+    const account = await AccountCustomer.findOne({ userid: userid });
+
+    if (!account) {
+      return res.status(404).json({ message: `Account with userid ${userid} not found` });
+    }
+
+    res.status(200).json({
+      message: 'Account information retrieved successfully',
+      account: account,
+    });
+  } catch (error) {
+    console.error('Error retrieving account information:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
-// Tạo order và xóa giỏ hàng
-router.post("/orders/user/:userid", async (req, res) => {
+// Hàm kiểm tra sự khác biệt giữa hai địa chỉ
+const isDifferentAddress = (address1, address2) => {
+  return (
+    address1.country !== address2.country ||
+    address1.province !== address2.province ||
+    address1.district !== address2.district ||
+    address1.addressDetail !== address2.addressDetail
+  );
+};
+
+// Hàm kiểm tra xem một địa chỉ đã tồn tại trong mảng addresses chưa
+const isDuplicateAddress = (newAddress, existingAddresses) => {
+  return existingAddresses.some(existingAddress =>
+    !isDifferentAddress(existingAddress, newAddress)
+  );
+};
+// POST: Tạo đơn hàng từ giỏ hàng và xóa giỏ hàng sau khi đơn hàng thành công
+router.post('/orders/user/:userid', async (req, res) => {
   try {
     const { userid } = req.params;
 
-    // Lấy thông tin giỏ hàng của người dùng
-    const cart = await Cart.findOne({ userid: userid });
-
-    // Kiểm tra xem giỏ hàng có tồn tại không
-    if (!cart) {
-      return res.status(404).json({ message: 'Cart not found' });
+    // Kiểm tra userid có giá trị hợp lệ không
+    if (!Number.isInteger(parseInt(userid)) || parseInt(userid) <= 0) {
+      return res.status(400).json({ message: 'Invalid userid' });
     }
 
-    // Tạo đối tượng Order mới từ dữ liệu yêu cầu
-    const newOrder = new Order({
-      userid,
+    // Tìm giỏ hàng của người dùng dựa trên userid
+    const cart = await Cart.findOne({ userid: parseInt(userid) });
+
+    if (!cart || cart.cartItems.length === 0) {
+      return res.status(404).json({ message: 'Cart is empty or not found' });
+    }
+
+    // Tạo đơn hàng từ thông tin trong giỏ hàng và thông tin người dùng
+    const orderData = {
+      userid: req.body.userid,
       channel: req.body.channel || 'Website',
       order_status: req.body.order_status || 'Chờ xử lí',
-      ordereddate: req.body.ordereddate,
-      paymentmethod: req.body.paymentmethod,
-      paymentstatus: req.body.paymentstatus,
-      shipfee: req.body.shipfee,
-      ordernote: req.body.ordernote,
-      orderadress: req.body.orderadress,
-      products: [], // Khởi tạo danh sách sản phẩm trống
+      ordereddate: req.body.ordereddate || new Date(),
+      paymentmethod: req.body.paymentmethod || '', 
+      paymentstatus: req.body.paymentstatus || false,
+      shippingfee: req.body.shippingfee || 0,
+      totalOrderValue: req.body.totalOrderValue || 0,
+      discount: req.body.discount || 0,
+      totalAmount: req.body.totalAmount || 0,
+      ordernote: req.body.ordernote || '',
+      adress: req.body.adress ? {
+        country: req.body.adress.country || 'Việt Nam',
+        postcodeZip: req.body.adress.postcodeZip || '',
+        province: req.body.adress.province || '',
+        district: req.body.adress.district || '',
+        addressDetail: req.body.adress.addressDetail || '',
+      } : {
+        country: 'Việt Nam',
+        postcodeZip: '',
+        province: '',
+        district: '',
+        addressDetail: '',
+      },
       rejectreason: '',
-    });
+      clientInfo: req.body.clientInfo || {}, // Đảm bảo rằng clientInfo được gửi trong request body
 
-    // Lấy thông tin chi tiết sản phẩm từ DB Product
-    const productIds = cart.cartItems.map(item => item.id);
-    const products = await Product.find({ id: { $in: productIds } });
+      // Thêm sản phẩm từ giỏ hàng vào đơn hàng
+      products: cart.cartItems.map(item => ({
+        id: item.id,
+        category1: item.category1,
+        category2: item.category2,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        img1: item.img1,
+      })),
+    };
 
-    // Kiểm tra xem sản phẩm có tồn tại không
-    if (!products || products.length !== productIds.length) {
-      return res.status(404).json({ message: 'Some products not found' });
+    // Tạo đối tượng Order từ dữ liệu đã tạo
+    const newOrder = new Order(orderData);
+    // Lưu đơn hàng vào cơ sở dữ liệu
+    await newOrder.save();
+    const accountCustomer = await AccountCustomer.findOne({ userid: parseInt(userid) });
+
+    if (accountCustomer) {
+      const isAddressDuplicate = accountCustomer.addresses.some(existingAddress =>
+        !isDifferentAddress(existingAddress, orderData.adress)
+      );
+
+      if (!isAddressDuplicate) {
+        accountCustomer.addresses.push(orderData.adress);
+        await accountCustomer.save();
+      } else {
+        console.log('Duplicate address found. Not saving.');
+      }
+    } else {
+      console.error('User not found while trying to save order address.');
     }
 
-    // Duyệt qua danh sách sản phẩm từ DB và thêm vào đơn hàng
-    products.forEach(product => {
-      const cartItem = cart.cartItems.find(item => item.id === product.id);
+    // Xóa giỏ hàng sau khi tạo đơn hàng thành công
+    await Cart.deleteOne({ userid: parseInt(userid) });
 
-      const orderProduct = {
-        id: product.id,
-        category1: product.category1,
-        category2: product.category2,
-        name: product.name,
-        price: product.price,
-        img1: product.img1,
-        quantity: cartItem.quantity,
-      };
-
-      newOrder.products.push(orderProduct);
+    res.status(200).json({
+      message: 'Order created successfully',
+      order: newOrder,
+      userid: parseInt(userid)
     });
-
-    // Lưu đối tượng Order vào cơ sở dữ liệu
-    const createdOrder = await Order.create(newOrder);
-
-    // Xóa giỏ hàng của người dùng
-    await Cart.deleteOne({ userid: userid });
-
-    // Trả về đơn hàng đã được tạo mới
-    res.json(createdOrder);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ err: error.message });
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: error.message });
   }
 });
-// Các phần còn lại không thay đổi
+
 
 module.exports = router;

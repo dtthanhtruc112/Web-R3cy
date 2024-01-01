@@ -1,4 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,7 @@ import { Component, Renderer2 } from '@angular/core';
 })
 export class AppComponent {
   title = 'R3cy_Admin';
-  constructor(private renderer: Renderer2) {}
+  // constructor() {}
 
   ngOnInit(): void {
     document.addEventListener('DOMContentLoaded', () => {
@@ -29,6 +30,18 @@ export class AppComponent {
           h4Element.classList.toggle('active');
         });
       });
+    });
+  }
+
+  isLoginPage: boolean = false;
+
+  constructor(private router: Router, private renderer: Renderer2) {
+    // Subscribe to router events to detect changes in the route
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Check if the current route is 'login'
+        this.isLoginPage = this.router.url === '/login';
+      }
     });
   }
 }

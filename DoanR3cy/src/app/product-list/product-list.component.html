@@ -2,14 +2,14 @@
     <div class="firstinfo">
         <h3 class="bigtitle">SẢN PHẨM</h3>
         <p> 
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia dolore magni, reiciendis beatae porro esse, recusandae repellat libero in ducimus numquam ad assumenda voluptatum eos iste vero similique excepturi reprehenderit.
+            Được thiết kế và sản xuất thủ công tại một xưởng ở Thành phố Hồ Chí Minh, R3cy mang trên mình câu chuyện đầy ý nghĩa với thành phố.  R3cy mong muốn tạo ra các vật dụng không chỉ bền chắc, đẹp mắt mà còn cùng bạn góp phần bảo vệ môi trường.
         </p>
     </div>
     <br>
     <div class="flexboxcontainer">
         <div class="leftcolumn">
             <h3 class="filtertitle">Bộ lọc &emsp;</h3>
-            <p class="note">Xóa bộ lọc</p>
+            <p class="note" (click)="clearStatus()">Xóa bộ lọc</p>
 
             <p class="selecttitle">Loại sản phẩm</p>
             <input type="checkbox" name="cate-opt1" value="phu-kien" id="cate-opt1" [(ngModel)]="isCateOpt1Checked" (change)="onCheckboxChange()"> Phụ kiện 
@@ -32,16 +32,16 @@
         </div>
 
         <div class="rightcolumn">
-            <div class="floatright">
+            <!-- <div class="floatright">
                 <select style="float: right;" name="" id="sort" aria-placeholder="Bộ lọc">
                     <option value="pho-bien">Lọc theo Phổ biến</option>
                     <option value="gia">Lọc theo Giá</option>
                 </select>
                 <br>
                 <p style="float: right;">Đang hiển thị 00 sản phẩm</p>
-            </div>
-            <br><br><br><br><br><br>
-            <div class="product-show" *ngFor="let p of product" [routerLink]="['/product', p.id]">
+            </div> -->
+            <!-- <br><br><br><br><br><br> -->
+            <div class="product-show" *ngFor="let p of product" [routerLink]="['/product', p._id]">
                     <!-- <p class="mainimg">{{p.img1}}</p> -->
                     <img [src]="p.img1">
                     <p class="name">{{p.name}}</p>

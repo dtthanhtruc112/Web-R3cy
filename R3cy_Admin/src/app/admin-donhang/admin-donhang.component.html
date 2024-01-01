@@ -26,19 +26,17 @@
             </label> -->
 
             <div class="sort font-bold">
-                <label for="sortInput"><p>Hiển thị |</p>
-                    <input type="text" id="sortInput" [(ngModel)]="sortColumn" class="font-bold"></label>
-              </div>
-          
-              <div class="search">
-                <input
-                  type="text"
-                  [(ngModel)]="searchOrderNumber"
-                  #orderNumberInputField
-                  (keyup.enter)="handleSearch($event)"
-                  placeholder="Tìm kiếm theo mã đơn"
-                />
-              </div>
+                <label for="sortInput">
+                    <p>Hiển thị |</p>
+                    <input type="text" id="sortInput" [(ngModel)]="sortColumn" (keyup.enter)="sortTable1()"
+                        class="font-bold">
+                </label>
+            </div>
+
+            <div class="search">
+                <input type="text" [(ngModel)]="searchOrderNumber" #orderNumberInputField
+                    (keyup.enter)="handleSearch($event)" placeholder="Tìm kiếm theo mã đơn" />
+            </div>
         </div>
         <!-- <div class="container_item">
             <button>Thêm điều kiện lọc</button>
@@ -71,13 +69,14 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</span></li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{
+                                            product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
                                 <button class="p" (click)="closePopup()">Đóng</button>
                             </div>
-                            
+
                         </div>
                     </tbody>
                 </table>
@@ -134,13 +133,14 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{
+                                            product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
                                 <button class="p" (click)="closePopup()">Đóng</button>
                             </div>
-                            
+
                         </div>
                     </tbody>
                 </table>
@@ -156,12 +156,18 @@
                         <th>Trạng thái</th>
                         <th (click)="sortTable('totalOrderValue')">Tổng tiền</th>
                     </tr>
-                    <tbody *ngFor="let order of getFilteredOrders(['Đang giao', 'Chờ lấy hàng'])">
+                    <tbody *ngFor="let order of getFilteredOrders(['Đang giao'])">
                         <td (click)="showProductDetails(order.ordernumber)" id="ordernumber">{{order.ordernumber}}</td>
                         <td>{{order.ordereddate}}</td>
                         <td>{{order.userid}}</td>
                         <td>{{order.paymentmethod}}</td>
-                        <td>{{order.address}}</td>
+                        <td *ngIf="order.adress">
+                            {{order.adress.country ? order.adress.country + ' - ' : ''}}
+                            {{order.adress.province ? order.adress.province + ', ' : ''}}
+                            {{order.adress.district ? order.adress.district + ' - ' : ''}}
+                            {{order.adress.addressDetail ? order.adress.addressDetail : ''}}
+                        </td>                        
+                        <td *ngIf="!order.adress"></td>                        
                         <td>{{order.order_status}}</td>
                         <td>{{order.totalAmount}}.000đ</td>
                         <div class="overlay" *ngIf="showOverlay"></div>
@@ -172,13 +178,14 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{
+                                            product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
                                 <button class="p" (click)="closePopup()">Đóng</button>
                             </div>
-                            
+
                         </div>
                     </tbody>
                 </table>
@@ -208,13 +215,14 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{
+                                            product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
                                 <button class="p" (click)="closePopup()">Đóng</button>
                             </div>
-                            
+
                         </div>
                     </tbody>
                 </table>
@@ -244,13 +252,14 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{
+                                            product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
                                 <button class="p" (click)="closePopup()">Đóng</button>
                             </div>
-                            
+
                         </div>
                     </tbody>
                 </table>
@@ -280,13 +289,14 @@
                                 <p>Các sản phẩm chi tiết của đơn hàng:</p>
                                 <!-- Hiển thị thông tin chi tiết sản phẩm -->
                                 <ul *ngFor="let product of selectedOrder.products">
-                                    <li>{{ product.name }} - {{ product.quantity }} x {{ product.price }}.000đ</li>
+                                    <li><img [src]="product.img1"><span>{{ product.name }} - {{ product.quantity }} x {{
+                                            product.price }}.000đ</span></li>
                                 </ul>
                             </div>
                             <div class="button">
                                 <button class="p" (click)="closePopup()">Đóng</button>
                             </div>
-                            
+
                         </div>
                     </tbody>
                 </table>

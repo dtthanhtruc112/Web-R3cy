@@ -38,6 +38,89 @@ router.get('/', (req, res) => {
 router.use(bodyParser.json({ limit: '10mb' })); 
 router.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
+// Router lấy thông tin mã giảm giá
+router.get('/discount', cors(), (req, res) =>
+  Discount.find()
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
+
+router.get('/discount/dang-ap-dung', cors(), (req, res) =>
+  Discount.find({status: "Đang áp dụng"})
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
+
+router.get('/discount/da-len-lich', cors(), (req, res) =>
+  Discount.find({status: "Đã lên lịch"})
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
+
+router.get('/discount/da-het-han', cors(), (req, res) =>
+  Discount.find({status: "Đã hết hạn"})
+    .then(data => { res.json(data) })
+    .catch(error => { res.status(500).json({ err: error.message }) }
+    ));
+
+//Router sửa thông tin mã giảm giá
+router.patch("/:id", async(req, res) =>{
+  try{
+      await Discount.updateOne({ _id: req.params.id}, {
+          $set: {
+            code: req.body.code, 
+            title: req.body.title,
+            description: req.body.description,
+            status: req.body.status,
+            activate_date: req.body.activate_date,
+            expired_date: req.body.expired_date,
+            valuecode: req.body.valuecode
+          }
+      })
+      res.send("Success!");
+  }catch(error){
+      res.json({error: error.mesage})
+  }
+})
+
+//Router xóa mã giảm giá
+router.delete('/:id', async (req, res) => {
+  try {
+    const discountId = req.params.id;
+
+    // Kiểm tra xem sản phẩm có tồn tại không
+    const existingDiscount = await Discount.findById(discountId);
+    if (!existingDiscount) {
+      return res.status(404).json({ error: 'Discount not found' });
+    }
+
+    // Xoá sản phẩm từ database
+    await Discount.deleteOne({ _id: discountId });
+
+    res.json({ message: 'Discount deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting discount on server:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//Router thêm mã giảm giá
+router.post("/discount",cors(),async (req,res)=>{
+  // Log dữ liệu nhận được từ req.body
+  console.log('Received data:', req.body);
+
+  // Tạo một đối tượng Product từ dữ liệu nhận được
+  const newDiscount = new Discount(req.body);
+
+  // Lưu đối tượng vào cơ sở dữ liệu
+  try {
+    const savedDiscount = await newDiscount.save();
+    console.log('Discount saved to database:', savedDiscount);
+    res.status(200).send('Discount saved successfully');
+  } catch (err) {
+    console.error('Error saving discount to database:', err);
+    res.status(500).send('Internal Server Error');
+  }})
 
 
 // Router lấy thông tin sản phẩm
@@ -108,7 +191,9 @@ router.patch("/:id", async(req, res) =>{
             opt2: req.body.opt2,
             description: req.body.description,
             quantity: req.body.quantity,
-            sold_quantity: req.body.sold_quantity
+            sold_quantity: req.body.sold_quantity,
+            input_ask: req.body.input_ask,
+            input_name: req.body.input_name
           }
       })
       res.send("Success!");
@@ -116,6 +201,27 @@ router.patch("/:id", async(req, res) =>{
       res.json({error: error.mesage})
   }
 })
+
+//Router xóa sản phẩm
+router.delete('/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    // Kiểm tra xem sản phẩm có tồn tại không
+    const existingProduct = await Product.findById(productId);
+    if (!existingProduct) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Xoá sản phẩm từ database
+    await Product.deleteOne({ _id: productId });
+
+    res.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting product on server:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 //Router thêm sản phẩm
 router.post("/product",cors(),async (req,res)=>{
@@ -135,7 +241,7 @@ router.post("/product",cors(),async (req,res)=>{
     res.status(500).send('Internal Server Error');
   }})
 
-// Router lấy tất cả đơn hàng
+
 router.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find().populate({ path: 'products', model: 'Product' });
@@ -695,6 +801,7 @@ router.get('/my-account/:id', async (req, res) => {
     // Trả về thông tin cần thiết
     const accountInfo = {
       _id: account._id,
+      nickname: account.nickname,
       Name: account.Name,
       phonenumber: account.phonenumber,
       Mail: account.Mail,

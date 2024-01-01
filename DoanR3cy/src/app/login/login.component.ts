@@ -78,6 +78,11 @@ export class LoginComponent implements OnInit{
     // Chuyển hướng đến trang forgot-pass khi người dùng bấm "Quên mật khẩu?"
     this.router.navigate(['/forgot-pass']);
   }
+
+  navigateToSignup(): void {
+    this.router.navigate(['/sign-up']);
+  }
+
 }
 
 // // login.component.ts

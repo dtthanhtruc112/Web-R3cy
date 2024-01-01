@@ -1,6 +1,7 @@
 export interface product {
     highlight?: boolean;
     option: (option: string) => void;
+    _id: string;
     id: number;
     category1: string,
     category2: string,
@@ -20,6 +21,8 @@ export interface product {
     ask1: string,
     answer1: string,
     ask2: string,
-    answer2: string
-   
+    answer2: string,
+    input_ask: string,
+    input_answer: string,
+    input_name: string
 }

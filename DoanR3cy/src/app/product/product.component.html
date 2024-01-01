@@ -1,14 +1,26 @@
 <br><br><br><br><br>
+<link rel="stylesheet" href="../../assets/themify-icons/themify-icons.css">
 
 <div class="main" *ngIf="productt">
     <p>Sản phẩm/{{productt.category1}}/{{productt.category2}}/{{productt.name}}</p>
     <div class="productcontainer">
-        <div class="leftcolumn">
+        <!-- <div class="leftcolumn">
             <img [src]="productt.img1">
             <br>
             <img [src]="productt.img2" alt="" class="smallimg">
             <img [src]="productt.img3" alt="" class="smallimg">
-        </div>
+        </div> -->
+
+        <div class="leftcolumn">
+            <div class="main-image">
+              <img [src]="currentImage">
+            </div>
+            <div class="sub-images">
+            <img [src]="productt.img1" alt="" class="smallimg" (click)="onClick(productt.img1)">
+              <img *ngIf="productt.img2" [src]="productt.img2" alt="" class="smallimg" (click)="onClick(productt.img2)">
+              <img *ngIf="productt.img3" [src]="productt.img3" alt="" class="smallimg" (click)="onClick(productt.img3)">
+            </div>
+          </div>
 
         <div class="rightcolumn">
             <h1 class="name">{{productt.name}}</h1>
@@ -23,7 +35,7 @@
             <br> -->
 
             <p class="grey">Số lượng:</p>
-            <input type="number" [(ngModel)]="quantity" mode="decimal" inputId="quantity" [min]="1" [max]="1000">
+            <input style="padding: 0 10px;" type="number" [(ngModel)]="quantity" mode="decimal" inputId="quantity" [min]="1" [max]="1000">
 
             <br><br>
             <!-- <button type="button" routerLink="/product-cart" routerLinkActive="active"
@@ -37,11 +49,19 @@
             <button type="button" class="cta">Mua hàng</button>
         </div>
     </div>
+    <br>
 
     <h2>Đánh giá sản phẩm</h2>
     <div class="rate">
         <div class="leftcontent">
             <h2>{{productt.rate}} trên 5</h2>
+            <span class="star-container">
+                <p class="ti-star" [ngStyle]="{'color': productt.rate >= 1 ? '#ffc107' : 'black'}"></p> &nbsp;
+                <p class="ti-star" [ngStyle]="{'color': productt.rate >= 2 ? '#ffc107' : 'black'}"></p> &nbsp;
+                <p class="ti-star" [ngStyle]="{'color': productt.rate >= 3 ? '#ffc107' : 'black'}"></p> &nbsp;
+                <p class="ti-star" [ngStyle]="{'color': productt.rate >= 4 ? '#ffc107' : 'black'}"></p> &nbsp;
+                <p class="ti-star" [ngStyle]="{'color': productt.rate >= 5 ? '#ffc107' : 'black'}"></p>
+            </span>
         </div>
 
         <div class="rightcontent">
@@ -56,29 +76,85 @@
             <button type="button">Có hình ảnh/video</button>
         </div>
     </div>
+    <br>
 
     <div class="ratecontent">
         <div class="imgfb">
-            <img src="" alt="">
+            <img src="https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"alt="">
         </div>
         <div class="fbcontent">
             <p class="grey">{{productt.accountfb1}}</p>
+            <p class="fbrate">{{productt.rate}} sao</p>
             <p>{{productt.fb1}}</p>
         </div>
 
     </div>
+    <br>
 
     <h2>Thảo luận</h2>
     <div class="qua">
-        <p>{{productt.ask1}}</p>
-        <p>{{productt.answer1}}</p>
+        <div class="divide_answer">
+            <div class="answer-icon">
+                <p class="inline-qna ask">Hỏi</p> &nbsp;
+            </div>
+
+            <div class="answer-content">
+                <p class="inline-qna">{{productt.ask1}}</p> <br>
+            </div>
+        </div>
+        <div class="divide_answer">
+            <div class="answer-icon">
+                <p class="inline-qna answer">Đáp</p> &nbsp;
+            </div>
+
+            <div class="answer-content">
+                <p class="inline-qna">{{productt.answer1}}</p>
+            </div>
+        </div>
         <hr>
-        <p>{{productt.ask2}}</p>
-        <p>{{productt.answer2}}</p>
+        <div class="divide_answer">
+            <div class="answer-icon">
+                <p class="inline-qna ask">Hỏi</p> &nbsp;
+            </div>
+
+            <div class="answer-content">
+                <p class="inline-qna">{{productt.ask2}}</p> <br>
+            </div>
+        </div>
+        
+        <div class="divide_answer">
+            <div class="answer-icon">
+                <p class="inline-qna answer">Đáp</p> &nbsp;
+            </div>
+
+            <div class="answer-content">
+                <p class="inline-qna">{{productt.answer2}}</p>
+            </div>
+        </div>
+        
+        
+        <hr>
+        <div class="divide_answer" *ngIf="showDiv == true">
+            <div class="ask-icon">
+                <p class="inline-qna ask">Hỏi</p> &nbsp;
+            </div>
+
+            <div class="ask-content">
+                <p class="inline-qna grey">{{productt.input_name}}</p> <br>
+                <p class="inline-qna">{{productt.input_ask}}</p>
+            </div>
+        </div>
+        <br>
+
+        <input type="text" placeholder="Bạn có thắc mắc? Hãy nhập câu hỏi tại đây" class="input-ask" [(ngModel)]="productt.input_ask"> <br> <br>
+        <input type="text" placeholder="Tên khách hàng" class="input-name" [(ngModel)]="productt.input_name"> &nbsp;
+        <button type="button" (click)="updateQna(productt)">Gửi câu hỏi</button>
     </div>
+    <br>
 
     <!-- <h2>Sản phẩm có liên quan</h2> -->
     <div class="relatedProduct1">
+        <!-- <h2>Sản phẩm có liên quan</h2> -->
 
     </div>
 </div>

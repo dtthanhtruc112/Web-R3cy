@@ -3,7 +3,7 @@ div{
 }
 
 .max-box{
-    margin-left: 280px;
+    /* margin-left: 280px; */
     padding: 5px;
 }
 
@@ -129,7 +129,7 @@ input[type="text"] {
 
     .max-box{
         margin: auto;
-        margin-top: 128px;
+        /* margin-top: 128px; */
         padding: 5px;
     }
 

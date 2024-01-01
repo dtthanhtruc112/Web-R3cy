@@ -33,6 +33,9 @@ export class ProductService {
   //   const url = `${this._url}/${id}`;
   //   return this._http.get<product>(url);
   // }
+
+  apiUrl:  string = "http://localhost:3000";
+  
   getProduct(id: number): Observable<product> {
     const url = `${this.apiurl}/product/${id}`;
     return this._http.get<product>(url);
@@ -56,9 +59,13 @@ export class ProductService {
     return this._http.get<product[]>(this._url);
   }
 
-  getProductById(id: number): Observable<product | undefined> {
+  getProductById(id: any): Observable<product | undefined> {
     return this._http.get<product[]>(this._url).pipe(
-      map(products => products.find(product => product.id === id) ?? undefined)
+      map((products: any[]) => {
+        const product = products.find((productt: product) => productt._id === id);
+        console.log('Product:', product);
+        return product ?? undefined;
+      })
     );
   }
 
@@ -69,5 +76,9 @@ export class ProductService {
     return this._http.get<product[]>(url);
   }
 
+  updateProduct(updatedProduct: any): Observable<any> {
+    const url = `${this.apiUrl}/${updatedProduct.id}`;
+    return this._http.patch(url, updatedProduct);
+  }
   
 }

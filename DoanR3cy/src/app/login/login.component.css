@@ -10,6 +10,10 @@ div{
     padding: 0;
 }
 
+body{
+    background-color: var(--color-lightblue);
+}
+
 .clear{
     clear: both
 }
@@ -98,6 +102,18 @@ input{
 .text-pass .text-ep > input{
     padding-left: 10px;
 }
+
+.has-account{
+    color: var(--color-grey);
+    margin-top: 16px;
+}
+
+.has-account > a{
+    /* margin-left: auto; */
+    color: var(--color-blue);
+    /* margin-bottom: 32px; */
+}
+
 
 /* ============Responsive============ */
 /* Tablet */

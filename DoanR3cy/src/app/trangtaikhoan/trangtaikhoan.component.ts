@@ -104,6 +104,7 @@ export class TrangtaikhoanComponent implements OnInit {
         this.account = result;
         // Reset editing state
         this.isEditing = false;
+        alert('Cập nhật thông tin tài khoản thành công!')
       },
       (error) => {
         console.error(error);

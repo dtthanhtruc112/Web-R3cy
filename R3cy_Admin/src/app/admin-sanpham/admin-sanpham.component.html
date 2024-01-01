@@ -2,7 +2,7 @@
 
 <div class="fullpage">
     <h3 class="h3">Sản phẩm</h3>
-    <button>+ Thêm sản phẩm mới</button>
+    <button type="button" [routerLink]="['/createsp']">+ Thêm sản phẩm mới</button>
     <br>
     <div class="container">
         <div class="container_item">
@@ -31,7 +31,7 @@
                     <tbody *ngFor="let p of product">
                         <td>{{p.name}}</td>
                         <td>{{p.category1}}</td>
-                        <td [routerLink]="['/sanpham',p.id]">></td>
+                        <td [routerLink]="['/sanpham',p._id]">></td>
                     </tbody>
                 </table>
             </div>
@@ -51,7 +51,7 @@
                         <td><input type="number" [(ngModel)]="p.quantity"></td>
                         <td><input type="number" [(ngModel)]="p.sold_quantity" ></td>
                         <td>{{calculateQuantityRemaining(p)}}</td>
-                        <td><i class="bi bi-check-circle-fill" (click)="updateQuantity(p)"></i><i class="bi bi-x-circle-fill" (click)="openPopup()"></i></td>
+                        <td><i class="bi bi-check-circle-fill" (click)="updateQuantity(p)"></i></td>
                     </tbody>
                 </table>
             </div>
