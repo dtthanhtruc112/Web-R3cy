@@ -76,4 +76,38 @@ export class AccountcustomerService {
       catchError(this.handleError)
     );
   }
+
+  // Thêm địa chỉ mới vào accountcustomer dựa trên _id
+  addAddress(accountId: string, province: string, district: string, addressDetail: string): Observable<any> {
+    const url = `${this.apiUrl}/add-address/${accountId}`;
+    const body = { province, district, addressDetail };
+
+    return this._http.post(url, body).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Chỉnh sửa địa chỉ của một accountcustomer dựa trên _id và index của địa chỉ
+  editAddress(accountId: string, index: number, updatedAddress: any): Observable<any> {
+    const url = `${this.apiUrl}/edit-address/${accountId}/${index}`;
+    return this._http.put(url, updatedAddress).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Xoá địa chỉ của một accountcustomer dựa trên _id và index của địa chỉ
+  deleteAddress(accountId: string, index: number): Observable<any> {
+    const url = `${this.apiUrl}/delete-address/${accountId}/${index}`;
+    return this._http.delete(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Đặt địa chỉ làm mặc định của một accountcustomer dựa trên _id và index của địa chỉ
+  setDefaultAddress(accountId: string, index: number): Observable<any> {
+    const url = `${this.apiUrl}/set-default-address/${accountId}/${index}`;
+    return this._http.put(url, {}).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

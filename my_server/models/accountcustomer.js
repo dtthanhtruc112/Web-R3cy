@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const accountCustomerSchema = new mongoose.Schema({
+  nickname: {
+    type: String,
+    default: null,
+  },
   Name: {
     type: String,
     required: true,
@@ -52,30 +56,22 @@ const accountCustomerSchema = new mongoose.Schema({
 
 accountCustomerSchema.plugin(AutoIncrement, { inc_field: 'userid', start_seq: 1 });
 
-// Sử dụng hook 'pre' để thực hiện logic tăng giảm chỉ số và quản lý địa chỉ mặc định
+// Sử dụng hook 'pre' để thực hiện logic tăng giảm chỉ số và kiểm tra địa chỉ mặc định
 accountCustomerSchema.pre('save', async function (next) {
   if (!this.userid) {
     const maxUserId = await mongoose.model('AccountCustomer').findOne({}, { userid: 1 }, { sort: { userid: -1 } });
     this.userid = maxUserId ? maxUserId.userid + 1 : 1;
   }
 
-  // if (!this?.addresses?.some(address => address?.isDefault) && this?.addresses?.length > 0) {
-  //   this.addresses[0].isDefault = true;
-  // }
   // Kiểm tra xem có địa chỉ mặc định không, nếu không thì đặt là địa chỉ đầu tiên làm mặc định
   if (this.addresses && Array.isArray(this.addresses) && this.addresses.length > 0) {
     const defaultAddress = this.addresses.find(address => address && address.isDefault);
 
     if (!defaultAddress) {
-      // Ensure that the first address exists before setting isDefault
-      if (this.addresses[0]) {
-        this.addresses[0].isDefault = true;
-      }
+      // Đặt làm mặc định nếu là lần đầu thêm địa chỉ hoặc mảng chỉ chứa 1 địa chỉ
+      this.addresses[0].isDefault = true;
     }
   } 
-
-  // Chỉ giữ lại địa chỉ đầu tiên nếu có nhiều địa chỉ được đặt làm mặc định
-  this.addresses = this.addresses ? [this.addresses[0]] : [];
 
   next();
 });

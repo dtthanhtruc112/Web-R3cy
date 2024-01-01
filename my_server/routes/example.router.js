@@ -697,6 +697,7 @@ router.get('/my-account/:id', async (req, res) => {
     // Trả về thông tin cần thiết
     const accountInfo = {
       _id: account._id,
+      nickname: account.nickname,
       Name: account.Name,
       phonenumber: account.phonenumber,
       Mail: account.Mail,
@@ -704,6 +705,7 @@ router.get('/my-account/:id', async (req, res) => {
       dob: account.dob,
       avatar: account.avatar,
       userid: account.userid,
+      addresses: account.addresses,
     };
 
     res.json(accountInfo);
@@ -727,6 +729,135 @@ router.put('/my-account/:id', async (req, res) => {
     res.json(account);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// POST để thêm địa chỉ mới
+router.post('/add-address/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const { province, district, addressDetail } = req.body;
+
+  try {
+    // Tìm tài khoản theo userId
+    const account = await AccountCustomer.findOne({ _id: userId });
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Thêm địa chỉ mới vào danh sách địa chỉ của tài khoản
+    account.addresses.push({
+      province: province,
+      district: district,
+      addressDetail: addressDetail,
+      isDefault: false,
+    });
+
+    // Lưu tài khoản sau khi thêm địa chỉ mới
+    const updatedAccount = await account.save();
+
+    return res.status(200).json(updatedAccount);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Chỉnh sửa địa chỉ theo userId và index của địa chỉ
+router.put('/edit-address/:userId/:index', async (req, res) => {
+  const userId = req.params.userId;
+  const index = req.params.index;
+  const { province, district, addressDetail } = req.body;
+
+  try {
+    const account = await AccountCustomer.findOne({ _id: userId });
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Kiểm tra xem index có hợp lệ không
+    if (index < 0 || index >= account.addresses.length) {
+      return res.status(400).json({ error: 'Invalid address index' });
+    }
+
+    // Chỉnh sửa địa chỉ theo index
+    const addressToUpdate = account.addresses[index];
+    addressToUpdate.province = province;
+    addressToUpdate.district = district;
+    addressToUpdate.addressDetail = addressDetail;
+
+    // Lưu tài khoản sau khi chỉnh sửa địa chỉ
+    const updatedAccount = await account.save();
+
+    return res.status(200).json(updatedAccount);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Xoá địa chỉ theo userId và index của địa chỉ
+router.delete('/delete-address/:userId/:index', async (req, res) => {
+  const userId = req.params.userId;
+  const index = req.params.index;
+
+  try {
+    const account = await AccountCustomer.findOne({ _id: userId });
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Kiểm tra xem index có hợp lệ không
+    if (index < 0 || index >= account.addresses.length) {
+      return res.status(400).json({ error: 'Invalid address index' });
+    }
+
+    // Xoá địa chỉ theo index
+    account.addresses.splice(index, 1);
+
+    // Lưu tài khoản sau khi xoá địa chỉ
+    const updatedAccount = await account.save();
+
+    return res.status(200).json(updatedAccount);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Đặt địa chỉ làm mặc định theo userId và index của địa chỉ
+router.put('/set-default-address/:userId/:index', async (req, res) => {
+  const userId = req.params.userId;
+  const index = req.params.index;
+
+  try {
+    const account = await AccountCustomer.findOne({ _id: userId });
+
+    if (!account) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    // Kiểm tra xem index có hợp lệ không
+    if (index < 0 || index >= account.addresses.length) {
+      return res.status(400).json({ error: 'Invalid address index' });
+    }
+
+    // Đặt địa chỉ làm mặc định
+    const selectedAddress = account.addresses[index];
+    account.addresses.forEach(address => {
+      address.isDefault = false;
+    });
+    selectedAddress.isDefault = true;
+
+    // Lưu tài khoản sau khi đặt địa chỉ làm mặc định
+    const updatedAccount = await account.save();
+
+    return res.status(200).json(updatedAccount);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

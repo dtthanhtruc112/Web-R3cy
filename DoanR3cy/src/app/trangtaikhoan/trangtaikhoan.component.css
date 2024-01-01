@@ -204,29 +204,53 @@ input {
     margin-right: 1vw;
 }
 .diachi_container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 15px;
-}
-.diachi_item {
     border: 1px solid var(--color-blue);
     border-radius: 10px;
     padding: 10px;
-    margin-right: 40px;
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 350px;
 }
-.diachi_item > input{
-    margin: 6px 0;
-    width: 100%;
+.diachi_item_input{
+    border-width: 1px;
+    border-style: solid;
 }
-.diachi_item_name {
+.diachi_item_button {
+    text-align: center;
+}
+.diachi_item_row {
+    display: flex;
+}
+.diachi_item_label {
+    min-width: 12vw;
     font-weight: bold;
 }
-.diachi_item>button, .diachi_item>
-span {
-    margin: 0.5vw;
+.diachi_popup_container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    margin-top: 16px;
+}
+.diachi_popup_item {
+    display: flex;
+    flex-direction: row;
+}
+.diachi_popup_item_detail {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    margin-bottom: 12px;
+}
+.diachi_popup_label {
+    margin-right: 8px;
+    font-weight: bold;
+    width: 100%;
+}
+.diachi_popup_input{
+    border-width: 1px;
+    border-style: solid;
+    width: -webkit-fill-available;
 }
 .voucher_nhapma {
     text-align: center;
@@ -453,7 +477,4 @@ span {
     .donhang_itemdetal_row img{
         display: none;
     }
-
-    
-    
 }

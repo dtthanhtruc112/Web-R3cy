@@ -24,74 +24,14 @@
                     <h2 class="h2">THÔNG TIN TÀI KHOẢN</h2>
                     <p class="p">Quản lý thông tin hồ sơ để bảo mật tài khoản </p>
                     <hr>
-                    <!-- <div>
-                        <div class="hoso_item">
-                            <div class="hoso_item_content">
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="tendn">Tên đăng nhập</label>
-                                    <input type="text" name="" id="" value="{{tendangnhap}}" readonly>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="ten">Họ và tên</label>
-                                    <input type="text" name="" id="" value="{{hovaten}}" readonly>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="email">Email</label>
-                                    <input type="text" name="" id="email" value="{{email}}" readonly>
-                                    <span class="p" id="hoso_change" (click)="chinhsua('email')">Thay đổi</span>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="sdt">Số điện thoại</label>
-                                    <input type="text" value="{{sdt}}" id="sdt" readonly>
-                                    <span class="p" id="hoso_change" (click)="chinhsua('sdt')">Thay đổi</span>
-                                </div>
-                                <div class="hoso_item_row" *ngIf="selectedGender">
-                                    <label class="hoso_item_label p" for="sdt">Giới tính:</label>
-                                    <label>
-                                        <input type="radio" [value]="'Nam'" [(ngModel)]="selectedGender"
-                                            name="gioitinh">Nam
-                                    </label>
-                                    <label>
-                                        <input type="radio" [value]="'Nữ'" [(ngModel)]="selectedGender"
-                                            name="gioitinh">Nữ
-                                    </label>
-                                    <label>
-                                        <input type="radio" [value]="'Khác'" [(ngModel)]="selectedGender"
-                                            name="gioitinh">Khác
-                                    </label>
-                                </div>
-                                <div class="hoso_item_row">
-                                    <label class="hoso_item_label p" for="ngaysinh">Ngày Sinh</label>
-                                    <label>
-                                        Ngày: <select [(ngModel)]="selectedDay">
-                                            <option *ngFor="let day of days" [value]="day">{{ day }}</option>
-                                        </select>
-                                        Tháng: <select [(ngModel)]="selectedMonth">
-                                            <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-                                        </select>
-                                        Năm: <select [(ngModel)]="selectedYear">
-                                            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="hoso_img">
-                                <img class="circle_img" #selectedImage [src]="imageSrc" alt=""> <br>
-                                <button type="button" class="button p" (click)="selectImage()">Chọn ảnh</button>
-                                <input type="file" #myfile name="myfile" accept="image/*"
-                                    (change)="displayImage($event)">
-                            </div>
-                        </div>
-
-                        <div class="hoso_item_row">
-                            <button type="button" class="button p" (click)="saveData()">Lưu</button>
-                        </div>
-                    </div> -->
 
                     <div class="user-profile">
                         <div *ngIf="!isEditing">
                             <div class="hoso_item">
                                 <div class="hoso_item_content">
+                                    <div class="hoso_item_row">
+                                        <strong class="hoso_item_label p">Tên đăng nhập:</strong> {{ account.nickname || 'Chưa có thông tin'}}
+                                    </div>
                                     <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Họ và tên:</strong> {{ account.Name }}
                                     </div>
@@ -107,9 +47,9 @@
                                     <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Ngày sinh:</strong> {{ account.dob || 'Chưa có thông tin'}}
                                     </div>
-                                    <div class="hoso_item_row">
+                                    <!-- <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Avatar:</strong> {{ account.avatar || 'Chưa có thông tin'}}
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="hoso_img">
                                     <img class="circle_img" alt=""> <br>
@@ -122,6 +62,9 @@
                         <div *ngIf="isEditing">
                             <div class="hoso_item">
                                 <div class="hoso_item_content">
+                                    <div class="hoso_item_row">
+                                        <strong class="hoso_item_label p">Tên đăng nhập:</strong> <input type="text" [(ngModel)]="editedAccount.nickname" />
+                                    </div>
                                     <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Họ và tên:</strong> <input type="text" [(ngModel)]="editedAccount.Name" />
                                     </div>
@@ -145,9 +88,9 @@
                                     <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Ngày sinh:</strong> <input type="text" [(ngModel)]="editedAccount.dob" />
                                     </div>
-                                    <div class="hoso_item_row">
+                                    <!-- <div class="hoso_item_row">
                                         <strong class="hoso_item_label p">Avatar:</strong> <input type="text" [(ngModel)]="editedAccount.avatar" />
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="hoso_img">
                                     <img class="circle_img" #selectedImage [src]="imageSrc" alt=""> <br>
@@ -176,7 +119,7 @@
                     <p class="p">Quản lý các địa chỉ giao hàng, cài đặt địa chỉ mặc định </p>
                     <hr>
                     <button type="button" class="button p" (click)="openPopup()">+ THÊM ĐỊA CHỈ MỚI</button>
-                    <div class="diachi_container" *ngFor="let address of userAddresses">
+                    <!-- <div class="diachi_container" *ngFor="let address of userAddresses">
                         <div class="diachi_item">
                             <input class="diachi_item_name" type="text" value="{{ address.hovaten }}" readonly>
                             <input type="text" name="" id="" value="{{ address.sdt }}" readonly> <br>
@@ -185,7 +128,37 @@
                             <span class="p" id="hoso_change" #mySpan (click)="deleteDiv(mySpan)">Xóa</span>
                             <span class="p" id="hoso_change" (click)="chinhsua('diachi')">Chỉnh sửa</span>
                         </div>
+                    </div> -->
+                    <div *ngIf="account && account.addresses && account.addresses.length > 0">
+                        <div *ngFor="let address of account.addresses; let i = index" class="diachi_container" [ngClass]="{ 'default-address': address.isDefault, 'edit-mode': address.editMode }">
+                            <div *ngIf="!address.editMode">
+                                <p class="diachi_item_row"><strong class="diachi_item_label">Tỉnh/Thành phố:</strong> {{ address.province }}</p>
+                                <p class="diachi_item_row"><strong class="diachi_item_label">Quận/Huyện:</strong> {{ address.district }}</p>
+                                <p class="diachi_item_row"><strong class="diachi_item_label">Chi tiết địa chỉ:</strong> {{ address.addressDetail }}</p>
+                            </div>
+                            <div *ngIf="address.editMode">
+                                <div>
+                                    <p class="diachi_item_row"><strong class="diachi_item_label">Tỉnh/Thành phố:</strong> <input type="text" class="diachi_item_input" [(ngModel)]="address.province" placeholder="Nhập tỉnh/thành phố" /></p>
+                                    <p class="diachi_item_row"><strong class="diachi_item_label">Quận/Huyện:</strong> <input type="text" class="diachi_item_input" [(ngModel)]="address.district" placeholder="Nhập quận/huyện" /></p>
+                                    <p class="diachi_item_row"><strong class="diachi_item_label">Chi tiết địa chỉ:</strong> <input type="text" class="diachi_item_input" [(ngModel)]="address.addressDetail" placeholder="Nhập chi tiết địa chỉ" /></p>
+                                </div>
+                                <div class="diachi_item_button">
+                                    <button class="button" (click)="saveAddress(i)">Lưu</button>
+                                    <button *ngIf="!address.isDefault" class="button" (click)="setDefaultAddress(i)">Đặt làm mặc định</button>
+                                    <button class="button" (click)="cancelEditAddress(i)">Huỷ</button>
+                                </div>
+                            </div>
+                            <div class="diachi_item_button">
+                                <button *ngIf="!address.editMode" class="button" (click)="editAddress(i)">Chỉnh sửa</button>
+                                <button *ngIf="!address.editMode" class="button" (click)="deleteAddress(i)">Xoá</button>
+                            </div>
+                        </div>
                     </div>
+                    <!-- <div class="diachi_container" *ngFor="let address of userAddresses">
+                        <div class="diachi_item">
+                            
+                        </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -294,17 +267,24 @@
 
             <div class="popup" *ngIf="addressPopup">
                 <h2 class="h2">Thêm Địa Chỉ Mới</h2>
-                <label for="newProvince">Tỉnh/Thành phố:</label>
-                <input type="text" id="newProvince" placeholder="Nhập tỉnh/thành phố">
-                <br>
-                <label for="newDistrict">Quận/Huyện:</label>
-                <input type="text" id="newDistrict" placeholder="Nhập quận/huyện">
-                <br>
-                <label for="newAddress">Địa chỉ chi tiết:</label>
-                <textarea id="newAddress" placeholder="Nhập địa chỉ chi tiết" [(ngModel)]="newAddress"></textarea>
-                <br>
-                <button class="p" (click)="addNewAddress()">Thêm Địa Chỉ</button>
-                <button class="p" (click)="closePopup()">Đóng</button>
+                <div class="diachi_popup_container">
+                    <div class="diachi_popup_item">
+                        <label for="newProvince" class="diachi_popup_label">Tỉnh/Thành phố:</label>
+                        <input type="text" id="newProvince" class="diachi_popup_input" [(ngModel)]="newAddress.province" placeholder="Nhập tỉnh/thành phố">
+                    </div>
+                    <div class="diachi_popup_item">
+                        <label for="newDistrict" class="diachi_popup_label">Quận/Huyện:</label>
+                        <input type="text" id="newDistrict" class="diachi_popup_input" [(ngModel)]="newAddress.district" placeholder="Nhập quận/huyện">
+                    </div>
+                    <div class="diachi_popup_item_detail">
+                        <label for="newAddressDetail" class="diachi_popup_label">Địa chỉ chi tiết:</label>
+                        <textarea id="newAddressDetail" class="diachi_popup_input" [(ngModel)]="newAddress.addressDetail" placeholder="Nhập địa chỉ chi tiết"></textarea>
+                    </div>
+                </div>
+                <div class="diachi_item_button">
+                    <button class="p" (click)="addNewAddress()">Thêm Địa Chỉ</button>
+                    <button class="p" (click)="closePopup()">Đóng</button>
+                </div>
             </div>
 
 

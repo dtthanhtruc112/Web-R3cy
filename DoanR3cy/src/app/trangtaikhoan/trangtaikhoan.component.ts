@@ -22,6 +22,7 @@ import { AccountcustomerService } from '../Service/accountcustomer.service';
 export class TrangtaikhoanComponent implements OnInit {
   selectedbar: string = 'hoso_content';
   order: any;
+  newAddress: any = { province: '', district: '', addressDetail: '' };
 
   showContent(contentId: string): void {
     this.selectedbar = contentId;
@@ -121,6 +122,104 @@ export class TrangtaikhoanComponent implements OnInit {
   cancelEdit(): void {
     // Reset editing state without saving
     this.isEditing = false;
+  }
+
+  // Chỉnh sửa địa chỉ (NEW)
+  editAddress(index: number): void {
+    // Chuyển sang chế độ chỉnh sửa
+    this.account.addresses[index].editMode = true;
+  }
+
+  saveAddress(index: number): void {
+    // Lưu dữ liệu xuống database
+    this.accountService.editAddress(this.account._id, index, this.account.addresses[index]).subscribe(
+      (result) => {
+        // Update account with the edited values
+        this.account = result;
+        // Reset editing state
+        this.account.addresses[index].editMode = false;
+      },
+      (error) => {
+        console.error(error);
+        // Xử lý lỗi nếu cần thiết
+      }
+    );
+  }
+
+  cancelEditAddress(index: number): void {
+    // Huỷ chỉnh sửa, quay lại chế độ xem thông tin
+    this.account.addresses[index].editMode = false;
+    // Gọi hàm getAccountInfo từ service để lấy thông tin tài khoản
+    const currentUserString = sessionStorage.getItem('CurrentUser') || '';
+    const currentUserObject = JSON.parse(currentUserString);
+    const accountId = currentUserObject._id;
+    this.accountService.getAccountInfo(accountId).subscribe(
+      (result) => {
+        if (result) {
+          this.account = result;
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  deleteAddress(index: number): void {
+    // Xoá địa chỉ khỏi database
+    this.accountService.deleteAddress(this.account._id, index).subscribe(
+      (result) => {
+        // Xoá địa chỉ khỏi danh sách
+        this.account.addresses.splice(index, 1);
+      },
+      (error) => {
+        console.error(error);
+        // Xử lý lỗi nếu cần thiết
+      }
+    );
+  }
+
+  setDefaultAddress(index: number): void {
+    // Đặt địa chỉ làm mặc định và cập nhật trạng thái của các địa chỉ khác
+    this.accountService.setDefaultAddress(this.account._id, index).subscribe(
+      (result) => {
+        // Update account with the default address
+        this.account = result;
+      },
+      (error) => {
+        console.error(error);
+        // Xử lý lỗi nếu cần thiết
+      }
+    );
+    // Đặt làm mặc định và cập nhật trạng thái của các địa chỉ khác
+    // this.account.addresses.forEach((address, i) => {
+    //   if (i === index) {
+    //     address.isDefault = true;
+    //   } else {
+    //     address.isDefault = false;
+    //   }
+    // });
+  }
+
+  addNewAddress(): void {
+    const currentUserString = sessionStorage.getItem('CurrentUser') || '';
+    const currentUserObject = JSON.parse(currentUserString);
+    const accountId = currentUserObject._id;
+    const { province, district, addressDetail } = this.newAddress;
+
+    this.accountService.addAddress(accountId, province, district, addressDetail)
+      .subscribe(
+        (result) => {
+          this.account = result;
+          alert('Thêm địa chỉ thành công!');
+          // Đóng popup sau khi thêm địa chỉ mới
+          this.closePopup();
+        },
+        (error) => {
+          console.error(error);
+          // Xử lý lỗi nếu cần thiết
+        }
+      );
   }
 
 
@@ -332,17 +431,6 @@ export class TrangtaikhoanComponent implements OnInit {
       }
     }
 
-  }
-
-
-
-  newAddress: string = '';
-  addNewAddress(): void {
-    // Thêm logic để xử lý và lưu địa chỉ mới vào cơ sở dữ liệu hoặc nơi cần thiết
-    console.log('Đã thêm địa chỉ mới:', this.newAddress);
-
-    // Sau khi xử lý, bạn có thể đóng popup nếu cần
-    this.closePopup();
   }
 
 

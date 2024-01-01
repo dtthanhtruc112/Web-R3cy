@@ -2,6 +2,7 @@ export class AccountCustomer {
   user: any;
   constructor(
     public _id: any = null,
+    public nickname: string | null = null,
     public Name: string = '',
     public phonenumber: string = '',
     public Mail: string = '',
@@ -21,4 +22,5 @@ export interface Address {
   district: string;
   addressDetail: string;
   isDefault: boolean;
+  editMode?: boolean;
 }
