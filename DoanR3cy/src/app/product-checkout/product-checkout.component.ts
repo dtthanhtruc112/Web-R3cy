@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router,Params } from '@angular/router';
-import { CartService } from '../Service/cart.service';
+// import { CartService } from '../Service/cart.service';
 import { OrderService } from '../Service/order.service';
-import { product } from '../Interface/product';
-import { AuthService } from '../Service/auth.service';
-import { Cart } from '../models/cart';
-import { CartItem } from '../models/cart';
+// import { product } from '../Interface/product';
+// import { AuthService } from '../Service/auth.service';
+// import { Cart } from '../models/cart';
+// import { CartItem } from '../models/cart';
 import { ActivatedRoute } from '@angular/router';
 import { Order, ClientInfo, Address } from '../Interface/Order';
 import { DiscountService } from '../Service/discount.service';
+import { AccountCustomer } from '../Interface/AccountCustomer';
+import { AccountcustomerService } from '../Service/accountcustomer.service';
 
 
 @Component({
@@ -28,9 +30,8 @@ export class ProductCheckoutComponent implements OnInit {
   discount = 0;
   totalAmount = 0;
   userId = 0;
-  selectedPaymentMethod: string = '';
   voucherCode: string = '';
-
+  selectedPaymentMethod: string = 'Bank';
   selectPayment(method: string) {
     this.selectedPaymentMethod = method;
   }
@@ -41,6 +42,7 @@ export class ProductCheckoutComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private discountService: DiscountService,
+    private accountcustomerSerive:  AccountcustomerService , 
   ) {
     this.checkoutFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
@@ -67,6 +69,8 @@ export class ProductCheckoutComponent implements OnInit {
         this.userId = parseFloat(params['userId']);
         this.voucherCode = params['voucherCode']
 
+        // Load thông tin tài khoản
+        this.loadAccountData(this.userId);
 
         console.log('cartItems', this.cartItems)
         console.log('orderTotal', this.orderTotal)
@@ -74,21 +78,47 @@ export class ProductCheckoutComponent implements OnInit {
         console.log('totalAmount', this.totalAmount)
         console.log('userId', this.userId)
         console.log('voucherCode', this.voucherCode)
+
+
         
       }
     });
     
   }
 
+  // Trong hàm loadAccountData
+loadAccountData(userId: number): void {
+  this.accountcustomerSerive.getAccount(userId).subscribe(
+    (account: any) => { // Sửa kiểu dữ liệu nếu cần thiết
+      if (account && account.account) {
+        this.checkoutFormGroup.patchValue({
+          name: account.account.Name,
+          email: account.account.Mail,
+          phone: account.account.phonenumber,
+          country: account.account.addresses[0].country,
+          zip: account.account.addresses[0].postcodeZip,
+          city: account.account.addresses[0].province,
+          district: account.account.addresses[0].district,
+          street: account.account.addresses[0].addressDetail,
+        });
+      } else {
+        console.error('Account not found');
+      }
+    },
+    (error) => {
+      console.error('Error retrieving account information:', error);
+    }
+  );
+}
+
+
   backtoCart(): void {
     this.router.navigate(['/cart']);
   }
 
-
-
-  
-
   placeOrder(): void {
+    console.log('Request body:', this.checkoutFormGroup.getRawValue());
+
     this.isSubmitted = true;
     if (this.checkoutFormGroup.invalid) {
       return;
@@ -126,9 +156,9 @@ export class ProductCheckoutComponent implements OnInit {
       shippingfee: this.shippingFee,
       discount: this.discount,
       totalAmount: this.totalAmount,
-      address: address,
+      adress: address,
       clientInfo: clientInfo,
-      orderNotes: new Date(), // Ghi chú với kiểu dữ liệu Date
+      orderNote: 'Không có ghi chú', // 
       id: String(), // Trường này cần phải điền dữ liệu đơn hàng tương ứng
       rejectreason: '' // Lí do từ chối đơn hàng
     };

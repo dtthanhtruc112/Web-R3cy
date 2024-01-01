@@ -466,7 +466,22 @@ router.get('/account/:userid', async (req, res) => {
 });
 
 
+// Hàm kiểm tra sự khác biệt giữa hai địa chỉ
+const isDifferentAddress = (address1, address2) => {
+  return (
+    address1.country !== address2.country ||
+    address1.province !== address2.province ||
+    address1.district !== address2.district ||
+    address1.addressDetail !== address2.addressDetail
+  );
+};
 
+// Hàm kiểm tra xem một địa chỉ đã tồn tại trong mảng addresses chưa
+const isDuplicateAddress = (newAddress, existingAddresses) => {
+  return existingAddresses.some(existingAddress =>
+    !isDifferentAddress(existingAddress, newAddress)
+  );
+};
 // POST: Tạo đơn hàng từ giỏ hàng và xóa giỏ hàng sau khi đơn hàng thành công
 router.post('/orders/user/:userid', async (req, res) => {
   try {
@@ -497,7 +512,19 @@ router.post('/orders/user/:userid', async (req, res) => {
       discount: req.body.discount || 0,
       totalAmount: req.body.totalAmount || 0,
       ordernote: req.body.ordernote || '',
-      address: req.body.address || {}, // Đảm bảo rằng address được gửi trong request body
+      adress: req.body.adress ? {
+        country: req.body.adress.country || 'Việt Nam',
+        postcodeZip: req.body.adress.postcodeZip || '',
+        province: req.body.adress.province || '',
+        district: req.body.adress.district || '',
+        addressDetail: req.body.adress.addressDetail || '',
+      } : {
+        country: 'Việt Nam',
+        postcodeZip: '',
+        province: '',
+        district: '',
+        addressDetail: '',
+      },
       rejectreason: '',
       clientInfo: req.body.clientInfo || {}, // Đảm bảo rằng clientInfo được gửi trong request body
 
@@ -515,9 +542,24 @@ router.post('/orders/user/:userid', async (req, res) => {
 
     // Tạo đối tượng Order từ dữ liệu đã tạo
     const newOrder = new Order(orderData);
-
     // Lưu đơn hàng vào cơ sở dữ liệu
     await newOrder.save();
+    const accountCustomer = await AccountCustomer.findOne({ userid: parseInt(userid) });
+
+    if (accountCustomer) {
+      const isAddressDuplicate = accountCustomer.addresses.some(existingAddress =>
+        !isDifferentAddress(existingAddress, orderData.adress)
+      );
+
+      if (!isAddressDuplicate) {
+        accountCustomer.addresses.push(orderData.adress);
+        await accountCustomer.save();
+      } else {
+        console.log('Duplicate address found. Not saving.');
+      }
+    } else {
+      console.error('User not found while trying to save order address.');
+    }
 
     // Xóa giỏ hàng sau khi tạo đơn hàng thành công
     await Cart.deleteOne({ userid: parseInt(userid) });
