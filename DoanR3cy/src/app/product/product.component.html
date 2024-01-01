@@ -4,12 +4,6 @@
 <div class="main" *ngIf="productt">
     <p>Sản phẩm/{{productt.category1}}/{{productt.category2}}/{{productt.name}}</p>
     <div class="productcontainer">
-        <!-- <div class="leftcolumn">
-            <img [src]="productt.img1">
-            <br>
-            <img [src]="productt.img2" alt="" class="smallimg">
-            <img [src]="productt.img3" alt="" class="smallimg">
-        </div> -->
 
         <div class="leftcolumn">
             <div class="main-image">
@@ -28,25 +22,14 @@
             <p class="oldprice">{{productt.oldprice}}.000đ</p>
             <p>{{productt.description}}</p>
             <br><br>
-            <!-- <p class="grey">Phân loại:</p>
-            <button type="button" (click)="selectOption(productt.opt1)">{{productt.opt1}}</button>
-            <button type="button" (click)="selectOption.(productt.opt2)">{{productt.opt2}}</button>
-            <button type="button" (click)="selectOption(productt.opt3)">{{productt.opt3}}</button>
-            <br> -->
 
             <p class="grey">Số lượng:</p>
             <input style="padding: 0 10px;" type="number" [(ngModel)]="quantity" mode="decimal" inputId="quantity" [min]="1" [max]="1000">
 
             <br><br>
-            <!-- <button type="button" routerLink="/product-cart" routerLinkActive="active"
-                (click)="addToCart(productt)">Thêm vào giỏ hàng</button> -->
-            <!-- <button type="button" routerLink="/cart" routerLinkActive="active"
-                (click)="addProductToCart()">Thêm vào giỏ hàng</button> -->
                 <button type="button" 
-                *ngIf="productt" (click)="addToCart()">Thêm vào giỏ hàng</button>
+                *ngIf="productt" class="cta" (click)="addToCart()">Thêm vào giỏ hàng</button>
 
-
-            <button type="button" class="cta">Mua hàng</button>
         </div>
     </div>
     <br>
@@ -154,7 +137,15 @@
 
     <!-- <h2>Sản phẩm có liên quan</h2> -->
     <div class="relatedProduct1">
-        <!-- <h2>Sản phẩm có liên quan</h2> -->
+        <h2>Sản phẩm có liên quan</h2>
+        <div class="product-show" *ngFor="let p of productsSuggestion" [routerLink]="['/product', p._id]">
+            <img [src]="p.img1">
+            <p class="name">{{p.name}}</p>
+            <div class="pricecontainer">
+                <p class="price">{{p.price}}.000đ</p>
+                <p class="oldprice">{{p.oldprice}}.000đ</p>
+            </div>  
+        </div>
 
     </div>
 </div>

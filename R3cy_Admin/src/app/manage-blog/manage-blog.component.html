@@ -28,7 +28,6 @@
                         </td>
                         <td>{{ blog.date | date }}</td>
                         <td>{{ blog.author }}</td>
-                        <!-- <td><i class="fa-solid fa-trash"></i></td> -->
                         <td><i class="fa-solid fa-trash" (click)="deleteBlog(blog._id)"></i></td>
                         <td><button class="btn" (click)="editBlog(blog._id)">Chỉnh sửa</button></td>
                       </tr>

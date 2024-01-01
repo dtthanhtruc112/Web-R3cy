@@ -7,7 +7,6 @@
     <div class=" container1 containerContent">
         <div class=" Welcome">
             <p class="h3 text-center mt-60 font-bold"><b>Chào mừng đến với R3cy!</b></p>
-    
             <p class="h4 text-center">Được thiết kế và sản xuất thủ công tại một xưởng ở Thành phố Hồ Chí Minh,
             R3cy mang trên mình câu chuyện đầy ý nghĩa với thành phố. R3cy mong muốn tạo ra các vật dụng không chỉ bền chắc, đẹp mắt mà còn cùng bạn góp phần bảo vệ môi trường.</p>
         </div>
@@ -17,7 +16,7 @@
                 <h2>SẢN PHẨM NỔI BẬT</h2>
             </div>
             <div class="containerProduct">
-                <div class="product-show" *ngFor="let p of productsHighlight" [routerLink]="['/product', p.id]">
+                <div class="product-show" *ngFor="let p of productsHighlight" [routerLink]="['/product', p._id]">
                     <!-- <p class="mainimg">{{p.img1}}</p> -->
                     <img [src]="p.img1">
                     <p class="name">{{p.name}}</p>

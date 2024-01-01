@@ -22,11 +22,21 @@ export class AuthService {
   }
 
   setCurrentUser(user: any) {
-    sessionStorage.setItem('CurrentUser', JSON.stringify(user));
+    if (user) {
+      sessionStorage.setItem('CurrentUser', JSON.stringify(user));
+    } else {
+      console.error('Trying to set null user.');
+    }
   }
-
+  
   getCurrentUser() {
-    return JSON.parse(sessionStorage.getItem('CurrentUser')!);
+    const userString = sessionStorage.getItem('CurrentUser');
+    if (userString) {
+      return JSON.parse(userString);
+    } else {
+      console.error('No user found in sessionStorage.');
+      return null; // or handle the absence of user in a way that makes sense for your application
+    }
   }
 
   isLoggedIn(): boolean {
