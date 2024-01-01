@@ -723,7 +723,11 @@ router.delete('/deleteadmin/:id', async (req, res) => {
     }
 
     // Xoá tài khoản admin từ database
-    await existingAccount.remove();
+    const deletedAccount = await AccountCustomer.findByIdAndDelete(accountId);
+
+    if (!deletedAccount) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
 
     res.json({ message: 'Account deleted successfully' });
   } catch (error) {
