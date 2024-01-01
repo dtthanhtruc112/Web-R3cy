@@ -28,7 +28,7 @@
       <a href="#" class="menuActive" routerLink="/customers" routerLinkActive="active"><i class="fa-regular fa-note-sticky"></i> Khách hàng</a>
       <a href="#" class="menuActive" routerLink="/adminaccount" routerLinkActive="active"><i class="fa-regular fa-note-sticky"></i> Tài khoản</a>
       <a href="#" class="menuActive" routerLink="/blog" routerLinkActive="active"><i class="fa-regular fa-note-sticky"></i> Blog</a>
-      <a href="#" class="menuActive" ><i class="fa-regular fa-note-sticky"></i> Đăng xuất</a>
+      <a (click)="logOut()" class="menuActive" ><i class="fa-regular fa-note-sticky"></i> Đăng xuất</a>
     </div>
     <!-- Cài đặt -->
     <div class="containerSetting">
@@ -37,7 +37,7 @@
       </p>
       <div class="submenu">
         <a href="#">Quản lý tài khoản</a>
-        <a href="#">Đăng xuất</a>
+        <a>Đăng xuất</a>
       </div>
     </div>
   </div>
