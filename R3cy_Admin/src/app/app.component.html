@@ -1,10 +1,10 @@
 
 <div class="container">
-    <div class="leftcolumn">
+    <div class="leftcolumn" *ngIf="!isLoginPage">
         <app-admin-sidebar></app-admin-sidebar>
     </div>
 
-    <div class="rightcolumn">
+    <div class="rightcolumn" [ngClass]="{'full-width': isLoginPage}">
         <router-outlet></router-outlet>
     </div>
 </div>
