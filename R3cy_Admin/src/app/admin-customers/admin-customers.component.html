@@ -33,11 +33,11 @@
                         <td>
                             <div *ngFor="let diaChi of item.addresses">
                                 <span>
-                                    <p>{{ diaChi.country }}</p>
-                                    <p>{{ diaChi.postcodeZip }}</p>
-                                    <p>{{ diaChi.province }}</p>
-                                    <p>{{ diaChi.district }}</p>
-                                    <p>{{ diaChi.addressDetail }}</p>
+                                    <p>{{ diaChi?.country }}</p> 
+                                    <p>{{ diaChi?.postcodeZip }}</p>
+                                    <p>{{ diaChi?.province }}</p>
+                                    <p>{{ diaChi?.district }}</p>
+                                    <p>{{ diaChi?.addressDetail }}</p>
                                 </span>
                             </div>
                         </td>
