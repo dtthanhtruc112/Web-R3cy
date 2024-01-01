@@ -83,10 +83,44 @@ router.patch("/:id", async(req, res) =>{
   }
 })
 
-//Router thêm sản phẩm
-router.post("/product",cors(),async (req,res)=>{
+//Router xóa mã giảm giá
+router.delete('/:id', async (req, res) => {
+  try {
+    const discountId = req.params.id;
+
+    // Kiểm tra xem sản phẩm có tồn tại không
+    const existingDiscount = await Discount.findById(discountId);
+    if (!existingDiscount) {
+      return res.status(404).json({ error: 'Discount not found' });
+    }
+
+    // Xoá sản phẩm từ database
+    await Discount.deleteOne({ _id: discountId });
+
+    res.json({ message: 'Discount deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting discount on server:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//Router thêm mã giảm giá
+router.post("/discount",cors(),async (req,res)=>{
   // Log dữ liệu nhận được từ req.body
-  console.log('Received data:', req.body)})
+  console.log('Received data:', req.body);
+
+  // Tạo một đối tượng Product từ dữ liệu nhận được
+  const newDiscount = new Discount(req.body);
+
+  // Lưu đối tượng vào cơ sở dữ liệu
+  try {
+    const savedDiscount = await newDiscount.save();
+    console.log('Discount saved to database:', savedDiscount);
+    res.status(200).send('Discount saved successfully');
+  } catch (err) {
+    console.error('Error saving discount to database:', err);
+    res.status(500).send('Internal Server Error');
+  }})
 
 
 // Router lấy thông tin sản phẩm
@@ -173,17 +207,18 @@ router.delete('/:id', async (req, res) => {
   try {
     const productId = req.params.id;
 
-    // Kiểm tra xem account có tồn tại không
+    // Kiểm tra xem sản phẩm có tồn tại không
     const existingProduct = await Product.findById(productId);
     if (!existingProduct) {
       return res.status(404).json({ error: 'Product not found' });
     }
 
-    // Xoá tài khoản admin từ database
-    await existingProduct.remove();
+    // Xoá sản phẩm từ database
+    await Product.deleteOne({ _id: productId });
 
     res.json({ message: 'Product deleted successfully' });
   } catch (error) {
+    console.error('Error deleting product on server:', error);
     res.status(500).json({ error: error.message });
   }
 });
