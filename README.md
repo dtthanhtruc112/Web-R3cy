@@ -1,6 +1,6 @@
 # Web-R3cy
 Đồ án môn học Phát triển web kinh doanh tại trường Đại học Kinh tế Luật do nhóm sinh viên ngành Thương mại điện tử thực hiện và phát triển với sự hướng dẫn của Giảng viên ThS. Nguyễn Quang Phúc. 
-Website R3cy với các chức năng chính: 
+Website R3cy sử dụng Angular JS và Node JS cùng cơ sở dữ liệu NoSQL (MongoDB) với các chức năng chính: 
 - Phân hệ khách hàng: Xem và tìm kiếm sản phẩm, quản lý giỏ hàng và đặt hàng, xem các tin tức và Blog, quản lý tài khoản, các đơn hàng và đánh giá đơn hàng, thảo luận sản phẩm, đặt hàng custom. 
 - Phân hệ admin: quản lý các sản phẩm và tồn kho, quản lý đơn hàng, quản lý các yêu cầu đặt hàng custom, quản lý khách hàng, quản lý blog.
 
